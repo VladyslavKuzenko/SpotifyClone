@@ -37,8 +37,6 @@ root.render(
     }}
   >
     <App />
-    <LoginButton/>
-    <LogoutButton/>
-   
+  
   </Auth0Provider>,
 );
