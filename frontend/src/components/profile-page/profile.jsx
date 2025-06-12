@@ -3,7 +3,7 @@ import styles from "./profile.module.css";
 
 export default function Profile() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [selectedGoal, setSelectedGoal] = useState("Discover new music");
+  const [selectedGoal, setSelectedGoal] = useState("Listener");
   const dropdownRef = useRef(null);
 
   // Закриття дропдауна при кліку поза ним
@@ -29,10 +29,8 @@ export default function Profile() {
   }
 
   const goals = [
-    "Discover new music",
-    "Promote my songs",
-    "Find collaborators",
-    "Just for fun",
+    "Listener",
+    "Artist",
   ];
 
   return (
@@ -64,7 +62,7 @@ export default function Profile() {
           </div>
 
           <div className={styles.b2}>
-            <div className={styles.text11}>Your Goal</div>
+            <div className={styles.text11}>Your Role</div>
             <div className={styles.dropdown} ref={dropdownRef}>
               <div className={styles["dropdown-toggle"]} onClick={toggleDropdown}>
                 <span className={styles.label}>{selectedGoal}</span>

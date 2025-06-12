@@ -10,9 +10,9 @@ function App() {
   return (
     //<Login/>
     //<Register/>
-    <Main/>
+    //<Main/>
     //<Player />
-    //<Profile/>
+    <Profile/>
 
   );
 }
