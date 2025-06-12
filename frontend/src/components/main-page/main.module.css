@@ -1,0 +1,545 @@
+  html {
+    scrollbar-width: none;
+
+  }
+  
+  .container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+
+  }
+
+  .left-side {
+    width: 225px;
+    height: 100vh;
+    background-color: #E7E7E7;
+    position: fixed;
+  }
+
+  .left-side:hover {
+    width: 340px;
+    transition: all 0.3s ease-in;
+
+  }
+
+  .ava-place {
+    width: 100%;
+    height: 90px;
+    align-items: center;
+    margin-top: 121px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .avatarka {
+    width: 89px;
+    height: 89px;
+    border-radius: 50%;
+    background-color: #BFBFBF;
+    cursor: pointer;
+
+  }
+
+  .pages-btns-div {
+    width: 100%;
+    height: 310px;
+    display: flex;
+    justify-content: center;
+    margin-top: 48px;
+  }
+
+  .page-btn {
+    width: 43px;
+    height: 43px;
+    background-color: #8F8F8F;
+    border-radius: 50%;
+    cursor: pointer;
+
+  }
+
+  .btns-div {
+    width: 44px;
+    height: 310px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+
+  }
+
+  .song-place-div {
+    width: 100%;
+    height: 150px;
+    margin-top: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .song-div {
+    width: 111px;
+    height: 145px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .song-name {
+    width: 100%;
+    height: 25px;
+    font-family: 'Inter', sans-serif;
+    text-align: center;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0%;
+
+  }
+
+  .singer {
+    width: 100%;
+    height: 15px;
+    margin-top: 3px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #999999;
+    text-align: center;
+
+  }
+
+  .circle-song {
+    width: 81px;
+    height: 81px;
+    border-radius: 50%;
+    background-color: #A7A7A7;
+    margin-top: 13px;
+  }
+
+  .home-text {
+    width: 165px;
+    height: 100vh;
+    margin-left: 225px;
+  }
+
+  .middle {
+    width: 850px;
+    height: 100vh;
+  }
+
+
+
+  .right-side {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .text-home {
+    width: 100%;
+    height: 42px;
+    margin-top: 60px;
+    text-indent: 18px;
+    align-content: center;
+
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 100%;
+    letter-spacing: 0%;
+
+  }
+
+  .empty-div2 {
+    width: 100%;
+    height: 60px;
+
+  }
+
+  .platform1 {
+    width: 100%;
+    height: 41px;
+    display: flex;
+  }
+
+  .search {
+    width: 48.8%;
+    border: none;
+    outline: none;
+    height: 100%;
+    background-color: #C0C0C0;
+    text-indent: 10px;
+  }
+
+  .search::placeholder {
+    color: white;
+  }
+
+  .new-post {
+    height: 100%;
+    width: 23%;
+    background-color: #A7A7A7;
+    margin-left: 22px;
+    text-align: center;
+    align-content: center;
+    color: white;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    cursor: pointer;
+
+  }
+
+  .notification {
+    height: 100%;
+    width: 23%;
+    background-color: #A7A7A7;
+    margin-left: 22px;
+    text-align: center;
+    align-content: center;
+    color: white;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    cursor: pointer;
+  }
+
+  .empty-div3 {
+    width: 100%;
+    height: 40px;
+
+  }
+
+  .container-vibe {
+    width: 100%;
+    height: 39px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+  }
+
+  .vibe-div {
+    width: 14.88%;
+    height: 100%;
+    background-color: gray;
+    text-align: center;
+    align-content: center;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    cursor: pointer;
+
+  }
+
+
+  .empty-div4 {
+    width: 100%;
+    height: 30px;
+  }
+
+  .container-stories {
+    width: 100%;
+    height: 135px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+
+  .stories-plat {
+    width: 100px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+
+
+  .stories {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #D9D9D9;
+    cursor: pointer;
+
+  }
+
+  .nickname {
+    width: 100%;
+    height: 20px;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0%;
+
+  }
+
+
+  .empty-div5 {
+    width: 100%;
+    height: 60px;
+  }
+
+
+  .swipe-box {
+    width: 100%;
+    height: 40px;
+    display: flex;
+  }
+
+  .all-div {
+    width: 60px;
+    height: 100%;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    cursor: pointer;
+
+  }
+
+  .artists-div {
+    width: 80px;
+    height: 100%;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    cursor: pointer;
+  }
+
+  .friends-div {
+    width: 80px;
+    height: 100%;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    cursor: pointer;
+
+  }
+
+  .who-to-follow-div {
+    width: 415px;
+    height: 500px;
+    background-color: #E8E8E8;
+    overflow-y: auto;
+    scrollbar-width: none;
+    margin-left: 20px;
+    margin-right: 20px;
+
+  }
+
+
+  .who-to-follow-text {
+    height: 50px;
+    width: 100%;
+    text-indent: 20px;
+    display: flex;
+    justify-content: end;
+    flex-direction: column;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 100%;
+    letter-spacing: 0%;
+
+  }
+
+  .who-to-follow-accounts {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+
+  }
+
+  .empty-div6 {
+    width: 100%;
+    height: 25px;
+  }
+
+
+  .account-platform {
+    width: 100%;
+    height: 80px;
+    display: flex;
+    align-items: flex-end;
+    flex-direction: row;
+    margin-top: 7px;
+
+
+  }
+
+  .place-for-ava {
+    width: 80px;
+    height: 100%;
+    margin-left: 22px;
+  }
+
+  .name-nickname {
+    width: 170px;
+    height: 75%;
+    display: flex;
+    flex-direction: column;
+
+
+  }
+
+  .follow-btn {
+    width: 115px;
+    height: 75%;
+    margin-left: 10px;
+    color: black;
+    background-color: #F8F8F8;
+    text-align: center;
+    align-content: center;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+
+
+  }
+
+  .name-follow {
+    width: 100%;
+    height: 50%;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+  }
+
+  .nickname-follow {
+    width: 100%;
+    height: 50%;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #767676;
+  }
+
+  .ava-follow {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #D9D9D9;
+  }
+
+  .users-content {
+    width: 100%;
+    height: 1000px;
+    background-color: rgb(173, 173, 173);
+  }
+
+  .new-song-div {
+    width: 415px;
+    height: 450px;
+    margin-top: 30px;
+  }
+
+  .ns-text1 {
+    width: 100%;
+    height: 25px;
+    text-indent: 20px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 100%;
+    letter-spacing: 0%;
+
+  }
+
+  .ns-middle {
+    width: 100%;
+    height: 315px;
+    background-color: #C1C1C1;
+    margin-top: 5px;
+  }
+
+  .ns-bottom {
+    width: 100%;
+    height: 95px;
+    background-color: #737373;
+    align-content: center;
+    display: flex;
+    align-items: center;
+  }
+
+  .ns-song-author {
+    width: 200px;
+    height: 60%;
+    margin-left: 40px;
+  }
+
+  .ns-play-btn-div {
+    width: 120px;
+    height: 100%;
+    margin-left: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .ns-play-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #7E7E7E;
+    cursor: pointer;
+    background-repeat: no-repeat;
+    background-size: 30%;
+    background-position: center;
+
+
+  }
+
+
+  .ns-song {
+    width: 100%;
+    height: 50%;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: white;
+    align-content: center;
+  }
+
+  .ns-author {
+    width: 100%;
+    height: 50%;
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #B8B8B8;
+    align-content: center;
+
+  }
+

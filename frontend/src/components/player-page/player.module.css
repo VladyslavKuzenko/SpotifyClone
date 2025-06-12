@@ -1,0 +1,152 @@
+  .container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .leftSide {
+    width: 225px;
+    height: 100vh;
+    background-color: #e7e7e7;
+    position: fixed;
+  }
+
+  .avaPlace {
+    width: 100%;
+    height: 90px;
+    align-items: center;
+    margin-top: 121px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .avatarka {
+    width: 89px;
+    height: 89px;
+    border-radius: 50%;
+    background-color: #bfbfbf;
+    cursor: pointer;
+  }
+
+  .pagesBtnsDiv {
+    width: 100%;
+    height: 310px;
+    display: flex;
+    justify-content: center;
+    margin-top: 48px;
+  }
+
+  .btnsDiv {
+    width: 44px;
+    height: 310px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+  }
+
+  .pageBtn {
+    width: 43px;
+    height: 43px;
+    background-color: #8f8f8f;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  .songPlaceDiv {
+    width: 100%;
+    height: 150px;
+    margin-top: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .songDiv {
+    width: 111px;
+    height: 145px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .songName {
+    width: 100%;
+    height: 25px;
+    font-family: 'Inter', sans-serif;
+    text-align: center;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0%;
+  }
+
+  .singer {
+    width: 100%;
+    height: 15px;
+    margin-top: 3px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #999999;
+    text-align: center;
+  }
+
+  .circleSong {
+    width: 81px;
+    height: 81px;
+    border-radius: 50%;
+    background-color: #a7a7a7;
+    margin-top: 13px;
+  }
+
+  .middleRight {
+    margin-left: 225px;
+    flex: 1;
+    height: 100vh;
+    background-color: black;
+  }
+
+  .emptyDiv1 {
+    width: 100%;
+    height: 60px;
+    background-color: lime;
+  }
+
+  .mrMiddle {
+    width: 100%;
+    height: 755px;
+    background-color: red;
+    display: flex;
+  }
+
+  .mrLeft {
+    flex: 0.25;
+    background-color: gray;
+  }
+
+  .mrMidd {
+    flex: 0.5;
+    background-color: coral;
+  }
+
+  .mrRight {
+    flex: 0.25;
+    background-color: gray;
+  }
+
+  .emptyDiv2 {
+    width: 100px;
+    height: 100%;
+    background-color: blue;
+  }
+
+  .mrBottom {
+    width: 100%;
+    height: 119px;
+    background-color: yellow;
+    position: fixed;
+    bottom: 0;
+  }
+
