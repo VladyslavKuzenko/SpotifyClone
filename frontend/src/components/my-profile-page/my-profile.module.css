@@ -135,7 +135,8 @@ html {
 .edit-profile {
     margin-left: 90%;
     top: 20px;
-    position: relative;cursor: pointer;
+    position: relative;
+    cursor: pointer;
 }
 .profile-photo {
     width: 165px;

@@ -7,6 +7,7 @@ import Player from './components/player-page/player';
 import Profile from './components/profile-page/profile';
 import UserProfile from './components/user-profile-page/user-profile';
 import MyProfile from './components/my-profile-page/my-profile';
+import EditProfile from './components/edit-profile-page/edit-profile';
 
 function App() {
   return (
@@ -16,7 +17,8 @@ function App() {
     //<Player />
     //<Profile/>
     //<UserProfile/>
-    <MyProfile/>
+    //<MyProfile/>
+    <EditProfile/>
 
   );
 }
