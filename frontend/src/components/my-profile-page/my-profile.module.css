@@ -129,18 +129,14 @@ html {
     flex-direction: column;
     justify-content: space-between;
     position: relative;
-    left: 95%;
-    top: 20%;
 }
 
-.setting-circles {
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    background-color: #6F6F6F;
 
+.edit-profile {
+    margin-left: 90%;
+    top: 20px;
+    position: relative;cursor: pointer;
 }
-
 .profile-photo {
     width: 165px;
     height: 165px;
@@ -209,14 +205,6 @@ html {
     justify-content: space-between;
 }
 
-.followers-count {
-    font-family: 'Inter', sans-serif;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 100%;
-    letter-spacing: 0%;
-    align-content: end;
-}
 
 .functional-container1 {
     width: 100%;

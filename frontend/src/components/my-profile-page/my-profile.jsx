@@ -31,11 +31,7 @@ const MyProfile = () => {
 
       <div className={styles['profile-side']}>
         <div className={styles['channel-hat']}>
-          <div className={styles['hat-setting-platform']}>
-            <div className={styles['setting-circles']}></div>
-            <div className={styles['setting-circles']}></div>
-            <div className={styles['setting-circles']}></div>
-          </div>
+            <div className={styles['edit-profile']}>Edit profile</div>
           <div className={styles['profile-photo']}></div>
           <div className={styles['you-name']}>You</div>
         </div>
