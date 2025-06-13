@@ -5,6 +5,7 @@ import Register from './components/register-page/register';
 import Main from './components/main-page/main';
 import Player from './components/player-page/player';
 import Profile from './components/profile-page/profile';
+import UserProfile from './components/user-profile-page/user-profile';
 
 function App() {
   return (
@@ -12,7 +13,8 @@ function App() {
     //<Register/>
     //<Main/>
     //<Player />
-    <Profile/>
+    //<Profile/>
+    <UserProfile/>
 
   );
 }
