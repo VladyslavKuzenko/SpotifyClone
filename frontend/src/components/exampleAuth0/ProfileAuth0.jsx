@@ -2,7 +2,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import React from "react";
 
 /* This components is the example how to use 'user' variable, that contains user data (like name, email, etc.) */
-const Profile = () => {
+const ProfileAuth0 = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
 
   if (isLoading) {
@@ -28,4 +28,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default ProfileAuth0;
