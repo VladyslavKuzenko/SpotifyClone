@@ -1,30 +1,11 @@
 import React from 'react';
 import styles from './user-profile.module.css';
+import LeftSide from '../main-components/left-side';
 
 const UserProfile = () => {
   return (
     <div className={styles.container}>
-      <div className={styles['left-side']}>
-        <div className={styles['ava-place']}>
-          <div className={styles.avatarka}></div>
-        </div>
-        <div className={styles['pages-btns-div']}>
-          <div className={styles['btns-div']}>
-            <div className={styles['page-btn']}></div>
-            <div className={styles['page-btn']}></div>
-            <div className={styles['page-btn']}></div>
-            <div className={styles['page-btn']}></div>
-            <div className={styles['page-btn']}></div>
-          </div>
-        </div>
-        <div className={styles['song-place-div']}>
-          <div className={styles['song-div']}>
-            <div className={styles['song-name']}>Not Like Us</div>
-            <div className={styles.singer}>Kendrick Lamar</div>
-            <div className={styles['circle-song']}></div>
-          </div>
-        </div>
-      </div>
+      <LeftSide/>
       <div className={styles['empty-div1']}></div>
       <div className={styles['profile-side']}>
         <div className={styles['channel-hat']}>

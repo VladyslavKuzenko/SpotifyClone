@@ -17,11 +17,6 @@
     position: fixed;
   }
 
-  .left-side:hover {
-    width: 340px;
-    transition: all 0.3s ease-in;
-
-  }
 
   .ava-place {
     width: 100%;
