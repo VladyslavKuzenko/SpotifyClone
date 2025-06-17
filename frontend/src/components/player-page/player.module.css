@@ -286,20 +286,23 @@
       width: 100%;
       height: 66px;
       margin-bottom: 15px;
+      border: none;
+      padding-left: 0;
+      padding-right: 0;
+      background-color: transparent;
 
     }
 
     .cover {
       width: 66px;
       height: 66px;
-      margin-right: 20px;
       background-color: #FFFFFF;
+      margin-right: 15px;
 
 
     }
 
     .info {
-      flex-grow: 1;
       display: flex;
       flex-direction: column;
     }
@@ -336,6 +339,8 @@
       text-align: center;
       align-content: center;
       width: 20%;
+      margin-left: auto;
+
 
     }
 
@@ -591,7 +596,7 @@
       height: 8px;
       border-radius: 50%;
       margin: 2px;
-      background-color:#868686;
+      background-color: #868686;
 
     }
 

@@ -9,7 +9,6 @@
         display: flex;
         flex-direction: column;
         position: relative;
-        /* додано, бо внутрішні absolute позиції */
     }
 
     .right-side1 {

@@ -1,8 +1,13 @@
 import React from "react";
 import styles from "./player.module.css";
+import YourLibraryComponent from './your-library-component';
+import SongItem from './song-item';
+import PlayerComponent from './player-component';
+
 
 const Player = () => {
   return (
+
     <div className={styles.container}>
       <div className={styles["left-side"]}>
         <div className={styles["ava-place"]}>
@@ -30,44 +35,7 @@ const Player = () => {
 
         <div className={styles["mr-middle"]}>
           <div className={styles["mr-left"]}>
-            <div className={styles["your-library"]}>
-              <div className={styles["yl-empty1"]}></div>
-
-              <div className={styles["yl-main"]}>
-                <div className={styles["yl-text-plus"]}>
-                  <div className={styles["yl-text"]}>Your library</div>
-                  <div className={styles["yl-plus-plat"]}>
-                    <div className={styles["yl-plus"]}>+</div>
-                  </div>
-                </div>
-
-                <div className={styles["playlist-platform"]}>
-                  {[...Array(3)].map((_, i) => (
-                    <div key={i} className={styles["playlist-element"]}>
-                      playlist
-                    </div>
-                  ))}
-                </div>
-
-                <div className={styles["search-recent"]}>
-                  <div className={styles["sr-search"]}>Search</div>
-                  <div className={styles["sr-recent"]}>Recent</div>
-                </div>
-
-                <div className={styles["yl-song-container"]}>
-                  {[...Array(9)].map((_, i) => (
-                    <div key={i} className={styles["song-item"]}>
-                      <div className={styles.cover}></div>
-                      <div className={styles.info}>
-                        <div className={styles.title}>Song title</div>
-                        <div className={styles.artist}>Artist</div>
-                      </div>
-                      <div className={styles.duration}>2:56</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
+            <YourLibraryComponent />
           </div>
 
           <div className={styles["mr-midd"]}>
@@ -151,47 +119,7 @@ const Player = () => {
           <div className={styles["empty-div2"]}></div>
         </div>
 
-        <div className={styles["mr-bottom"]}>
-          <div className={styles["mb-empty1"]}></div>
-
-          <div className={styles["mrb-left"]}>
-            <div className={styles["bmr-cover"]}></div>
-            <div className={styles["bmr-song-info"]}>
-              <div className={styles["bmr-title"]}>Song title</div>
-              <div className={styles["bmr-artist"]}>Artist</div>
-            </div>
-          </div>
-
-          <div className={styles["mrb-center"]}>
-            <div className={styles["bmr-controls"]}>
-              <div className={styles["bmr-btn"]}>⏺</div>
-              <div className={styles["bmr-btn"]}>⏮</div>
-              <div className={styles["bmr-btn"]}>▶</div>
-              <div className={styles["bmr-btn"]}>⏭</div>
-              <div className={styles["bmr-btn"]}>⏺</div>
-            </div>
-            <div className={styles["bmr-progress"]}>
-              <div className={styles["current-time-start"]}>0:57</div>
-              <div className={styles["bmr-bar-wrapper"]}>
-                <div
-                  className={styles["bmr-bar-fill"]}
-                  style={{ width: "50%" }}
-                ></div>
-              </div>
-              <div className={styles["current-time-end"]}>4:32</div>
-            </div>
-          </div>
-
-          <div className={styles["mrb-right"]}>
-            <div className={styles["bmr-volume-wrapper"]}>
-              <div
-                className={styles["bmr-volume-fill"]}
-                style={{ width: "70%" }}
-              ></div>
-            </div>
-            <div className={styles["bmr-plus"]}>+</div>
-          </div>
-        </div>
+        <PlayerComponent/>
       </div>
     </div>
   );
