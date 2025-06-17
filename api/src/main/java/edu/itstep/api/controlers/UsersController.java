@@ -30,25 +30,25 @@ public class UsersController {
         return userRepository.findById(id).orElseThrow(RuntimeException::new);
     }
 
-    @PostMapping
-    public ResponseEntity createUser(@RequestBody User user) throws URISyntaxException {
-        User savedUser = userRepository.save(user);
-        return ResponseEntity.created(new URI("/users/" + savedUser.getId())).body(savedUser);
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity updateUser(@PathVariable Long id, @RequestBody User user) {
-        User currentUser = userRepository.findById(id).orElseThrow(RuntimeException::new);
-        currentUser.setName(user.getName());
-        currentUser.setEmail(user.getEmail());
-        currentUser = userRepository.save(user);
-
-        return ResponseEntity.ok(currentUser);
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity deleteUser(@PathVariable Long id) {
-        userRepository.deleteById(id);
-        return ResponseEntity.ok().build();
-    }
+//    @PostMapping
+//    public ResponseEntity createUser(@RequestBody User user) throws URISyntaxException {
+//        User savedUser = userRepository.save(user);
+//        return ResponseEntity.created(new URI("/users/" + savedUser.getId())).body(savedUser);
+//    }
+//
+//    @PutMapping("/{id}")
+//    public ResponseEntity updateUser(@PathVariable Long id, @RequestBody User user) {
+//        User currentUser = userRepository.findById(id).orElseThrow(RuntimeException::new);
+//        currentUser.setName(user.getName());
+//        currentUser.setEmail(user.getEmail());
+//        currentUser = userRepository.save(user);
+//
+//        return ResponseEntity.ok(currentUser);
+//    }
+//
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity deleteUser(@PathVariable Long id) {
+//        userRepository.deleteById(id);
+//        return ResponseEntity.ok().build();
+//    }
 }
