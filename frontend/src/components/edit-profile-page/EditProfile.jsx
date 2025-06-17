@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
-import styles from "./edit-profile.module.css";
-import LeftSide from "../main-components/left-side";
+import styles from "./EditProfile.module.css";
+import LeftSide from "../main-components/LeftSide";
 
 export default function EditProfile() {
   const [profileType, setProfileType] = useState("Artist");
@@ -24,7 +24,7 @@ export default function EditProfile() {
 
   return (
     <div className={styles.container}>
-      <LeftSide/>
+      <LeftSide />
 
       <div className={styles["empty-div1"]}></div>
 

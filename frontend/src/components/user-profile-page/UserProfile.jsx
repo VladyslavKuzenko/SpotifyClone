@@ -1,11 +1,13 @@
 import React from 'react';
 import styles from './user-profile.module.css';
-import LeftSide from '../main-components/left-side';
+import LeftSide from '../main-components/LeftSide';
+import SongItem from './SongItem';
+import AlbumItem from './AlbumItem';
 
 const UserProfile = () => {
   return (
     <div className={styles.container}>
-      <LeftSide/>
+      <LeftSide />
       <div className={styles['empty-div1']}></div>
       <div className={styles['profile-side']}>
         <div className={styles['channel-hat']}>
@@ -33,13 +35,8 @@ const UserProfile = () => {
           <div className={styles['saved-album-container']}>
             <div className={styles['saved-album-text']}>Saved Albums</div>
             <div className={styles['album-array']}>
-              {Array(13).fill(0).map((_, idx) => (
-                <div className={styles['album-item']} key={idx}>
-                  <div className={styles['it-container']}>
-                    <div className={styles['ait-name']}>Limits</div>
-                    <div className={styles['ait-author']}>John watts</div>
-                  </div>
-                </div>
+              {Array(12).fill(0).map((_, idx) => (
+                <AlbumItem />
               ))}
             </div>
           </div>
@@ -47,23 +44,7 @@ const UserProfile = () => {
             <div className={styles['saved-songs-text']}>Saved Songs</div>
             <div className={styles['song-array']}>
               {Array(10).fill(0).map((_, idx) => (
-                <div className={styles['song-item']} key={idx}>
-                  <div className={styles['song-photo']}></div>
-                  <div className={styles['name-artist']}>
-                    <div className={styles['song-name-it']}>Song tittle</div>
-                    <div className={styles['song-artist-it']}>Artist</div>
-                  </div>
-                  <div className={styles['listeners-count']}>102 664 992</div>
-                  <div className={styles.plus}>+</div>
-                  <div className={styles.duration}>13:58</div>
-                  <div className={styles['more-menu']}>
-                    <div className={styles['menu-plat']}>
-                      <div className={styles['mp-circle']}></div>
-                      <div className={styles['mp-circle']}></div>
-                      <div className={styles['mp-circle']}></div>
-                    </div>
-                  </div>
-                </div>
+                <SongItem />
               ))}
             </div>
           </div>
