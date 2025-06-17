@@ -11,10 +11,10 @@ import EditProfile from './components/edit-profile-page/edit-profile';
 
 function App() {
   return (
-    <Login/>
+    //<Login/>
     //<Register/>
     //<Main/>
-    //<Player />
+    <Player />
     //<Profile/>
     //<UserProfile/>
     //<MyProfile/>

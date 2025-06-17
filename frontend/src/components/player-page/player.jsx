@@ -4,6 +4,7 @@ import YourLibraryComponent from './your-library-component';
 import SongItem from './song-item';
 import PlayerComponent from './player-component';
 import LeftSide from '../main-components/left-side';
+import MiddleSongItem from '../player-page/middle-song-item';
 
 
 const Player = () => {
@@ -43,8 +44,8 @@ const Player = () => {
                 <div className={styles["play-follow"]}>
                   <div className={styles["pf-empty1"]}></div>
                   <div className={styles["pf-container"]}>
-                    <div className={styles["pf-play"]}>Play</div>
-                    <div className={styles["pf-follow"]}>Follow</div>
+                    <button className={styles["pf-play"]}>Play</button>
+                    <button className={styles["pf-follow"]}>Follow</button>
                   </div>
                 </div>
               </div>
@@ -53,25 +54,7 @@ const Player = () => {
 
               <div className={styles["as-plat3"]}>
                 {[...Array(9)].map((_, i) => (
-                  <div key={i} className={styles["as-song-item"]}>
-                    <div className={styles["as-song-photo"]}></div>
-                    <div className={styles["as-name-artist"]}>
-                      <div className={styles["as-song-name-it"]}>Song tittle</div>
-                      <div className={styles["as-song-artist-it"]}>Artist</div>
-                    </div>
-                    <div className={styles["as-listeners-count"]}>
-                      102 664 992
-                    </div>
-                    <div className={styles["as-plus"]}>+</div>
-                    <div className={styles["as-duration"]}>13:58</div>
-                    <div className={styles["as-more-menu"]}>
-                      <div className={styles["as-menu-plat"]}>
-                        <div className={styles["as-mp-circle"]}></div>
-                        <div className={styles["as-mp-circle"]}></div>
-                        <div className={styles["as-mp-circle"]}></div>
-                      </div>
-                    </div>
-                  </div>
+                  <MiddleSongItem/>
                 ))}
               </div>
             </div>
