@@ -1,0 +1,249 @@
+.main-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 870px;
+  width: 780px;
+  background-color: #d9d9d9;
+}
+
+.text1 {
+  width: 100%;
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  margin-top: 40px;
+}
+
+.picture {
+  width: 103px;
+  height: 103px;
+  border-radius: 50%;
+  background-color: white;
+  margin: 20px auto 0 auto;
+}
+
+.container {
+  width: 270px;
+  height: 35px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+  margin: 20px auto 0 auto;
+}
+
+.change-picture {
+  width: 125px;
+  height: 35px;
+  gap: 10px;
+  background: #7b7b7b;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.delete-picture {
+  width: 125px;
+  height: 35px;
+  gap: 10px;
+  background: #eeeeee;
+  border: none;
+  color: #9c9c9c;
+  cursor: pointer;
+}
+
+.username {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  width: 270px;
+  margin: 20px auto 0 auto;
+}
+
+#user-name,
+.user-name {
+  width: 270px;
+  height: 53px;
+  text-indent: 7px;
+  background-color: #eeeeee;
+  border: none;
+  outline: none;
+  margin: 10px auto 0 auto;
+  display: flex;
+}
+
+.bottom-block {
+  height: 490px;
+  width: 560px;
+  margin: 15px auto 0 auto;
+}
+
+.text11 {
+  width: 100%;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  margin-bottom: 7px;
+}
+
+#location,
+.location {
+  text-indent: 7px;
+  border: none;
+  outline: none;
+  width: 270px;
+  height: 53px;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+#bio,
+.bio {
+  text-indent: 7px;
+  border: none;
+  outline: none;
+  width: 99.5%;
+  height: 53px;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.cont-block {
+  width: 100%;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.up {
+  width: 100%;
+  height: 45px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-family: 'Inter', sans-serif;
+  text-align: center;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  color: #9c9c9c;
+}
+
+.bottom {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  text-align: center;
+  width: 100%;
+  height: 45px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  color: #9c9c9c;
+}
+
+.block {
+  width: 125px;
+  height: 45px;
+  gap: 10px;
+  background: #eeeeee;
+  align-content: center;
+  cursor: pointer;
+}
+
+.cnt-btn {
+  width: 270px;
+  height: 48px;
+  gap: 10px;
+  background: #7f7f7f;
+  border: none;
+  cursor: pointer;
+  color: white;
+}
+
+.f {
+  width: 100%;
+  height: 48px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-top: 25px;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  width: 270px;
+  font-family: 'Inter', sans-serif;
+}
+
+.dropdown-toggle {
+  width: 270px;
+  height: 53px;
+  background-color: #646464;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 100%;
+  cursor: pointer;
+  text-indent: 7px;
+  box-sizing: border-box;
+}
+
+.dropdown-toggle .arrow {
+  font-size: 16px;
+  transition: transform 0.2s ease;
+  margin-right: 7px;
+}
+
+.dropdown-options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  border: 1px solid #ccc;
+  border-top: none;
+  background-color: #eeeeee;
+  z-index: 10;
+  width: 270px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 100%;
+  color: #9c9c9c;
+  box-sizing: border-box;
+}
+
+.dropdown-options div {
+  cursor: pointer;
+  height: 53px;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  text-indent: 7px;
+}
+
+.dropdown-options div:hover {
+  background-color: #e0e0e0;
+}
+
+.ocnt {
+  width: 99.5%;
+  display: flex;
+  justify-content: space-between;
+}

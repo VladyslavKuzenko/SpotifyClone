@@ -1,0 +1,164 @@
+.container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+}
+
+.left-side {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.right-side {
+    width: 50%;
+    height: 100%;
+    align-content: center;
+    position: fixed;
+    right: 0;
+}
+
+.login-photo {
+    width: 100%;
+    height: 90%;
+    background-color: #999999;
+}
+
+.login-platform {
+    width: 415px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.logo {
+    width: 100%;
+    height: 27%;
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: 36px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #C5C5C5;
+    text-align: center;
+    align-content: center;
+    margin-bottom: 10px;
+    margin-top: 10px;
+
+}
+
+.login-content {
+    width: 100%;
+    height: auto;
+}
+
+.text1 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 36px;
+    line-height: 100%;
+    width: 100%;
+    text-align: center;
+    padding-bottom: 5px;
+
+}
+
+.text2 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 100%;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+
+}
+
+.email {
+    width: 100%;
+    height: 48px;
+    text-indent: 7px;
+    background-color: #D5D5D5;
+    outline: none;
+    border: none;
+    margin-bottom: 10px;
+}
+
+.password {
+    width: 100%;
+    height: 48px;
+    text-indent: 7px;
+    background-color: #D5D5D5;
+    outline: none;
+    border: none;
+    margin-bottom: 25px;
+
+}
+
+.email::placeholder,
+.password::placeholder {
+    color: white;
+}
+
+.continue {
+    border: none;
+    width: 100%;
+    height: 48px;
+    background-color: #7F7F7F;
+    cursor: pointer;
+    color: white;
+    margin-bottom: 25px;
+
+}
+
+.text3 {
+    width: 100%;
+
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 100%;
+    text-align: center;
+    margin-bottom: 25px;
+
+}
+
+.continue-with-google {
+    border: none;
+    width: 100%;
+    height: 48px;
+    background-color: #D5D5D5;
+    cursor: pointer;
+    color: white;
+    margin-bottom: 15px;
+}
+
+.continue-with-apple {
+    border: none;
+    width: 100%;
+    height: 48px;
+    background-color: #D5D5D5;
+    cursor: pointer;
+    color: white;
+    margin-bottom: 25px;
+
+}
+
+.text4 {
+    width: 100%;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: center;
+    margin-bottom: 10px;
+
+}
+
+.text5 {
+    color: #007BFF;
+    cursor: pointer;
+}
