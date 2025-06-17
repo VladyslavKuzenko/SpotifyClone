@@ -1,7 +1,7 @@
 // YourLibraryComponent.jsx
 import React from "react";
 import styles from "./player.module.css"; // заміни на свій шлях до CSS-модуля
-import SongItem from './song-item';
+import SongItem from './SongItem';
 
 const YourLibraryComponent = () => {
   return (
@@ -31,7 +31,7 @@ const YourLibraryComponent = () => {
 
         <div className={styles["yl-song-container"]}>
           {[...Array(9)].map((_, i) => (
-            <SongItem/>
+            <SongItem />
           ))}
         </div>
       </div>

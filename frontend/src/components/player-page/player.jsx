@@ -1,17 +1,17 @@
 import React from "react";
 import styles from "./player.module.css";
-import YourLibraryComponent from './your-library-component';
-import SongItem from './song-item';
-import PlayerComponent from './player-component';
-import LeftSide from '../main-components/left-side';
-import MiddleSongItem from '../player-page/middle-song-item';
+import YourLibraryComponent from './YourLibrary';
+import SongItem from './SongItem';
+import PlayerComponent from './PlayerComponent';
+import LeftSide from '../main-components/LeftSide';
+import MiddleSongItem from './MIddleSongItem';
 
 
 const Player = () => {
   return (
 
     <div className={styles.container}>
-      <LeftSide/>
+      <LeftSide />
 
       <div className={styles["middle-right"]}>
         <div className={styles["empty-div1"]}></div>
@@ -54,7 +54,7 @@ const Player = () => {
 
               <div className={styles["as-plat3"]}>
                 {[...Array(9)].map((_, i) => (
-                  <MiddleSongItem/>
+                  <MiddleSongItem />
                 ))}
               </div>
             </div>
@@ -84,7 +84,7 @@ const Player = () => {
           <div className={styles["empty-div2"]}></div>
         </div>
 
-        <PlayerComponent/>
+        <PlayerComponent />
       </div>
     </div>
   );

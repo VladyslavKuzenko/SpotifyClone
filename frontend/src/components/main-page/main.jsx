@@ -1,12 +1,12 @@
 // App.jsx
 import React from "react";
 import styles from "./main.module.css";
-import LeftSide from "../main-components/left-side"
+import LeftSide from "../main-components/LeftSide"
 
 const Main = () => {
   return (
     <div className={styles.container}>
-      <LeftSide/>
+      <LeftSide />
 
       <div className={styles["home-text"]}>
         <div className={styles["text-home"]}>Home</div>
