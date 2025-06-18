@@ -1,14 +1,18 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./player.module.css";
 
 export default function Audio({ currentSong }) {
-  const audioRef = useRef(null);
+ const audioRef = useRef(null);
+  const [isSongPlayed, setIsSongPlayed] = useState(false);
+
   const playAudio = () => {
     audioRef.current?.play();
+    setIsSongPlayed(true);
   };
 
   const pauseAudio = () => {
     audioRef.current?.pause();
+    setIsSongPlayed(false);
   };
 
   const skipForward = () => {
@@ -20,23 +24,21 @@ export default function Audio({ currentSong }) {
   };
   return (
     <div className={styles["bmr-controls"]}>
-      <audio
-        id="myAudio"
-        ref={audioRef}
-        src={currentSong.source_url}
-      ></audio>
+      <audio id="myAudio" ref={audioRef} src={currentSong.source_url}></audio>
 
       <button className={styles["bmr-btn"]}>⏺</button>
       <button className={styles["bmr-btn"]}>⏮</button>
-      <button className={styles["bmr-btn"]} onClick={playAudio}>
-        ▶
-      </button>
+      {isSongPlayed ? (
+        <button className={styles["bmr-btn"]} onClick={pauseAudio}>
+          ⏸
+        </button>
+      ) : (
+        <button className={styles["bmr-btn"]} onClick={playAudio}>
+          ▶
+        </button>
+      )}
       <button className={styles["bmr-btn"]}>⏭</button>
       <button className={styles["bmr-btn"]}>⏺</button>
-
-      <button className={styles["bmr-btn"]} onClick={pauseAudio}>
-        ⏸
-      </button>
     </div>
   );
 }
