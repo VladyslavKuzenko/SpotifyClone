@@ -2,15 +2,15 @@
 import React from "react";
 import styles from "./player.module.css"; // або шлях до глобального стилю, якщо не CSS Modules
 
-const SongItem = ({ title = "Song title", artist = "Artist", duration = "2:56" }) => {
+const SongItem = ({onSongSelect,song }) => {
   return (
-    <button className={styles["song-item"]}>
+    <button className={styles["song-item"]} onClick={()=>{onSongSelect(song)}}>
       <div className={styles.cover}></div>
       <div className={styles.info}>
-        <div className={styles.title}>{title}</div>
-        <div className={styles.artist}>{artist}</div>
+        <div className={styles.title}>{song.title}</div>
+        <div className={styles.artist}>{song.artist}</div>
       </div>
-      <div className={styles.duration}>{duration}</div>
+      <div className={styles.duration}>{song.duration}</div>
     </button>
   );
 };

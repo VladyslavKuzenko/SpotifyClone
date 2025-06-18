@@ -1,9 +1,9 @@
 import React from 'react';
 import styles from './player.module.css'; // Заміни на фактичний шлях
 
-const MiddleSongItem = ({ i }) => {
+const MiddleSongItem = ({onSongSelect, i }) => {
     return (
-        <button key={i} className={styles['as-song-item']}>
+        <button key={i} className={styles['as-song-item']} onClick={()=>onSongSelect("Recomended song")}>
             <div className={styles['as-song-photo']}></div>
 
             <div className={styles['as-name-artist']}>
