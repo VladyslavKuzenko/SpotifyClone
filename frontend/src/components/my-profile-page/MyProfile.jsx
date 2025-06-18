@@ -13,7 +13,7 @@ const MyProfile = () => {
 
       <div className={styles['profile-side']}>
         <div className={styles['channel-hat']}>
-          <div className={styles['edit-profile']}>Edit profile</div>
+          <button className={styles['edit-profile']}>Edit profile</button>
           <div className={styles['profile-photo']}></div>
           <div className={styles['you-name']}>You</div>
         </div>

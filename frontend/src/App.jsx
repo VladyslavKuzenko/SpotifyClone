@@ -13,11 +13,11 @@ function App() {
     //<Login/>
     //<Register/>
     //<Main/>
-    <PlayerPage />
+    //<PlayerPage />
     //<Profile/>
     //<UserProfile/>
     //<MyProfile/>
-    //<EditProfile/>
+    <EditProfile/>
 
   );
 }
