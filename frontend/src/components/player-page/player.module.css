@@ -326,6 +326,9 @@
       letter-spacing: 0%;
       padding-bottom: 5px;
       text-align: start;
+
+
+
     }
 
     .artist {
@@ -336,8 +339,6 @@
       color: #959595;
       letter-spacing: 0%;
       text-align: start;
-
-
     }
 
     .duration {
