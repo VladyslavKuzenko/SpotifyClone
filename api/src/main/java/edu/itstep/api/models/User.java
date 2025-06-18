@@ -40,9 +40,9 @@ public class User {
     private int followingsCount;
     @Column(name = "followers_count")
     private int followersCount;
-//    @Column(name = "day_track")
-//    private Track dayTrack;
-//    private Player player;
+    @ManyToOne
+    @JoinColumn(name = "day_track_id")
+    private Track dayTrack;
     @Column(name = "show_listening_history")
     private boolean showListeningHistory;
     @Column(name = "allow_messages")
@@ -64,22 +64,6 @@ public class User {
     private Set<User> followers;
 
     public User() {
-    }
-
-    public User(String firstname, String lastname, String username, Country country, Goal goal, Set<Genre> genres, Set<Vibe> vibes, String shortBio, int followingsCount, int followersCount, boolean showListeningHistory, boolean allowMessages, String uiTheme) {
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.username = username;
-        this.country = country;
-        this.goal = goal;
-        this.genres = genres;
-        this.vibes = vibes;
-        this.shortBio = shortBio;
-        this.followingsCount = followingsCount;
-        this.followersCount = followersCount;
-        this.showListeningHistory = showListeningHistory;
-        this.allowMessages = allowMessages;
-        this.uiTheme = uiTheme;
     }
 
     public Long getId() {
@@ -208,5 +192,13 @@ public class User {
 
     public void setFollowers(Set<User> followers) {
         this.followers = followers;
+    }
+
+    public Track getDayTrack() {
+        return dayTrack;
+    }
+
+    public void setDayTrack(Track dayTrack) {
+        this.dayTrack = dayTrack;
     }
 }
