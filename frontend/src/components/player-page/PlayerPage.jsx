@@ -83,7 +83,6 @@ const PlayerPage = () => {
             </div>
           </div>
 
-          <div className={styles["empty-div2"]}></div>
         </div>
 
         <FooterPlayer currentSong={currentSong}/>
