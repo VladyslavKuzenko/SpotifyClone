@@ -2,7 +2,7 @@
       margin: 0;
       padding: 0;
     }
-    
+
     .container {
       width: 100%;
       display: flex;
@@ -120,12 +120,12 @@
 
     .empty-div1 {
       width: 100%;
-      height: 60px;
+      height: 52px;
     }
 
     .mr-middle {
       width: 100%;
-      height: 755px;
+      height: 765px;
       display: flex;
 
     }
@@ -149,7 +149,6 @@
       display: flex;
       justify-content: center;
       overflow: hidden
-
     }
 
     .mr-right {
@@ -313,6 +312,7 @@
     .info {
       display: flex;
       flex-direction: column;
+
     }
 
     .title {
@@ -325,6 +325,7 @@
       line-height: 100%;
       letter-spacing: 0%;
       padding-bottom: 5px;
+      text-align: start;
     }
 
     .artist {
@@ -334,6 +335,8 @@
       line-height: 100%;
       color: #959595;
       letter-spacing: 0%;
+      text-align: start;
+
 
     }
 
@@ -346,7 +349,7 @@
       height: 100%;
       text-align: center;
       align-content: center;
-      width: 20%;
+      width: 15%;
       margin-left: auto;
 
 
@@ -415,7 +418,7 @@
 
     .as-plat2 {
       width: 100%;
-      height: 286px;
+      height: 257px;
       background-color: #A4A4A4;
     }
 
@@ -518,7 +521,7 @@
 
     .as-plat3 {
       width: 100%;
-      height: 365px;
+      height: 401px;
       overflow-y: auto;
       scrollbar-width: none;
       background-color: #D9D9D9;
@@ -662,7 +665,7 @@
       width: 95%;
       height: 100%;
       background-color: #D9D9D9;
-      
+
     }
 
     .am-text {
@@ -795,7 +798,7 @@
       display: flex;
       z-index: 1000;
       justify-content: center;
-      
+
     }
 
     .mr-bottom {
@@ -888,7 +891,7 @@
       cursor: pointer;
       font-size: 30px;
       background-color: transparent;
-      border:none;
+      border: none;
 
     }
 

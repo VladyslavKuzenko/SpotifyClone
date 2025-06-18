@@ -1,4 +1,4 @@
-// YourLibraryComponent.jsx
+// YourLibrary.jsx
 import React, { useState } from "react";
 import styles from "./player.module.css"; // заміни на свій шлях до CSS-модуля
 import SongItem from "./SongItem";
