@@ -1,9 +1,9 @@
 // PlayerComponent.jsx
 import React from "react";
 import styles from "./player.module.css"; // заміни на свій шлях до CSS
-import Audio from "./AudioControl";
+import AudioControl from "./AudioControl";
 
-const FooterPlayer = ({ currentSong }) => {
+const FooterPlayer = ({ currentSong,nextSong,prevSong }) => {
   
   return (
     <div className={styles["mr-bottom"]}>
@@ -17,7 +17,7 @@ const FooterPlayer = ({ currentSong }) => {
         </div>
       </div>
 
-        <Audio currentSong={currentSong} />
+        <AudioControl currentSong={currentSong} nextSong={nextSong} prevSong={prevSong}/>
 
 
     

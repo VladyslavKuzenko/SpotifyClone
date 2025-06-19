@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import styles from "./player.module.css";
 import convertTime from "./convertTime";
 
-export default function AudioControl({ currentSong }) {
+export default function AudioControl({ currentSong, nextSong, prevSong }) {
   const audioRef = useRef(null);
   const [isSongPlayed, setIsSongPlayed] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
@@ -19,13 +19,17 @@ export default function AudioControl({ currentSong }) {
     setIsSongPlayed(false);
   };
   const reduceVolume = () => {
-    audioRef.current.volume-0.1>=0?audioRef.current.volume-=0.1:audioRef.current.volume=0
-    setVolume(audioRef.current.volume)
+    audioRef.current.volume - 0.1 >= 0
+      ? (audioRef.current.volume -= 0.1)
+      : (audioRef.current.volume = 0);
+    setVolume(audioRef.current.volume);
   };
   const increaseVolume = () => {
-    audioRef.current.volume+0.1<=1?audioRef.current.volume+=0.1:audioRef.current.volume=1
+    audioRef.current.volume + 0.1 <= 1
+      ? (audioRef.current.volume += 0.1)
+      : (audioRef.current.volume = 1);
 
-    setVolume(audioRef.current.volume)
+    setVolume(audioRef.current.volume);
   };
 
   /*  const skipForward = () => {
@@ -51,15 +55,23 @@ export default function AudioControl({ currentSong }) {
             onLoadedMetadata={() => {
               setDuration(Math.floor(audioRef.current.duration));
               setVolume(audioRef.current.volume);
+              playAudio();
               console.log("Volume: " + audioRef.current.volume);
             }}
             onTimeUpdate={() => {
               setCurrentTime(Math.floor(audioRef.current.currentTime));
             }}
+            onEnded={() => {
+    setIsSongPlayed(false);
+              
+              nextSong();
+            }}
           ></audio>
 
           <button className={styles["bmr-btn"]}>⏺</button>
-          <button className={styles["bmr-btn"]}>⏮</button>
+          <button className={styles["bmr-btn"]} onClick={prevSong}>
+            ⏮
+          </button>
           {isSongPlayed ? (
             <button className={styles["bmr-btn"]} onClick={pauseAudio}>
               ⏸
@@ -69,7 +81,9 @@ export default function AudioControl({ currentSong }) {
               ▶
             </button>
           )}
-          <button className={styles["bmr-btn"]}>⏭</button>
+          <button className={styles["bmr-btn"]} onClick={nextSong}>
+            ⏭
+          </button>
           <button className={styles["bmr-btn"]}>⏺</button>
         </div>
 
@@ -92,7 +106,14 @@ export default function AudioControl({ currentSong }) {
         </div>
       </div>
       <div className={styles["mrb-right"]}>
-        <button className={styles["bmr-plus"]} onClick={()=>{reduceVolume()}}>-</button>
+        <button
+          className={styles["bmr-plus"]}
+          onClick={() => {
+            reduceVolume();
+          }}
+        >
+          -
+        </button>
         {/* <div className={styles["bmr-volume-wrapper"]}>
           <div
             className={styles["bmr-volume-fill"]}
@@ -101,7 +122,9 @@ export default function AudioControl({ currentSong }) {
         </div> */}
         <progress id="file" value={volume} max="1"></progress>
 
-        <button className={styles["bmr-plus"]} onClick={()=>increaseVolume()}>+</button>
+        <button className={styles["bmr-plus"]} onClick={() => increaseVolume()}>
+          +
+        </button>
       </div>
     </>
   );

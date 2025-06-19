@@ -1,28 +1,55 @@
 import React, { useState } from "react";
 import styles from "./player.module.css";
-import YourLibrary from './YourLibrary';
-import SongItem from './SongItem';
-import FooterPlayer from './FooterPlayer';
-import LeftSide from '../main-components/LeftSide';
-import MiddleSongItem from './MIddleSongItem';
-
+import YourLibrary from "./YourLibrary";
+import SongItem from "./SongItem";
+import FooterPlayer from "./FooterPlayer";
+import LeftSide from "../main-components/LeftSide";
+import MiddleSongItem from "./MIddleSongItem";
 
 const PlayerPage = () => {
   const [currentSong, setCurrentSong] = useState("");
-
+  const [songsLibrary, setSongsLibrary] = useState([
+    {
+      title: "I Fall to Pieces",
+      artist: "Patsy Cline",
+      source_url: "/test_music/Patsy Cline - I Fall to Pieces.mp3",
+    },
+    {
+      title: "Bring It on Home",
+      artist: "Sonny Boy Williamson",
+      source_url: "/test_music/Sonny Boy Williamson - Bring It on Home.mp3",
+    },
+  ]);
+  const [songsRecomended, setSongsRecomended] = useState([
+    {
+      title: "I Fall to Pieces",
+      artist: "Patsy Cline",
+      source_url: "/test_music/Patsy Cline - I Fall to Pieces.mp3",
+    },
+    {
+      title: "Bring It on Home",
+      artist: "Sonny Boy Williamson",
+      source_url: "/test_music/Sonny Boy Williamson - Bring It on Home.mp3",
+    },
+  ]);
+  const nextSong = () => {
+    if (songsLibrary.indexOf(currentSong) + 1 < songsLibrary.length)
+      setCurrentSong(songsLibrary[songsLibrary.indexOf(currentSong) + 1]);
+  };
+  const prevSong = () => {
+    if (songsLibrary.indexOf(currentSong) - 1 >= 0)
+      setCurrentSong(songsLibrary[songsLibrary.indexOf(currentSong) - 1]);
+  };
   return (
-
     <div className={styles.container}>
       <LeftSide />
-
       <div className={styles["middle-right"]}>
         <div className={styles["empty-div1"]}></div>
 
         <div className={styles["mr-middle"]}>
           <div className={styles["mr-left"]}>
-            <YourLibrary onSongSelect={setCurrentSong}/>
+            <YourLibrary songsLibrary={songsLibrary} onSongSelect={setCurrentSong} />
           </div>
-
           <div className={styles["mr-midd"]}>
             <div className={styles["artist-songs"]}>
               <div className={styles["as-plat1"]}>
@@ -56,7 +83,7 @@ const PlayerPage = () => {
 
               <div className={styles["as-plat3"]}>
                 {[...Array(9)].map((_, i) => (
-                  <MiddleSongItem onSongSelect={setCurrentSong}/>
+                  <MiddleSongItem onSongSelect={setCurrentSong} />
                 ))}
               </div>
             </div>
@@ -86,7 +113,11 @@ const PlayerPage = () => {
           <div className={styles["empty-div2"]}></div>
         </div>
 
-        <FooterPlayer currentSong={currentSong}/>
+        <FooterPlayer
+          currentSong={currentSong}
+          nextSong={nextSong}
+          prevSong={prevSong}
+        />
       </div>
     </div>
   );

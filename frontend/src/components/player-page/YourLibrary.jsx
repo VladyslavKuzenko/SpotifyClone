@@ -3,11 +3,8 @@ import React, { useState } from "react";
 import styles from "./player.module.css"; // заміни на свій шлях до CSS-модуля
 import SongItem from "./SongItem";
 
-const YourLibrary = ({ onSongSelect }) => {
-  const [songs, setSongs] = useState([
-      { title: "I Fall to Pieces", duration: "2:56", artist: "Patsy Cline",source_url:"/test_music/Patsy Cline - I Fall to Pieces.mp3" },
-      { title: "Bring It on Home", duration: "2:56", artist: "Sonny Boy Williamson" ,source_url:"/test_music/Sonny Boy Williamson - Bring It on Home.mp3"},
-    ]);
+const YourLibrary = ({songsLibrary, onSongSelect }) => {
+  
 
   return (
     <div className={styles["your-library"]}>
@@ -35,8 +32,8 @@ const YourLibrary = ({ onSongSelect }) => {
         </div>
 
         <div className={styles["yl-song-container"]}>
-          {songs.map((i) => (
-            <SongItem onSongSelect={onSongSelect} song={i} />
+          {songsLibrary.map((i) => (
+            <SongItem onSongSelect={onSongSelect} song={i}/>
           ))}
         </div>
       </div>
