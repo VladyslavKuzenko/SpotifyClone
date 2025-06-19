@@ -2,7 +2,7 @@
     scrollbar-width: none;
 
   }
-  
+
   .container {
     width: 100%;
     display: flex;
@@ -243,14 +243,15 @@
   }
 
   .container-stories {
+    display: flex;
     width: 100%;
     height: 135px;
-    display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-  gap: 50px; /* фіксована відстань між елементами */
-  overflow: auto;
+    gap: 50px;
+    /* фіксована відстань між елементами */
+    overflow: auto;
   }
 
 
@@ -410,7 +411,7 @@
     font-size: 16px;
     line-height: 100%;
     letter-spacing: 0%;
-    border:none;
+    border: none;
     cursor: pointer;
 
 
@@ -424,7 +425,7 @@
     font-size: 16px;
     line-height: 100%;
     letter-spacing: 0%;
-        cursor: pointer;
+    cursor: pointer;
 
   }
 
@@ -445,7 +446,7 @@
     height: 60px;
     border-radius: 50%;
     background-color: #D9D9D9;
-        cursor: pointer;
+    cursor: pointer;
 
   }
 
@@ -542,4 +543,3 @@
     align-content: center;
 
   }
-

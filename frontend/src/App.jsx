@@ -13,13 +13,13 @@ function App() {
   return (
     //<Login/>
     //<Register/>
-    <Main/>
+    //<Main/>
     //<PlayerPage />
     //<Profile/>
     //<UserProfile/>
     //<MyProfile/>
     //<EditProfile/>
-    //<ChatPage/>
+    <ChatPage/>
 
   );
 }
