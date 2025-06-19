@@ -8,7 +8,7 @@ import MiddleSongItem from './MIddleSongItem';
 
 
 const PlayerPage = () => {
-  const [currentSong, setCurrentSong] = useState("Test sound");
+  const [currentSong, setCurrentSong] = useState("");
 
   return (
 
