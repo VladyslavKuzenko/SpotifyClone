@@ -19,6 +19,7 @@ const ChatList = () => {
         <div className={styles.groups}>
           {[...Array(3)].map((_, i) => (
             <GroupItem/>
+            
           ))}
         </div>
       </div>
