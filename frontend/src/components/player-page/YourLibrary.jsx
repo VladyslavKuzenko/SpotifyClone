@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import styles from "./player.module.css"; // заміни на свій шлях до CSS-модуля
 import SongItem from "./SongItem";
 
-const YourLibrary = ({songsLibrary, onSongSelect }) => {
+const YourLibrary = ({songs, onSongSelect,onSetCurrentAlbum }) => {
   
 
   return (
@@ -27,13 +27,15 @@ const YourLibrary = ({songsLibrary, onSongSelect }) => {
         </div>
 
         <div className={styles["search-recent"]}>
-          <div className={styles["sr-search"]}>Search</div>
+          <div className={styles["sr-search"]}>
+            
+          </div>
           <div className={styles["sr-recent"]}>Recent</div>
         </div>
 
         <div className={styles["yl-song-container"]}>
-          {songsLibrary.map((i) => (
-            <SongItem onSongSelect={onSongSelect} song={i}/>
+          {songs.map((i) => (
+            <SongItem onSongSelect={onSongSelect} song={i} onSetCurrentAlbum={()=>{onSetCurrentAlbum(songs)}}/>
           ))}
         </div>
       </div>

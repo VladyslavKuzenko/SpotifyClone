@@ -1,9 +1,9 @@
 // SongItem.jsx
 import React, { useEffect, useState } from "react";
 import styles from "./player.module.css"; // або шлях до глобального стилю, якщо не CSS Modules
-import convertTime from "./convertTime";
+import {convertTime} from "./js/functions";
 
-const SongItem = ({ onSongSelect, song }) => {
+const SongItem = ({ onSongSelect, song, moreInfo, onSetCurrentAlbum }) => {
   const [duration, setDuration] = useState(0);
   useEffect(() => {
     const audio = new Audio();
@@ -18,6 +18,7 @@ const SongItem = ({ onSongSelect, song }) => {
       className={styles["song-item"]}
       onClick={() => {
         onSongSelect(song);
+        onSetCurrentAlbum();
       }}
     >
       <div className={styles.cover}></div>
@@ -25,7 +26,14 @@ const SongItem = ({ onSongSelect, song }) => {
         <div className={styles.title}>{song.title}</div>
         <div className={styles.artist}>{song.artist}</div>
       </div>
-      <div className={styles.duration}>{convertTime(duration)}</div>
+      {moreInfo ? (
+        <div>
+          <div className={styles.duration}>{convertTime(duration)}</div>
+          <div>TEST</div>
+        </div>
+      ) : (
+        <div className={styles.duration}>{convertTime(duration)}</div>
+      )}
     </button>
   );
 };

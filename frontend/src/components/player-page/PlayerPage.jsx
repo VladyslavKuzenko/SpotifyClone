@@ -5,9 +5,11 @@ import SongItem from "./SongItem";
 import FooterPlayer from "./FooterPlayer";
 import LeftSide from "../main-components/LeftSide";
 import MiddleSongItem from "./MIddleSongItem";
+import MiddleItem from "./MiddleItem";
 
 const PlayerPage = () => {
   const [currentSong, setCurrentSong] = useState("");
+  const [currentAlbum, setCurrentAlbum] = useState("");
   const [songsLibrary, setSongsLibrary] = useState([
     {
       title: "I Fall to Pieces",
@@ -20,25 +22,35 @@ const PlayerPage = () => {
       source_url: "/test_music/Sonny Boy Williamson - Bring It on Home.mp3",
     },
   ]);
-  const [songsRecomended, setSongsRecomended] = useState([
+  const [songsMiddleItem, setSongsMiddleItem] = useState([
     {
-      title: "I Fall to Pieces",
+      title: "I Fall to Pieces 1",
       artist: "Patsy Cline",
       source_url: "/test_music/Patsy Cline - I Fall to Pieces.mp3",
     },
     {
-      title: "Bring It on Home",
+      title: "Bring It on Home 2",
+      artist: "Sonny Boy Williamson",
+      source_url: "/test_music/Sonny Boy Williamson - Bring It on Home.mp3",
+    },
+    {
+      title: "I Fall to Pieces 3",
+      artist: "Patsy Cline",
+      source_url: "/test_music/Patsy Cline - I Fall to Pieces.mp3",
+    },
+    {
+      title: "Bring It on Home 4",
       artist: "Sonny Boy Williamson",
       source_url: "/test_music/Sonny Boy Williamson - Bring It on Home.mp3",
     },
   ]);
   const nextSong = () => {
-    if (songsLibrary.indexOf(currentSong) + 1 < songsLibrary.length)
-      setCurrentSong(songsLibrary[songsLibrary.indexOf(currentSong) + 1]);
+    if (currentAlbum.indexOf(currentSong) + 1 < currentAlbum.length)
+      setCurrentSong(currentAlbum[currentAlbum.indexOf(currentSong) + 1]);
   };
   const prevSong = () => {
-    if (songsLibrary.indexOf(currentSong) - 1 >= 0)
-      setCurrentSong(songsLibrary[songsLibrary.indexOf(currentSong) - 1]);
+    if (currentAlbum.indexOf(currentSong) - 1 >= 0)
+      setCurrentSong(currentAlbum[currentAlbum.indexOf(currentSong) - 1]);
   };
   return (
     <div className={styles.container}>
@@ -48,9 +60,10 @@ const PlayerPage = () => {
 
         <div className={styles["mr-middle"]}>
           <div className={styles["mr-left"]}>
-            <YourLibrary songsLibrary={songsLibrary} onSongSelect={setCurrentSong} />
+            <YourLibrary songs={songsLibrary} onSongSelect={setCurrentSong} onSetCurrentAlbum={setCurrentAlbum}/>
           </div>
-          <div className={styles["mr-midd"]}>
+          <MiddleItem songs={songsMiddleItem} onSongSelect={setCurrentSong}onSetCurrentAlbum={setCurrentAlbum}/>
+       {/*    <div className={styles["mr-midd"]}>
             <div className={styles["artist-songs"]}>
               <div className={styles["as-plat1"]}>
                 <div className={styles["left-right-btns"]}>
@@ -83,11 +96,11 @@ const PlayerPage = () => {
 
               <div className={styles["as-plat3"]}>
                 {[...Array(9)].map((_, i) => (
-                  <MiddleSongItem onSongSelect={setCurrentSong} />
+                  <MiddleSongItem songsMiddleItem={songsMiddleItem} onSongSelect={setCurrentSong} />
                 ))}
               </div>
             </div>
-          </div>
+          </div> */}
 
           <div className={styles["mr-right"]}>
             <div className={styles["artists-mix"]}>
@@ -114,9 +127,7 @@ const PlayerPage = () => {
         </div>
 
         <FooterPlayer
-          currentSong={currentSong}
-          nextSong={nextSong}
-          prevSong={prevSong}
+         songControl={{ currentSong, nextSong, prevSong }}
         />
       </div>
     </div>

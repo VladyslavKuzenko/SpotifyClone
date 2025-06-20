@@ -1,4 +1,4 @@
-import React from 'react';
+/* import React from 'react';
 import styles from './player.module.css'; // Заміни на фактичний шлях
 
 const MiddleSongItem = ({onSongSelect, i }) => {
@@ -35,3 +35,4 @@ const MiddleSongItem = ({onSongSelect, i }) => {
 };
 
 export default MiddleSongItem;
+ */

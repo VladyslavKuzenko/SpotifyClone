@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "./player.module.css";
-import convertTime from "./convertTime";
+import {convertTime} from "./js/functions";
 
-export default function AudioControl({ currentSong, nextSong, prevSong }) {
+export default function AudioControl({songControl}) {
   const audioRef = useRef(null);
   const [isSongPlayed, setIsSongPlayed] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
@@ -11,7 +11,6 @@ export default function AudioControl({ currentSong, nextSong, prevSong }) {
   const playAudio = () => {
     audioRef.current?.play();
     setIsSongPlayed(true);
-    console.log(audioRef.current.duration);
   };
 
   const pauseAudio = () => {
@@ -51,7 +50,7 @@ export default function AudioControl({ currentSong, nextSong, prevSong }) {
           <audio
             id="myAudio"
             ref={audioRef}
-            src={currentSong.source_url}
+            src={songControl.currentSong.source_url}
             onLoadedMetadata={() => {
               setDuration(Math.floor(audioRef.current.duration));
               setVolume(audioRef.current.volume);
@@ -62,14 +61,14 @@ export default function AudioControl({ currentSong, nextSong, prevSong }) {
               setCurrentTime(Math.floor(audioRef.current.currentTime));
             }}
             onEnded={() => {
-    setIsSongPlayed(false);
+/*     setIsSongPlayed(false); */
               
-              nextSong();
+              songControl.nextSong();
             }}
           ></audio>
 
           <button className={styles["bmr-btn"]}>⏺</button>
-          <button className={styles["bmr-btn"]} onClick={prevSong}>
+          <button className={styles["bmr-btn"]} onClick={songControl.prevSong}>
             ⏮
           </button>
           {isSongPlayed ? (
@@ -81,7 +80,7 @@ export default function AudioControl({ currentSong, nextSong, prevSong }) {
               ▶
             </button>
           )}
-          <button className={styles["bmr-btn"]} onClick={nextSong}>
+          <button className={styles["bmr-btn"]} onClick={songControl.nextSong}>
             ⏭
           </button>
           <button className={styles["bmr-btn"]}>⏺</button>

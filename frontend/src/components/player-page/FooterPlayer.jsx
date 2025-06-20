@@ -3,7 +3,8 @@ import React from "react";
 import styles from "./player.module.css"; // заміни на свій шлях до CSS
 import AudioControl from "./AudioControl";
 
-const FooterPlayer = ({ currentSong,nextSong,prevSong }) => {
+//const FooterPlayer = ({ currentSong,nextSong,prevSong }) => {
+const FooterPlayer = ({ songControl }) => {
   
   return (
     <div className={styles["mr-bottom"]}>
@@ -12,12 +13,12 @@ const FooterPlayer = ({ currentSong,nextSong,prevSong }) => {
       <div className={styles["mrb-left"]}>
         <div className={styles["bmr-cover"]}></div>
         <div className={styles["bmr-song-info"]}>
-          <div className={styles["bmr-title"]}>{currentSong.title}</div>
-          <div className={styles["bmr-artist"]}>{currentSong.artist}</div>
+          <div className={styles["bmr-title"]}>{songControl.currentSong.title}</div>
+          <div className={styles["bmr-artist"]}>{songControl.currentSong.artist}</div>
         </div>
       </div>
 
-        <AudioControl currentSong={currentSong} nextSong={nextSong} prevSong={prevSong}/>
+        <AudioControl  songControl={{ currentSong:songControl.currentSong, nextSong:songControl.nextSong, prevSong:songControl.prevSong }}/>
 
 
     
