@@ -6,12 +6,14 @@ export function convertTime(timeInSeconds) {
   return result;
 }
 
-export function searchSongs(songs, searchParameters) {
-  const newSongs = songs.map(
-    (song) =>
-      song.title.includes(searchParameters) ||
-      song.artist.includes(searchParameters)
-  );
-  
-  return newSongs;
+export function searchSongs(songs, searchParameter, setSongs) {
+  const newSongs = songs.filter((song) => {
+    if (
+      song.title.toLowerCase().includes(searchParameter.toLowerCase()) ||
+      song.artist.toLowerCase().includes(searchParameter.toLowerCase())
+    )
+      return song;
+  });
+
+  setSongs(newSongs);
 }

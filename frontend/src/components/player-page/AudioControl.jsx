@@ -31,13 +31,6 @@ export default function AudioControl({songControl}) {
     setVolume(audioRef.current.volume);
   };
 
-  /*  const skipForward = () => {
-    audioRef.current.currentTime += 10;
-  };
-
-  const skipBack = () => {
-    audioRef.current.currentTime -= 10;
-  }; */
   const handleProgressChange = (e) => {
     const newTime = parseFloat(e.target.value);
     audioRef.current.currentTime = newTime;
@@ -113,12 +106,7 @@ export default function AudioControl({songControl}) {
         >
           -
         </button>
-        {/* <div className={styles["bmr-volume-wrapper"]}>
-          <div
-            className={styles["bmr-volume-fill"]}
-            style={{ width: "70%" }}
-          ></div>
-        </div> */}
+
         <progress id="file" value={volume} max="1"></progress>
 
         <button className={styles["bmr-plus"]} onClick={() => increaseVolume()}>

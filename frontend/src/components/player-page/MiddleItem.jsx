@@ -1,8 +1,16 @@
+import { useState } from "react";
+import { searchSongs } from "./js/functions";
 import MiddleSongItem from "./MIddleSongItem";
 import styles from "./player.module.css";
 import SongItem from "./SongItem";
 
-export default function MiddleItem({ songs, onSongSelect ,onSetCurrentAlbum}) {
+export default function MiddleItem({
+  songsList,
+  onSongSelect,
+  onSetCurrentAlbum,
+}) {
+  const [search, setSearch] = useState("");
+  const [songs, setSongs] = useState(songsList);
   return (
     <div className={styles["mr-midd"]}>
       <div className={styles["artist-songs"]}>
@@ -12,7 +20,15 @@ export default function MiddleItem({ songs, onSongSelect ,onSetCurrentAlbum}) {
             <div className={styles["right-btn-plat"]}></div>
           </div>
           <div className={styles["as-search-plat"]}>
-            <div className={styles["as-search"]}>Search</div>
+            <input
+              className={styles["as-search"]}
+              type="text"
+              onChange={(e) => {
+                setSearch(e.target.value);
+                searchSongs(songsList, e.target.value, setSongs);
+              }}
+              value={search}
+            />
           </div>
         </div>
 
@@ -27,7 +43,15 @@ export default function MiddleItem({ songs, onSongSelect ,onSetCurrentAlbum}) {
           <div className={styles["play-follow"]}>
             <div className={styles["pf-empty1"]}></div>
             <div className={styles["pf-container"]}>
-              <button className={styles["pf-play"]} onClick={()=>onSongSelect(songs[0])}>Play</button>
+              <button
+                className={styles["pf-play"]}
+                onClick={() => {
+                  onSongSelect(songs[0]);
+                  onSetCurrentAlbum(songs);
+                }}
+              >
+                Play
+              </button>
               <button className={styles["pf-follow"]}>Follow</button>
             </div>
           </div>
@@ -37,14 +61,16 @@ export default function MiddleItem({ songs, onSongSelect ,onSetCurrentAlbum}) {
 
         <div className={styles["as-plat3"]}>
           {songs.map((i) => (
-            <SongItem onSongSelect={onSongSelect} song={i} moreInfo onSetCurrentAlbum={()=>{onSetCurrentAlbum(songs)}}/>
-          ))}
-          {/*  {songs.map((_, i) => (
-            <MiddleSongItem
-              songs={songsMiddleItem}
-              onSongSelect={setCurrentSong}
+            <SongItem
+              onSongSelect={onSongSelect}
+              song={i}
+              moreInfo
+              onSetCurrentAlbum={() => {
+                onSetCurrentAlbum(songs);
+              }}
             />
-          ))} */}
+          ))}
+       
         </div>
       </div>
     </div>

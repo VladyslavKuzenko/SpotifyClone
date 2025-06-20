@@ -60,47 +60,10 @@ const PlayerPage = () => {
 
         <div className={styles["mr-middle"]}>
           <div className={styles["mr-left"]}>
-            <YourLibrary songs={songsLibrary} onSongSelect={setCurrentSong} onSetCurrentAlbum={setCurrentAlbum}/>
+            <YourLibrary songsList={songsLibrary} onSongSelect={setCurrentSong} onSetCurrentAlbum={setCurrentAlbum}/>
           </div>
-          <MiddleItem songs={songsMiddleItem} onSongSelect={setCurrentSong}onSetCurrentAlbum={setCurrentAlbum}/>
-       {/*    <div className={styles["mr-midd"]}>
-            <div className={styles["artist-songs"]}>
-              <div className={styles["as-plat1"]}>
-                <div className={styles["left-right-btns"]}>
-                  <div className={styles["left-btn-plat"]}></div>
-                  <div className={styles["right-btn-plat"]}></div>
-                </div>
-                <div className={styles["as-search-plat"]}>
-                  <div className={styles["as-search"]}>Search</div>
-                </div>
-              </div>
-
-              <div className={styles["as-plat2"]}>
-                <div className={styles["as-empty1"]}></div>
-                <div className={styles["artist-listeners"]}>
-                  <div className={styles["al-artist"]}>Artist</div>
-                  <div className={styles["al-listeners"]}>
-                    1 689 76 monthly listeners
-                  </div>
-                </div>
-                <div className={styles["play-follow"]}>
-                  <div className={styles["pf-empty1"]}></div>
-                  <div className={styles["pf-container"]}>
-                    <button className={styles["pf-play"]}>Play</button>
-                    <button className={styles["pf-follow"]}>Follow</button>
-                  </div>
-                </div>
-              </div>
-
-              <div className={styles["recommended-text"]}>Recommended</div>
-
-              <div className={styles["as-plat3"]}>
-                {[...Array(9)].map((_, i) => (
-                  <MiddleSongItem songsMiddleItem={songsMiddleItem} onSongSelect={setCurrentSong} />
-                ))}
-              </div>
-            </div>
-          </div> */}
+          <MiddleItem songsList={songsMiddleItem} onSongSelect={setCurrentSong}onSetCurrentAlbum={setCurrentAlbum}/>
+    
 
           <div className={styles["mr-right"]}>
             <div className={styles["artists-mix"]}>
