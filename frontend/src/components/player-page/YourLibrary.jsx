@@ -1,9 +1,12 @@
 // YourLibraryComponent.jsx
-import React from "react";
+import React, { useState } from "react";
 import styles from "./player.module.css"; // заміни на свій шлях до CSS-модуля
-import SongItem from './SongItem';
+import SongItem from "./SongItem";
+import { searchSongs } from "./js/functions";
 
-const YourLibraryComponent = () => {
+const YourLibrary = ({ songsList, onSongSelect, onSetCurrentAlbum }) => {
+  const [search, setSearch] = useState("");
+  const [songs, setSongs] = useState(songsList);
   return (
     <div className={styles["your-library"]}>
       <div className={styles["yl-empty1"]}></div>
@@ -25,13 +28,28 @@ const YourLibraryComponent = () => {
         </div>
 
         <div className={styles["search-recent"]}>
-          <div className={styles["sr-search"]}>Search</div>
+          <div className={styles["sr-search"]}>
+            <input
+              type="text"
+              onChange={(e) => {
+                setSearch(e.target.value);
+                searchSongs(songsList, e.target.value, setSongs);
+              }}
+              value={search}
+            />
+          </div>
           <div className={styles["sr-recent"]}>Recent</div>
         </div>
 
         <div className={styles["yl-song-container"]}>
-          {[...Array(9)].map((_, i) => (
-            <SongItem />
+          {songs.map((i) => (
+            <SongItem
+              onSongSelect={onSongSelect}
+              song={i}
+              onSetCurrentAlbum={() => {
+                onSetCurrentAlbum(songs);
+              }}
+            />
           ))}
         </div>
       </div>
@@ -39,4 +57,4 @@ const YourLibraryComponent = () => {
   );
 };
 
-export default YourLibraryComponent;
+export default YourLibrary;

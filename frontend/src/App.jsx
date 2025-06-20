@@ -2,7 +2,7 @@ import React from 'react';
 import Login from './components/login-page/Login';
 import Register from './components/register-page/Register';
 import Main from './components/main-page/Main';
-import Player from './components/player-page/Player';
+import PlayerPage from './components/player-page/PlayerPage';
 import Profile from './components/profile-page/Profile';
 import UserProfile from './components/user-profile-page/UserProfile';
 import MyProfile from './components/my-profile-page/MyProfile';
@@ -13,11 +13,11 @@ function App() {
     //<Login/>
     //<Register/>
     //<Main/>
-    //<Player />
+    <PlayerPage />
     //<Profile/>
     //<UserProfile/>
     //<MyProfile/>
-    <EditProfile/>
+    //<EditProfile/>
 
   );
 }
