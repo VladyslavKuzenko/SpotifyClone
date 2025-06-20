@@ -8,6 +8,7 @@ export default function MiddleItem({
   songsList,
   onSongSelect,
   onSetCurrentAlbum,
+  artist
 }) {
   const [search, setSearch] = useState("");
   const [songs, setSongs] = useState(songsList);
@@ -35,9 +36,9 @@ export default function MiddleItem({
         <div className={styles["as-plat2"]}>
           <div className={styles["as-empty1"]}></div>
           <div className={styles["artist-listeners"]}>
-            <div className={styles["al-artist"]}>Artist</div>
+            <div className={styles["al-artist"]}>{artist.firstName} {artist.lastName}</div>
             <div className={styles["al-listeners"]}>
-              1 689 76 monthly listeners
+              {artist.monthlyListner} monthly listeners
             </div>
           </div>
           <div className={styles["play-follow"]}>
