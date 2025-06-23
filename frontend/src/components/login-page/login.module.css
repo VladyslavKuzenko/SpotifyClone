@@ -162,3 +162,34 @@
     color: #007BFF;
     cursor: pointer;
 }
+
+.error {
+    width: 100%;
+    background-color: #f2dede;
+    border: 1px solid #ebccd1;
+    color: #a94442;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+/* Toggle visibility (like Bootstrap's .invisible) */
+.invisible {
+    visibility: hidden;
+}
+
+/* Optional hover states */
+.continue:hover,
+.continue-with-google:hover,
+.continue-with-apple:hover {
+    opacity: 0.85;
+    transition: opacity 0.2s ease-in-out;
+}
+
+/* Optional focus style for inputs */
+.email:focus,
+.password:focus {
+    background-color: #c4c4c4;
+}
