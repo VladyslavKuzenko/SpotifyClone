@@ -10,10 +10,18 @@ import EditProfile from './components/edit-profile-page/EditProfile';
 import ExampleCrud from './components/exampleAuth0/Example';
 import LoginButton from './components/exampleAuth0/LoginButton';
 import LogoutButton from './components/exampleAuth0/LogoutButton';
+import { Link, Route, Router, Routes } from 'react-router-dom';
 
 function App() {
   return (
     //<Login/>
+    
+    <Routes>
+        <Route path="/" element={<Main />} />
+        <Route path="/player" element={<PlayerPage />} />
+        <Route path="/login" element={<LoginButton />} />
+        <Route path="/logout" element={<LogoutButton />} />
+    </Routes>
     //<Register/>
     //<Main/>
     //<PlayerPage />
@@ -21,12 +29,12 @@ function App() {
     //<UserProfile/>
     //<MyProfile/>
     //<EditProfile/>
-    <>
+  /*   <>
     <LoginButton/>
     <LogoutButton/>
     <ExampleCrud/>
 
-    </>
+    </> */
   );
 }
 

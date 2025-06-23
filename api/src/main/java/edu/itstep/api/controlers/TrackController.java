@@ -28,6 +28,10 @@ public class TrackController {
     public Track getTrack(@PathVariable Long id) {
         return trackRepository.findById(id).orElseThrow(RuntimeException::new);
     }
+    @GetMapping("/tracks-by-artists/{id}")
+    public List<Track> getAllArtistTrack(@PathVariable Long id) {
+        return trackRepository.findAllByArtist_Id(id);
+    }
     @PostMapping
     public ResponseEntity createTrack(@RequestBody Track track) throws URISyntaxException {
         Track savedTrack = trackRepository.save(track);

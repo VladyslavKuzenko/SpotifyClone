@@ -1,9 +1,24 @@
 // App.jsx
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./main.module.css";
-import LeftSide from "../main-components/LeftSide"
+import LeftSide from "../main-components/LeftSide";
+import { useAuth0 } from "@auth0/auth0-react";
+import { Navigate } from "react-router-dom";
 
 const Main = () => {
+  const { isAuthenticated,isLoading } = useAuth0();
+
+  useEffect(() => {
+    console.log("Use Effect working");
+  });
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+
   return (
     <div className={styles.container}>
       <LeftSide />
@@ -36,7 +51,14 @@ const Main = () => {
 
         <div className={styles["empty-div4"]}></div>
         <div className={styles["container-stories"]}>
-          {["Kendrick Lamar", "NovakPro", "2Pac", "21 Savage", "Eminem", "Zelenskiy"].map((name) => (
+          {[
+            "Kendrick Lamar",
+            "NovakPro",
+            "2Pac",
+            "21 Savage",
+            "Eminem",
+            "Zelenskiy",
+          ].map((name) => (
             <div className={styles["stories-plat"]} key={name}>
               <div className={styles.stories}></div>
               <div className={styles.nickname}>{name}</div>

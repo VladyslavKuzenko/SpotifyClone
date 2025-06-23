@@ -2,6 +2,8 @@ package edu.itstep.api.controlers;
 
 import edu.itstep.api.models.Artist;
 import edu.itstep.api.repositories.ArtistRepository;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,8 +33,17 @@ public class ArtistController {
         return artistRepository.findArtistsByUser_Id(id);
     }
     @GetMapping("/top")
-    public Artist getTopByOrderByListeningCount() {
+    public Artist getTopByOrderByListeningCountDesc() {
         return artistRepository.findTopByOrderByListeningCountDesc();
+    }
+    @GetMapping("/top/{first}/{count}")
+    public List<Artist> getAllByOrderByListeningCountDescWithParams(@PathVariable Integer first,@PathVariable Integer count) {
+        Pageable pageable = PageRequest.of(first, first+count);
+        return artistRepository.findAllByOrderByListeningCountDesc(pageable);
+    }
+    @GetMapping("/all")
+    public List<Artist> getAllByOrderByListeningCountDesc() {
+        return artistRepository.findAllByOrderByListeningCountDesc();
     }
     @PostMapping
     public ResponseEntity createArtist(@RequestBody Artist artist) throws URISyntaxException {

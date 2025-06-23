@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./player.module.css";
 import YourLibrary from "./YourLibrary";
 import SongItem from "./SongItem";
@@ -6,8 +6,13 @@ import FooterPlayer from "./FooterPlayer";
 import LeftSide from "../main-components/LeftSide";
 import MiddleSongItem from "./MIddleSongItem";
 import MiddleItem from "./MiddleItem";
+import { useAuth0 } from "@auth0/auth0-react";
+import { API_URL } from "../../properties/properties";
+import { Navigate } from "react-router-dom";
 
 const PlayerPage = () => {
+  const { isAuthenticated, isLoading } = useAuth0();
+  const { getAccessTokenSilently, getAccessTokenWithPopup } = useAuth0();
   const [currentSong, setCurrentSong] = useState("");
   const [currentAlbum, setCurrentAlbum] = useState("");
   const [songsLibrary, setSongsLibrary] = useState([
@@ -50,11 +55,42 @@ const PlayerPage = () => {
       listenersCount: 1222345,
     },
   ]);
-  const [artist, setArtist] = useState({
-    firstName: "Billie",
-    lastName: "Eilish",
-    monthlyListner: 71478075,
-  });
+  const [currentArtist, setCurrentArtist] = useState({});
+  const [artists, setArtists] = useState();
+
+  const handleArtist = async () => {
+    if (isAuthenticated) {
+      console.log("handleArtist is working");
+
+      const token = await getAccessTokenSilently({
+        authorizationParams: {
+          audience: API_URL,
+        },
+      });
+      const response = await fetch("http://localhost:8080/artists/top/0/20", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const body = await response.json();
+      setArtists(body);
+      setCurrentArtist(body[0])
+      console.log("BODY:")
+      console.log(body)
+      console.log("First Name: "+ body[0].user.firstName);
+      console.log(body[0].user.firstName);
+      console.log(body[0].listeningCount);
+      //console.log(body[0].user.firstName);
+    } else {
+      console.log("handleArtist is NOT working");
+    }
+  };
+  useEffect(() => {
+    console.log("useEffect is  working");
+
+    handleArtist();
+  },[isLoading]);
   const nextSong = () => {
     if (currentAlbum.indexOf(currentSong) + 1 < currentAlbum.length)
       setCurrentSong(currentAlbum[currentAlbum.indexOf(currentSong) + 1]);
@@ -63,6 +99,15 @@ const PlayerPage = () => {
     if (currentAlbum.indexOf(currentSong) - 1 >= 0)
       setCurrentSong(currentAlbum[currentAlbum.indexOf(currentSong) - 1]);
   };
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+//  handleArtist();
+
   return (
     <div className={styles.container}>
       <LeftSide />
@@ -81,7 +126,7 @@ const PlayerPage = () => {
             songsList={songsMiddleItem}
             onSongSelect={setCurrentSong}
             onSetCurrentAlbum={setCurrentAlbum}
-            artist={artist}
+            artist={{...currentArtist.user,monthlyListner:currentArtist.listeningCount}}
           />
 
           <div className={styles["mr-right"]}>

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { API_URL } from "../../properties/properties";
-
 /*   This component is the example how to do request on API  */
 export default function ExampleCrud() {
   const [response, setResponse] = useState();
@@ -9,7 +8,6 @@ export default function ExampleCrud() {
   const [user, setUser] = useState();
   const { isAuthenticated } = useAuth0();
   const { getAccessTokenSilently, getAccessTokenWithPopup } = useAuth0();
-
   /* Here we DON`T need authorization */
   const handlePublic = async () => {
     const response = await fetch("http://localhost:8080/api/public");
@@ -58,7 +56,6 @@ export default function ExampleCrud() {
 
       const body = await response.json();
       setArtist(body);
-      console.log(body.user.lastname)
     }
   };
     const handleUser = async () => {
