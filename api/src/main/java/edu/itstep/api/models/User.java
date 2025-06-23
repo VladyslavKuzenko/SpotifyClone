@@ -49,7 +49,6 @@ public class User {
     private boolean allowMessages;
     @Column(name = "ui_theme")
     private String uiTheme;
-
     @ManyToMany
     @JoinTable(
             name = "users_followings",
@@ -62,6 +61,12 @@ public class User {
             joinColumns = @JoinColumn(name = "followed_user_id"),
             inverseJoinColumns = @JoinColumn(name = "follower_user_id"))
     private Set<User> followers;
+    @ManyToMany
+    @JoinTable(
+            name = "users_chats",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "chat_id"))
+    private Set<Chat> chats;
 
     public User() {
     }
@@ -200,5 +205,13 @@ public class User {
 
     public void setDayTrack(Track dayTrack) {
         this.dayTrack = dayTrack;
+    }
+
+    public Set<Chat> getChats() {
+        return chats;
+    }
+
+    public void setChats(Set<Chat> chats) {
+        this.chats = chats;
     }
 }
