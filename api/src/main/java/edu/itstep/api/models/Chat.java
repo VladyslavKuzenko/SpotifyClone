@@ -17,14 +17,6 @@ public class Chat {
     private String pictureUrl;
     @Column(name="update_time")
     private Date updateTime;
-    @ManyToMany
-    @JoinTable(
-            name = "users_chats",
-            joinColumns = @JoinColumn(name = "chat_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private Set<User> users;
-    @OneToMany
-    private Set<Message> messages;
 
     public Chat() {
     }
@@ -59,21 +51,5 @@ public class Chat {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
-    }
-
-    public Set<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
-    }
-
-    public Set<Message> getMessages() {
-        return messages;
-    }
-
-    public void setMessages(Set<Message> messages) {
-        this.messages = messages;
     }
 }

@@ -12,8 +12,6 @@ public class Goal {
     private Long id;
     @Column(nullable = false)
     private String title;
-    @OneToMany
-    private Set<User> users;
 
     public Goal() {
     }
@@ -36,13 +34,5 @@ public class Goal {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public Set<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
     }
 }

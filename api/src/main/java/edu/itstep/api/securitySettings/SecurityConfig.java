@@ -17,11 +17,15 @@ public class SecurityConfig {
     */
         return http
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/api/public").permitAll()
-                        .requestMatchers("/api/private").authenticated()
-                        .requestMatchers("/api/private-scoped").hasAuthority("SCOPE_read:messages")
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
+
                 )
+//                .authorizeHttpRequests((authorize) -> authorize
+//                        .requestMatchers("/api/public").permitAll()
+//                        .requestMatchers("/api/private").authenticated()
+//                        .requestMatchers("/api/private-scoped").hasAuthority("SCOPE_read:messages")
+//                        .anyRequest().authenticated()
+//                )
                 .cors(withDefaults())
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(withDefaults())

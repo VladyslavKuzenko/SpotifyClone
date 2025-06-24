@@ -12,12 +12,6 @@ public class Vibe {
     private Long id;
     @Column(nullable = false)
     private String title;
-    @ManyToMany
-    @JoinTable(
-            name = "users_vibes",
-            joinColumns = @JoinColumn(name = "vibe_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private Set<User> users;
 
     public Vibe() {
     }
@@ -40,13 +34,5 @@ public class Vibe {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public Set<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
     }
 }

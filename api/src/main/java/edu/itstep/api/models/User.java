@@ -1,5 +1,6 @@
 package edu.itstep.api.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Set;
@@ -54,17 +55,18 @@ public class User {
             name = "users_followings",
             joinColumns = @JoinColumn(name = "follower_user_id"),
             inverseJoinColumns = @JoinColumn(name = "followed_user_id"))
+    @JsonIgnore
     private Set<User> followings;
     @ManyToMany(mappedBy = "followings")
+    @JsonIgnore
     private Set<User> followers;
     @ManyToMany
     @JoinTable(
             name = "users_chats",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "chat_id"))
+    @JsonIgnore
     private Set<Chat> chats;
-    @OneToMany(mappedBy = "user")
-    private Set<TracksListenings> tracksListenings;
 
     public User() {
     }
@@ -211,13 +213,5 @@ public class User {
 
     public void setChats(Set<Chat> chats) {
         this.chats = chats;
-    }
-
-    public Set<TracksListenings> getTracksListenings() {
-        return tracksListenings;
-    }
-
-    public void setTracksListenings(Set<TracksListenings> tracksListenings) {
-        this.tracksListenings = tracksListenings;
     }
 }

@@ -12,8 +12,6 @@ public class Country {
     private Long id;
     @Column(nullable = false)
     private String name;
-    @OneToMany
-    private Set<User> users;
 
     public Country() {
     }
@@ -36,14 +34,6 @@ public class Country {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Set<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
     }
 }
 
