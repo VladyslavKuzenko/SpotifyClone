@@ -1,7 +1,7 @@
+drop database api;
 create database api;
 
 drop table users;
-drop database api;
 
 SHOW TABLES;
 

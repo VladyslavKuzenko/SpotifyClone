@@ -17,7 +17,11 @@ public class Chat {
     private String pictureUrl;
     @Column(name="update_time")
     private Date updateTime;
-    @OneToMany
+    @ManyToMany
+    @JoinTable(
+            name = "users_chats",
+            joinColumns = @JoinColumn(name = "chat_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> users;
     @OneToMany
     private Set<Message> messages;

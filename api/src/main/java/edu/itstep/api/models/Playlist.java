@@ -15,11 +15,7 @@ public class Playlist {
     private User user;
     @Column(nullable = false)
     private String title;
-    @ManyToMany
-    @JoinTable(
-            name = "tracks_playlists",
-            joinColumns = @JoinColumn(name = "playlist_id"),
-            inverseJoinColumns = @JoinColumn(name = "track_id"))
+    @ManyToMany(mappedBy = "playlists")
     private Set<Track> tracks;
 
     public Playlist() {

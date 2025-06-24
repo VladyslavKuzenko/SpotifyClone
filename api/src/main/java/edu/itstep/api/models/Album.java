@@ -15,7 +15,7 @@ public class Album {
     private Artist artist;
     @Column(nullable = false)
     private String title;
-    @OneToMany
+    @OneToMany(mappedBy = "album")
     private Set<Track> tracks;
 
     public Album() {
