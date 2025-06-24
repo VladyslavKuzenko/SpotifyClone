@@ -1,11 +1,12 @@
 package edu.itstep.api.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Set;
 
 @Entity
-@Table(name = "tracks")
+@Table(name = "albums")
 public class Album {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,7 +16,8 @@ public class Album {
     private Artist artist;
     @Column(nullable = false)
     private String title;
-    @OneToMany
+    @OneToMany(mappedBy = "album")
+    @JsonIgnore
     private Set<Track> tracks;
 
     public Album() {

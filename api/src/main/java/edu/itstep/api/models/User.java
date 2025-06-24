@@ -1,5 +1,6 @@
 package edu.itstep.api.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Set;
@@ -27,12 +28,14 @@ public class User {
             name = "users_genres",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id"))
+    @JsonIgnore
     private Set<Genre> genres;
     @ManyToMany
     @JoinTable(
             name = "users_vibes",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "vibe_id"))
+    @JsonIgnore
     private Set<Vibe> vibes;
     @Column(name = "short_bio")
     private String shortBio;
@@ -49,19 +52,25 @@ public class User {
     private boolean allowMessages;
     @Column(name = "ui_theme")
     private String uiTheme;
-
     @ManyToMany
     @JoinTable(
             name = "users_followings",
             joinColumns = @JoinColumn(name = "follower_user_id"),
             inverseJoinColumns = @JoinColumn(name = "followed_user_id"))
+    @JsonIgnore
     private Set<User> followings;
+    @ManyToMany(mappedBy = "followings")
+    @JsonIgnore
+    private Set<User> followers;
     @ManyToMany
     @JoinTable(
-            name = "users_followings",
-            joinColumns = @JoinColumn(name = "followed_user_id"),
-            inverseJoinColumns = @JoinColumn(name = "follower_user_id"))
-    private Set<User> followers;
+            name = "users_chats",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "chat_id"))
+    private Set<Chat> chats;
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private Set<TracksListenings> tracksListenings;
 
     public User() {
     }
@@ -200,5 +209,21 @@ public class User {
 
     public void setDayTrack(Track dayTrack) {
         this.dayTrack = dayTrack;
+    }
+
+    public Set<Chat> getChats() {
+        return chats;
+    }
+
+    public void setChats(Set<Chat> chats) {
+        this.chats = chats;
+    }
+
+    public Set<TracksListenings> getTracksListenings() {
+        return tracksListenings;
+    }
+
+    public void setTracksListenings(Set<TracksListenings> tracksListenings) {
+        this.tracksListenings = tracksListenings;
     }
 }

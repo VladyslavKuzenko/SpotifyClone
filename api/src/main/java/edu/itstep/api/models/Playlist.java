@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "tracks")
+@Table(name = "playlists")
 public class Playlist {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,12 +15,6 @@ public class Playlist {
     private User user;
     @Column(nullable = false)
     private String title;
-    @ManyToMany
-    @JoinTable(
-            name = "tracks_playlists",
-            joinColumns = @JoinColumn(name = "playlist_id"),
-            inverseJoinColumns = @JoinColumn(name = "track_id"))
-    private Set<Track> tracks;
 
     public Playlist() {
     }
@@ -47,14 +41,6 @@ public class Playlist {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public Set<Track> getTracks() {
-        return tracks;
-    }
-
-    public void setTracks(Set<Track> tracks) {
-        this.tracks = tracks;
     }
 }
 
