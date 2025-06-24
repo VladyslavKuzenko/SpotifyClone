@@ -24,5 +24,6 @@ public class APIController {
     @GetMapping(value = "/private-scoped")
     public MessageAuth0 privateScopedEndpoint() {
         return new MessageAuth0("All good. You can see this because you are Authenticated with a Token granted the 'read:messages' scope");
+
     }
 }

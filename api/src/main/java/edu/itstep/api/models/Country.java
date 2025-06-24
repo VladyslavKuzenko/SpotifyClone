@@ -1,5 +1,6 @@
 package edu.itstep.api.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Set;
@@ -12,7 +13,8 @@ public class Country {
     private Long id;
     @Column(nullable = false)
     private String name;
-    @OneToMany
+    @OneToMany(mappedBy = "country")
+    @JsonIgnore
     private Set<User> users;
 
     public Country() {

@@ -1,5 +1,6 @@
 package edu.itstep.api.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Set;
@@ -25,9 +26,9 @@ public class Track {
             name = "tracks_playlists",
             joinColumns = @JoinColumn(name = "track_id"),
             inverseJoinColumns = @JoinColumn(name = "playlist_id"))
+    @JsonIgnore
     private Set<Playlist> playlists;
-    @OneToMany(mappedBy = "track")
-    private Set<TracksListenings> tracksListenings;
+
 
     public Track() {
     }
@@ -78,14 +79,6 @@ public class Track {
 
     public void setPlaylists(Set<Playlist> playlists) {
         this.playlists = playlists;
-    }
-
-    public Set<TracksListenings> getTracksListenings() {
-        return tracksListenings;
-    }
-
-    public void setTracksListenings(Set<TracksListenings> tracksListenings) {
-        this.tracksListenings = tracksListenings;
     }
 }
 
