@@ -1,5 +1,6 @@
 package edu.itstep.api.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -13,10 +14,13 @@ public class Chat {
     private Long id;
     @Column(nullable = false)
     private String title;
-    @Column(name="picture_url", nullable = false)
+    @Column(name = "picture_url", nullable = false)
     private String pictureUrl;
-    @Column(name="update_time")
+    @Column(name = "update_time")
     private Date updateTime;
+    @OneToMany(mappedBy = "chat")
+    @JsonIgnore
+    private Set<Message> messages;
 
     public Chat() {
     }
@@ -51,5 +55,13 @@ public class Chat {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Set<Message> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(Set<Message> messages) {
+        this.messages = messages;
     }
 }

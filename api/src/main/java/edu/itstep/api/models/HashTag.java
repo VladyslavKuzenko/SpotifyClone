@@ -12,10 +12,23 @@ public class HashTag {
     private Long id;
     @Column(nullable = false)
     private String title;
-    @ManyToMany
-    @JoinTable(
-            name = "posts_hashtags",
-            joinColumns = @JoinColumn(name = "hashtag_id"),
-            inverseJoinColumns = @JoinColumn(name = "post_id"))
-    private Set<Post> posts;
+
+    public HashTag() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 }

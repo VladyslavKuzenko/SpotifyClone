@@ -17,102 +17,88 @@ SELECT TABLE_SCHEMA,
 FROM information_schema.columns
 ORDER BY TABLE_SCHEMA, TABLE_NAME, ORDINAL_POSITION;
 
-INSERT INTO api.countries
+INSERT INTO api.countries (id, name)
 VALUES (1, 'USA'),
-       (2, 'Germany');
+       (2, 'German');
 
-INSERT INTO api.goals
+INSERT INTO api.goals (id, title)
 VALUES (1, 'Run Marathon'),
        (2, 'Read 12 books');
 
-INSERT INTO api.users
+INSERT INTO api.users (id, allow_messages, first_name, followers_count, followings_count, last_name, short_bio,
+                       show_listening_history, ui_theme, username, country_id, day_track_id, goal_id)
 VALUES (301, 1, 'John', 10, 5, 'Doe', 'Loves coding', 1, 'dark', 'johndoe', 1, NULL, 1),
        (302, 1, 'Jane', 15, 8, 'Smith', NULL, 1, 'light', 'janesmith', 2, NULL, NULL);
 
-INSERT INTO api.artists
+INSERT INTO api.artists (id, profile_bg_url, profile_quote, user_id)
 VALUES (1, 'https://www.lorempixel.com/788/861', 'Whole magazine truth stop whose.', 301),
        (2, 'https://dummyimage.com/733x447', 'Cause believe son would mouth.', 302);
 
-INSERT INTO api.albums
+INSERT INTO api.albums (id, title, artist_id)
 VALUES (1, 'Greatest Hits', 1),
        (2, 'Acoustic Sessions', 2);
 
-INSERT INTO api.tracks
+INSERT INTO api.tracks (id, source_url, title, album_id, artist_id)
 VALUES (1, 'https://www.wheeler.com/', 'Song One', 1, 1),
        (2, NULL, 'Song Two', 2, 2);
 
-INSERT INTO api.chats
+INSERT INTO api.chats (id, picture_url, title, update_time)
 VALUES (1, 'https://www.lorempixel.com/300/635', 'show', '2025-01-15 07:39:52'),
        (2, 'https://www.lorempixel.com/676/966', 'health', NULL);
 
-INSERT INTO api.posts
-VALUES (1, 5, 'A cool post', 10, '{"img":"x.jpg"}', 1, 2, 'Title 1', 100, 301),
-       (2, 3, 'Another post', 20, '{"img":"y.jpg"}', 1, 4, 'Title 2', 200, 302);
+INSERT INTO api.posts (id, comments_count, description, likes_count, media_json, media_type, reposts_count, title,
+                       view_count, user_id)
+VALUES (1, 5, 'A cool post', 10, '{"image":"x.jpg"}', 5, 2, 'Title 1', 100, 301),
+       (2, 3, 'Another post', 20, '{"image":"y.jpg"}', 5, 4, 'Title 2', 200, 302);
 
-INSERT INTO api.comments
+INSERT INTO api.comments (id, text, post_id, user_id)
 VALUES (1, 'Language ball floor meet usually board necessary. Natural sport music white.', 1, 301),
        (2, 'Small citizen class morning. Others kind company likely.', 2, 302);
 
-INSERT INTO api.hashtags
-VALUES (1, '#music'),
-       (2, '#life');
+INSERT INTO api.hashtags (id, title)
+VALUES (1, 'music'),
+       (2, 'life');
 
-INSERT INTO api.messages
-VALUES (1, '{"msg":"hello"}', 1, '2025-03-02 06:05:29', 1, 301),
-       (2, '{"msg":"hey"}', 1, '2025-03-17 08:17:28', 2, 302);
+INSERT INTO api.messages (id, content_json, content_type, sent_datetime, chat_id, user_id)
+VALUES (1, '{"text":"hello"}', 1, '2025-03-02 06:05:29', 1, 301),
+       (2, '{"text":"hey"}', 1, '2025-03-17 08:17:28', 2, 302);
 
-INSERT INTO api.chats_messages
+INSERT INTO api.posts_hashtags(post_id, hashtag_id)
 VALUES (1, 1),
        (2, 2);
 
-INSERT INTO api.countries_users
-VALUES (1, 301),
-       (2, 302);
-
-INSERT INTO api.goals_users
-VALUES (1, 301),
-       (2, 302);
-
-INSERT INTO api.posts_comments
-VALUES (1, 1),
-       (2, 2);
-
-INSERT INTO api.posts_hashtags
-VALUES (1, 1),
-       (2, 2);
-
-INSERT INTO api.tracks_listenings
+INSERT INTO api.tracks_listenings (listened_datetime, track_id, user_id)
 VALUES ('2025-02-01 12:34:56', 1, 301),
        ('2025-02-02 13:22:45', 2, 302);
 
-INSERT INTO api.playlists
+INSERT INTO api.playlists (id, title, user_id)
 VALUES (501, 'Morning Vibes', 301),
        (502, 'Workout Hits', 302);
 
-INSERT INTO api.tracks_playlists
+INSERT INTO api.tracks_playlists (track_id, playlist_id)
 VALUES (1, 501),
        (2, 502);
 
-INSERT INTO api.users_chats
+INSERT INTO api.users_chats (user_id, chat_id)
 VALUES (301, 1),
        (302, 2);
 
-INSERT INTO api.users_followings
+INSERT INTO api.users_followings (follower_user_id, followed_user_id)
 VALUES (301, 302),
        (302, 301);
 
-INSERT INTO api.genres
+INSERT INTO api.genres (id, title)
 VALUES (10, 'Rock'),
        (11, 'Jazz');
 
-INSERT INTO api.users_genres
+INSERT INTO api.users_genres (user_id, genre_id)
 VALUES (301, 10),
        (302, 11);
 
-INSERT INTO api.vibes
+INSERT INTO api.vibes (id, title)
 VALUES (1, 'Chill'),
        (2, 'Energetic');
 
-INSERT INTO api.users_vibes
-VALUES (1, 301),
-       (2, 302);
+INSERT INTO api.users_vibes (user_id, vibe_id)
+VALUES (301, 1),
+       (302, 2);

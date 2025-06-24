@@ -1,0 +1,7 @@
+package edu.itstep.api.repositories;
+
+import edu.itstep.api.models.Chat;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ChatRepository extends JpaRepository<Chat, Long> {
+}

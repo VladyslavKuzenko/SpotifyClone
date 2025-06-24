@@ -1,5 +1,6 @@
 package edu.itstep.api.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Set;
@@ -16,6 +17,7 @@ public class Album {
     @Column(nullable = false)
     private String title;
     @OneToMany(mappedBy = "album")
+    @JsonIgnore
     private Set<Track> tracks;
 
     public Album() {

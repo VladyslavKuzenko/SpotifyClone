@@ -28,12 +28,14 @@ public class User {
             name = "users_genres",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id"))
+    @JsonIgnore
     private Set<Genre> genres;
     @ManyToMany
     @JoinTable(
             name = "users_vibes",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "vibe_id"))
+    @JsonIgnore
     private Set<Vibe> vibes;
     @Column(name = "short_bio")
     private String shortBio;
@@ -65,8 +67,10 @@ public class User {
             name = "users_chats",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "chat_id"))
-    @JsonIgnore
     private Set<Chat> chats;
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private Set<TracksListenings> tracksListenings;
 
     public User() {
     }
@@ -213,5 +217,13 @@ public class User {
 
     public void setChats(Set<Chat> chats) {
         this.chats = chats;
+    }
+
+    public Set<TracksListenings> getTracksListenings() {
+        return tracksListenings;
+    }
+
+    public void setTracksListenings(Set<TracksListenings> tracksListenings) {
+        this.tracksListenings = tracksListenings;
     }
 }

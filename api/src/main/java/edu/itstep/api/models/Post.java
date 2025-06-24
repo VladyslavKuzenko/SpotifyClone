@@ -1,5 +1,6 @@
 package edu.itstep.api.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import edu.itstep.api.models.contentModels.ContentType;
 import jakarta.persistence.*;
 
@@ -34,9 +35,8 @@ public class Post {
             name = "posts_hashtags",
             joinColumns = @JoinColumn(name = "post_id"),
             inverseJoinColumns = @JoinColumn(name = "hashtag_id"))
+    @JsonIgnore
     private Set<HashTag> hashtags;
-    @OneToMany
-    private Set<Comment> comments;
 
     public Post() {
     }
@@ -127,14 +127,6 @@ public class Post {
 
     public void setHashtags(Set<HashTag> hashtags) {
         this.hashtags = hashtags;
-    }
-
-    public Set<Comment> getComments() {
-        return comments;
-    }
-
-    public void setComments(Set<Comment> comments) {
-        this.comments = comments;
     }
 }
 
