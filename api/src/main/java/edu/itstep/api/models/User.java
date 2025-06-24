@@ -55,11 +55,7 @@ public class User {
             joinColumns = @JoinColumn(name = "follower_user_id"),
             inverseJoinColumns = @JoinColumn(name = "followed_user_id"))
     private Set<User> followings;
-    @ManyToMany
-    @JoinTable(
-            name = "users_followings",
-            joinColumns = @JoinColumn(name = "followed_user_id"),
-            inverseJoinColumns = @JoinColumn(name = "follower_user_id"))
+    @ManyToMany(mappedBy = "followings")
     private Set<User> followers;
     @ManyToMany
     @JoinTable(
@@ -67,6 +63,8 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "chat_id"))
     private Set<Chat> chats;
+    @OneToMany(mappedBy = "user")
+    private Set<TracksListenings> tracksListenings;
 
     public User() {
     }
@@ -213,5 +211,13 @@ public class User {
 
     public void setChats(Set<Chat> chats) {
         this.chats = chats;
+    }
+
+    public Set<TracksListenings> getTracksListenings() {
+        return tracksListenings;
+    }
+
+    public void setTracksListenings(Set<TracksListenings> tracksListenings) {
+        this.tracksListenings = tracksListenings;
     }
 }
