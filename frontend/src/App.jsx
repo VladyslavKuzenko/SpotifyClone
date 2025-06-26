@@ -3,7 +3,7 @@ import Login from './components/login-page/Login';
 import Register from './components/register-page/Register';
 import Main from './components/main-page/Main';
 import PlayerPage from './components/player-page/PlayerPage';
-import Profile from './components/profile-page/Profile';
+import Profile from './components/profile-page/ProfileSetup';
 import UserProfile from './components/user-profile-page/UserProfile';
 import MyProfile from './components/my-profile-page/MyProfile';
 import EditProfile from './components/edit-profile-page/EditProfile';
@@ -16,6 +16,7 @@ import { Link, Route, Router, Routes } from 'react-router-dom';
 import ChatPage from './components/chat-page/ChatPage';
 import AuthForm from './components/login-page/AuthForm';
 import Page from './components/page-page/Page';
+import ProfileSetup from './components/profile-page/ProfileSetup';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="/player" element={<PlayerPage />} />
         <Route path="/login" element={<LoginButton />} />
         <Route path="/logout" element={<LogoutButton />} />
+        <Route path="/profileSetup" element={<ProfileSetup />} />
     </Routes>
     //<Register/>
     //<Main/>

@@ -1,5 +1,4 @@
-// App.jsx
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./main.module.css";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Navigate } from "react-router-dom";
@@ -8,19 +7,33 @@ import StoriesItem from "./StoriesItem"
 import WhoToFollow from "./WhoToFollow"
 import NewSongs from "./NewSongs"
 import ContainerVibe from "./ContainerVibe"
+import { useAPI } from "../../hooks/useApi";
 
 const Main = () => {
-  const { isAuthenticated,isLoading } = useAuth0();
+  const { isAuthenticated, isLoading } = useAuth0();
+  const { isProfileConfirmed, refresh } = useAPI();
+  const [checkedProfile, setCheckedProfile] = useState(false);
 
   useEffect(() => {
-    console.log("Use Effect working");
-  });
+    if (isAuthenticated) {
+      refresh().finally(() => setCheckedProfile(true));
+    }
+  }, [isAuthenticated]);
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
 
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
+  }
+
+  if (!checkedProfile) {
+    return <div>Loading profile...</div>;
+  }
+
+  if (!isProfileConfirmed) {
+    return <Navigate to="/profileSetup" replace />;
   }
 
   return (
@@ -44,11 +57,11 @@ const Main = () => {
           <div className={styles.notification}>Notification</div>
         </div>
         <div className={styles["empty-div3"]}></div>
-       <ContainerVibe/>
+        <ContainerVibe />
 
         <div className={styles["empty-div4"]}></div>
 
-       <StoriesItem/>
+        <StoriesItem />
 
         <div className={styles["empty-div5"]}></div>
 
@@ -65,10 +78,10 @@ const Main = () => {
       <div className={styles["right-side"]}>
         <div className={styles["empty-div2"]}></div>
 
-        <WhoToFollow/>
+        <WhoToFollow />
 
 
-       <NewSongs/>
+        <NewSongs />
 
 
       </div>
