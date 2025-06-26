@@ -25,6 +25,8 @@ function App() {
       <Route path="/player" element={<PlayerPage />} />
       <Route path="/login" element={<LoginButton />} />
       <Route path="/logout" element={<LogoutButton />} />
+            <Route path="/chat" element={<ChatPage />} />
+
     </Routes>
     //<Register/>
     //<Main/>
