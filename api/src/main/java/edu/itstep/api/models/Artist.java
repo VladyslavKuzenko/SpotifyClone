@@ -15,6 +15,8 @@ public class Artist {
     private String profileBgUrl;
     @Column(name="profile_quote")
     private String profileQuote;
+    @Column(name="listening_count")
+    private Long listeningCount;
 
     public Artist() {
     }
@@ -50,4 +52,9 @@ public class Artist {
     public void setProfileQuote(String profileQuote) {
         this.profileQuote = profileQuote;
     }
+
+    public Long getListeningCount() {return listeningCount;}
+
+    public void setListeningCount(Long listeningCount) {this.listeningCount = listeningCount;}
+
 }

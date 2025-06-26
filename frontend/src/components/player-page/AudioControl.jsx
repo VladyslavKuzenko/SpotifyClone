@@ -43,7 +43,7 @@ export default function AudioControl({songControl}) {
           <audio
             id="myAudio"
             ref={audioRef}
-            src={songControl.currentSong.source_url}
+            src={songControl.currentSong.sourceUrl}
             onLoadedMetadata={() => {
               setDuration(Math.floor(audioRef.current.duration));
               setVolume(audioRef.current.volume);

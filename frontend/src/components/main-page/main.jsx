@@ -1,12 +1,28 @@
 // App.jsx
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./main.module.css";
+import { useAuth0 } from "@auth0/auth0-react";
+import { Navigate } from "react-router-dom";
 import LeftSide from "../main-components/LeftSide"
 import StoriesItem from "./StoriesItem"
 import WhoToFollow from "./WhoToFollow"
 import NewSongs from "./NewSongs"
 import ContainerVibe from "./ContainerVibe"
+
 const Main = () => {
+  const { isAuthenticated,isLoading } = useAuth0();
+
+  useEffect(() => {
+    console.log("Use Effect working");
+  });
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+
   return (
     <div className={styles.container}>
       <LeftSide />

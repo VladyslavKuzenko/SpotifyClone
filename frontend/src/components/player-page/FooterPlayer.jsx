@@ -15,7 +15,7 @@ const FooterPlayer = ({ songControl }) => {
         <div className={styles["bmr-cover"]}></div>
         <div className={styles["bmr-song-info"]}>
           <div className={styles["bmr-title"]}>{songControl.currentSong.title}</div>
-          <div className={styles["bmr-artist"]}>{songControl.currentSong.artist}</div>
+          {/* <div className={styles["bmr-artist"]}>{songControl.currentSong.artist}</div> */}
         </div>
       </div>
 
