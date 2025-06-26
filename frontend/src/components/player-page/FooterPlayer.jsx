@@ -7,8 +7,9 @@ import AudioControl from "./AudioControl";
 const FooterPlayer = ({ songControl }) => {
   
   return (
+        <div className={styles["footer-container"]}>
+
     <div className={styles["mr-bottom"]}>
-      <div className={styles["mb-empty1"]}></div>
 
       <div className={styles["mrb-left"]}>
         <div className={styles["bmr-cover"]}></div>
@@ -22,6 +23,7 @@ const FooterPlayer = ({ songControl }) => {
 
 
     
+    </div>
     </div>
   );
 };

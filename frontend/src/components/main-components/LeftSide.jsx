@@ -10,11 +10,11 @@ const LeftSide = () => {
 
       <div className={styles["pages-btns-div"]}>
         <div className={styles["btns-div"]}>
-          <div className={styles["page-btn"]}></div>
-          <div className={styles["page-btn"]}></div>
-          <div className={styles["page-btn"]}></div>
-          <div className={styles["page-btn"]}></div>
-          <div className={styles["page-btn"]}></div>
+          <button className={styles["page-btn"]}></button>
+          <button className={styles["page-btn"]}></button>
+          <button className={styles["page-btn"]}></button>
+          <button className={styles["page-btn"]}></button>
+          <button className={styles["page-btn"]}></button>
         </div>
       </div>
 

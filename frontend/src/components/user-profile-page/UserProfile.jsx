@@ -11,11 +11,11 @@ const UserProfile = () => {
       <div className={styles['empty-div1']}></div>
       <div className={styles['profile-side']}>
         <div className={styles['channel-hat']}>
-          <div className={styles['hat-setting-platform']}>
+          <button className={styles['hat-setting-platform']}>
             <div className={styles['setting-circles']}></div>
             <div className={styles['setting-circles']}></div>
             <div className={styles['setting-circles']}></div>
-          </div>
+          </button>
           <div className={styles['profile-photo']}>
             <div className={styles.status}></div>
           </div>
@@ -27,8 +27,8 @@ const UserProfile = () => {
           </div>
           <div className={styles['followers-count']}>999k followers</div>
           <div className={styles['follow-message-container']}>
-            <div className={styles['follow-btn']}>Follow</div>
-            <div className={styles['message-btn']}>Message</div>
+            <button className={styles['follow-btn']}>Follow</button>
+            <button className={styles['message-btn']}>Message</button>
           </div>
         </div>
         <div className={styles['functional-container1']}>

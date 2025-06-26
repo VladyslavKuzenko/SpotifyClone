@@ -229,7 +229,6 @@ const PlayerPage = () => {
             </div>
           </div>
 
-          <div className={styles["empty-div2"]}></div>
         </div>
 
         <FooterPlayer songControl={{ currentSong, nextSong, prevSong }} />

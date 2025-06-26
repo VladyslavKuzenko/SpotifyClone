@@ -2,7 +2,7 @@
     scrollbar-width: none;
 
   }
-  
+
   .container {
     width: 100%;
     display: flex;
@@ -50,6 +50,7 @@
     background-color: #8F8F8F;
     border-radius: 50%;
     cursor: pointer;
+    border:none;
 
   }
 
@@ -243,12 +244,15 @@
   }
 
   .container-stories {
+    display: flex;
     width: 100%;
     height: 135px;
-    display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
+    gap: 50px;
+    /* фіксована відстань між елементами */
+    overflow: auto;
   }
 
 
@@ -363,14 +367,10 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    cursor: pointer;
+    padding-top: 25px;
 
   }
 
-  .empty-div6 {
-    width: 100%;
-    height: 25px;
-  }
 
 
   .account-platform {
@@ -412,6 +412,8 @@
     font-size: 16px;
     line-height: 100%;
     letter-spacing: 0%;
+    border: none;
+    cursor: pointer;
 
 
   }
@@ -424,6 +426,8 @@
     font-size: 16px;
     line-height: 100%;
     letter-spacing: 0%;
+    cursor: pointer;
+
   }
 
   .nickname-follow {
@@ -435,6 +439,7 @@
     line-height: 100%;
     letter-spacing: 0%;
     color: #767676;
+
   }
 
   .ava-follow {
@@ -442,6 +447,8 @@
     height: 60px;
     border-radius: 50%;
     background-color: #D9D9D9;
+    cursor: pointer;
+
   }
 
   .users-content {
@@ -537,4 +544,3 @@
     align-content: center;
 
   }
-

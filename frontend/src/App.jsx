@@ -7,10 +7,15 @@ import Profile from './components/profile-page/Profile';
 import UserProfile from './components/user-profile-page/UserProfile';
 import MyProfile from './components/my-profile-page/MyProfile';
 import EditProfile from './components/edit-profile-page/EditProfile';
+
 import ExampleCrud from './components/exampleAuth0/Example';
 import LoginButton from './components/exampleAuth0/LoginButton';
 import LogoutButton from './components/exampleAuth0/LogoutButton';
 import { Link, Route, Router, Routes } from 'react-router-dom';
+
+import ChatPage from './components/chat-page/ChatPage';
+import AuthForm from './components/login-page/AuthForm';
+import Page from './components/page-page/Page';
 
 function App() {
   return (
@@ -33,6 +38,11 @@ function App() {
     <LoginButton/>
     <LogoutButton/>
     <ExampleCrud/>
+
+    <ChatPage/>
+    //<AuthForm/>
+    //<Page/>
+
 
     </> */
   );

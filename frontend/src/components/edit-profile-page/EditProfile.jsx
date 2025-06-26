@@ -1,27 +1,8 @@
-import React, { useState, useRef, useEffect } from "react";
+import React from "react";
 import styles from "./EditProfile.module.css";
 import LeftSide from "../main-components/LeftSide";
 
 export default function EditProfile() {
-  const [profileType, setProfileType] = useState("Artist");
-  const [showOptions, setShowOptions] = useState(false);
-  const optionsRef = useRef(null);
-  const toggleRef = useRef(null);
-
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (
-        optionsRef.current &&
-        !optionsRef.current.contains(e.target) &&
-        !toggleRef.current.contains(e.target)
-      ) {
-        setShowOptions(false);
-      }
-    };
-    document.addEventListener("click", handleClickOutside);
-    return () => document.removeEventListener("click", handleClickOutside);
-  }, []);
-
   return (
     <div className={styles.container}>
       <LeftSide />
@@ -30,7 +11,7 @@ export default function EditProfile() {
 
       <div className={styles["profile-side"]}>
         <div className={styles["channel-hat"]}>
-          <div className={styles["return-profile"]}>Return ro profile</div>
+          <button className={styles["return-profile"]}>Return to profile</button>
           <div className={styles["profile-photo"]}>
             <div className={styles.status}></div>
           </div>
@@ -72,36 +53,8 @@ export default function EditProfile() {
                 className={styles["edit-username"]}
                 placeholder="Username"
               />
-              <div
-                className={styles["prof-profile"]}
-                ref={toggleRef}
-                onClick={() => setShowOptions((prev) => !prev)}
-              >
-                {profileType}
-              </div>
-
-              {showOptions && (
-                <div className={styles["profile-options"]} ref={optionsRef}>
-                  <div
-                    className={styles.option}
-                    onClick={() => {
-                      setProfileType("Artist");
-                      setShowOptions(false);
-                    }}
-                  >
-                    Artist
-                  </div>
-                  <div
-                    className={styles.option}
-                    onClick={() => {
-                      setProfileType("Listener");
-                      setShowOptions(false);
-                    }}
-                  >
-                    Listener
-                  </div>
-                </div>
-              )}
+              <div className={styles["prof-profile"]}>Artist</div>
+              {/* Випадаюче меню видалене повністю */}
             </div>
 
             <div className={styles["your-name-text"]}>Personal information</div>

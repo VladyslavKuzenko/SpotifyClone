@@ -115,14 +115,17 @@
 }
 
 .hat-setting-platform {
-    width: 9px;
-    height: 30px;
+    width: 24px;
+    height: 35px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     position: relative;
     left: 95%;
     top: 20%;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
 }
 
 .setting-circles {
@@ -157,6 +160,7 @@
     display: flex;
     flex-direction: column;
     margin-top: 20px;
+
 }
 
 .profile-name {
@@ -188,9 +192,9 @@
     font-family: 'Inter', sans-serif;
     font-weight: 400;
     font-size: 18px;
-    line-height: 100%;
-    letter-spacing: 0%;
     align-content: end;
+
+    white-space: nowrap;
 }
 
 .follow-message-container {
@@ -214,6 +218,9 @@
     line-height: 100%;
     letter-spacing: 0%;
     color: white;
+    border: none;
+    cursor: pointer;
+
 }
 
 .message-btn {
@@ -229,6 +236,8 @@
     line-height: 100%;
     letter-spacing: 0%;
     color: black;
+    border: none;
+    cursor: pointer;
 }
 
 .functional-container1 {
