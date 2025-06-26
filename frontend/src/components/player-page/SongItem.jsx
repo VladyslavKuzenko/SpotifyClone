@@ -6,11 +6,12 @@ import { convertTime } from "./js/functions";
 const SongItem = ({ onSongSelect, song, moreInfo, onSetCurrentAlbum }) => {
   const [duration, setDuration] = useState(0);
   useEffect(() => {
+    console.log("song: ")
+    console.log(song)
     const audio = new Audio();
-    audio.src = song.source_url;
+    audio.src = song.sourceUrl;
     audio.addEventListener("loadedmetadata", () => {
       setDuration(Math.floor(audio.duration));
-      console.log(duration);
     });
   });
   return (
@@ -24,12 +25,12 @@ const SongItem = ({ onSongSelect, song, moreInfo, onSetCurrentAlbum }) => {
       <div className={styles.cover}></div>
       <div className={styles.info}>
         <div className={styles.title}>{song.title}</div>
-        <div className={styles.artist}>{song.artist}</div>
+        {/* <div className={styles.artist}>{song.artist}</div> */}
       </div>
       {moreInfo ? (
         <>
           <div className={styles["as-listeners-count"]}>
-            {song.listenersCount}
+            {song.listeningCount}
           </div>
           <div className={styles["as-plus-plat"]}>
             <div className={styles["as-plus"]}>+</div>

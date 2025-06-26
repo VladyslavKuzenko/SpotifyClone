@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { searchSongs } from "./js/functions";
 import MiddleSongItem from "./MIddleSongItem";
 import styles from "./player.module.css";
@@ -12,6 +12,12 @@ export default function MiddleItem({
 }) {
   const [search, setSearch] = useState("");
   const [songs, setSongs] = useState(songsList);
+  useEffect(()=>{
+    setSongs(songsList)
+    console.log("MiddleItem")
+    console.log(songsList)
+    console.log(songs)
+  },[songsList])
   return (
     <div className={styles["mr-midd"]}>
       <div className={styles["artist-songs"]}>

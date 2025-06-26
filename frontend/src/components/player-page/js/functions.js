@@ -9,8 +9,8 @@ export function convertTime(timeInSeconds) {
 export function searchSongs(songs, searchParameter, setSongs) {
   const newSongs = songs.filter((song) => {
     if (
-      song.title.toLowerCase().includes(searchParameter.toLowerCase()) ||
-      song.artist.toLowerCase().includes(searchParameter.toLowerCase())
+      song.title.toLowerCase().includes(searchParameter.toLowerCase()) /* || */
+      //song.artist.toLowerCase().includes(searchParameter.toLowerCase())
     )
       return song;
   });

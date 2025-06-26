@@ -21,6 +21,8 @@ public class Track {
     private String title;
     @Column(name = "source_url")
     private String sourceUrl;
+    @Column(name = "listening_count")
+    private Long listeningCount;
     @ManyToMany
     @JoinTable(
             name = "tracks_playlists",
@@ -71,6 +73,14 @@ public class Track {
 
     public void setSourceUrl(String sourceUrl) {
         this.sourceUrl = sourceUrl;
+    }
+
+    public Long getListeningCount() {
+        return listeningCount;
+    }
+
+    public void setListeningCount(Long listeningCount) {
+        this.listeningCount = listeningCount;
     }
 
     public Set<Playlist> getPlaylists() {
