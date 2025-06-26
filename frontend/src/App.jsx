@@ -9,6 +9,7 @@ import MyProfile from './components/my-profile-page/MyProfile';
 import EditProfile from './components/edit-profile-page/EditProfile';
 import ChatPage from './components/chat-page/ChatPage';
 import AuthForm from './components/login-page/AuthForm';
+import Page from './components/page-page/Page';
 
 function App() {
   return (
@@ -21,7 +22,8 @@ function App() {
     //<MyProfile/>
     //<EditProfile/>
     //<ChatPage/>
-    <AuthForm/>
+    //<AuthForm/>
+    <Page/>
 
   );
 }
