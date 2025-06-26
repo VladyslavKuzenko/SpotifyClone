@@ -1,3 +1,4 @@
 api/target/
 api/src/main/resources/application.properties
 /frontend/node_modules
+frontend/src/properties/properties.js
