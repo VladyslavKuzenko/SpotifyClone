@@ -4,7 +4,7 @@ import ChatList from './ChatList'
 import MyMessageItem from './MyMessageItem'
 import UserMessageItem from './UserMessageItem'
 import Footer from './Footer'
-
+import UpperContent from "./UpperContent";
 const ChatPage = () => {
     return (
         <div className={styles.container}>
@@ -13,17 +13,7 @@ const ChatPage = () => {
 
                 <div className={styles["chat-messages"]}>
                     <div className={styles["upper-side"]}>
-                        <div className={styles["upper-content"]}>
-                            <div className={styles["user-ava"]}></div>
-                            <div className={styles["user-ns"]}>
-                                <div className={styles["user-name"]}>User Nickname</div>
-                                <div className={styles["user-status"]}>Online</div>
-                            </div>
-                            <div className={styles["user-listening"]}>
-                                Listening to: Timeless – The Weeknd
-                            </div>
-                            <div className={styles["user-btn"]}>∨</div>
-                        </div>
+                     <UpperContent/>
                     </div>
 
                     <div className={styles["middle-side"]}>

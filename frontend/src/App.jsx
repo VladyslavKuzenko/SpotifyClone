@@ -21,9 +21,9 @@ function App() {
     //<UserProfile/>
     //<MyProfile/>
     //<EditProfile/>
-    //<ChatPage/>
+    <ChatPage/>
     //<AuthForm/>
-    <Page/>
+    //<Page/>
 
   );
 }
