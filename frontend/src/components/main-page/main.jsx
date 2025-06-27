@@ -1,20 +1,57 @@
 // App.jsx
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./main.module.css";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Navigate } from "react-router-dom";
-import LeftSide from "../main-components/LeftSide"
-import StoriesItem from "./StoriesItem"
-import WhoToFollow from "./WhoToFollow"
-import NewSongs from "./NewSongs"
-import ContainerVibe from "./ContainerVibe"
+import LeftSide from "../main-components/LeftSide";
+import StoriesItem from "./StoriesItem";
+import WhoToFollow from "./WhoToFollow";
+import NewSongs from "./NewSongs";
+import ContainerVibe from "./ContainerVibe";
+import { API_URL, CLIENT_ID, DOMAIN } from "../../properties/properties";
+import Auth0Lock from "auth0-lock";
 
 const Main = () => {
-  const { isAuthenticated,isLoading } = useAuth0();
+  const { isAuthenticated, isLoading } = useAuth0();
+  const [firstName, setFirstName] = useState("");
+  const {
+    getAccessTokenSilently,
+    getAccessTokenWithPopup,
+    getIdTokenClaims,
+    user,
+  } = useAuth0();
 
+
+  useEffect(() => {
+  if (user) {
+    const firstName = user["https://diplomaapp.com/firstName"];
+    const lastName = user["https://diplomaapp.com/lastName"];
+    console.log("First Name:", firstName);
+    console.log("First Name:", lastName);
+  }
+}, [user]);
   useEffect(() => {
     console.log("Use Effect working");
   });
+
+  const handleTest = async () => {
+    if (isAuthenticated) {
+      const token = await getAccessTokenWithPopup({
+        authorizationParams: {
+          audience: API_URL,
+        },
+      });
+
+      const idtoken = await getIdTokenClaims({
+        authorizationParams: {
+          audience: API_URL,
+        },
+      });
+      console.log("idtoken: ");
+      console.log(token);
+     
+    }
+  };
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -25,8 +62,13 @@ const Main = () => {
 
   return (
     <div className={styles.container}>
-      <LeftSide />
-
+      {/*       <LeftSide />
+       */}
+      <div>
+        <button onClick={handleTest}> Test</button>
+        <p>Name: {firstName}</p>
+      </div>
+      {/* 
       <div className={styles["home-text"]}>
         <div className={styles["text-home"]}>Home</div>
       </div>
@@ -71,7 +113,7 @@ const Main = () => {
        <NewSongs/>
 
 
-      </div>
+      </div> */}
     </div>
   );
 };

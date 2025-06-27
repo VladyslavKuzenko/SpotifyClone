@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+/* import React, { useEffect, useRef, useState } from "react";
 import auth0 from "auth0-js";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -191,3 +191,4 @@ const AuthForm = () => {
 };
 
 export default AuthForm;
+ */
