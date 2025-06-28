@@ -5,8 +5,8 @@ import { useAuth0 } from '@auth0/auth0-react';
 export const APIContext = createContext(undefined);
 
 export const APIProvider = ({ children }) => {
-  const [isProfileConfirmed, setIsProfileConfirmed] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const { isProfileConfirmed, setIsProfileConfirmed } = useState(false);
+  const { loading, setLoading } = useState(true);
   const { user, getAccessTokenSilently, isAuthenticated } = useAuth0();
 
   const apiFetch = async (path, options = {}) => {
@@ -61,7 +61,7 @@ export const APIProvider = ({ children }) => {
   }, [isAuthenticated, user?.sub]);
 
   return (
-    <APIContext.Provider value={{ isProfileConfirmed, loading, refresh: fetchAuth, apiFetch }}>
+    <APIContext.Provider value={{ isProfileConfirmed, loading, apiFetch }}>
       {children}
     </APIContext.Provider>
   );

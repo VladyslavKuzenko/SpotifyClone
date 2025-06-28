@@ -50,7 +50,6 @@ const Main = () => {
           <input
             type="search"
             placeholder="Search"
-            class="search"
             className={styles.search}
           />
           <div className={styles["new-post"]}>+ New post</div>
