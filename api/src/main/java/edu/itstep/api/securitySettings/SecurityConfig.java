@@ -17,9 +17,8 @@ public class SecurityConfig {
     an OAuth2 Resource Server, using JWT validation.
     */
         return http
-                .csrf().disable()
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers(HttpMethod.POST, "/users").permitAll()
+//                        .requestMatchers(HttpMethod.POST, "/users").permitAll()
                         .anyRequest().permitAll()
                 )
 //                .authorizeHttpRequests((authorize) -> authorize
