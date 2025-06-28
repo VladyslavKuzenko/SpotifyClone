@@ -1,7 +1,7 @@
 import logo from "../logo.svg";
 import { useState, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import { API_URL } from "../../properties/properties";
+import { API_URL } from "../../js/properties/properties";
 
 /*This component is the example how to do request on API. Response is the list of users from database.
  If you have not database  or you don`t want use it in this example, you can remove this component or comment it in App.jsx component */

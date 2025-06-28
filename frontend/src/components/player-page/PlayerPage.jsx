@@ -7,7 +7,7 @@ import LeftSide from "../main-components/LeftSide";
 import MiddleSongItem from "./MIddleSongItem";
 import MiddleItem from "./MiddleItem";
 import { useAuth0 } from "@auth0/auth0-react";
-import { API_URL } from "../../properties/properties";
+import { API_URL } from "../../js/properties/properties";
 import { Navigate } from "react-router-dom";
 
 const PlayerPage = () => {

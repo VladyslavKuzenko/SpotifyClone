@@ -1,7 +1,7 @@
 // SongItem.jsx
 import React, { useEffect, useState } from "react";
 import styles from "./player.module.css"; // або шлях до глобального стилю, якщо не CSS Modules
-import { convertTime } from "./js/functions";
+import { convertTime } from  "../../js/functions/functions";
 
 const SongItem = ({ onSongSelect, song, moreInfo, onSetCurrentAlbum }) => {
   const [duration, setDuration] = useState(0);
