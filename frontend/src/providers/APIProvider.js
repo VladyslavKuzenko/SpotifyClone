@@ -5,8 +5,8 @@ import { useAuth0 } from '@auth0/auth0-react';
 export const APIContext = createContext(undefined);
 
 export const APIProvider = ({ children }) => {
-  const { isProfileConfirmed, setIsProfileConfirmed } = useState(false);
-  const { loading, setLoading } = useState(true);
+  const [isProfileConfirmed, setIsProfileConfirmed] = useState(false);
+  const [profileConfirmationLoading, setProfileConfirmationLoading] = useState(true);
   const { user, getAccessTokenSilently, isAuthenticated } = useAuth0();
 
   const apiFetch = async (path, options = {}) => {
@@ -29,7 +29,7 @@ export const APIProvider = ({ children }) => {
           Authorization: `Bearer ${token}`,
         };
       } catch (e) {
-        console.error("Failed to get token:", e);
+        console.log("Failed to get token");
       }
     }
 
@@ -39,10 +39,10 @@ export const APIProvider = ({ children }) => {
     });
   };
 
-  const fetchAuth = async () => {
+  const refreshProfileConfirmation = async () => {
     if (!isAuthenticated || !user?.sub) return;
 
-    setLoading(true);
+    setProfileConfirmationLoading(true);
     try {
       const res = await apiFetch(`/users/hasProfileConfirmation/${user.sub}`);
       const data = await res.json();
@@ -50,18 +50,18 @@ export const APIProvider = ({ children }) => {
     } catch {
       setIsProfileConfirmed(false);
     } finally {
-      setLoading(false);
+      setProfileConfirmationLoading(false);
     }
   };
 
   useEffect(() => {
     if (isAuthenticated && user?.sub) {
-      fetchAuth();
+      refreshProfileConfirmation();
     }
   }, [isAuthenticated, user?.sub]);
 
   return (
-    <APIContext.Provider value={{ isProfileConfirmed, loading, apiFetch }}>
+    <APIContext.Provider value={{ isProfileConfirmed, profileConfirmationLoading, apiFetch }}>
       {children}
     </APIContext.Provider>
   );

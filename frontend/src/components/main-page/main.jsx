@@ -11,14 +11,7 @@ import { useAPI } from "../../hooks/useApi";
 
 const Main = () => {
   const { isAuthenticated, isLoading } = useAuth0();
-  const { isProfileConfirmed, refresh } = useAPI();
-  const [checkedProfile, setCheckedProfile] = useState(false);
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      refresh().finally(() => setCheckedProfile(true));
-    }
-  }, [isAuthenticated]);
+  const { isProfileConfirmed, profileConfirmationLoading } = useAPI();
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -28,7 +21,7 @@ const Main = () => {
     return <Navigate to="/login" replace />;
   }
 
-  if (!checkedProfile) {
+  if (profileConfirmationLoading) {
     return <div>Loading profile...</div>;
   }
 

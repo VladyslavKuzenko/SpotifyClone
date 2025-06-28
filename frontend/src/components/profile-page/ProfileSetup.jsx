@@ -3,10 +3,11 @@ import styles from "./profileSetup.module.css";
 import { useAPI } from "../../hooks/useApi";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Navigate, useNavigate } from "react-router-dom";
+import { API_URL } from "../../properties/properties";
 
 export default function ProfileSetup() {
-  const [ isAuthenticated, user ] = useAuth0();
-  const [ apiFetch ] = useAPI();
+  const { isAuthenticated, user, getAccessTokenWithPopup } = useAuth0();
+  const { apiFetch } = useAPI();
   const navigate = useNavigate();
   const [goalDropdownOpen, setGoalDropdownOpen] = useState(false);
   const [selectedGoal, setSelectedGoal] = useState({ id: -1, title: "Select goal" });
@@ -60,7 +61,7 @@ export default function ProfileSetup() {
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
-  });
+  }, []);
 
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
@@ -100,6 +101,12 @@ export default function ProfileSetup() {
   }
 
   async function submitProfileSetup() {
+    await getAccessTokenWithPopup({
+      authorizationParams: {
+        audience: API_URL
+      },
+    });
+
     const resultUser = {
       id: user.sub,
       firstName: "firstname",
@@ -110,7 +117,6 @@ export default function ProfileSetup() {
       vibes: selectedVibes.map(v => ({ id: v.id })),
       shortBio
     };
-
 
     try {
       const res = await apiFetch('/users', {
@@ -125,10 +131,10 @@ export default function ProfileSetup() {
         throw new Error('Failed to save user');
       }
 
-      navigate('/');
     } catch (err) {
       console.error(err);
     }
+    navigate('/');
   }
 
   return (
@@ -169,7 +175,7 @@ export default function ProfileSetup() {
           <div className={styles.b2}>
             <div className={styles.text11}>Your Role</div>
             <div className={styles.dropdown} ref={dropdownRef}>
-              <div className={styles["dropdown-toggle"]} onClick={()=>{setGoalDropdownOpen(!goalDropdownOpen)}}>
+              <div className={styles["dropdown-toggle"]} onClick={() => { setGoalDropdownOpen(!goalDropdownOpen) }}>
                 <span className={styles.label}>{selectedGoal.title}</span>
                 <span className={styles.arrow}>{goalDropdownOpen ? "˄" : "˅"}</span>
               </div>
