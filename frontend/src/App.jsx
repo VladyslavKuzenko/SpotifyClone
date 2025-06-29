@@ -25,7 +25,6 @@ function App() {
       <Route path="/login" element={<LoginButton />} />
       <Route path="/logout" element={<LogoutButton />} />
       <Route path="/chat" element={<ChatPage />} />
-      <Route path="/userprofile" element={<UserProfile />} />
 
 
     </Routes>
@@ -39,9 +38,14 @@ function App() {
     //<Profile/>
 
     //<UserProfile/>
+
     //<MyProfile/>
+
     //<EditProfile/>
+
     //<ChatPage/>
+
+    
     /*   <>
       <LoginButton/>
       <LogoutButton/>
