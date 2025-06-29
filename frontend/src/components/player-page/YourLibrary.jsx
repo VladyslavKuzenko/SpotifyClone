@@ -108,24 +108,24 @@ const YourLibrary = ({ songsList, onSongSelect, onSetCurrentAlbum }) => {
 
               </div>
 
-              <div className={styles["cancel-create"]}> 
-             <button  className={styles["cancel-btn"]} onClick={() => setIsModalOpen(false)}>Cancel</button> 
-             <button className={styles["create-btn"]}>Create</button>
+              <div className={styles["cancel-create"]}>
+                <button className={styles["cancel-btn"]} onClick={() => setIsModalOpen(false)}>Cancel</button>
+                <button className={styles["create-btn"]}>Create</button>
 
 
               </div>
 
 
-
-
-              </div>
 
 
             </div>
+
+
           </div>
+        </div>
       )}
-        </>
-      );
+    </>
+  );
 };
 
-      export default YourLibrary;
+export default YourLibrary;
