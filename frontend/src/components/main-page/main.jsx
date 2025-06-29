@@ -40,8 +40,8 @@ const Main = () => {
             class="search"
             className={styles.search}
           />
-          <div className={styles["new-post"]}>+ New post</div>
-          <div className={styles.notification}>Notification</div>
+          <button className={styles["new-post"]}>+ New post</button>
+          <button className={styles.notification}>Notification</button>
         </div>
         <div className={styles["empty-div3"]}></div>
        <ContainerVibe/>

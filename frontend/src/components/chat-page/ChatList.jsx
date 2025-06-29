@@ -17,7 +17,7 @@ const ChatList = () => {
       <div className={styles["groups-block"]}>
         <div className={styles.text1}>Groups:</div>
         <div className={styles.groups}>
-          {[...Array(11)].map((_, i) => (
+          {[...Array(31)].map((_, i) => (
             <GroupItem/>
             
           ))}

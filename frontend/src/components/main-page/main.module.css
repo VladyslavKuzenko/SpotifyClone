@@ -12,19 +12,22 @@
 
   .left-side {
     width: 225px;
-    height: 100vh;
+    height: 100%;
     background-color: #E7E7E7;
     position: fixed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
-
 
   .ava-place {
     width: 100%;
-    height: 90px;
-    align-items: center;
-    margin-top: 121px;
+    height: 89px;
     display: flex;
     justify-content: center;
+    position: absolute;
+    top: 128px;
+
   }
 
   .avatarka {
@@ -33,56 +36,44 @@
     border-radius: 50%;
     background-color: #BFBFBF;
     cursor: pointer;
+    margin-bottom: 30px;
 
   }
 
   .pages-btns-div {
     width: 100%;
-    height: 310px;
     display: flex;
-    justify-content: center;
-    margin-top: 48px;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+    position: absolute;
+    top: 278px;
+    gap: 20px;
   }
 
   .page-btn {
-    width: 43px;
-    height: 43px;
+    width: 45px;
+    height: 45px;
     background-color: #8F8F8F;
     border-radius: 50%;
     cursor: pointer;
-    border:none;
+    border: none;
 
   }
 
-  .btns-div {
-    width: 44px;
-    height: 310px;
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
-
-  }
 
   .song-place-div {
     width: 100%;
-    height: 150px;
-    margin-top: 80px;
     display: flex;
     justify-content: center;
     align-items: center;
-  }
-
-  .song-div {
-    width: 111px;
-    height: 145px;
-    display: flex;
     flex-direction: column;
-    align-items: center;
+    position: absolute;
+    top: 678px;
   }
 
   .song-name {
     width: 100%;
-    height: 25px;
     font-family: 'Inter', sans-serif;
     text-align: center;
     font-weight: 400;
@@ -94,7 +85,6 @@
 
   .singer {
     width: 100%;
-    height: 15px;
     margin-top: 3px;
     font-family: 'Inter', sans-serif;
     font-weight: 400;
@@ -115,14 +105,16 @@
   }
 
   .home-text {
-    width: 165px;
+    width: 135px;
     height: 100vh;
     margin-left: 225px;
+    margin-right: 30px;
+
   }
 
   .middle {
-    width: 850px;
-    height: 100vh;
+    width: 50%;
+
   }
 
 
@@ -132,6 +124,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+
   }
 
   .text-home {
@@ -159,6 +152,7 @@
     width: 100%;
     height: 41px;
     display: flex;
+    justify-content: space-between;
   }
 
   .search {
@@ -188,6 +182,8 @@
     line-height: 100%;
     letter-spacing: 0%;
     cursor: pointer;
+    border: none;
+
 
   }
 
@@ -205,6 +201,7 @@
     line-height: 100%;
     letter-spacing: 0%;
     cursor: pointer;
+    border: none;
   }
 
   .empty-div3 {
@@ -237,31 +234,68 @@
 
   }
 
-
   .empty-div4 {
     width: 100%;
     height: 30px;
+  }
+
+  .wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  .leftplat,
+  .rightplat {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+  }
+
+  .rightplat {
+    right: 0;
+  }
+
+  .leftplat {
+    left: 0;
+  }
+
+  /* Кнопки прокрутки */
+  .leftplat button,
+  .rightplat button {
+    background: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
   }
 
   .container-stories {
     display: flex;
     width: 100%;
     height: 135px;
-    flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    gap: 50px;
-    /* фіксована відстань між елементами */
+    gap: 4.5%;
     overflow: auto;
+    scrollbar-width: none;
   }
 
 
   .stories-plat {
-    width: 100px;
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+
   }
 
 
@@ -286,6 +320,17 @@
 
   }
 
+  .leftplat {
+    height: 100%;
+    width: 40px;
+    flex-shrink: 0;
+  }
+
+  .rightplat {
+    height: 100%;
+    width: 40px;
+    flex-shrink: 0;
+  }
 
   .empty-div5 {
     width: 100%;

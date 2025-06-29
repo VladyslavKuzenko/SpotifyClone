@@ -257,6 +257,7 @@
     flex: 1;
     height: 100%;
     margin-left: 10px;
+
 }
 
 .saved-album-text {
@@ -297,8 +298,10 @@
 
 .album-item {
     width: 32%;
-    height: 280px;
+    height: 279px;
     background-color: #D9D9D9;
+      aspect-ratio: 1 / 1; /* робить блок квадратним */
+
 }
 
 .it-container {
@@ -378,6 +381,8 @@
     color: #868686;
     text-align: center;
     align-content: center;
+    border:none;
+    background-color: transparent;
 }
 
 .duration {
@@ -422,6 +427,8 @@
     align-content: center;
     display: flex;
     justify-content: center;
+    border:none;
+    background-color: transparent;
 }
 
 .mp-circle {

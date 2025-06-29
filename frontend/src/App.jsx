@@ -18,20 +18,26 @@ import AuthForm from './components/login-page/AuthForm';
 
 function App() {
   return (
-    //<Login/>
 
     <Routes>
       <Route path="/" element={<Main />} />
       <Route path="/player" element={<PlayerPage />} />
       <Route path="/login" element={<LoginButton />} />
       <Route path="/logout" element={<LogoutButton />} />
-            <Route path="/chat" element={<ChatPage />} />
+      <Route path="/chat" element={<ChatPage />} />
+      <Route path="/userprofile" element={<UserProfile />} />
+
 
     </Routes>
+    //<Login/>
     //<Register/>
+
     //<Main/>
+
     //<PlayerPage />
+
     //<Profile/>
+
     //<UserProfile/>
     //<MyProfile/>
     //<EditProfile/>
