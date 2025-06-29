@@ -17,6 +17,8 @@ SELECT TABLE_SCHEMA,
 FROM information_schema.columns
 ORDER BY TABLE_SCHEMA, TABLE_NAME, ORDINAL_POSITION;
 
+select * from users;
+
 INSERT INTO api.countries (id, name)
 VALUES (1, 'USA'),
        (2, 'German');

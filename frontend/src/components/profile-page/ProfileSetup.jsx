@@ -45,6 +45,12 @@ export default function ProfileSetup() {
     setVibes(data);
   };
 
+  const isUsernameUnique = async (username) =>{
+    const response = await apiFetch(`/users/isUsernameUnique/${username}`);
+    const data = await response.json();
+    return data;
+  }
+
   useEffect(() => {
     function handleClickOutside(event) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -101,11 +107,17 @@ export default function ProfileSetup() {
   }
 
   async function submitProfileSetup() {
+    
     await getAccessTokenWithPopup({
       authorizationParams: {
         audience: API_URL
       },
     });
+
+    if(!isUsernameUnique(username))
+    {
+      return;
+    }
 
     const resultUser = {
       id: user.sub,
@@ -134,7 +146,7 @@ export default function ProfileSetup() {
     } catch (err) {
       console.error(err);
     }
-    navigate('/');
+    return <Navigate to="/" replace />;
   }
 
   return (

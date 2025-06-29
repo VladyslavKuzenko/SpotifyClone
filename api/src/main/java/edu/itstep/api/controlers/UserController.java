@@ -101,9 +101,16 @@ public class UserController {
     }
 
     @GetMapping("/hasProfileConfirmation/{id}")
-    public Boolean profileConfirmation(@PathVariable String id) {
-        System.out.println("hello");
-        System.out.println(id);
+    public Boolean hasProfileConfirmation(@PathVariable String id) {
         return userRepository.existsById(id);
+    }
+
+    @GetMapping("/isUsernameUnique/{username}")
+    public Boolean isUsernameUnique(@PathVariable String username) {
+        System.out.println("!!!!!!!!!!");
+        System.out.println(username);
+        boolean value = userRepository.existsById(username);
+        System.out.println(value);
+        return value;
     }
 }
