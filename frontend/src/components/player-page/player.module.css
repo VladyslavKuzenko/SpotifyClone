@@ -294,7 +294,6 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      cursor: pointer;
       margin-left: 40px;
       font-family: 'Inter', sans-serif;
       font-weight: 400;
@@ -309,6 +308,8 @@
     .private-box {
       width: 26px;
       height: 26px;
+      cursor: pointer;
+
     }
 
     .cancel-create {
@@ -319,7 +320,6 @@
       margin-top: 25px;
       align-items: end;
       justify-content: end;
-      cursor: pointer;
 
     }
 
@@ -338,6 +338,7 @@
       letter-spacing: 0%;
       margin-right: 35px;
       margin-left: 20px;
+      cursor: pointer;
 
     }
 
@@ -355,6 +356,7 @@
       line-height: 100%;
       letter-spacing: 0%;
       margin-left: 20px;
+      cursor: pointer;
 
     }
 
