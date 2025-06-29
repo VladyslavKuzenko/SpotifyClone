@@ -16,6 +16,7 @@ const PlayerPage = () => {
   const [currentSong, setCurrentSong] = useState("");
   const [currentAlbum, setCurrentAlbum] = useState("");
   const [songsLibrary, setSongsLibrary] = useState([]);
+  const [test, setTest] = useState();
   /* const [songsLibrary, setSongsLibrary] = useState([
     {
       title: "I Fall to Pieces",
@@ -153,6 +154,7 @@ const PlayerPage = () => {
 
       const bodyTrack = await responseTrack.json();
       setSongsMiddleItem(bodyTrack);
+      setTest(true);
     }
   };
   useEffect(() => {
@@ -182,58 +184,58 @@ const PlayerPage = () => {
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
-  //  handleArtist();
 
   return (
-    <div className={styles.container}>
-      <LeftSide />
-      <div className={styles["middle-right"]}>
-        <div className={styles["empty-div1"]}></div>
+    <>
+      <div className={styles.container}>
+        <LeftSide />
+        <div className={styles["middle-right"]}>
+          <div className={styles["empty-div1"]}></div>
 
-        <div className={styles["mr-middle"]}>
-          <div className={styles["mr-left"]}>
-            <YourLibrary
-              songsList={songsLibrary}
+          <div className={styles["mr-middle"]}>
+            <div className={styles["mr-left"]}>
+              <YourLibrary
+                songsList={songsLibrary}
+                onSongSelect={setCurrentSong}
+                onSetCurrentAlbum={setCurrentAlbum}
+              />
+            </div>
+            <MiddleItem
+              songsList={songsMiddleItem}
               onSongSelect={setCurrentSong}
               onSetCurrentAlbum={setCurrentAlbum}
+              artist={{
+                ...currentArtist.user,
+                monthlyListner: currentArtist.listeningCount,
+              }}
             />
-          </div>
-          <MiddleItem
-            songsList={songsMiddleItem}
-            onSongSelect={setCurrentSong}
-            onSetCurrentAlbum={setCurrentAlbum}
-            artist={{
-              ...currentArtist.user,
-              monthlyListner: currentArtist.listeningCount,
-            }}
-          />
 
-          <div className={styles["mr-right"]}>
-            <div className={styles["artists-mix"]}>
-              <div className={styles["am-text"]}>Artist`s mix</div>
-              <div className={styles["am-info-plat"]}>
-                <div className={styles["am-photo-plat"]}>
-                  <div className={styles["am-photo"]}></div>
-                </div>
-                <div className={styles["am-song-info"]}>
-                  <div className={styles["am-song-texts"]}>
-                    <div className={styles["am-song-title"]}>Song title</div>
-                    <div className={styles["am-song-artist"]}>Artist</div>
+            <div className={styles["mr-right"]}>
+              <div className={styles["artists-mix"]}>
+                <div className={styles["am-text"]}>Artist`s mix</div>
+                <div className={styles["am-info-plat"]}>
+                  <div className={styles["am-photo-plat"]}>
+                    <div className={styles["am-photo"]}></div>
                   </div>
-                  <div className={styles["am-icons"]}>
-                    <div className={styles["am-plus"]}>+</div>
-                    <div className={styles["am-menu"]}>⋯</div>
+                  <div className={styles["am-song-info"]}>
+                    <div className={styles["am-song-texts"]}>
+                      <div className={styles["am-song-title"]}>Song title</div>
+                      <div className={styles["am-song-artist"]}>Artist</div>
+                    </div>
+                    <div className={styles["am-icons"]}>
+                      <div className={styles["am-plus"]}>+</div>
+                      <div className={styles["am-menu"]}>⋯</div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
 
+          <FooterPlayer songControl={{ currentSong, nextSong, prevSong }} />
         </div>
-
-        <FooterPlayer songControl={{ currentSong, nextSong, prevSong }} />
       </div>
-    </div>
+    </>
   );
 };
 
