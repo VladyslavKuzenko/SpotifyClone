@@ -209,26 +209,7 @@ const PlayerPage = () => {
                 monthlyListner: currentArtist.listeningCount,
               }}
             />
-            <div className={styles["mr-right"]}>
-              <div className={styles["artists-mix"]}>
-                <div className={styles["am-text"]}>Artist`s mix</div>
-                <div className={styles["am-info-plat"]}>
-                  <div className={styles["am-photo-plat"]}>
-                    <div className={styles["am-photo"]}></div>
-                  </div>
-                  <div className={styles["am-song-info"]}>
-                    <div className={styles["am-song-texts"]}>
-                      <div className={styles["am-song-title"]}>Song title</div>
-                      <div className={styles["am-song-artist"]}>Artist</div>
-                    </div>
-                    <div className={styles["am-icons"]}>
-                      <div className={styles["am-plus"]}>+</div>
-                      <div className={styles["am-menu"]}>⋯</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            
           </div>
 
           <FooterPlayer songControl={{ currentSong, nextSong, prevSong }} />
