@@ -1,20 +1,18 @@
 // App.jsx
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./main.module.css";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Navigate } from "react-router-dom";
-import LeftSide from "../main-components/LeftSide"
-import StoriesItem from "./StoriesItem"
-import WhoToFollow from "./WhoToFollow"
-import NewSongs from "./NewSongs"
-import ContainerVibe from "./ContainerVibe"
+import LeftSide from "../main-components/LeftSide";
+import StoriesItem from "./StoriesItem";
+import WhoToFollow from "./WhoToFollow";
+import NewSongs from "./NewSongs";
+import ContainerVibe from "./ContainerVibe";
+import { getUser_metadata_firstName } from "../../js/functions/functions";
 
 const Main = () => {
-  const { isAuthenticated,isLoading } = useAuth0();
+  const { isAuthenticated, isLoading } = useAuth0();
 
-  useEffect(() => {
-    console.log("Use Effect working");
-  });
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -26,7 +24,6 @@ const Main = () => {
   return (
     <div className={styles.container}>
       <LeftSide />
-
       <div className={styles["home-text"]}>
         <div className={styles["text-home"]}>Home</div>
       </div>
@@ -44,11 +41,11 @@ const Main = () => {
           <button className={styles.notification}>Notification</button>
         </div>
         <div className={styles["empty-div3"]}></div>
-       <ContainerVibe/>
+        <ContainerVibe />
 
         <div className={styles["empty-div4"]}></div>
 
-       <StoriesItem/>
+        <StoriesItem />
 
         <div className={styles["empty-div5"]}></div>
 
@@ -65,12 +62,9 @@ const Main = () => {
       <div className={styles["right-side"]}>
         <div className={styles["empty-div2"]}></div>
 
-        <WhoToFollow/>
+        <WhoToFollow />
 
-
-       <NewSongs/>
-
-
+        <NewSongs />
       </div>
     </div>
   );

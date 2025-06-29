@@ -1,5 +1,4 @@
 import React from 'react';
-import Login from './components/login-page/Login';
 import Register from './components/register-page/Register';
 import Main from './components/main-page/Main';
 import PlayerPage from './components/player-page/PlayerPage';

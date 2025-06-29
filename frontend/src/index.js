@@ -1,8 +1,8 @@
 import { createRoot } from "react-dom/client";
 import { Auth0Provider } from "@auth0/auth0-react";
 import App from "./App.jsx";
-import { CLIENT_ID, DOMAIN } from "./properties/properties.js";
 import { BrowserRouter } from "react-router-dom";
+import { CLIENT_ID, DOMAIN } from "./js/properties/properties.js";
 
 const root = createRoot(document.getElementById("root"));
 

@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import { API_URL } from "../../properties/properties";
+import { API_URL } from "../../js/properties/properties";
+import { getUser_metadata_firstName } from "../../js/functions/functions";
 /*   This component is the example how to do request on API  */
 export default function ExampleCrud() {
   const [response, setResponse] = useState();
@@ -8,6 +9,17 @@ export default function ExampleCrud() {
   const [user, setUser] = useState();
   const { isAuthenticated } = useAuth0();
   const { getAccessTokenSilently, getAccessTokenWithPopup } = useAuth0();
+
+  /*Example how to get users_metadata */
+  const [firstName, setFirstName] = useState("");
+
+  useEffect(() => {
+    if (user) {
+      setFirstName(getUser_metadata_firstName(user));
+      console.log("First name: " + firstName);
+    }
+  }, [user]);
+
   /* Here we DON`T need authorization */
   const handlePublic = async () => {
     const response = await fetch("http://localhost:8080/api/public");
@@ -42,7 +54,6 @@ export default function ExampleCrud() {
   };
   const handleArtist = async () => {
     if (isAuthenticated) {
-  
       const token = await getAccessTokenSilently({
         authorizationParams: {
           audience: API_URL,
@@ -58,9 +69,8 @@ export default function ExampleCrud() {
       setArtist(body);
     }
   };
-    const handleUser = async () => {
+  const handleUser = async () => {
     if (isAuthenticated) {
-  
       const token = await getAccessTokenSilently({
         authorizationParams: {
           audience: API_URL,
@@ -74,7 +84,7 @@ export default function ExampleCrud() {
 
       const body = await response.json();
       setUser(body);
-      console.log(body.lastname)
+      console.log(body.lastname);
     }
   };
   return (
@@ -85,11 +95,12 @@ export default function ExampleCrud() {
       <button onClick={handleArtist}>Test Artist</button>
       <button onClick={handleUser}>Test User</button>
       Response: {response}
-          <p>
+      <p>
         User: {user && user.lastname} {user && user.firstname}
       </p>
-    <p>
-        Artist: {artist && artist.user.lastname} {artist && artist.user.firstname} 
+      <p>
+        Artist: {artist && artist.user.lastname}{" "}
+        {artist && artist.user.firstname}
       </p>
     </div>
   );

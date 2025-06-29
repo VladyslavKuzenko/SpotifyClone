@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "./player.module.css";
-import {convertTime} from "./js/functions";
+import {convertTime} from "../../js/functions/functions";
 
 export default function AudioControl({songControl}) {
   const audioRef = useRef(null);

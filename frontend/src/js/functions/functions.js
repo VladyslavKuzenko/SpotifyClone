@@ -17,3 +17,14 @@ export function searchSongs(songs, searchParameter, setSongs) {
 
   setSongs(newSongs);
 }
+
+export function getUser_metadata_firstName(user) {
+    
+  return user["https://diplomaapp.com/firstName"];
+}
+
+export function getUser_metadata_lastName(user) {
+    
+  return user["https://diplomaapp.com/lastName"];
+}
+

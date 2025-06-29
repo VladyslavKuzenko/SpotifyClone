@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { searchSongs } from "./js/functions";
+import { searchSongs } from  "../../js/functions/functions";
 import MiddleSongItem from "./MIddleSongItem";
 import styles from "./player.module.css";
 import SongItem from "./SongItem";

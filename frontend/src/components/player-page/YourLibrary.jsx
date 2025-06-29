@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import styles from "./player.module.css"; // заміни на свій шлях до CSS-модуля
 import SongItem from "./SongItem";
-import { searchSongs } from "./js/functions";
+import { searchSongs } from  "../../js/functions/functions";
 
 const YourLibrary = ({ songsList, onSongSelect, onSetCurrentAlbum }) => {
   const [search, setSearch] = useState("");
