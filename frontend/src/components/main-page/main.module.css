@@ -260,11 +260,11 @@
   }
 
   .rightplat {
-    right: 0;
+    right: 0px;
   }
 
   .leftplat {
-    left: 0;
+    left: 0px;
   }
 
   /* Кнопки прокрутки */
@@ -856,3 +856,40 @@
     border: none;
     cursor: pointer;
   }
+
+ .people-slider {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 20px 0;
+}
+
+
+.scroll-btn-left,
+.scroll-btn-right {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.4);
+  border: none;
+  color: white;
+  font-size: 22px;
+  cursor: pointer;
+  z-index: 1;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.scroll-btn-left {
+  left: -50px;
+}
+
+.scroll-btn-right {
+  right: -50px;
+}
+

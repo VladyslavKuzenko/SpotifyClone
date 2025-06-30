@@ -1,7 +1,40 @@
-import React from "react";
+import React, { useRef, useState, useEffect } from "react";
 import styles from "./main.module.css";
 
 const SearchModal = ({ isSearchModalOpen, setIsSearchModalOpen }) => {
+  const peopleRef = useRef(null);
+  const [showLeftBtn, setShowLeftBtn] = useState(false);
+  const [showRightBtn, setShowRightBtn] = useState(false);
+
+  useEffect(() => {
+    const container = peopleRef.current;
+    if (!container) return;
+
+    const checkButtons = () => {
+      const { scrollLeft, scrollWidth, clientWidth } = container;
+      setShowLeftBtn(scrollLeft > 0);
+      setShowRightBtn(scrollLeft + clientWidth < scrollWidth - 1);
+    };
+
+    checkButtons();
+
+    container.addEventListener("scroll", checkButtons);
+    const timeoutId = setTimeout(checkButtons, 100); // затримка після відкриття
+
+    return () => {
+      container.removeEventListener("scroll", checkButtons);
+      clearTimeout(timeoutId);
+    };
+  }, [isSearchModalOpen]);
+
+  const scroll = (direction) => {
+    const container = peopleRef.current;
+    if (!container) return;
+
+    const scrollAmount = 400;
+    container.scrollBy({ left: direction === "left" ? -scrollAmount : scrollAmount, behavior: "smooth" });
+  };
+
   if (!isSearchModalOpen) return null;
 
   return (
@@ -49,14 +82,28 @@ const SearchModal = ({ isSearchModalOpen, setIsSearchModalOpen }) => {
 
             <div className={styles["empty1"]}></div>
 
-            <div className={styles["people-array"]}>
-              {[...Array(15)].map((_, i) => (
-                <div key={i} className={styles["people-icon"]}>
-                  <div className={styles["people-photo"]}></div>
-                  <div className={styles["name-surname"]}>Name Surname {i + 1}</div>
-                  <div className={styles["people-nickname"]}>@nickname{i + 1}</div>
-                </div>
-              ))}
+            <div className={styles["people-slider"]}>
+              {showLeftBtn && (
+                <button className={styles["scroll-btn-left"]} onClick={() => scroll("left")}>
+                  ◀
+                </button>
+              )}
+
+              <div className={styles["people-array"]} ref={peopleRef}>
+                {[...Array(15)].map((_, i) => (
+                  <div key={i} className={styles["people-icon"]}>
+                    <div className={styles["people-photo"]}></div>
+                    <div className={styles["name-surname"]}>Name Surname {i + 1}</div>
+                    <div className={styles["people-nickname"]}>@nickname{i + 1}</div>
+                  </div>
+                ))}
+              </div>
+
+              {showRightBtn && (
+                <button className={styles["scroll-btn-right"]} onClick={() => scroll("right")}>
+                  ▶
+                </button>
+              )}
             </div>
 
             <div className={styles["grid-container"]}>
