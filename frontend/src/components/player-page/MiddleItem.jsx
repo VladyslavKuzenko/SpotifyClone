@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { searchSongs } from  "../../js/functions/functions";
+import { searchSongs } from "../../js/functions/functions";
 import MiddleSongItem from "./MIddleSongItem";
 import styles from "./player.module.css";
 import SongItem from "./SongItem";
@@ -12,20 +12,17 @@ export default function MiddleItem({
 }) {
   const [search, setSearch] = useState("");
   const [songs, setSongs] = useState(songsList);
-  useEffect(()=>{
+  useEffect(() => {
     setSongs(songsList)
     console.log("MiddleItem")
     console.log(songsList)
     console.log(songs)
-  },[songsList])
+  }, [songsList])
   return (
     <div className={styles["mr-midd"]}>
       <div className={styles["artist-songs"]}>
         <div className={styles["as-plat1"]}>
-          <div className={styles["left-right-btns"]}>
-            <div className={styles["left-btn-plat"]}></div>
-            <div className={styles["right-btn-plat"]}></div>
-          </div>
+
           <div className={styles["as-search-plat"]}>
             <input
               className={styles["as-search"]}
@@ -35,11 +32,26 @@ export default function MiddleItem({
                 searchSongs(songsList, e.target.value, setSongs);
               }}
               value={search}
+              placeholder="Search"
             />
           </div>
+          <div className={styles["recommended-artist"]}>
+            <div className={styles["recommended-text1"]}>Recommended for you</div>
+            <div className={styles["artist-text"]}>Artist</div>
+
+          </div>
+
+
+
         </div>
 
         <div className={styles["as-plat2"]}>
+
+          {/* <div className={styles["left-right-btns"]}>
+            <div className={styles["left-btn-plat"]}></div>
+            <div className={styles["right-btn-plat"]}></div>
+          </div>*/}
+
           <div className={styles["as-empty1"]}></div>
           <div className={styles["artist-listeners"]}>
             <div className={styles["al-artist"]}>{artist.firstName} {artist.lastName}</div>
@@ -77,7 +89,7 @@ export default function MiddleItem({
               }}
             />
           ))}
-       
+
         </div>
       </div>
     </div>

@@ -50,6 +50,10 @@ const YourLibrary = ({ songsList, onSongSelect, onSetCurrentAlbum }) => {
             >
               <div className={styles["yl-plus"]}>+</div>
             </div>
+
+            <div className={styles["go-likes"]}>
+              <button className={styles["golikes-btn"]}></button>
+            </div>
           </div>
 
           <div className={styles["playlist-platform"]}>
