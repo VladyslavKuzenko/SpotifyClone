@@ -162,6 +162,7 @@
     height: 100%;
     background-color: #C0C0C0;
     text-indent: 10px;
+    z-index: 1000;
   }
 
   .search::placeholder {
@@ -588,4 +589,270 @@
     color: #B8B8B8;
     align-content: center;
 
+  }
+
+
+
+  .search-dropdown-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9;
+    background: transparent;
+
+  }
+
+  .search-dropdown {
+    position: absolute;
+    top: -30px;
+    left: -60px;
+    width: 970px;
+    height: 880px;
+    background: rgba(0, 0, 0, 0.47);
+    backdrop-filter: blur(17px);
+    z-index: 10;
+  }
+
+  .back-btn {
+    width: 56px;
+    position: absolute;
+    left: 0;
+    height: 41px;
+    border: none;
+    margin-top: 28px;
+    cursor: pointer;
+    background-image: url(./images/back.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 55%;
+    background-color: transparent;
+
+  }
+
+  .modal-container {
+    width: 100%;
+    height: 89%;
+    position: absolute;
+    bottom: 0;
+  }
+
+  .modal-content {
+    width: 770px;
+    height: 100%;
+    margin-left: 60px;
+  }
+
+  .mpp-container {
+    width: 100%;
+    display: flex;
+  }
+
+  .music {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    cursor: pointer;
+
+  }
+
+  .people,
+  .position {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    margin-left: 25px;
+    cursor: pointer;
+    margin-bottom: 30px;
+
+  }
+
+  .search-array {
+    width: 100%;
+    height: 300px;
+    flex-direction: column;
+    overflow: auto;
+    scrollbar-width: none;
+  }
+
+  .song-item {
+    width: 100%;
+    height: 66px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+
+  }
+
+  .song-image {
+    height: 100%;
+    background-color: white;
+    width: 66px;
+  }
+
+  .song-tittle {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #FFFFFF;
+  }
+
+  .song-artist {
+    margin-top: 4px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: black;
+  }
+
+  .tittle-artist {
+    margin-left: 15px;
+    height: 100%;
+    align-content: center;
+    width: 450px;
+  }
+
+  .song-duration {
+    height: 100%;
+    width: 70px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    margin-right: 30px;
+
+  }
+
+  .song-playbtn {
+    width: 66px;
+    height: 66px;
+    border-radius: 50%;
+    background-color: #B5B5B5;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    margin-right: 30px;
+    color: white;
+
+  }
+
+  .song-menu {
+    border: none;
+    width: 7px;
+    height: 25px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    background-color: transparent;
+    cursor: pointer;
+
+  }
+
+  .menu-circle {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background-color: white;
+  }
+
+  .empty1 {
+    width: 100%;
+    height: 80px;
+  }
+
+  .people-array {
+    width: 100%;
+    height: 170px;
+    display: flex;
+    flex-direction: row;
+    overflow: auto;
+    justify-content: flex-start;
+    gap: 4.7%;
+    scrollbar-width: none;
+  }
+
+  .people-icon {
+    width: 125px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .people-photo {
+    width: 125px;
+    height: 125px;
+    border: none;
+    border-radius: 50%;
+    background-color: white;
+
+  }
+
+  .name-surname {
+    width: 100%;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: white;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+  }
+
+  .people-nickname {
+    width: 100%;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: black;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 4.7%;
+    width: 100%;
+    height: 109px;
+    overflow: auto;
+    scrollbar-width: none;
+    margin-top: 30px;
+
+  }
+
+  .grid-item {
+    height: 50px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    width: 125px;
+    border: none;
+    cursor: pointer;
   }
