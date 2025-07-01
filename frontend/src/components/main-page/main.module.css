@@ -924,7 +924,7 @@
     background: transparent;
     border: none;
     cursor: pointer;
-    color:white;
+    color: white;
   }
 
   .post-modal-content {
@@ -1228,12 +1228,12 @@
   }
 
   .post-stories-btn {
-    border:none;
+    border: none;
     width: 227px;
     height: 58px;
     background-color: white;
     cursor: pointer;
     position: absolute;
-    right:38px;
+    right: 38px;
     margin-top: 10px;
   }

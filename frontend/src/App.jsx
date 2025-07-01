@@ -24,6 +24,7 @@ function App() {
       <Route path="/login" element={<LoginButton />} />
       <Route path="/logout" element={<LogoutButton />} />
       <Route path="/chat" element={<ChatPage />} />
+      <Route path="/user-profile" element={<UserProfile />} />
 
 
     </Routes>
