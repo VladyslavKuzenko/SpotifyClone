@@ -16,9 +16,36 @@ const YourLibrary = ({
   const [songsFullList, setSongsFullList] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [playlists, setPlaylists] = useState([]);
+  const [titlePlaylist, setTitlePlaylist] = useState("");
 
   const { getAccessTokenSilently, getAccessTokenWithPopup, user } = useAuth0();
   const { isLoading, isAuthenticated } = useAuth0();
+
+  const handleCreatePlaylist = async () => {
+    if (isAuthenticated) {
+      const token = await getAccessTokenSilently({
+        authorizationParams: {
+          audience: API_URL,
+        },
+      });
+      const response = await fetch(`http://localhost:8080/playlists`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ title: titlePlaylist, user: { id: user.sub } }),
+      });
+
+      if (response.ok) {
+        setIsModalOpen(false);
+        setTitlePlaylist("");
+        isPlaylistsChangesControl.setIsPlaylistsChanges(true);
+      } else {
+        console.error("Failed to create playlist");
+      }
+    }
+  };
 
   const fetchPlaylists = async () => {
     if (isAuthenticated) {
@@ -38,7 +65,7 @@ const YourLibrary = ({
 
       const body = await response.json();
       setPlaylists(body);
- /*      console.log("Playlists: ");
+      /*      console.log("Playlists: ");
       console.log(body); */
       handleGetCurrentPlaylistTracks(body.find((i) => i.title === "Like"));
     }
@@ -97,7 +124,7 @@ const YourLibrary = ({
           <div className={styles["playlist-platform"]}>
             {playlists.map((i) => (
               <button
-                key={i}
+                key={i.id}
                 className={styles["playlist-element"]}
                 onClick={() => handleGetCurrentPlaylistTracks(i)}
               >
@@ -144,7 +171,7 @@ const YourLibrary = ({
             className={styles["modal-window"]}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className={styles["modal-left-side"]}>
+            {/* <div className={styles["modal-left-side"]}>
               <div className={styles["modal-text"]}> New playlist</div>
               <div className={styles["modal-image"]}>
                 <div className={styles["playlist-img"]}></div>
@@ -152,7 +179,7 @@ const YourLibrary = ({
                   Select image{" "}
                 </button>
               </div>
-            </div>
+            </div> */}
 
             <div className={styles["modal-right-side"]}>
               <div className={styles["empty-modal1"]}></div>
@@ -161,8 +188,10 @@ const YourLibrary = ({
                   type="text"
                   className={styles["playlist-name"]}
                   name=""
-                  id=""
-                  placeholder="Name"
+                  id="inp-title"
+                  placeholder="Title"
+                  value={titlePlaylist}
+                  onChange={(e) => setTitlePlaylist(e.target.value)}
                 />
                 <input
                   type="text"
@@ -173,7 +202,7 @@ const YourLibrary = ({
                 />
               </div>
 
-              <div className={styles["access"]}>
+              {/*  <div className={styles["access"]}>
                 <div className={styles["access-text"]}>Playlist access</div>
                 <div className={styles["private-public"]}>
                   <label className={styles["private-label"]}>
@@ -186,7 +215,7 @@ const YourLibrary = ({
                     <span>Public</span>
                   </label>
                 </div>
-              </div>
+              </div> */}
 
               <div className={styles["cancel-create"]}>
                 <button
@@ -195,7 +224,12 @@ const YourLibrary = ({
                 >
                   Cancel
                 </button>
-                <button className={styles["create-btn"]}>Create</button>
+                <button
+                  className={styles["create-btn"]}
+                  onClick={handleCreatePlaylist}
+                >
+                  Create
+                </button>
               </div>
             </div>
           </div>
