@@ -17,6 +17,7 @@ const YourLibrary = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [playlists, setPlaylists] = useState([]);
   const [titlePlaylist, setTitlePlaylist] = useState("");
+  const [sortType, setSortType] = useState("recent");
 
   const { getAccessTokenSilently, getAccessTokenWithPopup, user } = useAuth0();
   const { isLoading, isAuthenticated } = useAuth0();
@@ -70,15 +71,29 @@ const YourLibrary = ({
       handleGetCurrentPlaylistTracks(body.find((i) => i.title === "Like"));
     }
   };
+  const handleSortSongs = ( sortType) => {
+    if (sortType === "recent") {
+      songs.sort((a, b) => b.id - a.id);
+    } else if (sortType === "az") {
+      songs.sort((a, b) => a.title.localeCompare(b.title));
+    }
+  }
   useEffect(() => {
     if (isPlaylistsChangesControl.isPlaylistsChanges || !isLoading) {
       async function fetchData() {
         fetchPlaylists();
       }
       fetchData();
+      
       isPlaylistsChangesControl.setIsPlaylistsChanges(false);
     }
   }, [isLoading, isPlaylistsChangesControl.isPlaylistsChanges]);
+  useEffect(() => {
+    if (songs.length > 0) {
+      handleSortSongs("recent");
+      setSortType("recent");
+    }
+  },[songs])
   const handleGetCurrentPlaylistTracks = async (currentPlaylist) => {
     if (isAuthenticated) {
       const token = await getAccessTokenSilently({
@@ -97,6 +112,7 @@ const YourLibrary = ({
 
       const body = await response.json();
       setSongs(body);
+      setSongsFullList(body);
     }
   };
   if (isLoading) {
@@ -144,7 +160,20 @@ const YourLibrary = ({
                 value={search}
               />
             </div>
-            <div className={styles["sr-recent"]}>Recent</div>
+            <div className={styles["sr-recent"]}>
+              <select
+                className={styles["sr-select"]}
+                value={sortType}
+                onChange={(e) => {
+                  setSortType(e.target.value);
+                  handleSortSongs(e.target.value);
+                }}
+              >
+                <option value="recent">Recent</option>
+                <option value="az">A-Z</option>
+                {/* <option value="artist">By Artist</option> */}
+              </select>
+            </div>
           </div>
 
           <div className={styles["yl-song-container"]}>
