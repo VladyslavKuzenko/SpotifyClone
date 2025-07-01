@@ -716,7 +716,9 @@
       align-content: center;
       cursor: pointer;
     }
-
+.liked {
+  color: #b91d1d; /* зелений або будь-який інший */
+}
 
     .as-duration {
       width: 15%;

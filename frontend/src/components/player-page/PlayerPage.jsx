@@ -13,10 +13,15 @@ import { Navigate } from "react-router-dom";
 const PlayerPage = () => {
   const { isAuthenticated, isLoading } = useAuth0();
   const { getAccessTokenSilently, getAccessTokenWithPopup } = useAuth0();
+  const [isPlaylistsChanges, setIsPlaylistsChanges] = useState(false);
   const [currentSong, setCurrentSong] = useState("");
-  const [currentAlbum, setCurrentAlbum] = useState("");
-  const [songsLibrary, setSongsLibrary] = useState([]);
-  const [test, setTest] = useState();
+  const [currentSongList, setCurrentSongList] = useState("");
+  const [currentArtist, setCurrentArtist] = useState({});
+  /*   const [songsLibrary, setSongsLibrary] = useState([]); */
+  /*   const [songsMiddleItem, setSongsMiddleItem] = useState([]); */
+  const [artists, setArtists] = useState();
+
+  /*   const [test, setTest] = useState(); */
   /* const [songsLibrary, setSongsLibrary] = useState([
     {
       title: "I Fall to Pieces",
@@ -57,11 +62,8 @@ const PlayerPage = () => {
       listenersCount: 1222345,
     },
   ]); */
-  const [songsMiddleItem, setSongsMiddleItem] = useState([]);
-  const [currentArtist, setCurrentArtist] = useState({});
-  const [artists, setArtists] = useState();
 
-  const handleArtist = async () => {
+  const handleArtists = async () => {
     if (isAuthenticated) {
       console.log("handleArtist is working");
 
@@ -89,41 +91,10 @@ const PlayerPage = () => {
       console.log("handleArtist is NOT working");
     }
   };
-  const handleArtistMusic = async () => {
-    if (isAuthenticated) {
-      console.log("handleArtistMusic is working");
-      console.log("Current Artist Id");
-      console.log(currentArtist.id);
 
-      const token = await getAccessTokenSilently({
-        authorizationParams: {
-          audience: API_URL,
-        },
-      });
-      const response = await fetch(
-        `http://localhost:8080/tracks/tracks-by-artists/${currentArtist.id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      const body = await response.json();
-      setSongsMiddleItem(body);
-      console.log("BODY Track:");
-      console.log(body);
-      /*  console.log("First Name: "+ body[0].user.firstName);
-      console.log(body[0].user.firstName);
-      console.log(body[0].listeningCount); */
-      //console.log(body[0].user.firstName);
-    } else {
-      console.log("handleArtist is NOT working");
-    }
-  };
   const handleStart = async () => {
     if (isAuthenticated) {
-      console.log("handleArtist is working");
+     /*  console.log("handleArtist is working"); */
 
       const token = await getAccessTokenSilently({
         authorizationParams: {
@@ -139,12 +110,13 @@ const PlayerPage = () => {
         }
       );
 
-      const bodyArtist = await responseArtist.json();
-      setArtists(bodyArtist);
-      setCurrentArtist(bodyArtist[0]);
-
-      const responseTrack = await fetch(
-        `http://localhost:8080/tracks/tracks-by-artists/${bodyArtist[0].id}`,
+      const bodyArtists = await responseArtist.json();
+      setArtists(bodyArtists);
+      setCurrentArtist(bodyArtists[0]);
+ /*      console.log("BODY ARTISTS:");
+      console.log(bodyArtists); */
+      /*  const responseTrack = await fetch(
+        `http://localhost:8080/tracks/tracks-by-artists/${bodyArtists[0].id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -153,13 +125,19 @@ const PlayerPage = () => {
       );
 
       const bodyTrack = await responseTrack.json();
-      setSongsMiddleItem(bodyTrack);
-      setTest(true);
+      setSongsMiddleItem(bodyTrack); */
+      /*  setTest(true); */
     }
   };
   useEffect(() => {
-    handleStart();
+    async function fetchData() {
+      await handleStart();
+    }
+    fetchData();
   }, [isLoading]);
+  /*     useEffect(() => {
+    handleArtistMusic();
+  }, [currentArtist]); */
   /* useEffect(() => {
     console.log("useEffect isLoading is  working");
     handleArtist();
@@ -170,12 +148,20 @@ const PlayerPage = () => {
   },[currentArtist]); */
 
   const nextSong = () => {
-    if (currentAlbum.indexOf(currentSong) + 1 < currentAlbum.length)
-      setCurrentSong(currentAlbum[currentAlbum.indexOf(currentSong) + 1]);
+    if (currentSongList.indexOf(currentSong) + 1 < currentSongList.length)
+      setCurrentSong(currentSongList[currentSongList.indexOf(currentSong) + 1]);
   };
   const prevSong = () => {
-    if (currentAlbum.indexOf(currentSong) - 1 >= 0)
-      setCurrentSong(currentAlbum[currentAlbum.indexOf(currentSong) - 1]);
+    if (currentSongList.indexOf(currentSong) - 1 >= 0)
+      setCurrentSong(currentSongList[currentSongList.indexOf(currentSong) - 1]);
+  };
+  const nextArtist = () => {
+    if (artists.indexOf(currentArtist) + 1 < artists.length)
+      setCurrentArtist(artists[artists.indexOf(currentArtist) + 1]);
+  };
+  const prevArtist = () => {
+    if (artists.indexOf(currentArtist) - 1 >= 0)
+      setCurrentArtist(artists[artists.indexOf(currentArtist) - 1]);
   };
   if (isLoading) {
     return <div>Loading...</div>;
@@ -195,21 +181,29 @@ const PlayerPage = () => {
           <div className={styles["mr-middle"]}>
             <div className={styles["mr-left"]}>
               <YourLibrary
-                songsList={songsLibrary}
+                /* songsList={songsLibrary} */
                 onSongSelect={setCurrentSong}
-                onSetCurrentAlbum={setCurrentAlbum}
+                onSetCurrentSongList={setCurrentSongList}
+                isPlaylistsChangesControl={{
+                  isPlaylistsChanges,
+                  setIsPlaylistsChanges,
+                }}
               />
             </div>
             <MiddleItem
-              songsList={songsMiddleItem}
+              /* songsList={songsMiddleItem} */
               onSongSelect={setCurrentSong}
-              onSetCurrentAlbum={setCurrentAlbum}
-              artist={{
+              onSetCurrentSongList={setCurrentSongList}
+              isPlaylistsChangesControl={{
+                isPlaylistsChanges,
+                setIsPlaylistsChanges,
+              }}
+              /*    artist={{
                 ...currentArtist.user,
                 monthlyListner: currentArtist.listeningCount,
-              }}
+              }} */
+              /*       artistControl={{ nextArtist, prevArtist }} */
             />
-            
           </div>
 
           <FooterPlayer songControl={{ currentSong, nextSong, prevSong }} />

@@ -1,13 +1,83 @@
-import React, { useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import styles from "./player.module.css";
 import SongItem from "./SongItem";
 import { searchSongs } from "../../js/functions/functions";
+import { useAuth0 } from "@auth0/auth0-react";
+import { Navigate } from "react-router-dom";
+import { API_URL } from "../../js/properties/properties";
 
-const YourLibrary = ({ songsList, onSongSelect, onSetCurrentAlbum }) => {
+const YourLibrary = ({
+  onSongSelect,
+  onSetCurrentSongList,
+  isPlaylistsChangesControl,
+}) => {
   const [search, setSearch] = useState("");
-  const [songs, setSongs] = useState(songsList);
+  const [songs, setSongs] = useState([]);
+  const [songsFullList, setSongsFullList] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [playlists, setPlaylists] = useState([]);
 
+  const { getAccessTokenSilently, getAccessTokenWithPopup, user } = useAuth0();
+  const { isLoading, isAuthenticated } = useAuth0();
+
+  const fetchPlaylists = async () => {
+    if (isAuthenticated) {
+      const token = await getAccessTokenSilently({
+        authorizationParams: {
+          audience: API_URL,
+        },
+      });
+      const response = await fetch(
+        `http://localhost:8080/playlists/playlists/${user.sub}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const body = await response.json();
+      setPlaylists(body);
+ /*      console.log("Playlists: ");
+      console.log(body); */
+      handleGetCurrentPlaylistTracks(body.find((i) => i.title === "Like"));
+    }
+  };
+  useEffect(() => {
+    if (isPlaylistsChangesControl.isPlaylistsChanges || !isLoading) {
+      async function fetchData() {
+        fetchPlaylists();
+      }
+      fetchData();
+      isPlaylistsChangesControl.setIsPlaylistsChanges(false);
+    }
+  }, [isLoading, isPlaylistsChangesControl.isPlaylistsChanges]);
+  const handleGetCurrentPlaylistTracks = async (currentPlaylist) => {
+    if (isAuthenticated) {
+      const token = await getAccessTokenSilently({
+        authorizationParams: {
+          audience: API_URL,
+        },
+      });
+      const response = await fetch(
+        `http://localhost:8080/tracks/tracks/${currentPlaylist.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const body = await response.json();
+      setSongs(body);
+    }
+  };
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
   return (
     <>
       <div className={styles["your-library"]}>
@@ -25,10 +95,14 @@ const YourLibrary = ({ songsList, onSongSelect, onSetCurrentAlbum }) => {
           </div>
 
           <div className={styles["playlist-platform"]}>
-            {[...Array(3)].map((_, i) => (
-              <div key={i} className={styles["playlist-element"]}>
-                playlist
-              </div>
+            {playlists.map((i) => (
+              <button
+                key={i}
+                className={styles["playlist-element"]}
+                onClick={() => handleGetCurrentPlaylistTracks(i)}
+              >
+                {i.title}
+              </button>
             ))}
           </div>
 
@@ -38,7 +112,7 @@ const YourLibrary = ({ songsList, onSongSelect, onSetCurrentAlbum }) => {
                 type="text"
                 onChange={(e) => {
                   setSearch(e.target.value);
-                  searchSongs(songsList, e.target.value, setSongs);
+                  searchSongs(songsFullList, e.target.value, setSongs);
                 }}
                 value={search}
               />
@@ -52,8 +126,8 @@ const YourLibrary = ({ songsList, onSongSelect, onSetCurrentAlbum }) => {
                 key={i.id}
                 onSongSelect={onSongSelect}
                 song={i}
-                onSetCurrentAlbum={() => {
-                  onSetCurrentAlbum(songs);
+                onSetCurrentSongList={() => {
+                  onSetCurrentSongList(songs);
                 }}
               />
             ))}
@@ -61,10 +135,11 @@ const YourLibrary = ({ songsList, onSongSelect, onSetCurrentAlbum }) => {
         </div>
       </div>
 
-
-
       {isModalOpen && (
-        <div className={styles["modal-overlay"]} onClick={() => setIsModalOpen(false)}>
+        <div
+          className={styles["modal-overlay"]}
+          onClick={() => setIsModalOpen(false)}
+        >
           <div
             className={styles["modal-window"]}
             onClick={(e) => e.stopPropagation()}
@@ -73,24 +148,34 @@ const YourLibrary = ({ songsList, onSongSelect, onSetCurrentAlbum }) => {
               <div className={styles["modal-text"]}> New playlist</div>
               <div className={styles["modal-image"]}>
                 <div className={styles["playlist-img"]}></div>
-                <button className={styles["playlist-btn"]}>Select image </button>
-
+                <button className={styles["playlist-btn"]}>
+                  Select image{" "}
+                </button>
               </div>
             </div>
-
 
             <div className={styles["modal-right-side"]}>
               <div className={styles["empty-modal1"]}></div>
               <div className={styles["name-desc"]}>
-
-                <input type="text" className={styles["playlist-name"]} name="" id="" placeholder="Name" />
-                <input type="text" className={styles["playlist-description"]} name="" id="" placeholder="Description" />
+                <input
+                  type="text"
+                  className={styles["playlist-name"]}
+                  name=""
+                  id=""
+                  placeholder="Name"
+                />
+                <input
+                  type="text"
+                  className={styles["playlist-description"]}
+                  name=""
+                  id=""
+                  placeholder="Description"
+                />
               </div>
 
               <div className={styles["access"]}>
                 <div className={styles["access-text"]}>Playlist access</div>
                 <div className={styles["private-public"]}>
-
                   <label className={styles["private-label"]}>
                     <input type="checkbox" className={styles["private-box"]} />
                     <span>Private</span>
@@ -100,27 +185,19 @@ const YourLibrary = ({ songsList, onSongSelect, onSetCurrentAlbum }) => {
                     <input type="checkbox" className={styles["public-box"]} />
                     <span>Public</span>
                   </label>
-
-
                 </div>
-
-
-
               </div>
 
               <div className={styles["cancel-create"]}>
-                <button className={styles["cancel-btn"]} onClick={() => setIsModalOpen(false)}>Cancel</button>
+                <button
+                  className={styles["cancel-btn"]}
+                  onClick={() => setIsModalOpen(false)}
+                >
+                  Cancel
+                </button>
                 <button className={styles["create-btn"]}>Create</button>
-
-
               </div>
-
-
-
-
             </div>
-
-
           </div>
         </div>
       )}
