@@ -8,10 +8,12 @@ import WhoToFollow from "./WhoToFollow";
 import NewSongs from "./NewSongs";
 import ContainerVibe from "./ContainerVibe";
 import SearchModal from "./SearchModal";
+import NewPost from "./NewPost";
 
 const Main = () => {
   const { isAuthenticated, isLoading } = useAuth0();
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
+  const [isPostModalOpen, setIsPostModalOpen] = useState(false); // для New Post
 
   if (isLoading) return <div>Loading...</div>;
   if (!isAuthenticated) return <Navigate to="/login" replace />;
@@ -35,7 +37,12 @@ const Main = () => {
               className={styles.search}
               onFocus={() => setIsSearchModalOpen(true)}
             />
-            <button className={styles["new-post"]}>+ New post</button>
+            <button
+              className={styles["new-post"]}
+              onClick={() => setIsPostModalOpen(true)}
+            >
+              + New post
+            </button>
             <button className={styles.notification}>Notification</button>
 
             <SearchModal
@@ -68,6 +75,10 @@ const Main = () => {
           <NewSongs />
         </div>
       </div>
+
+     {isPostModalOpen && (
+  <NewPost onClose={() => setIsPostModalOpen(false)} />
+)}
     </>
   );
 };

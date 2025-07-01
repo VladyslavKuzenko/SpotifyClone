@@ -1,4 +1,4 @@
- import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "./player.module.css";
 import SongItem from "./SongItem";
 import { searchSongs } from "../../js/functions/functions";
@@ -9,7 +9,8 @@ const YourLibrary = ({ songsList, onSongSelect, onSetCurrentAlbum }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("Recent");
   const [showOptions, setShowOptions] = useState(false);
-
+  const [isPrivate, setIsPrivate] = useState(false);
+  const [isPublic, setIsPublic] = useState(false);
   const dropdownRef = useRef();
 
   const handleSelect = (option) => {
@@ -164,16 +165,28 @@ const YourLibrary = ({ songsList, onSongSelect, onSetCurrentAlbum }) => {
               <div className={styles["access"]}>
                 <div className={styles["access-text"]}>Playlist access</div>
                 <div className={styles["private-public"]}>
-                  <label className={styles["private-label"]}>
-                    <input type="checkbox" className={styles["private-box"]} />
-                    <span>Private</span>
-                  </label>
+  <label className={styles["private-label"]}>
+    <input
+      type="checkbox"
+      className={styles["private-box"]}
+      checked={isPrivate}
+      disabled={isPublic} // Блокуємо, якщо вибрано Public
+      onChange={() => setIsPrivate(!isPrivate)}
+    />
+    <span>Private</span>
+  </label>
 
-                  <label className={styles["public-label"]}>
-                    <input type="checkbox" className={styles["public-box"]} />
-                    <span>Public</span>
-                  </label>
-                </div>
+  <label className={styles["public-label"]}>
+    <input
+      type="checkbox"
+      className={styles["public-box"]}
+      checked={isPublic}
+      disabled={isPrivate} // Блокуємо, якщо вибрано Private
+      onChange={() => setIsPublic(!isPublic)}
+    />
+    <span>Public</span>
+  </label>
+</div>
               </div>
 
               <div className={styles["cancel-create"]}>
