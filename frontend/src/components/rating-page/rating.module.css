@@ -1,0 +1,381 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scrollbar-width: none;
+
+}
+
+.left-side {
+    height: 100%;
+    width: 225px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-color: crimson;
+}
+
+.raitinig-container {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.upper-platform {
+    width: calc(100% - 225px);
+    height: 900px;
+    margin-left: 225px;
+    display: flex;
+}
+
+.bottom-platform {
+    width: calc(100% - 225px);
+    height: 900px;
+    background-color: #4B4B4B;
+    margin-left: 225px;
+    align-content: center;
+}
+
+.upper-left {
+    width: 63%;
+    height: 100%;
+    background-color: #7A7A7A;
+
+}
+
+.upper-right {
+    width: 37%;
+    height: 100%;
+    background-color: #373737;
+    display: flex;
+    justify-content: center;
+}
+
+.top-content {
+    width: 100%;
+    height: 110px;
+    align-content: end;
+    display: flex;
+}
+
+.info-song {
+    display: flex;
+    width: 100%;
+    height: 160px;
+    margin-top: 110px;
+}
+
+.info-place {
+    width: 15%;
+    height: 100%;
+    display: flex;
+    justify-content: end;
+
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 64px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: rgba(255, 255, 255, 0.13);
+    align-items: center;
+    padding-right: 23px;
+
+}
+
+.info-content {
+    width: 85%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.info-artist {
+    width: 100%;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 26px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #FFFFFF4D;
+
+}
+
+.info-song-name {
+    width: 100%;
+    color: white;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 64px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    padding-bottom: 20px;
+
+
+}
+
+.info-listeners {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: white;
+
+}
+
+.text1 {
+    height: 100%;
+    width: calc(30% - 20px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-indent: 20px;
+    padding-right: 20px;
+
+}
+
+.all-type {
+    border: none;
+    background-color: #8C8C8C8F;
+    width: 125px;
+    height: 46px;
+    cursor: pointer;
+    color: white;
+    margin: 5px;
+
+}
+
+.period {
+    border: none;
+    width: 270px;
+    height: 46px;
+    background-color: #8C8C8C8F;
+    cursor: pointer;
+    color: white;
+    margin: 5px;
+
+}
+
+.world-place {
+    border: none;
+    width: 270px;
+    height: 46px;
+    background-color: #8C8C8C8F;
+    cursor: pointer;
+    color: white;
+    margin: 5px;
+
+}
+
+.btn-container {
+    height: 100%;
+    width: 70%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+}
+
+.scroll-container {
+    width: 450px;
+    height: 100%;
+    overflow: auto;
+    scrollbar-color: #525252 transparent;
+    margin-top: 30px;
+    margin-left: 15px;
+    margin-right: 15px;
+
+}
+
+.scroll-item {
+    width: 100%;
+    height: 315px;
+    display: flex;
+    margin-bottom: 30px;
+
+
+}
+
+.item-place {
+    height: 100%;
+    width: 45px;
+    background-color: transparent;
+    align-content: center;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 40px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #FFFFFF4F;
+}
+
+.item-info {
+    width: 380px;
+
+}
+
+.item-photo {
+    width: 100%;
+    height: 235px;
+    background-color: #615F5F;
+    border-radius: 5px;
+}
+
+.inside-info {
+    height: 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.inside-name {
+    color: white;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    margin-top: 15px;
+    margin-bottom: 5px;
+
+}
+
+.inside-singer {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 11px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #FFFFFF75;
+    margin-bottom: 7px;
+
+}
+
+.inside-listeners {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #FFFFFFB2;
+}
+
+.bottom-content {
+    width: 85%;
+    height: 690px;
+    margin-left: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.raite-item1 {
+    width: 75%;
+    height: 132px;
+    background-color: #8F8F8F;
+    display: flex;
+    justify-content: space-between;
+}
+
+.raite-item2 {
+    width: 60%;
+    height: 132px;
+    background-color: #8F8F8F;
+    display: flex;
+    justify-content: space-between;
+}
+
+.raite-item3 {
+    width: 45%;
+    height: 132px;
+    background-color: #8F8F8F;
+    display: flex;
+    justify-content: space-between;
+}
+
+.raite-item4 {
+    width: 35%;
+    height: 132px;
+    background-color: #8F8F8F;
+    display: flex;
+    justify-content: space-between;
+}
+
+.raite-item5 {
+    width: 25%;
+    height: 132px;
+    background-color: #8F8F8F;
+    display: flex;
+    justify-content: space-between;
+}
+
+.raite-photo {
+    width: 132px;
+    height: 132px;
+    background-color: #373737;
+}
+
+.raite-wrapper {
+    width: 100%;
+    height: 132px;
+    align-items: center;
+    display: flex;
+
+}
+
+.raite-listeners {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: white;
+    margin-left: 60px;
+
+}
+
+.raite-end {
+    height: 100%;
+    width: 11px;
+    background-color: #292929;
+}
+
+.text2 {
+    color: white;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    margin-bottom: 25px;
+    margin-left: 100px;
+
+}
+
+.raite-center {
+    flex: 1;
+    align-content: center;
+}
+
+.raite-text {
+    margin-left: 30px;
+    color: white;
+    font-family: 'Inter',sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: 0%;
+
+
+}
