@@ -82,7 +82,7 @@ html {
     letter-spacing: 0%;
     color: rgba(255, 255, 255, 0.13);
     align-items: center;
-    padding-right: 23px;
+    padding-right: 30px;
 
 }
 
@@ -164,6 +164,8 @@ html {
     cursor: pointer;
     color: white;
     margin: 5px;
+    text-align: start;
+    text-indent: 20px;
 
 }
 
@@ -175,7 +177,8 @@ html {
     cursor: pointer;
     color: white;
     margin: 5px;
-
+    text-align: start;
+    text-indent: 20px;
 }
 
 .btn-container {
@@ -378,4 +381,27 @@ html {
     letter-spacing: 0%;
 
 
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  z-index: 100;
+  width: 100%;
+}
+
+.dropdown-item {
+  cursor: pointer;
+  white-space: nowrap;
+
+}
+
+.dropdown-item:hover {
+  background-color: #f0f0f0;
+}
+
+.selected {
+  background-color: #e0e0e0;
 }

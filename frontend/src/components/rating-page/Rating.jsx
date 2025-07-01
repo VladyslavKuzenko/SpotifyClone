@@ -11,7 +11,7 @@ export default function Rating() {
             <div className={styles["top-content"]}>
               <div className={styles["text1"]}>Popular Tracks</div>
               <div className={styles["btn-container"]}>
-                <button className={styles["all-type"]}>All type </button>
+                <button className={styles["all-type"]}>All Type </button>
                 <button className={styles["period"]}>Monthly</button>
                 <button className={styles["world-place"]}>Worldwide</button>
               </div>
