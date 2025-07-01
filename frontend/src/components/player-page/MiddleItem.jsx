@@ -1,5 +1,5 @@
 import { use, useEffect, useState } from "react";
-import { searchSongs } from "../../js/functions/functions";
+import { isSubscribed, searchSongs } from "../../js/functions/functions";
 import MiddleSongItem from "./MIddleSongItem";
 import styles from "./player.module.css";
 import SongItem from "./SongItem";
@@ -11,20 +11,21 @@ export default function MiddleItem({
   /*   songsList, */
   onSongSelect,
   onSetCurrentSongList,
-  isPlaylistsChangesControl
- /*  artist, */
-/*   artistControl, */
+  isPlaylistsChangesControl,
+  /*  artist, */
+  /*   artistControl, */
 }) {
   const [search, setSearch] = useState("");
   const [songs, setSongs] = useState([]);
   const [songsFullList, setSongsFullList] = useState([]);
   const [artists, setArtists] = useState();
   const [currentArtist, setCurrentArtist] = useState(null);
-  const { isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0();
- 
+  const [isFollowed, setIsFollowed] = useState(false);
+  const {user, isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0();
+
   const handleArtistMusic = async () => {
-    if (isAuthenticated&& currentArtist) {
-  /*     console.log("handleArtistMusic is working");
+    if (isAuthenticated && currentArtist) {
+      /*     console.log("handleArtistMusic is working");
       console.log("ARTIST"); */
 
       const token = await getAccessTokenSilently({
@@ -44,7 +45,7 @@ export default function MiddleItem({
       const body = await response.json();
       setSongs(body);
       setSongsFullList(body);
- /*      console.log("BODY Track:");
+      /*      console.log("BODY Track:");
       console.log(body);
  */
       /*  console.log("First Name: "+ body[0].user.firstName);
@@ -53,33 +54,32 @@ export default function MiddleItem({
       //console.log(body[0].user.firstName);
     }
   };
-    const handleStart = async () => {
-      if (isAuthenticated) {
-    /*     console.log("handleArtist is working"); */
-  
-        const token = await getAccessTokenSilently({
-          authorizationParams: {
-            audience: API_URL,
+  const handleStart = async () => {
+    if (isAuthenticated) {
+
+      const token = await getAccessTokenSilently({
+        authorizationParams: {
+          audience: API_URL,
+        },
+      });
+      const responseArtist = await fetch(
+        "http://localhost:8080/artists/top/0/20",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
           },
-        });
-        const responseArtist = await fetch(
-          "http://localhost:8080/artists/top/0/20",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-  
-              const bodyArtists = await responseArtist.json();
-        setArtists(bodyArtists);
-        setCurrentArtist(bodyArtists[0]);
-   /*      console.log("BODY ARTISTS:");
+        }
+      );
+
+      const bodyArtists = await responseArtist.json();
+      setArtists(bodyArtists);
+      setCurrentArtist(bodyArtists[0]);
+      /*      console.log("BODY ARTISTS:");
         console.log(bodyArtists);
         console.log("BODY ARTISTS 0:");
         console.log(bodyArtists[0]); */
-        
-       /*  console.log("BODY ARTISTS:");
+
+      /*  console.log("BODY ARTISTS:");
         console.log(bodyArtists);
         const responseTrack = await fetch(
           `http://localhost:8080/tracks/tracks-by-artists/${bodyArtists[0].id}`,
@@ -93,10 +93,38 @@ export default function MiddleItem({
         const bodyTrack = await responseTrack.json();
         setSongs(bodyTrack);
         setSongsFullList(bodyTrack);
-        /*  setTest(true); */ 
+        /*  setTest(true); */
+    }
+  };
+  const habdleFollow = async () => {
+    if(isAuthenticated){
+      const token = await getAccessTokenSilently({
+        authorizationParams: {
+          audience: API_URL,
+        },
+      });
+      const response = await fetch(
+        `http://localhost:8080/users/follow/${user.sub}/${currentArtist?.user.id}`,
+        {
+          method: isFollowed ? "DELETE" : "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+/*       const body= await response.json();
+      console.log(body);
+      console.log(); */
+      
+
+      if (response.ok) {
+        setIsFollowed(!isFollowed);
+      } else {
+        console.error("Failed to follow/unfollow the artist");
       }
-    };
-  useEffect(() => {
+    }
+  }
+    useEffect(() => {
     const fetchData = async () => {
       await handleStart();
     };
@@ -110,8 +138,14 @@ export default function MiddleItem({
     const fetchData = async () => {
       await handleArtistMusic();
     };
+    const checkFollowed = async () => {
+      if (isAuthenticated && user&&currentArtist) {
+        const subscribed = await isSubscribed(user, currentArtist?.user, getAccessTokenSilently);
+        setIsFollowed(subscribed);
+      }
+    };
     fetchData();
-
+    checkFollowed();
   }, [currentArtist]);
 
   const nextArtist = () => {
@@ -136,16 +170,10 @@ export default function MiddleItem({
       <div className={styles["artist-songs"]}>
         <div className={styles["as-plat1"]}>
           <div className={styles["left-right-btns"]}>
-            <button
-              className={styles["left-btn-plat"]}
-              onClick={prevArtist}
-            >
+            <button className={styles["left-btn-plat"]} onClick={prevArtist}>
               {"<"}
             </button>
-            <button
-              className={styles["right-btn-plat"]}
-              onClick={nextArtist}
-            >
+            <button className={styles["right-btn-plat"]} onClick={nextArtist}>
               {">"}
             </button>
           </div>
@@ -184,7 +212,7 @@ export default function MiddleItem({
               >
                 Play
               </button>
-              <button className={styles["pf-follow"]}>Follow</button>
+              <button className={styles["pf-follow"]} onClick={habdleFollow}>{isFollowed?'Unfollow':'Follow'}</button>
             </div>
           </div>
         </div>

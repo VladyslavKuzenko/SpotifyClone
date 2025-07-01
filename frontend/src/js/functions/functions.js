@@ -61,3 +61,26 @@ export async function isUserPlaylistContainsSong(song,user,getAccessTokenSilentl
 /*   console.log("isUserPlaylistContainsSong: " + result); */
   return result
 }
+
+export async function isSubscribed(user,userToCheckSubscription,getAccessTokenSilently){
+    const token = await getAccessTokenSilently({
+          authorizationParams: {
+            audience: API_URL,
+          },
+        });
+  const response = await fetch(
+    `http://localhost:8080/users/userFollowing/${user.sub}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  const body = await response.json();
+  console.log("isSubscribed: ");
+  console.log(body);
+  var isSubscribed = body.some(
+    (i) => i.id === userToCheckSubscription.id
+  );
+  return isSubscribed;
+} 
