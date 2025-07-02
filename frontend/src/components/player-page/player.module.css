@@ -1106,6 +1106,7 @@
       display: flex;
       box-sizing: border-box;
       background-color: #858585;
+      background-color: red;
 
 
     }
@@ -1115,6 +1116,7 @@
       height: 100%;
       display: flex;
       align-items: center;
+      background-color: green;
 
 
     }

@@ -7,7 +7,7 @@ import AudioControl from "./AudioControl";
 const FooterPlayer = ({ songControl }) => {
 
   return (
-        <div className={styles["footer-container"]}>
+    <div className={styles["footer-container"]}>
 
     <div className={styles["mr-bottom"]}>
 
