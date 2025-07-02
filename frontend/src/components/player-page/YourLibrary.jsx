@@ -1,19 +1,30 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, {use, useState, useEffect, useRef } from "react";
 import styles from "./player.module.css";
 import SongItem from "./SongItem";
 import { searchSongs } from "../../js/functions/functions";
+import { useAuth0 } from "@auth0/auth0-react";
+import { Navigate } from "react-router-dom";
+import { API_URL } from "../../js/properties/properties";
 
-const YourLibrary = ({ songsList, onSongSelect, onSetCurrentAlbum }) => {
+const YourLibrary = ({
+  onSongSelect,
+  onSetCurrentSongList,
+  isPlaylistsChangesControl,
+}) => {
   const [search, setSearch] = useState("");
-  const [songs, setSongs] = useState(songsList);
+  const [songs, setSongs] = useState([]);
+  const [songsFullList, setSongsFullList] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [playlists, setPlaylists] = useState([]);
+  const [titlePlaylist, setTitlePlaylist] = useState("");
+  const [sortType, setSortType] = useState("recent");
   const [selectedOption, setSelectedOption] = useState("Recent");
   const [showOptions, setShowOptions] = useState(false);
   const [isPrivate, setIsPrivate] = useState(false);
   const [isPublic, setIsPublic] = useState(false);
   const dropdownRef = useRef();
 
-  const handleSelect = (option) => {
+/*   const handleSelect = (option) => {
     setSelectedOption(option);
     setShowOptions(false);
     if (option === "New") {
@@ -23,7 +34,7 @@ const YourLibrary = ({ songsList, onSongSelect, onSetCurrentAlbum }) => {
     } else if (option === "Recent") {
       setSongs([...songsList]);
     }
-  };
+  }; */
 
   // Закриття дропдауна при кліку поза ним
   useEffect(() => {
@@ -37,6 +48,108 @@ const YourLibrary = ({ songsList, onSongSelect, onSetCurrentAlbum }) => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const { getAccessTokenSilently, getAccessTokenWithPopup, user } = useAuth0();
+  const { isLoading, isAuthenticated } = useAuth0();
+
+  const handleCreatePlaylist = async () => {
+    if (isAuthenticated) {
+      const token = await getAccessTokenSilently({
+        authorizationParams: {
+          audience: API_URL,
+        },
+      });
+      const response = await fetch(`http://localhost:8080/playlists`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ title: titlePlaylist, user: { id: user.sub } }),
+      });
+
+      if (response.ok) {
+        setIsModalOpen(false);
+        setTitlePlaylist("");
+        isPlaylistsChangesControl.setIsPlaylistsChanges(true);
+      } else {
+        console.error("Failed to create playlist");
+      }
+    }
+  };
+
+  const fetchPlaylists = async () => {
+    if (isAuthenticated) {
+      const token = await getAccessTokenSilently({
+        authorizationParams: {
+          audience: API_URL,
+        },
+      });
+      const response = await fetch(
+        `http://localhost:8080/playlists/playlists/${user.sub}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const body = await response.json();
+      setPlaylists(body);
+      /*      console.log("Playlists: ");
+      console.log(body); */
+      handleGetCurrentPlaylistTracks(body.find((i) => i.title === "Like"));
+    }
+  };
+  const handleSortSongs = ( sortType) => {
+    if (sortType === "recent") {
+      songs.sort((a, b) => b.id - a.id);
+    } else if (sortType === "az") {
+      songs.sort((a, b) => a.title.localeCompare(b.title));
+    }
+  }
+  useEffect(() => {
+    if (isPlaylistsChangesControl.isPlaylistsChanges || !isLoading) {
+      async function fetchData() {
+        fetchPlaylists();
+      }
+      fetchData();
+      
+      isPlaylistsChangesControl.setIsPlaylistsChanges(false);
+    }
+  }, [isLoading, isPlaylistsChangesControl.isPlaylistsChanges]);
+  useEffect(() => {
+    if (songs.length > 0) {
+      handleSortSongs("recent");
+      setSortType("recent");
+    }
+  },[songs])
+  const handleGetCurrentPlaylistTracks = async (currentPlaylist) => {
+    if (isAuthenticated) {
+      const token = await getAccessTokenSilently({
+        authorizationParams: {
+          audience: API_URL,
+        },
+      });
+      const response = await fetch(
+        `http://localhost:8080/tracks/tracks/${currentPlaylist.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const body = await response.json();
+      setSongs(body);
+      setSongsFullList(body);
+    }
+  };
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
   return (
     <>
       <div className={styles["your-library"]}>
@@ -58,10 +171,14 @@ const YourLibrary = ({ songsList, onSongSelect, onSetCurrentAlbum }) => {
           </div>
 
           <div className={styles["playlist-platform"]}>
-            {[...Array(3)].map((_, i) => (
-              <div key={i} className={styles["playlist-element"]}>
-                playlist
-              </div>
+            {playlists.map((i) => (
+              <button
+                key={i.id}
+                className={styles["playlist-element"]}
+                onClick={() => handleGetCurrentPlaylistTracks(i)}
+              >
+                {i.title}
+              </button>
             ))}
           </div>
 
@@ -71,15 +188,28 @@ const YourLibrary = ({ songsList, onSongSelect, onSetCurrentAlbum }) => {
                 type="text"
                 onChange={(e) => {
                   setSearch(e.target.value);
-                  searchSongs(songsList, e.target.value, setSongs);
+                  searchSongs(songsFullList, e.target.value, setSongs);
                 }}
                 value={search}
                 className={styles["search-css"]}
                 placeholder="Search"
               />
             </div>
+            <div className={styles["sr-recent"]}>
+              <select
+                className={styles["sr-select"]}
+                value={sortType}
+                onChange={(e) => {
+                  setSortType(e.target.value);
+                  handleSortSongs(e.target.value);
+                }}
+              >
+                <option value="recent">Recent</option>
+                <option value="az">A-Z</option>
+                {/* <option value="artist">By Artist</option> */}
+              </select>
 
-            <div className={styles["recent-container"]} ref={dropdownRef}>
+{/* <div className={styles["recent-container"]} ref={dropdownRef}>
               <div
                 className={styles["sr-recent"]}
                 onClick={() => setShowOptions((prev) => !prev)}
@@ -113,7 +243,7 @@ const YourLibrary = ({ songsList, onSongSelect, onSetCurrentAlbum }) => {
                     Most played
                   </div>
                 </div>
-              )}
+              )}*/}
             </div>
           </div>
 
@@ -123,7 +253,10 @@ const YourLibrary = ({ songsList, onSongSelect, onSetCurrentAlbum }) => {
                 key={i.id}
                 onSongSelect={onSongSelect}
                 song={i}
-                onSetCurrentAlbum={() => onSetCurrentAlbum(songs)}
+                onSetCurrentSongList={() => {
+                  onSetCurrentSongList(songs);
+                }}
+
               />
             ))}
           </div>
@@ -139,13 +272,16 @@ const YourLibrary = ({ songsList, onSongSelect, onSetCurrentAlbum }) => {
             className={styles["modal-window"]}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className={styles["modal-left-side"]}>
-              <div className={styles["modal-text"]}>New playlist</div>
+            {/* <div className={styles["modal-left-side"]}>
+              <div className={styles["modal-text"]}> New playlist</div>
               <div className={styles["modal-image"]}>
                 <div className={styles["playlist-img"]}></div>
-                <button className={styles["playlist-btn"]}>Select image</button>
+                <button className={styles["playlist-btn"]}>
+                  Select image{" "}
+                </button>
               </div>
-            </div>
+            </div> */}
+
 
             <div className={styles["modal-right-side"]}>
               <div className={styles["empty-modal1"]}></div>
@@ -153,41 +289,37 @@ const YourLibrary = ({ songsList, onSongSelect, onSetCurrentAlbum }) => {
                 <input
                   type="text"
                   className={styles["playlist-name"]}
-                  placeholder="Name"
+                  name=""
+                  id="inp-title"
+                  placeholder="Title"
+                  value={titlePlaylist}
+                  onChange={(e) => setTitlePlaylist(e.target.value)}
+
                 />
                 <input
                   type="text"
                   className={styles["playlist-description"]}
+                  name=""
+                  id=""
                   placeholder="Description"
                 />
               </div>
 
-              <div className={styles["access"]}>
+              {/*  <div className={styles["access"]}>
                 <div className={styles["access-text"]}>Playlist access</div>
                 <div className={styles["private-public"]}>
-  <label className={styles["private-label"]}>
-    <input
-      type="checkbox"
-      className={styles["private-box"]}
-      checked={isPrivate}
-      disabled={isPublic} // Блокуємо, якщо вибрано Public
-      onChange={() => setIsPrivate(!isPrivate)}
-    />
-    <span>Private</span>
-  </label>
+                  <label className={styles["private-label"]}>
+                    <input type="checkbox" className={styles["private-box"]} />
+                    <span>Private</span>
+                  </label>
 
-  <label className={styles["public-label"]}>
-    <input
-      type="checkbox"
-      className={styles["public-box"]}
-      checked={isPublic}
-      disabled={isPrivate} // Блокуємо, якщо вибрано Private
-      onChange={() => setIsPublic(!isPublic)}
-    />
-    <span>Public</span>
-  </label>
-</div>
-              </div>
+                  <label className={styles["public-label"]}>
+                    <input type="checkbox" className={styles["public-box"]} />
+                    <span>Public</span>
+                  </label>
+                </div>
+              </div> */}
+
 
               <div className={styles["cancel-create"]}>
                 <button
@@ -196,7 +328,13 @@ const YourLibrary = ({ songsList, onSongSelect, onSetCurrentAlbum }) => {
                 >
                   Cancel
                 </button>
-                <button className={styles["create-btn"]}>Create</button>
+                <button
+                  className={styles["create-btn"]}
+                  onClick={handleCreatePlaylist}
+                >
+                  Create
+                </button>
+
               </div>
             </div>
           </div>

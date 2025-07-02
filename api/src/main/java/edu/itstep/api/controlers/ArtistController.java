@@ -29,7 +29,7 @@ public class ArtistController {
         return artistRepository.findById(id).orElseThrow(RuntimeException::new);
     }
     @GetMapping("/byUser/{id}")
-    public Artist getArtistByUserId(@PathVariable Long id) {
+    public Artist getArtistByUserId(@PathVariable String id) {
         return artistRepository.findArtistsByUser_Id(id);
     }
     @GetMapping("/top")

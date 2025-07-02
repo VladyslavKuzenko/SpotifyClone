@@ -9,23 +9,23 @@ import java.util.Objects;
 @Embeddable
 public class TracksListeningsId implements Serializable {
     @Column(name = "user_id")
-    private Long userId;
+    private String userId;
     @Column(name = "track_id")
     private Long trackId;
 
     public TracksListeningsId() {
     }
 
-    public TracksListeningsId(Long userId, Long trackId) {
+    public TracksListeningsId(String userId, Long trackId) {
         this.userId = userId;
         this.trackId = trackId;
     }
 
-    public Long getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
