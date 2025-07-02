@@ -15,13 +15,17 @@ const Main = () => {
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
   
-  // Новий стан для вибору вкладки
+  // Основний свайп-бокс
   const [selectedTab, setSelectedTab] = useState("all");
+  
+  // Стан для меню Notification
+  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+  const [notificationTab, setNotificationTab] = useState("all");
 
   if (isLoading) return <div>Loading...</div>;
   if (!isAuthenticated) return <Navigate to="/login" replace />;
 
-  // Функція для рендера контенту в users-content залежно від selectedTab
+  // Контент для основного свайп-боксу (All, Artists, Friends)
   const renderContent = () => {
     switch (selectedTab) {
       case "all":
@@ -32,6 +36,24 @@ const Main = () => {
         return <div>Це контент для Friends</div>;
       default:
         return null;
+    }
+  };
+
+  // Контент для меню Notification
+  const renderNotificationContent = () => {
+    switch (notificationTab) {
+      case "all":
+        return <div>Notification: All</div>;
+
+      case "likes":
+        return <div>Notification: Likes</div>;
+
+        
+
+
+      default:
+        return null;
+
     }
   };
 
@@ -60,12 +82,42 @@ const Main = () => {
             >
               + New post
             </button>
-            <button className={styles.notification}>Notification</button>
+            <button
+              className={styles.notification}
+              onClick={() => setIsNotificationOpen(!isNotificationOpen)}
+            >
+              Notification
+            </button>
 
             <SearchModal
               isSearchModalOpen={isSearchModalOpen}
               setIsSearchModalOpen={setIsSearchModalOpen}
             />
+
+            {/* Меню Notification */}
+            {isNotificationOpen && (
+              <div className={styles.notificationMenu}>
+                <div className={styles.notificationHeader}>Notification</div>
+
+                <div className={styles.notificationTabs}>
+                  {["all", "likes"].map((tab) => (
+                    <div
+                      key={tab}
+                      className={`${styles.notificationTab} ${
+                        notificationTab === tab ? styles.active : ""
+                      }`}
+                      onClick={() => setNotificationTab(tab)}
+                    >
+                      {tab.charAt(0).toUpperCase() + tab.slice(1)}
+                    </div>
+                  ))}
+                </div>
+
+                <div className={styles.notificationContent}>
+                  {renderNotificationContent()}
+                </div>
+              </div>
+            )}
           </div>
 
           <div className={styles["empty-div3"]}></div>
@@ -75,30 +127,35 @@ const Main = () => {
           <StoriesItem />
           <div className={styles["empty-div5"]}></div>
 
+          {/* Основний свайп-бокс */}
           <div className={styles["swipe-box"]}>
             <div
-              className={`${styles["all-div"]} ${selectedTab === "all" ? styles.active : ""}`}
+              className={`${styles["all-div"]} ${
+                selectedTab === "all" ? styles.active : ""
+              }`}
               onClick={() => setSelectedTab("all")}
             >
               All
             </div>
             <div
-              className={`${styles["artists-div"]} ${selectedTab === "artists" ? styles.active : ""}`}
+              className={`${styles["artists-div"]} ${
+                selectedTab === "artists" ? styles.active : ""
+              }`}
               onClick={() => setSelectedTab("artists")}
             >
               Artists
             </div>
             <div
-              className={`${styles["friends-div"]} ${selectedTab === "friends" ? styles.active : ""}`}
+              className={`${styles["friends-div"]} ${
+                selectedTab === "friends" ? styles.active : ""
+              }`}
               onClick={() => setSelectedTab("friends")}
             >
               Friends
             </div>
           </div>
 
-          <div className={styles["users-content"]}>
-            {renderContent()}
-          </div>
+          <div className={styles["users-content"]}>{renderContent()}</div>
         </div>
 
         <div className={styles["empty-div1"]}></div>

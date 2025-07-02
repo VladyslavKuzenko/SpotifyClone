@@ -205,6 +205,64 @@
     border: none;
   }
 
+  .notificationMenu {
+    position: absolute;
+    top: 40px;
+    /* трохи нижче кнопки Notification */
+    right: 0;
+    width: 464px;
+    height: 640px;
+    background-color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+    padding: 16px;
+  }
+
+  .notificationHeader {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: #333;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 8px;
+  }
+
+  .notificationTabs {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+    user-select: none;
+  }
+
+  .notificationTab {
+    cursor: pointer;
+    padding: 8px 16px;
+    color: #B8B8B8;
+    border-radius: 20px;
+    transition: color 0.3s ease, background-color 0.3s ease;
+    font-weight: 600;
+  }
+
+  .notificationTab:hover {
+    background-color: #f0f0f0;
+  }
+
+  .notificationTab.active {
+    color: #4B4B4B;
+    background-color: #ddd;
+  }
+
+  .notificationContent {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 8px;
+    color: #555;
+    font-size: 16px;
+  }
+
   .empty-div3 {
     width: 100%;
     height: 40px;
@@ -1238,15 +1296,17 @@
     margin-top: 10px;
   }
 
-  .all-div, .artists-div, .friends-div {
-  cursor: pointer;
-  border-radius: 6px;
-  transition: color 0.3s ease;
-  color: #B8B8B8; 
-}
+  .all-div,
+  .artists-div,
+  .friends-div {
+    cursor: pointer;
+    border-radius: 6px;
+    transition: color 0.3s ease;
+    color: #B8B8B8;
+  }
 
-.all-div.active,
-.artists-div.active,
-.friends-div.active {
-  color: #4B4B4B; 
-}
+  .all-div.active,
+  .artists-div.active,
+  .friends-div.active {
+    color: #4B4B4B;
+  }
