@@ -21,7 +21,7 @@ const StoriesItem = () => {
     const el = scrollRef.current;
     if (!el) return;
 
-    const scrollAmount = el.clientWidth * 0.8;
+    const scrollAmount = el.clientWidth * 0.7455;
     el.scrollBy({
       left: direction === "left" ? -scrollAmount : scrollAmount,
       behavior: "smooth",

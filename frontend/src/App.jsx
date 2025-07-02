@@ -6,6 +6,7 @@ import Profile from './components/profile-page/Profile';
 import UserProfile from './components/user-profile-page/UserProfile';
 import MyProfile from './components/my-profile-page/MyProfile';
 import EditProfile from './components/edit-profile-page/EditProfile';
+import Rating from './components/rating-page/Rating';
 
 import ExampleCrud from './components/exampleAuth0/Example';
 import LoginButton from './components/exampleAuth0/LoginButton';
@@ -24,6 +25,8 @@ function App() {
       <Route path="/login" element={<LoginButton />} />
       <Route path="/logout" element={<LogoutButton />} />
       <Route path="/chat" element={<ChatPage />} />
+      <Route path="/user-profile" element={<UserProfile />} />
+      <Route path="/rating" element={<Rating />} />
 
 
     </Routes>

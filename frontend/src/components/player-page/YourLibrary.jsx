@@ -1,4 +1,4 @@
-import React, { use, useEffect, useState } from "react";
+import React, {use, useState, useEffect, useRef } from "react";
 import styles from "./player.module.css";
 import SongItem from "./SongItem";
 import { searchSongs } from "../../js/functions/functions";
@@ -18,6 +18,35 @@ const YourLibrary = ({
   const [playlists, setPlaylists] = useState([]);
   const [titlePlaylist, setTitlePlaylist] = useState("");
   const [sortType, setSortType] = useState("recent");
+  const [selectedOption, setSelectedOption] = useState("Recent");
+  const [showOptions, setShowOptions] = useState(false);
+  const [isPrivate, setIsPrivate] = useState(false);
+  const [isPublic, setIsPublic] = useState(false);
+  const dropdownRef = useRef();
+
+/*   const handleSelect = (option) => {
+    setSelectedOption(option);
+    setShowOptions(false);
+    if (option === "New") {
+      setSongs([...songsList]); // Можеш додати реальну логіку
+    } else if (option === "Most played") {
+      setSongs([...songsList]);
+    } else if (option === "Recent") {
+      setSongs([...songsList]);
+    }
+  }; */
+
+  // Закриття дропдауна при кліку поза ним
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setShowOptions(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const { getAccessTokenSilently, getAccessTokenWithPopup, user } = useAuth0();
   const { isLoading, isAuthenticated } = useAuth0();
@@ -135,6 +164,10 @@ const YourLibrary = ({
             >
               <div className={styles["yl-plus"]}>+</div>
             </div>
+
+            <div className={styles["go-likes"]}>
+              <button className={styles["golikes-btn"]}></button>
+            </div>
           </div>
 
           <div className={styles["playlist-platform"]}>
@@ -158,6 +191,8 @@ const YourLibrary = ({
                   searchSongs(songsFullList, e.target.value, setSongs);
                 }}
                 value={search}
+                className={styles["search-css"]}
+                placeholder="Search"
               />
             </div>
             <div className={styles["sr-recent"]}>
@@ -173,6 +208,42 @@ const YourLibrary = ({
                 <option value="az">A-Z</option>
                 {/* <option value="artist">By Artist</option> */}
               </select>
+
+{/* <div className={styles["recent-container"]} ref={dropdownRef}>
+              <div
+                className={styles["sr-recent"]}
+                onClick={() => setShowOptions((prev) => !prev)}
+              >
+                <span className={styles["recent-selected-text"]}>
+                  {selectedOption}
+                </span>
+                <span className={styles["arrow"]}>
+                  {showOptions ? "▲" : "▼"}
+                </span>
+              </div>
+
+              {showOptions && (
+                <div className={styles["recent-options"]}>
+                  <div
+                    className={styles["recent-option"]}
+                    onClick={() => handleSelect("Recent")}
+                  >
+                    Recent
+                  </div>
+                  <div
+                    className={styles["recent-option"]}
+                    onClick={() => handleSelect("New")}
+                  >
+                    New
+                  </div>
+                  <div
+                    className={styles["recent-option"]}
+                    onClick={() => handleSelect("Most played")}
+                  >
+                    Most played
+                  </div>
+                </div>
+              )}*/}
             </div>
           </div>
 
@@ -185,6 +256,7 @@ const YourLibrary = ({
                 onSetCurrentSongList={() => {
                   onSetCurrentSongList(songs);
                 }}
+
               />
             ))}
           </div>
@@ -210,6 +282,7 @@ const YourLibrary = ({
               </div>
             </div> */}
 
+
             <div className={styles["modal-right-side"]}>
               <div className={styles["empty-modal1"]}></div>
               <div className={styles["name-desc"]}>
@@ -221,6 +294,7 @@ const YourLibrary = ({
                   placeholder="Title"
                   value={titlePlaylist}
                   onChange={(e) => setTitlePlaylist(e.target.value)}
+
                 />
                 <input
                   type="text"
@@ -246,6 +320,7 @@ const YourLibrary = ({
                 </div>
               </div> */}
 
+
               <div className={styles["cancel-create"]}>
                 <button
                   className={styles["cancel-btn"]}
@@ -259,6 +334,7 @@ const YourLibrary = ({
                 >
                   Create
                 </button>
+
               </div>
             </div>
           </div>

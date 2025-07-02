@@ -16,6 +16,7 @@ export default function MiddleItem({
   /*   artistControl, */
 }) {
   const [search, setSearch] = useState("");
+
   const [songs, setSongs] = useState([]);
   const [songsFullList, setSongsFullList] = useState([]);
   const [artists, setArtists] = useState();
@@ -177,6 +178,7 @@ export default function MiddleItem({
               {">"}
             </button>
           </div>
+
           <div className={styles["as-search-plat"]}>
             <input
               className={styles["as-search"]}
@@ -186,11 +188,26 @@ export default function MiddleItem({
                 searchSongs(songsFullList, e.target.value, setSongs);
               }}
               value={search}
+              placeholder="Search"
             />
           </div>
+          <div className={styles["recommended-artist"]}>
+            <div className={styles["recommended-text1"]}>Recommended for you</div>
+            <div className={styles["artist-text"]}>Artist</div>
+
+          </div>
+
+
+
         </div>
 
         <div className={styles["as-plat2"]}>
+
+          {/* <div className={styles["left-right-btns"]}>
+            <div className={styles["left-btn-plat"]}></div>
+            <div className={styles["right-btn-plat"]}></div>
+          </div>*/}
+
           <div className={styles["as-empty1"]}></div>
           <div className={styles["artist-listeners"]}>
             <div className={styles["al-artist"]}>

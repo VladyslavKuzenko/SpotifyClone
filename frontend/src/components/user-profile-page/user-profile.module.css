@@ -122,10 +122,50 @@
     justify-content: space-between;
     position: relative;
     left: 95%;
-    top: 20%;
     background-color: transparent;
     border: none;
     cursor: pointer;
+}
+
+.menu-wrapper {
+    position: relative;
+    display: inline-block;
+    left: 95%;
+    top: 20%;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #535353;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 999;
+    width: 361px;
+    display: flex;
+    flex-direction: column;
+
+}
+
+
+.dropdown-item {
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    font-size: 14px;
+    color: #fff;
+    background-color: #535353;
+    height: 69px;
+    text-indent: 30px;
+
+
+}
+
+.dropdown-item:hover {
+    background-color: #878787;
+
 }
 
 .setting-circles {
@@ -156,11 +196,11 @@
 }
 
 .name-bio {
-    width: 50%;
+    width: 45%;
     display: flex;
     flex-direction: column;
     margin-top: 20px;
-
+    max-width: 100%;
 }
 
 .profile-name {
@@ -171,6 +211,11 @@
     line-height: 100%;
     letter-spacing: 0%;
     height: 42px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .profile-bio {
@@ -178,7 +223,12 @@
     font-weight: 400;
     font-size: 16px;
     line-height: 100%;
-    letter-spacing: 0%;
+    letter-spacing: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .nbf-cont {
@@ -195,6 +245,7 @@
     align-content: end;
 
     white-space: nowrap;
+    margin-left: 70px;
 }
 
 .follow-message-container {
@@ -300,9 +351,10 @@
     width: 32%;
     height: 279px;
     background-color: #D9D9D9;
-      aspect-ratio: 1 / 1; /* робить блок квадратним */
+    aspect-ratio: 1 / 1;
 
 }
+
 
 .it-container {
     margin-top: 200px;
@@ -381,7 +433,7 @@
     color: #868686;
     text-align: center;
     align-content: center;
-    border:none;
+    border: none;
     background-color: transparent;
 }
 
@@ -427,7 +479,7 @@
     align-content: center;
     display: flex;
     justify-content: center;
-    border:none;
+    border: none;
     background-color: transparent;
 }
 
