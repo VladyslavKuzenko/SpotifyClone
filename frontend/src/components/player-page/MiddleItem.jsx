@@ -237,7 +237,6 @@ export default function MiddleItem({
               </div>
             </div>
 
-            {/* Контент вкладок */}
             {activeArtistTab === "songs" && (
               <div className={styles["as-plat3"]}>
                 <div className={styles["plat3-array"]}>
@@ -279,10 +278,28 @@ export default function MiddleItem({
                 </div>
 
                 <div className={styles["albums-array-songs"]}>
-                  {[...Array(6)].map((_, i) => (
-                    <div key={i} className={styles["albums-songs"]}>
-                     
-                    </div>
+                  {[...Array(14)].map((_, i) => (
+                     <>
+                  {songs.length > 0 ? (
+                    songs.map((song) => (
+                      <SongItem
+                        key={song.id}
+                        song={song}
+                        moreInfo
+                        onSongSelect={onSongSelect}
+                        onSetCurrentSongList={() => onSetCurrentSongList(songs)}
+                        isPlaylistsChangesControl={isPlaylistsChangesControl}
+                        openMenu={openMenuSongId === song.id}
+                        toggleMenu={() =>
+                          setOpenMenuSongId(openMenuSongId === song.id ? null : song.id)
+                        }
+                        closeMenu={() => setOpenMenuSongId(null)}
+                      />
+                    ))
+                  ) : (
+                    <div>No songs found</div>
+                  )}
+                </>
                   ))}
                 </div>
 
