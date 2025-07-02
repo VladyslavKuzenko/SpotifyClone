@@ -1,11 +1,11 @@
 // PlayerComponent.jsx
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./player.module.css"; // заміни на свій шлях до CSS
 import AudioControl from "./AudioControl";
 
 //const FooterPlayer = ({ currentSong,nextSong,prevSong }) => {
 const FooterPlayer = ({ songControl }) => {
-  
+
   return (
         <div className={styles["footer-container"]}>
 
@@ -15,7 +15,7 @@ const FooterPlayer = ({ songControl }) => {
         <div className={styles["bmr-cover"]}></div>
         <div className={styles["bmr-song-info"]}>
           <div className={styles["bmr-title"]}>{songControl.currentSong.title}</div>
-          {/* <div className={styles["bmr-artist"]}>{songControl.currentSong.artist}</div> */}
+          <div className={styles["bmr-artist"]}>{songControl.currentSong?.artist?.user?.username}</div>
         </div>
       </div>
 

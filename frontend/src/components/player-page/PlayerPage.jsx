@@ -92,10 +92,10 @@ const PlayerPage = () => {
     }
   };
 
-  const handleStart = async () => {
-    if (isAuthenticated) {
+/*   const handleStart = async () => {
+    if (isAuthenticated) { */
      /*  console.log("handleArtist is working"); */
-
+/* 
       const token = await getAccessTokenSilently({
         authorizationParams: {
           audience: API_URL,
@@ -112,7 +112,7 @@ const PlayerPage = () => {
 
       const bodyArtists = await responseArtist.json();
       setArtists(bodyArtists);
-      setCurrentArtist(bodyArtists[0]);
+      setCurrentArtist(bodyArtists[0]); */
  /*      console.log("BODY ARTISTS:");
       console.log(bodyArtists); */
       /*  const responseTrack = await fetch(
@@ -127,11 +127,11 @@ const PlayerPage = () => {
       const bodyTrack = await responseTrack.json();
       setSongsMiddleItem(bodyTrack); */
       /*  setTest(true); */
-    }
-  };
+/*     }
+  }; */
   useEffect(() => {
     async function fetchData() {
-      await handleStart();
+      await handleArtists();
     }
     fetchData();
   }, [isLoading]);
@@ -198,10 +198,7 @@ const PlayerPage = () => {
                 isPlaylistsChanges,
                 setIsPlaylistsChanges,
               }}
-              /*    artist={{
-                ...currentArtist.user,
-                monthlyListner: currentArtist.listeningCount,
-              }} */
+        
               /*       artistControl={{ nextArtist, prevArtist }} */
             />
           </div>
