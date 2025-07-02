@@ -176,7 +176,7 @@ const PlayerPage = () => {
       <div className={styles.container}>
         <LeftSide />
         <div className={styles["middle-right"]}>
-          <div className={styles["empty-div1"]}></div>
+          <div className={styles["empty-div11"]}></div>
 
           <div className={styles["mr-middle"]}>
             <div className={styles["mr-left"]}>
@@ -206,8 +206,10 @@ const PlayerPage = () => {
             />
           </div>
 
-          <FooterPlayer songControl={{ currentSong, nextSong, prevSong }} />
         </div>
+
+          <FooterPlayer songControl={{ currentSong, nextSong, prevSong }} />
+
       </div>
     </>
   );

@@ -1,6 +1,8 @@
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { isSubscribed, searchSongs } from "../../js/functions/functions";
 import MiddleSongItem from "./MIddleSongItem";
+import SongItemMiddle from "./SongItemMiddle";
+
 import styles from "./player.module.css";
 import SongItem from "./SongItem";
 import { API_URL } from "../../js/properties/properties";
@@ -168,16 +170,13 @@ export default function MiddleItem({
 
   return (
     <div className={styles["mr-midd"]}>
+
+
       <div className={styles["artist-songs"]}>
+
+        
         <div className={styles["as-plat1"]}>
-          <div className={styles["left-right-btns"]}>
-            <button className={styles["left-btn-plat"]} onClick={prevArtist}>
-              {"<"}
-            </button>
-            <button className={styles["right-btn-plat"]} onClick={nextArtist}>
-              {">"}
-            </button>
-          </div>
+         
 
           <div className={styles["as-search-plat"]}>
             <input
@@ -207,9 +206,17 @@ export default function MiddleItem({
             <div className={styles["left-btn-plat"]}></div>
             <div className={styles["right-btn-plat"]}></div>
           </div>*/}
+        <div className={styles["empty-div1"]}></div>
 
-          <div className={styles["as-empty1"]}></div>
           <div className={styles["artist-listeners"]}>
+             <div className={styles["left-right-btns"]}>
+            <button className={styles["left-btn-plat"]} onClick={prevArtist}>
+              {"<"}
+            </button>
+            <button className={styles["right-btn-plat"]} onClick={nextArtist}>
+              {">"}
+            </button>
+          </div>
             <div className={styles["al-artist"]}>
               {currentArtist?.user.firstName} {currentArtist?.user.lastName}
             </div>
@@ -234,11 +241,16 @@ export default function MiddleItem({
           </div>
         </div>
 
-        <div className={styles["recommended-text"]}>Recommended</div>
+        <div className={styles["recommended-text"]}>
+
+         <div className={styles["rec-songs"]}>Songs</div>
+         <div className={styles["rec-album"]}>Albums</div>
+
+        </div>
 
         <div className={styles["as-plat3"]}>
           {songs.map((i) => (
-            <SongItem
+            <SongItemMiddle
               onSongSelect={onSongSelect}
               song={i}
               moreInfo
@@ -249,7 +261,11 @@ export default function MiddleItem({
             />
           ))}
         </div>
+
+
       </div>
+
+
     </div>
   );
 }
