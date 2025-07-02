@@ -13,10 +13,27 @@ import NewPost from "./NewPost";
 const Main = () => {
   const { isAuthenticated, isLoading } = useAuth0();
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
-  const [isPostModalOpen, setIsPostModalOpen] = useState(false); // для New Post
+  const [isPostModalOpen, setIsPostModalOpen] = useState(false);
+  
+  // Новий стан для вибору вкладки
+  const [selectedTab, setSelectedTab] = useState("all");
 
   if (isLoading) return <div>Loading...</div>;
   if (!isAuthenticated) return <Navigate to="/login" replace />;
+
+  // Функція для рендера контенту в users-content залежно від selectedTab
+  const renderContent = () => {
+    switch (selectedTab) {
+      case "all":
+        return <div>Це контент для All</div>;
+      case "artists":
+        return <div>Це контент для Artists</div>;
+      case "friends":
+        return <div>Це контент для Friends</div>;
+      default:
+        return null;
+    }
+  };
 
   return (
     <>
@@ -59,12 +76,29 @@ const Main = () => {
           <div className={styles["empty-div5"]}></div>
 
           <div className={styles["swipe-box"]}>
-            <div className={styles["all-div"]}>All</div>
-            <div className={styles["artists-div"]}>Artists</div>
-            <div className={styles["friends-div"]}>Friends</div>
+            <div
+              className={`${styles["all-div"]} ${selectedTab === "all" ? styles.active : ""}`}
+              onClick={() => setSelectedTab("all")}
+            >
+              All
+            </div>
+            <div
+              className={`${styles["artists-div"]} ${selectedTab === "artists" ? styles.active : ""}`}
+              onClick={() => setSelectedTab("artists")}
+            >
+              Artists
+            </div>
+            <div
+              className={`${styles["friends-div"]} ${selectedTab === "friends" ? styles.active : ""}`}
+              onClick={() => setSelectedTab("friends")}
+            >
+              Friends
+            </div>
           </div>
 
-          <div className={styles["users-content"]}></div>
+          <div className={styles["users-content"]}>
+            {renderContent()}
+          </div>
         </div>
 
         <div className={styles["empty-div1"]}></div>
@@ -76,9 +110,9 @@ const Main = () => {
         </div>
       </div>
 
-     {isPostModalOpen && (
-  <NewPost onClose={() => setIsPostModalOpen(false)} />
-)}
+      {isPostModalOpen && (
+        <NewPost onClose={() => setIsPostModalOpen(false)} />
+      )}
     </>
   );
 };

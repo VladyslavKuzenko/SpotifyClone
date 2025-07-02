@@ -219,16 +219,23 @@ html {
 
 }
 
-.world-place {
+.worldwide {
     border: none;
     width: 270px;
     height: 46px;
     background-color: #8C8C8C8F;
     cursor: pointer;
-    color: white;
+
     margin: 5px;
     text-align: start;
     text-indent: 20px;
+    outline: none;
+        color: rgb(255, 255, 255);
+
+}
+
+.worldwide::placeholder {
+    color: white;
 }
 
 .btn-container {
