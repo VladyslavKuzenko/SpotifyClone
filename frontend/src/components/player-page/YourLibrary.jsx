@@ -204,7 +204,7 @@ const YourLibrary = ({
                   handleSortSongs(e.target.value);
                 }}
               >
-                <option value="recent">Recent</option>
+                <option value="recent" >Recent</option>
                 <option value="az">A-Z</option>
                 {/* <option value="artist">By Artist</option> */}
               </select>

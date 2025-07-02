@@ -24,7 +24,7 @@ export default function MiddleItem({
   const [artists, setArtists] = useState();
   const [currentArtist, setCurrentArtist] = useState(null);
   const [isFollowed, setIsFollowed] = useState(false);
-  const {user, isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0();
+  const { user, isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0();
 
   const handleArtistMusic = async () => {
     if (isAuthenticated && currentArtist) {
@@ -100,7 +100,7 @@ export default function MiddleItem({
     }
   };
   const habdleFollow = async () => {
-    if(isAuthenticated){
+    if (isAuthenticated) {
       const token = await getAccessTokenSilently({
         authorizationParams: {
           audience: API_URL,
@@ -115,10 +115,10 @@ export default function MiddleItem({
           },
         }
       );
-/*       const body= await response.json();
-      console.log(body);
-      console.log(); */
-      
+      /*       const body= await response.json();
+            console.log(body);
+            console.log(); */
+
 
       if (response.ok) {
         setIsFollowed(!isFollowed);
@@ -127,7 +127,7 @@ export default function MiddleItem({
       }
     }
   }
-    useEffect(() => {
+  useEffect(() => {
     const fetchData = async () => {
       await handleStart();
     };
@@ -142,7 +142,7 @@ export default function MiddleItem({
       await handleArtistMusic();
     };
     const checkFollowed = async () => {
-      if (isAuthenticated && user&&currentArtist) {
+      if (isAuthenticated && user && currentArtist) {
         const subscribed = await isSubscribed(user, currentArtist?.user, getAccessTokenSilently);
         setIsFollowed(subscribed);
       }
@@ -174,9 +174,9 @@ export default function MiddleItem({
 
       <div className={styles["artist-songs"]}>
 
-        
+
         <div className={styles["as-plat1"]}>
-         
+
 
           <div className={styles["as-search-plat"]}>
             <input
@@ -206,17 +206,17 @@ export default function MiddleItem({
             <div className={styles["left-btn-plat"]}></div>
             <div className={styles["right-btn-plat"]}></div>
           </div>*/}
-        <div className={styles["empty-div1"]}></div>
+          <div className={styles["empty-div1"]}></div>
 
           <div className={styles["artist-listeners"]}>
-             <div className={styles["left-right-btns"]}>
-            <button className={styles["left-btn-plat"]} onClick={prevArtist}>
-              {"<"}
-            </button>
-            <button className={styles["right-btn-plat"]} onClick={nextArtist}>
-              {">"}
-            </button>
-          </div>
+            <div className={styles["left-right-btns"]}>
+              <button className={styles["left-btn-plat"]} onClick={prevArtist}>
+                {"<"}
+              </button>
+              <button className={styles["right-btn-plat"]} onClick={nextArtist}>
+                {">"}
+              </button>
+            </div>
             <div className={styles["al-artist"]}>
               {currentArtist?.user.firstName} {currentArtist?.user.lastName}
             </div>
@@ -236,30 +236,33 @@ export default function MiddleItem({
               >
                 Play
               </button>
-              <button className={styles["pf-follow"]} onClick={habdleFollow}>{isFollowed?'Unfollow':'Follow'}</button>
+              <button className={styles["pf-follow"]} onClick={habdleFollow}>{isFollowed ? 'Unfollow' : 'Follow'}</button>
             </div>
           </div>
         </div>
 
         <div className={styles["recommended-text"]}>
 
-         <div className={styles["rec-songs"]}>Songs</div>
-         <div className={styles["rec-album"]}>Albums</div>
+          <div className={styles["rec-songs"]}>Songs</div>
+          <div className={styles["rec-album"]}>Albums</div>
 
         </div>
 
         <div className={styles["as-plat3"]}>
-          {songs.map((i) => (
-            <SongItemMiddle
-              onSongSelect={onSongSelect}
-              song={i}
-              moreInfo
-              onSetCurrentSongList={() => {
-                onSetCurrentSongList(songs);
-              }}
-              isPlaylistsChangesControl={isPlaylistsChangesControl}
-            />
-          ))}
+          <div className={styles["plat3-array"]}>
+
+            {songs.map((i) => (
+              <SongItem
+                onSongSelect={onSongSelect}
+                song={i}
+                moreInfo
+                onSetCurrentSongList={() => {
+                  onSetCurrentSongList(songs);
+                }}
+                isPlaylistsChangesControl={isPlaylistsChangesControl}
+              />
+            ))}
+          </div>
         </div>
 
 
