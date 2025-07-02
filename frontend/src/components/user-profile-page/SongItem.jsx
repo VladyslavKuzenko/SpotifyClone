@@ -13,16 +13,16 @@ const SongItem = ({ idx }) => {
 
       <div className={styles['listeners-count']}>102 664 992</div>
 
-      <div className={styles.plus}>+</div>
+      <button className={styles.plus}>+</button>
 
       <div className={styles.duration}>13:58</div>
 
       <div className={styles['more-menu']}>
-        <div className={styles['menu-plat']}>
+        <button className={styles['menu-plat']}>
           <div className={styles['mp-circle']}></div>
           <div className={styles['mp-circle']}></div>
           <div className={styles['mp-circle']}></div>
-        </div>
+        </button>
       </div>
     </div>
   );

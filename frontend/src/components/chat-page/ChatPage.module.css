@@ -96,6 +96,8 @@ body {
     gap:11%;
     overflow: auto;
     align-items: center;
+    scrollbar-width: thin;
+    
 }
 
 .group-icon {
@@ -104,6 +106,7 @@ body {
     display: flex;
     justify-content: space-between;
     flex-direction: column;
+    width: 112px;
 
 
 }
@@ -129,6 +132,8 @@ body {
     text-overflow: ellipsis;
     text-align: center;
     color: rgba(71, 71, 71, 1);
+        margin-bottom: 5px;
+
 }
 
 .text2 {
