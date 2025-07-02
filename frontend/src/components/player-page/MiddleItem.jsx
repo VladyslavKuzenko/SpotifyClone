@@ -12,7 +12,7 @@ export default function MiddleItem({
   onSongSelect,
   onSetCurrentSongList,
   isPlaylistsChangesControl,
-  /*  artist, */
+
   /*   artistControl, */
 }) {
   const [search, setSearch] = useState("");
