@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./player.module.css";
 import YourLibrary from "./YourLibrary";
-import SongItem from "./SongItem";
 import MusicPlayer from "../sharedComponents/MusicPlayer";
 import LeftSide from "../main-components/LeftSide";
 import MiddleItem from "./MiddleItem";

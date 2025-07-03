@@ -1,6 +1,6 @@
 import React from "react";
 import LeftSide from '../main-components/LeftSide'
-import FooterPlayer from '../player-page/FooterPlayer'
+import MusicPlayer from '../sharedComponents/MusicPlayer'
 import SongItem from '../player-page/SongItem'
 
 import styles from "./likes.module.css";

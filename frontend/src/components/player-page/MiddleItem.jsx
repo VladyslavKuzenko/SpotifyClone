@@ -4,7 +4,6 @@ import styles from "./player.module.css";
 
 import SongItem from "./SongItem";
 
-import styles from "./player.module.css";
 import { API_URL } from "../../js/properties/properties";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Navigate } from "react-router-dom";
@@ -21,7 +20,8 @@ export default function MiddleItem({
   const [albums, setAlbums] = useState([]); // стан для альбомів
   const [artists, setArtists] = useState([]);
   const [currentArtist, setCurrentArtist] = useState(null);
-  const {user, isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0();
+  const { user, isAuthenticated, isLoading, getAccessTokenSilently } =
+    useAuth0();
 
   const [openMenuSongId, setOpenMenuSongId] = useState(null);
 
@@ -48,7 +48,7 @@ export default function MiddleItem({
     }
   };
 
-  const handleArtistAlbums = async () => {
+/*   const handleArtistAlbums = async () => {
     if (isAuthenticated && currentArtist) {
       const token = await getAccessTokenSilently({
         authorizationParams: { audience: API_URL },
@@ -65,23 +65,26 @@ export default function MiddleItem({
       // setAlbums(bodyAlbums.albums || []);
       setAlbums(Array.isArray(bodyAlbums) ? bodyAlbums : []);
     }
-  };
+  }; */
 
   const handleStart = async () => {
     if (isAuthenticated) {
       const token = await getAccessTokenSilently({
         authorizationParams: { audience: API_URL },
       });
-      const responseArtist = await fetch("http://localhost:8080/artists/top/0/20", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const responseArtist = await fetch(
+        "http://localhost:8080/artists/top/0/20",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       const bodyArtists = await responseArtist.json();
       setArtists(bodyArtists);
       setCurrentArtist(bodyArtists[0]);
     }
   };
-  
-    useEffect(() => {
+
+  useEffect(() => {
     const fetchData = async () => {
       await handleStart();
     };
@@ -93,9 +96,9 @@ export default function MiddleItem({
   }, [isLoading]);
   useEffect(() => {
     const fetchData = async () => {
-      await handleArtistMusic();
+      await handleArtistSongs();
     };
-   
+
     fetchData();
   }, [currentArtist]);
 
@@ -137,15 +140,17 @@ export default function MiddleItem({
           </div>
           <div className={styles["recommended-artist"]}>
             <div
-              className={`${styles["recommended-text1"]} ${activeTab === "recommended" ? styles.activeTab : ""
-                }`}
+              className={`${styles["recommended-text1"]} ${
+                activeTab === "recommended" ? styles.activeTab : ""
+              }`}
               onClick={() => setActiveTab("recommended")}
             >
               Recommended for you
             </div>
             <div
-              className={`${styles["artist-text"]} ${activeTab === "artist" ? styles.activeTab : ""
-                }`}
+              className={`${styles["artist-text"]} ${
+                activeTab === "artist" ? styles.activeTab : ""
+              }`}
               onClick={() => setActiveTab("artist")}
             >
               Artist
@@ -160,10 +165,16 @@ export default function MiddleItem({
               <div className={styles["empty-div1"]}></div>
               <div className={styles["artist-listeners"]}>
                 <div className={styles["left-right-btns"]}>
-                  <button className={styles["left-btn-plat"]} onClick={prevArtist}>
+                  <button
+                    className={styles["left-btn-plat"]}
+                    onClick={prevArtist}
+                  >
                     {"<"}
                   </button>
-                  <button className={styles["right-btn-plat"]} onClick={nextArtist}>
+                  <button
+                    className={styles["right-btn-plat"]}
+                    onClick={nextArtist}
+                  >
                     {">"}
                   </button>
                 </div>
@@ -188,9 +199,11 @@ export default function MiddleItem({
                   >
                     Play
                   </button>
-                  <button className={styles["pf-follow"]} onClick={habdleFollow}>
-                    {isFollowed ? "Unfollow" : "Follow"}
-                  </button>
+
+                  <FollowingButton
+                    userToFollow={currentArtist?.user}
+                    styles={styles["pf-follow"]}
+                  />
                 </div>
               </div>
             </div>
@@ -198,18 +211,20 @@ export default function MiddleItem({
             {/* Вкладки Songs / Albums */}
             <div className={styles["recommended-text"]}>
               <div
-                className={`${styles["rec-songs"]} ${activeArtistTab === "songs" ? styles.activeTab : ""
-                  }`}
+                className={`${styles["rec-songs"]} ${
+                  activeArtistTab === "songs" ? styles.activeTab : ""
+                }`}
                 onClick={() => setActiveArtistTab("songs")}
               >
-             {/*    Play
+                {/*    Play
               </button>
               <FollowingButton userToFollow={currentArtist?.user} styles={styles["pf-follow"]}/>  */}
                 Songs
               </div>
               <div
-                className={`${styles["rec-album"]} ${activeArtistTab === "albums" ? styles.activeTab : ""
-                  }`}
+                className={`${styles["rec-album"]} ${
+                  activeArtistTab === "albums" ? styles.activeTab : ""
+                }`}
                 onClick={() => setActiveArtistTab("albums")}
               >
                 Albums
@@ -230,7 +245,9 @@ export default function MiddleItem({
                         isPlaylistsChangesControl={isPlaylistsChangesControl}
                         openMenu={openMenuSongId === song.id}
                         toggleMenu={() =>
-                          setOpenMenuSongId(openMenuSongId === song.id ? null : song.id)
+                          setOpenMenuSongId(
+                            openMenuSongId === song.id ? null : song.id
+                          )
                         }
                         closeMenu={() => setOpenMenuSongId(null)}
                       />
@@ -244,13 +261,14 @@ export default function MiddleItem({
 
             {activeArtistTab === "albums" && (
               <div className={styles["albums-container"]}>
-
                 <div className={styles["albums-array"]}>
                   {[...Array(6)].map((_, i) => (
                     <div key={i} className={styles["albums-item"]}>
                       <div className={styles["albums-nameartist"]}>
                         <div className={styles["albumsname"]}>Album name</div>
-                        <div className={styles["albumsartist"]}>Album artist</div>
+                        <div className={styles["albumsartist"]}>
+                          Album artist
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -258,34 +276,36 @@ export default function MiddleItem({
 
                 <div className={styles["albums-array-songs"]}>
                   {[...Array(14)].map((_, i) => (
-                     <>
-                  {songs.length > 0 ? (
-                    songs.map((song) => (
-                      <SongItem
-                        key={song.id}
-                        song={song}
-                        moreInfo
-                        onSongSelect={onSongSelect}
-                        onSetCurrentSongList={() => onSetCurrentSongList(songs)}
-                        isPlaylistsChangesControl={isPlaylistsChangesControl}
-                        openMenu={openMenuSongId === song.id}
-                        toggleMenu={() =>
-                          setOpenMenuSongId(openMenuSongId === song.id ? null : song.id)
-                        }
-                        closeMenu={() => setOpenMenuSongId(null)}
-                      />
-                    ))
-                  ) : (
-                    <div>No songs found</div>
-                  )}
-                </>
+                    <>
+                      {songs.length > 0 ? (
+                        songs.map((song) => (
+                          <SongItem
+                            key={song.id}
+                            song={song}
+                            moreInfo
+                            onSongSelect={onSongSelect}
+                            onSetCurrentSongList={() =>
+                              onSetCurrentSongList(songs)
+                            }
+                            isPlaylistsChangesControl={
+                              isPlaylistsChangesControl
+                            }
+                            openMenu={openMenuSongId === song.id}
+                            toggleMenu={() =>
+                              setOpenMenuSongId(
+                                openMenuSongId === song.id ? null : song.id
+                              )
+                            }
+                            closeMenu={() => setOpenMenuSongId(null)}
+                          />
+                        ))
+                      ) : (
+                        <div>No songs found</div>
+                      )}
+                    </>
                   ))}
                 </div>
-
-
-
               </div>
-
             )}
           </>
         )}
@@ -303,7 +323,9 @@ export default function MiddleItem({
                   isPlaylistsChangesControl={isPlaylistsChangesControl}
                   openMenu={openMenuSongId === song.id}
                   toggleMenu={() =>
-                    setOpenMenuSongId(openMenuSongId === song.id ? null : song.id)
+                    setOpenMenuSongId(
+                      openMenuSongId === song.id ? null : song.id
+                    )
                   }
                   closeMenu={() => setOpenMenuSongId(null)}
                 />
@@ -312,6 +334,6 @@ export default function MiddleItem({
           </div>
         )}
       </div>
-    </div >
+    </div>
   );
 }
