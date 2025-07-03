@@ -1319,6 +1319,9 @@
       /* або прибрати height */
       overflow: visible;
       /* або hidden, якщо треба обрізати */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
 
@@ -1332,6 +1335,7 @@
 
       overflow-x: auto;
       scrollbar-width: none;
+      
 
 
     }
@@ -1368,7 +1372,7 @@
     }
 
     .albums-array-songs {
-      width: 100%;
+      width: 95%;
       height: 100%;
       padding-top: 30px;
 
