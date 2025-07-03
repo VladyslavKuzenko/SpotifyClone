@@ -4,6 +4,8 @@ import edu.itstep.api.models.User;
 import edu.itstep.api.repositories.UserRepository;
 import edu.itstep.api.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,6 +40,11 @@ public class UserController {
     @GetMapping("/userFollowing/{id}")
     public Set<User> getUserFollowing(@PathVariable String id) {
         return userRepository.findById(id).orElseThrow(RuntimeException::new).getFollowings();
+    }
+    @GetMapping("/userByFollowers/{count}")
+    public List<User> getUserOrderByFollowersCount(@PathVariable Integer count) {
+        Pageable pageable = PageRequest.of(0, count);
+        return userRepository.findAllByOrderByFollowersCountDesc(pageable);
     }
 
     @PostMapping

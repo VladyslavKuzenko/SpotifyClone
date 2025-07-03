@@ -1,11 +1,11 @@
 import { use, useEffect, useState } from "react";
 import { isSubscribed, searchSongs } from "../../js/functions/functions";
-import MiddleSongItem from "./MIddleSongItem";
 import styles from "./player.module.css";
 import SongItem from "./SongItem";
 import { API_URL } from "../../js/properties/properties";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Navigate } from "react-router-dom";
+import FollowingButton from "../sharedComponents/FollowingButton";
 
 export default function MiddleItem({
   /*   songsList, */
@@ -21,7 +21,6 @@ export default function MiddleItem({
   const [songsFullList, setSongsFullList] = useState([]);
   const [artists, setArtists] = useState();
   const [currentArtist, setCurrentArtist] = useState(null);
-  const [isFollowed, setIsFollowed] = useState(false);
   const {user, isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0();
 
   const handleArtistMusic = async () => {
@@ -97,34 +96,7 @@ export default function MiddleItem({
         /*  setTest(true); */
     }
   };
-  const habdleFollow = async () => {
-    if(isAuthenticated){
-      const token = await getAccessTokenSilently({
-        authorizationParams: {
-          audience: API_URL,
-        },
-      });
-      const response = await fetch(
-        `http://localhost:8080/users/follow/${user.sub}/${currentArtist?.user.id}`,
-        {
-          method: isFollowed ? "DELETE" : "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-/*       const body= await response.json();
-      console.log(body);
-      console.log(); */
-      
-
-      if (response.ok) {
-        setIsFollowed(!isFollowed);
-      } else {
-        console.error("Failed to follow/unfollow the artist");
-      }
-    }
-  }
+  
     useEffect(() => {
     const fetchData = async () => {
       await handleStart();
@@ -139,14 +111,8 @@ export default function MiddleItem({
     const fetchData = async () => {
       await handleArtistMusic();
     };
-    const checkFollowed = async () => {
-      if (isAuthenticated && user&&currentArtist) {
-        const subscribed = await isSubscribed(user, currentArtist?.user, getAccessTokenSilently);
-        setIsFollowed(subscribed);
-      }
-    };
+   
     fetchData();
-    checkFollowed();
   }, [currentArtist]);
 
   const nextArtist = () => {
@@ -229,7 +195,7 @@ export default function MiddleItem({
               >
                 Play
               </button>
-              <button className={styles["pf-follow"]} onClick={habdleFollow}>{isFollowed?'Unfollow':'Follow'}</button>
+              <FollowingButton userToFollow={currentArtist?.user} styles={styles["pf-follow"]}/>
             </div>
           </div>
         </div>

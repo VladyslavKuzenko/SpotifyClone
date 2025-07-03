@@ -4,7 +4,6 @@ import YourLibrary from "./YourLibrary";
 import SongItem from "./SongItem";
 import FooterPlayer from "./FooterPlayer";
 import LeftSide from "../main-components/LeftSide";
-import MiddleSongItem from "./MIddleSongItem";
 import MiddleItem from "./MiddleItem";
 import { useAuth0 } from "@auth0/auth0-react";
 import { API_URL } from "../../js/properties/properties";
