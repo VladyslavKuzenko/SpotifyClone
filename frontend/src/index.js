@@ -3,6 +3,7 @@ import { Auth0Provider } from "@auth0/auth0-react";
 import App from "./App.jsx";
 import { BrowserRouter } from "react-router-dom";
 import { CLIENT_ID, DOMAIN } from "./js/properties/properties.js";
+import { APIProvider } from "./providers/APIProvider.js";
 
 const root = createRoot(document.getElementById("root"));
 
@@ -15,7 +16,9 @@ root.render(
     }}
   >
     <BrowserRouter>
-      <App />
+      <APIProvider>
+        <App />
+      </APIProvider>
     </BrowserRouter>
   </Auth0Provider>
 );

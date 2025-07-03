@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "../main-page/main.module.css";
+import MusicPlayer from "../sharedComponents/MusicPlayer";
 
 const LeftSide = () => {
   return (
@@ -17,11 +18,12 @@ const LeftSide = () => {
         <button className={styles["page-btn"]}></button>
       </div>
 
-      <div className={styles["song-place-div"]}>
+     {/*  <div className={styles["song-place-div"]}>
         <div className={styles["song-name"]}>Not Like Us</div>
         <div className={styles.singer}>Kendrick Lamar</div>
         <div className={styles["circle-song"]}></div>
-      </div>
+      </div> */}
+      <MusicPlayer/>
     </div>
   );
 };

@@ -5,10 +5,11 @@ import { searchSongs } from "../../js/functions/functions";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Navigate } from "react-router-dom";
 import { API_URL } from "../../js/properties/properties";
+import { useAPI } from "../../hooks/useApi";
 
 const YourLibrary = ({
-  onSongSelect,
-  onSetCurrentSongList,
+ /*  onSongSelect, */
+/*   onSetCurrentSongList, */
   isPlaylistsChangesControl,
 }) => {
   const [search, setSearch] = useState("");
@@ -23,7 +24,7 @@ const YourLibrary = ({
   const [isPrivate, setIsPrivate] = useState(false);
   const [isPublic, setIsPublic] = useState(false);
   const dropdownRef = useRef();
-
+  const { setCurrentSongList} = useAPI();
 /*   const handleSelect = (option) => {
     setSelectedOption(option);
     setShowOptions(false);
@@ -204,7 +205,7 @@ const YourLibrary = ({
                   handleSortSongs(e.target.value);
                 }}
               >
-                <option value="recent">Recent</option>
+                <option value="recent" >Recent</option>
                 <option value="az">A-Z</option>
                 {/* <option value="artist">By Artist</option> */}
               </select>
@@ -251,10 +252,10 @@ const YourLibrary = ({
             {songs.map((i) => (
               <SongItem
                 key={i.id}
-                onSongSelect={onSongSelect}
+                /* onSongSelect={onSongSelect} */
                 song={i}
                 onSetCurrentSongList={() => {
-                  onSetCurrentSongList(songs);
+                  setCurrentSongList(songs);
                 }}
 
               />
@@ -284,7 +285,7 @@ const YourLibrary = ({
 
 
             <div className={styles["modal-right-side"]}>
-              <div className={styles["empty-modal1"]}></div>
+              <div className={styles["empty-modal1"]}>New playlist</div>
               <div className={styles["name-desc"]}>
                 <input
                   type="text"

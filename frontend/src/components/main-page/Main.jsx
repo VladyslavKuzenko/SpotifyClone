@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "./main.module.css";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Navigate } from "react-router-dom";
@@ -14,18 +14,36 @@ const Main = () => {
   const { isAuthenticated, isLoading } = useAuth0();
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
-  
-  // Основний свайп-бокс
   const [selectedTab, setSelectedTab] = useState("all");
-  
-  // Стан для меню Notification
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [notificationTab, setNotificationTab] = useState("all");
+
+  const notificationRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        notificationRef.current &&
+        !notificationRef.current.contains(event.target)
+      ) {
+        setIsNotificationOpen(false);
+      }
+    };
+
+    if (isNotificationOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isNotificationOpen]);
 
   if (isLoading) return <div>Loading...</div>;
   if (!isAuthenticated) return <Navigate to="/login" replace />;
 
-  // Контент для основного свайп-боксу (All, Artists, Friends)
   const renderContent = () => {
     switch (selectedTab) {
       case "all":
@@ -39,21 +57,18 @@ const Main = () => {
     }
   };
 
-  // Контент для меню Notification
   const renderNotificationContent = () => {
     switch (notificationTab) {
       case "all":
         return <div>Notification: All</div>;
-
       case "likes":
         return <div>Notification: Likes</div>;
-
-        
-
-
+      case "comments":
+        return <div>Notification: comments</div>;
+      case "follows":
+        return <div>Notification: follows</div>;
       default:
         return null;
-
     }
   };
 
@@ -94,13 +109,15 @@ const Main = () => {
               setIsSearchModalOpen={setIsSearchModalOpen}
             />
 
-            {/* Меню Notification */}
             {isNotificationOpen && (
-              <div className={styles.notificationMenu}>
+              <div
+                className={styles.notificationMenu}
+                ref={notificationRef}
+              >
                 <div className={styles.notificationHeader}>Notification</div>
 
                 <div className={styles.notificationTabs}>
-                  {["all", "likes"].map((tab) => (
+                  {["all", "likes", "comments", "follows"].map((tab) => (
                     <div
                       key={tab}
                       className={`${styles.notificationTab} ${
@@ -127,7 +144,6 @@ const Main = () => {
           <StoriesItem />
           <div className={styles["empty-div5"]}></div>
 
-          {/* Основний свайп-бокс */}
           <div className={styles["swipe-box"]}>
             <div
               className={`${styles["all-div"]} ${
