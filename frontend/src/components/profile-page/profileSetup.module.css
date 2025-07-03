@@ -164,6 +164,10 @@
   cursor: pointer;
 }
 
+.block-selected {
+  background: #ffffff;
+}
+
 .cnt-btn {
   width: 270px;
   height: 48px;

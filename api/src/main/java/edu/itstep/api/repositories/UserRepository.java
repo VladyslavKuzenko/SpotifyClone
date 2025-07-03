@@ -9,5 +9,6 @@ import java.util.Set;
 
 public interface UserRepository extends JpaRepository<User, String> {
     List<User> findAllByOrderByFollowersCountDesc(Pageable pageable);
+    public Boolean existsByUsername(String username);
 
 }
