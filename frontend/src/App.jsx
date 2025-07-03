@@ -1,11 +1,6 @@
-import React from 'react';
-import Register from './components/register-page/Register';
 import Main from './components/main-page/Main';
 import PlayerPage from './components/player-page/PlayerPage';
-import Profile from './components/profile-page/Profile';
 import UserProfile from './components/user-profile-page/UserProfile';
-import MyProfile from './components/my-profile-page/MyProfile';
-import EditProfile from './components/edit-profile-page/EditProfile';
 import Rating from './components/rating-page/Rating';
 import Likes from './components/likes-page/Likes';
 import LoginButton from './components/exampleAuth0/LoginButton';
@@ -13,7 +8,6 @@ import LogoutButton from './components/exampleAuth0/LogoutButton';
 import { Route, Routes } from 'react-router-dom';
 
 import ChatPage from './components/chat-page/ChatPage';
-import AuthForm from './components/login-page/AuthForm';
 import ProfileSetup from './components/profile-page/ProfileSetup';
 
 function App() {

@@ -8,10 +8,11 @@ import { API_URL } from "../../js/properties/properties";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Navigate } from "react-router-dom";
 import FollowingButton from "../sharedComponents/FollowingButton";
+import { useAPI } from "../../hooks/useApi";
 
 export default function MiddleItem({
-  onSongSelect,
-  onSetCurrentSongList,
+ /*  
+  onSetCurrentSongList, */
   isPlaylistsChangesControl,
 }) {
   const [search, setSearch] = useState("");
@@ -20,11 +21,9 @@ export default function MiddleItem({
   const [albums, setAlbums] = useState([]); // стан для альбомів
   const [artists, setArtists] = useState([]);
   const [currentArtist, setCurrentArtist] = useState(null);
-  const { user, isAuthenticated, isLoading, getAccessTokenSilently } =
-    useAuth0();
-
+  const { user, isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0();
   const [openMenuSongId, setOpenMenuSongId] = useState(null);
-
+  const { setCurrentSong, setCurrentSongList } = useAPI();
   // Вкладка для артиста: 'songs' або 'albums'
   const [activeArtistTab, setActiveArtistTab] = useState("songs");
 
@@ -192,8 +191,8 @@ export default function MiddleItem({
                     className={styles["pf-play"]}
                     onClick={() => {
                       if (songs.length > 0) {
-                        onSongSelect(songs[0]);
-                        onSetCurrentSongList(songs);
+                        setCurrentSong(songs[0]);
+                        setCurrentSongList(songs);
                       }
                     }}
                   >
@@ -240,8 +239,7 @@ export default function MiddleItem({
                         key={song.id}
                         song={song}
                         moreInfo
-                        onSongSelect={onSongSelect}
-                        onSetCurrentSongList={() => onSetCurrentSongList(songs)}
+                        onSetCurrentSongList={() => setCurrentSongList(songs)}
                         isPlaylistsChangesControl={isPlaylistsChangesControl}
                         openMenu={openMenuSongId === song.id}
                         toggleMenu={() =>
@@ -283,9 +281,8 @@ export default function MiddleItem({
                             key={song.id}
                             song={song}
                             moreInfo
-                            onSongSelect={onSongSelect}
                             onSetCurrentSongList={() =>
-                              onSetCurrentSongList(songs)
+                              setCurrentSongList(songs)
                             }
                             isPlaylistsChangesControl={
                               isPlaylistsChangesControl
@@ -318,8 +315,7 @@ export default function MiddleItem({
                   key={song.id}
                   song={song}
                   moreInfo
-                  onSongSelect={onSongSelect}
-                  onSetCurrentSongList={() => onSetCurrentSongList(songs)}
+                  onSetCurrentSongList={() => setCurrentSongList(songs)}
                   isPlaylistsChangesControl={isPlaylistsChangesControl}
                   openMenu={openMenuSongId === song.id}
                   toggleMenu={() =>

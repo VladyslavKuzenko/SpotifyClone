@@ -3,7 +3,7 @@ import styles from "./profileSetup.module.css";
 import { useAPI } from "../../hooks/useApi";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Navigate, useNavigate } from "react-router-dom";
-import { API_URL } from "../../properties/properties";
+import { API_URL } from "../../js/properties/properties";
 
 export default function ProfileSetup() {
   const { isAuthenticated, user, getAccessTokenWithPopup } = useAuth0();

@@ -63,6 +63,7 @@ export async function isUserPlaylistContainsSong(song,user,getAccessTokenSilentl
 }
 
 export async function isSubscribed(user,userToCheckSubscription,getAccessTokenSilently){
+  
     const token = await getAccessTokenSilently({
           authorizationParams: {
             audience: API_URL,

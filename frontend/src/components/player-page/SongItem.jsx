@@ -6,9 +6,10 @@ import {
 } from "../../js/functions/functions";
 import { useAuth0 } from "@auth0/auth0-react";
 import { API_URL } from "../../js/properties/properties";
+import { useAPI } from "../../hooks/useApi";
 
 const SongItem = ({
-  onSongSelect,
+  /*  onSongSelect, */
   song,
   moreInfo,
   onSetCurrentSongList,
@@ -18,9 +19,9 @@ const SongItem = ({
   const [isLiked, setIsLiked] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAtpModalOpen, setIsAtpModalOpen] = useState(false);
-
   const atpRef = useRef(null);
   const { user, getAccessTokenSilently, isAuthenticated } = useAuth0();
+  const { setCurrentSong } = useAPI();
 
   useEffect(() => {
     const audio = new Audio();
@@ -106,7 +107,7 @@ const SongItem = ({
       <button
         className={styles["song-item"]}
         onClick={() => {
-          onSongSelect(song);
+          setCurrentSong(song);
           onSetCurrentSongList();
           setIsMenuOpen(false);
           setIsAtpModalOpen(false);
