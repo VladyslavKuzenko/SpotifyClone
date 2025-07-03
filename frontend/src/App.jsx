@@ -7,6 +7,7 @@ import UserProfile from './components/user-profile-page/UserProfile';
 import MyProfile from './components/my-profile-page/MyProfile';
 import EditProfile from './components/edit-profile-page/EditProfile';
 import Rating from './components/rating-page/Rating';
+import Likes from './components/likes-page/Likes';
 
 import ExampleCrud from './components/exampleAuth0/Example';
 import LoginButton from './components/exampleAuth0/LoginButton';
@@ -27,6 +28,7 @@ function App() {
       <Route path="/chat" element={<ChatPage />} />
       <Route path="/user-profile" element={<UserProfile />} />
       <Route path="/rating" element={<Rating />} />
+      <Route path="/likes" element={<Likes />} />
 
 
     </Routes>

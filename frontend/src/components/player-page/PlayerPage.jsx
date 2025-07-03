@@ -91,10 +91,10 @@ const PlayerPage = () => {
     }
   };
 
-/*   const handleStart = async () => {
+  /*   const handleStart = async () => {
     if (isAuthenticated) { */
-     /*  console.log("handleArtist is working"); */
-/* 
+  /*  console.log("handleArtist is working"); */
+  /* 
       const token = await getAccessTokenSilently({
         authorizationParams: {
           audience: API_URL,
@@ -112,9 +112,9 @@ const PlayerPage = () => {
       const bodyArtists = await responseArtist.json();
       setArtists(bodyArtists);
       setCurrentArtist(bodyArtists[0]); */
- /*      console.log("BODY ARTISTS:");
+  /*      console.log("BODY ARTISTS:");
       console.log(bodyArtists); */
-      /*  const responseTrack = await fetch(
+  /*  const responseTrack = await fetch(
         `http://localhost:8080/tracks/tracks-by-artists/${bodyArtists[0].id}`,
         {
           headers: {
@@ -125,8 +125,8 @@ const PlayerPage = () => {
 
       const bodyTrack = await responseTrack.json();
       setSongsMiddleItem(bodyTrack); */
-      /*  setTest(true); */
-/*     }
+  /*  setTest(true); */
+  /*     }
   }; */
   useEffect(() => {
     async function fetchData() {
@@ -175,7 +175,7 @@ const PlayerPage = () => {
       <div className={styles.container}>
         <LeftSide />
         <div className={styles["middle-right"]}>
-          <div className={styles["empty-div1"]}></div>
+          <div className={styles["empty-div11"]}></div>
 
           <div className={styles["mr-middle"]}>
             <div className={styles["mr-left"]}>
@@ -197,13 +197,16 @@ const PlayerPage = () => {
                 isPlaylistsChanges,
                 setIsPlaylistsChanges,
               }}
-        
+
               /*       artistControl={{ nextArtist, prevArtist }} */
             />
           </div>
-
-          <MusicPlayer songControl={{ currentSong, nextSong, prevSong }} footerPlayer />
         </div>
+
+        <MusicPlayer
+          songControl={{ currentSong, nextSong, prevSong }}
+          footerPlayer
+        />
       </div>
     </>
   );

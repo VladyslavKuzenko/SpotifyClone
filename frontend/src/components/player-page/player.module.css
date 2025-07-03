@@ -12,27 +12,33 @@
 
     .middle-right {
       margin-left: 225px;
-      flex: 1;
-      height: 100vh;
+      width: calc(100% - 225px);
+      height: 86.5vh;
 
     }
 
     .empty-div1 {
       width: 100%;
-      height: 52px;
+      height: 20px;
+    }
+
+    .empty-div11 {
+      width: 100%;
+      height: 50px;
     }
 
     .mr-middle {
       width: 100%;
-      height: 765px;
+      height: calc(86.5vh - 50px);
       display: flex;
 
     }
 
     .mr-left {
-      flex: 0.25;
       display: flex;
       justify-content: end;
+      flex: 0.25;
+
     }
 
     .mr-midd {
@@ -44,7 +50,7 @@
     }
 
     .your-library {
-      width: 95%;
+      width: 94%;
       height: 100%;
       display: flex;
       flex-direction: row;
@@ -59,7 +65,6 @@
 
     .yl-main {
       flex: 1;
-
     }
 
     .yl-text-plus {
@@ -110,16 +115,16 @@
       display: flex;
       justify-content: center;
       align-items: end;
-     
+
     }
 
 
     .golikes-btn {
       width: 80%;
       height: 55%;
-      border:none;
+      border: none;
       background-color: transparent;
-       background-repeat: no-repeat;
+      background-repeat: no-repeat;
       background-image: url(./images/arrowright.png);
       background-position: center;
       background-size: 50%;
@@ -130,13 +135,13 @@
       width: 100%;
       height: 90px;
       align-items: center;
+      overflow: auto;
       display: flex;
-      justify-content: flex-start;
 
     }
 
     .playlist-element {
-      width: 25%;
+      width: 100px;
       height: 42px;
       text-align: center;
       align-content: center;
@@ -148,8 +153,12 @@
       letter-spacing: 0%;
       margin-right: 10px;
       background-color: #C5C5C5;
+      border: none;
+      cursor: pointer;
 
     }
+
+
 
 
     .modal-overlay {
@@ -168,20 +177,21 @@
 
     .modal-window {
       width: 705px;
-      height: 465px;
+      height: 345px;
       background-color: #AFAFAF;
       z-index: 1001;
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
       display: flex;
       margin: 20px;
+      align-items: center;
     }
 
     .modal-left-side {
-      width: 35%;
+      width: 0;
       height: 100%;
       display: flex;
       flex-direction: column;
-      align-items: end;
+
     }
 
     .modal-image {
@@ -194,8 +204,9 @@
     }
 
     .modal-right-side {
-      width: 65%;
       height: 100%;
+      width: 100%;
+
     }
 
     .modal-text {
@@ -235,8 +246,16 @@
     }
 
     .empty-modal1 {
-      width: 100%;
       height: 105px;
+      align-content: center;
+      color: white;
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 100%;
+      letter-spacing: 0%;
+      margin-left: 40px;
+
     }
 
     .name-desc {
@@ -248,7 +267,7 @@
     }
 
     .playlist-name {
-      width: 295px;
+      width: 515px;
       height: 35px;
       background-color: transparent;
       border-bottom: 1px solid #FFFFFF !important;
@@ -260,7 +279,7 @@
     }
 
     .playlist-description {
-      width: 295px;
+      width: 515px;
       height: 35px;
       background-color: transparent;
       border-bottom: 1px solid #FFFFFF !important;
@@ -400,6 +419,20 @@
 
     }
 
+    .sr-select {
+      width: 100%;
+      height: 100%;
+      border: none;
+      outline: none;
+      text-indent: 15px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 100%;
+      letter-spacing: 0%;
+
+    }
+
     .search-css {
       width: 100%;
       height: 100%;
@@ -409,6 +442,8 @@
       text-indent: 15px;
       box-sizing: border-box;
     }
+
+
 
     .search-css::placeholder {
       color: black;
@@ -422,7 +457,6 @@
 
     .sr-recent {
       height: 100%;
-      text-indent: 25px;
       align-content: center;
       width: 171px;
 
@@ -430,47 +464,10 @@
       font-weight: 400;
       font-size: 18px;
       margin-left: 10px;
-      background-color: #fff;
-
 
     }
 
-    .arrow {
-      font-size: 14px;
-      margin-left: 30px;
 
-    }
-
-    .recent-container {
-      position: relative;
-      width: 45%;
-    }
-
-    .recent-options {
-      position: absolute;
-      top: 100%;
-      left: 10px;
-      width: 171px;
-      background-color: white;
-      z-index: 10;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
-
-
-    .recent-option {
-      cursor: pointer;
-      font-family: 'Inter', sans-serif;
-      font-size: 16px;
-      height: 37px;
-      align-items: center;
-      display: flex;
-      text-indent: 25px;
-
-    }
-
-    .recent-option:hover {
-      background-color: #f0f0f0;
-    }
 
     .yl-song-container {
       width: 100%;
@@ -494,11 +491,25 @@
 
     }
 
+    .song-item1 {
+      display: flex;
+      align-items: center;
+      width: 95%;
+      height: 66px;
+      margin-bottom: 15px;
+      border: none;
+      padding-left: 0;
+      padding-right: 0;
+      background-color: transparent;
+      margin: auto;
+      margin-bottom: 12px;
+
+    }
+
     .cover {
       width: 66px;
       height: 66px;
       background-color: #FFFFFF;
-      margin-right: 15px;
 
 
     }
@@ -506,6 +517,10 @@
     .info {
       display: flex;
       flex-direction: column;
+      height: 100%;
+      width: 45%;
+      text-indent: 30px;
+      justify-content: center;
 
     }
 
@@ -520,7 +535,6 @@
       letter-spacing: 0%;
       padding-bottom: 5px;
       text-align: start;
-
 
 
     }
@@ -551,23 +565,28 @@
     }
 
     .artist-songs {
-      width: 95%;
+      width: 96%;
       height: 100%;
+      overflow-y: scroll;
+      scrollbar-width: none;
+
     }
 
 
     .as-plat1 {
       width: 100%;
       height: 100px;
-      background-color: #D9D9D9;
+      background-color: RGB(217, 217, 217);
+      padding-bottom: 15px;
+
     }
 
     .left-right-btns {
-      width: 20%;
-      height: 100%;
+      width: 130px;
       display: flex;
-      justify-content: space-evenly;
+      justify-content: space-between;
       align-items: center;
+      margin-left: 60px;
 
     }
 
@@ -576,6 +595,8 @@
       height: 35px;
       background-color: #949494;
       border-radius: 50%;
+      border: none;
+      cursor: pointer;
     }
 
     .right-btn-plat {
@@ -583,12 +604,15 @@
       height: 35px;
       background-color: #949494;
       border-radius: 50%;
+      cursor: pointer;
+      border: none;
 
 
     }
 
     .as-search-plat {
       flex: 1;
+
     }
 
     .as-search {
@@ -605,9 +629,8 @@
       background-color: #C0C0C0;
       border: none;
       outline: none;
+      margin-top: 10px;
       margin-left: 30px;
-      margin-top: 12px;
-
     }
 
     .as-search::placeholder {
@@ -629,6 +652,7 @@
 
     .artist-listeners {
       width: 100%;
+
       height: 130px;
     }
 
@@ -652,6 +676,8 @@
       padding-bottom: 5px;
       width: 100%;
       text-indent: 60px;
+      margin-top: 20px;
+      padding-bottom: 10px;
 
     }
 
@@ -663,6 +689,7 @@
       letter-spacing: 0%;
       width: 100%;
       text-indent: 60px;
+
     }
 
     .pf-empty1 {
@@ -671,14 +698,15 @@
     }
 
     .pf-container {
-      width: 216px;
+      width: 370px;
       height: 100%;
       display: flex;
       justify-content: space-between;
+      margin-top: 40px;
     }
 
     .pf-play {
-      width: 103px;
+      width: 166px;
       height: 100%;
       text-align: center;
       align-content: center;
@@ -693,7 +721,7 @@
     }
 
     .pf-follow {
-      width: 103px;
+      width: 166px;
       height: 100%;
       text-align: center;
       align-content: center;
@@ -711,7 +739,6 @@
       width: 100%;
       height: 47px;
       align-content: center;
-      text-indent: 15px;
       font-family: 'Inter', sans-serif;
       font-weight: 400;
       font-size: 18px;
@@ -719,9 +746,19 @@
       letter-spacing: 0%;
       background-color: #D9D9D9;
       padding-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+      padding-bottom: 5px;
 
 
+    }
 
+    .rec-songs,
+    .rec-album {
+      color: black;
+      cursor: pointer;
     }
 
     .as-plat3 {
@@ -730,7 +767,15 @@
       overflow-y: auto;
       scrollbar-width: none;
       background-color: #D9D9D9;
+      display: flex;
+      justify-content: center;
 
+
+    }
+
+    .plat3-array {
+      width: 95%;
+      height: 100%;
     }
 
     .as-song-item {
@@ -778,6 +823,7 @@
       color: #868686;
       text-align: center;
       align-content: center;
+
     }
 
     .as-plus-plat {
@@ -794,6 +840,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+
     }
 
     .as-plus {
@@ -809,9 +856,11 @@
       align-content: center;
       cursor: pointer;
     }
-.liked {
-  color: #b91d1d; /* зелений або будь-який інший */
-}
+
+    .liked {
+      color: #b91d1d;
+
+    }
 
     .as-duration {
       width: 15%;
@@ -827,8 +876,10 @@
     }
 
     .as-more-menu {
-      width: 12%;
+      width: 10%;
       align-content: center;
+      height: 100%;
+      position: relative;
     }
 
     .as-menu-plat {
@@ -839,6 +890,57 @@
       justify-content: center;
       cursor: pointer;
 
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: 50%;
+      right: 70%;
+      width: 187px;
+      height: auto;
+      background-color: #fff;
+      z-index: 999;
+    }
+
+    .dropdown-item {
+      cursor: pointer;
+      border-radius: 4px;
+      user-select: none;
+      width: 100%;
+      height: 37px;
+      cursor: pointer;
+      text-align: center;
+      align-content: center;
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 100%;
+      letter-spacing: 0%;
+      color: #575757;
+    }
+
+        .dropdown-itemup1 {
+      cursor: pointer;
+      border-radius: 4px;
+      user-select: none;
+      width: 100%;
+      height: 37px;
+      cursor: pointer;
+      text-align: start;
+      align-content: center;
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 100%;
+      letter-spacing: 0%;
+      color: #575757;
+      border-bottom: 1px solid #A6A6A6;
+      border-radius: 0;
+
+    }
+
+    .dropdown-item:hover {
+      background-color: #f0f0f0;
     }
 
     .as-mp-circle {
@@ -859,21 +961,7 @@
       height: 23px;
     }
 
-    .as-song-artist-it {
-      font-family: 'Inter', sans-serif;
-      font-weight: 400;
-      font-size: 14px;
-      line-height: 100%;
-      letter-spacing: 0%;
-      color: #959595;
-    }
 
-    .artists-mix {
-      width: 95%;
-      height: 100%;
-      background-color: #D9D9D9;
-
-    }
 
     .am-text {
       font-family: 'Inter', sans-serif;
@@ -1001,15 +1089,16 @@
       position: fixed;
       bottom: 0;
       width: calc(100% - 225px);
-      height: 119px;
+      height: 12vh;
       display: flex;
       z-index: 1000;
       justify-content: center;
+      margin-left: 225px;
 
     }
 
     .mr-bottom {
-      width: 97.5%;
+      width: 97%;
 
       height: 100%;
       display: flex;
@@ -1026,6 +1115,13 @@
       align-items: center;
 
 
+    }
+
+    .foot-mrb-left {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      /* решта стилів */
     }
 
     .mrb-center {
@@ -1178,12 +1274,12 @@
 
     .recommended-artist {
       width: 300px;
-      height: 50%;
+      height: 45%;
       display: flex;
       justify-content: space-between;
       margin-left: 30px;
-      align-items: center;
-      font-family: 'Inter',sans-serif;
+      align-items: end;
+      font-family: 'Inter', sans-serif;
       font-weight: 400;
       font-size: 18px;
       line-height: 100%;
@@ -1191,6 +1287,264 @@
 
     }
 
-    .recommended-text1, .artist-text {
+    .recommended-text1,
+    .artist-text,
+    .rec-songs,
+    .rec-album {
       cursor: pointer;
+    }
+
+    .activeTab {
+      border-bottom: 2px solid black;
+      cursor: pointer;
+    }
+
+    .recommended-content {
+      background-color: RGB(217, 217, 217);
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    .recommended-array {
+      height: 100%;
+      width: 95%;
+    }
+
+    .albums-container {
+      background-color: #D9D9D9;
+      width: 100%;
+      height: auto;
+      /* або прибрати height */
+      overflow: visible;
+      /* або hidden, якщо треба обрізати */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+
+    .albums-array {
+      width: 100%;
+      height: 270px;
+
+      display: flex;
+      flex-direction: row;
+      gap: 20px;
+
+      overflow-x: auto;
+      scrollbar-width: none;
+      
+
+
+    }
+
+    .albums-item {
+      height: 100%;
+      width: 270px;
+      background-color: #AFAFAF;
+      flex-shrink: 0;
+    }
+
+    .albums-nameartist {
+      margin-top: 80%;
+      margin-left: 30px;
+    }
+
+    .albumsname {
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      font-size: 24px;
+      line-height: 120%;
+      letter-spacing: 0%;
+      color: #161616;
+    }
+
+    .albumsartist {
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      font-size: 10px;
+      line-height: 120%;
+      letter-spacing: 0%;
+      color: #161616;
+
+    }
+
+    .albums-array-songs {
+      width: 95%;
+      height: 100%;
+      padding-top: 30px;
+
+
+
+    }
+
+    .albums-songs {
+      width: 90%;
+      height: 150px;
+      background-color: #9e9e9e;
+      margin-bottom: 10px;
+    }
+
+    .modalBackdrop {
+      position: fixed;
+      left: 225px;
+      top: 0;
+      width: calc(100% - 225px);
+      height: 100%;
+      background-color: rgba(226, 226, 226, 0.5);
+      display: flex;
+      justify-content: center;
+
+      z-index: 999;
+    }
+
+    .modalContent {
+      height: 730px;
+      width: 67%;
+      position: fixed;
+      top: calc(88vh - 730px);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .foot-left {
+      width: 38%;
+      height: 663px;
+      background-color: #868686;
+      padding-left: 30px;
+      padding-right: 30px;
+      padding-top: 40px;
+
+    }
+
+    .foot-right {
+      width: 55%;
+      height: 100%;
+      background-color: #A2A2A2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .foot-photo {
+      width: 100%;
+      height: 440px;
+      background-color: #D9D9D9;
+    }
+
+    .foot-bcontent {
+      width: 100%;
+      height: 100px;
+      display: flex;
+      margin-top: 30px;
+    }
+
+    .foot-songartist {
+      width: 50%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+    }
+
+    .foot-likeslisteners {
+      width: 50%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: end;
+    }
+
+    .foot-song,
+    .foot-artist,
+    .foot-likes,
+    .foot-listeners {
+      color: white;
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      font-size: 20px;
+      line-height: 100%;
+      letter-spacing: 0%;
+
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: 100%;
+    }
+
+    .tab-content {
+      width: 100%;
+      height: 70px;
+      margin-top: 40px;
+      margin-left: 20px;
+    }
+
+    .up-next-btn {
+      height: 100%;
+      border: none;
+      cursor: pointer;
+      width: 100px;
+      background-color: transparent;
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      font-size: 20px;
+      line-height: 100%;
+      letter-spacing: 0%;
+
+    }
+
+    .foot-array {
+      flex: 1;
+      width: 92%;
+      overflow: auto;
+      scrollbar-width: none;
+    }
+
+    .songfsdfs {
+      width: 100%;
+      height: 66px;
+      margin-bottom: 10px;
+      background-color: #575757;
+    }
+
+    .dropdown-itemup-wrapper {
+      position: relative;
+      /* контекст позиціонування для абсолютного модального */
+      display: inline-block;
+    }
+
+    .atp-modal {
+      position: absolute;
+      top: 150%;
+      left: -250px;
+      transform: translateY(-50%);
+      width: 187px;
+      min-height: 37px;
+      max-height: 100px;
+      overflow-y: auto;
+      height: auto;
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      scrollbar-width: none;
+    }
+
+    .atp-item {
+      color: white;
+      font-size: 13px;
+      background-color: #ffffff;
+      cursor: pointer;
+      white-space: nowrap;
+      width: 100%;
+      height: 37px;
+      flex-shrink: 0;
+      align-content: center;
+      color:black;
+    }
+
+    .atp-item:hover {
+      background-color: #ececec;
     }

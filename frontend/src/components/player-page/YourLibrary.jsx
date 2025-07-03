@@ -204,7 +204,7 @@ const YourLibrary = ({
                   handleSortSongs(e.target.value);
                 }}
               >
-                <option value="recent">Recent</option>
+                <option value="recent" >Recent</option>
                 <option value="az">A-Z</option>
                 {/* <option value="artist">By Artist</option> */}
               </select>
@@ -284,7 +284,7 @@ const YourLibrary = ({
 
 
             <div className={styles["modal-right-side"]}>
-              <div className={styles["empty-modal1"]}></div>
+              <div className={styles["empty-modal1"]}>New playlist</div>
               <div className={styles["name-desc"]}>
                 <input
                   type="text"
