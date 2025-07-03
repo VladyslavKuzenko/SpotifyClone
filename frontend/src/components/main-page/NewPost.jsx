@@ -82,7 +82,7 @@ const NewPost = ({ onClose }) => {
                   ×
                 </button>
                 <div className={styles["file-stories"]}>
-                  <button className={styles["add-stories"]}>Add stories</button>
+                  <button className={styles["add-stories"]}>Choose photo</button>
                 </div>
                 <div className={styles["post-stories"]}>
                   <button className={styles["post-stories-btn"]}>Post</button>
