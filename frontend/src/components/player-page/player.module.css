@@ -176,8 +176,8 @@
     }
 
     .modal-window {
-      width: 705px;
-      height: 345px;
+      width: 600px;
+      height: 245px;
       background-color: #AFAFAF;
       z-index: 1001;
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
@@ -205,7 +205,6 @@
 
     .modal-right-side {
       height: 100%;
-      width: 100%;
 
     }
 
@@ -278,21 +277,6 @@
       margin-left: 40px;
     }
 
-    .playlist-description {
-      width: 515px;
-      height: 35px;
-      background-color: transparent;
-      border-bottom: 1px solid #FFFFFF !important;
-      outline: none;
-      border: none;
-      background-color: transparent;
-      margin-left: 40px;
-
-
-
-    }
-
-    .playlist-description::placeholder,
     .playlist-name::placeholder {
       color: #FFFFFF;
       font-family: 'Inter', sans-serif;
@@ -354,7 +338,6 @@
       height: 60px;
       align-content: center;
       display: flex;
-      margin-top: 25px;
       align-items: end;
       justify-content: end;
 

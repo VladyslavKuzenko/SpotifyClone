@@ -9,7 +9,7 @@ import NewSongs from "./NewSongs";
 import ContainerVibe from "./ContainerVibe";
 import SearchModal from "./SearchModal";
 import NewPost from "./NewPost";
-
+import PostItem from "./PostItem";
 const Main = () => {
   const { isAuthenticated, isLoading } = useAuth0();
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
@@ -47,11 +47,17 @@ const Main = () => {
   const renderContent = () => {
     switch (selectedTab) {
       case "all":
-        return <div>Це контент для All</div>;
+        return <div><PostItem/><PostItem/></div>;
+
+
       case "artists":
         return <div>Це контент для Artists</div>;
+
+
       case "friends":
         return <div>Це контент для Friends</div>;
+
+
       default:
         return null;
     }
