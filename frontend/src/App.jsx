@@ -29,6 +29,7 @@ function App() {
       <Route path="/user-profile" element={<UserProfile />} />
       <Route path="/rating" element={<Rating />} />
       <Route path="/likes" element={<Likes />} />
+      <Route path="/profile" element={<Profile />} />
 
 
     </Routes>
