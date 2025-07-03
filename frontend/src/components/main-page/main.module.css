@@ -1109,15 +1109,16 @@
     height: 87px;
     width: 540px;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     margin-top: 7px;
+    gap:15px
   }
 
   .at-music,
   .at-gallery,
   .at-video,
   .at-document,
-  .at-add-tag {
+  .at-album {
     height: 100%;
     width: 100px;
     border: none;
@@ -1486,4 +1487,11 @@
   min-width: 190px;  
   aspect-ratio: 1 / 1;  
   background-color: #C1C1C1;
+}
+
+.radio-post  {
+  width: 27px;
+  height: 27px;
+  margin-left: 15px;
+  margin-right: 5px;
 }
