@@ -5,19 +5,11 @@ import { useAPI } from "../../hooks/useApi";
 
 export default function AudioControl({ footerPlayer }) {
   const { currentSong, nextSong, prevSong, audioRef } = useAPI();
-  const {isSongPlayed, setIsSongPlayed} = useAPI();
-  const {currentTime, setCurrentTime} = useAPI();
-  const {duration, setDuration} = useAPI();
-  const {volume, setVolume} = useAPI();
-  const playAudio = () => {
-    audioRef.current?.play();
-    setIsSongPlayed(true);
-  };
-
-  const pauseAudio = () => {
-    audioRef.current?.pause();
-    setIsSongPlayed(false);
-  };
+  const { isSongPlayed, setIsSongPlayed } = useAPI();
+  const { currentTime, setCurrentTime } = useAPI();
+  const { duration, setDuration } = useAPI();
+  const { volume, setVolume } = useAPI();
+  const { playAudio, pauseAudio } = useAPI();
   const reduceVolume = () => {
     audioRef.current.volume - 0.1 >= 0
       ? (audioRef.current.volume -= 0.1)

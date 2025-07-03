@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import stylesFooter from "../player-page/player.module.css"; // заміни на свій шлях до CSS
  import stylesLeft from "../main-page/main.module.css";
  
@@ -42,10 +42,11 @@ const Modal = ({ onClose, song }) => {
 };
 
 const MusicPlayer = ({ footerPlayer }) => {
-  const { currentSong } = useAPI();
+  const { currentSong,currentSongList,setCurrentSong,setCurrentSongList,apiFetch } = useAPI();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  /* const { user } = useAPI();
+ */
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
@@ -53,7 +54,21 @@ const MusicPlayer = ({ footerPlayer }) => {
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
+/* 
+   const fetchPlaylists = async () => {
+    const response=await apiFetch(`/playlists/playlists/${user.sub}`)
+    const data = await response.json();
+    return data;
+  }
+  const fetchSong = async () => {
+    const response=await apiFetch("")
+    const data = await response.json();
 
+    setCurrentSong(data);
+  }
+useEffect(() => {
+
+}) */
   return (
     <>
       {footerPlayer ? (

@@ -6,7 +6,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { API_URL } from "../../js/properties/properties";
 
 export default function ProfileSetup() {
-  const { isAuthenticated, user, getAccessTokenWithPopup } = useAuth0();
+  const { isAuthenticated,isLoading, user, getAccessTokenWithPopup } = useAuth0();
   const { apiFetch } = useAPI();
   const navigate = useNavigate();
   const [goalDropdownOpen, setGoalDropdownOpen] = useState(false);
@@ -69,6 +69,9 @@ export default function ProfileSetup() {
     };
   }, []);
 
+  if(isLoading){
+    return <div>Loading...</div>;
+  }
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }

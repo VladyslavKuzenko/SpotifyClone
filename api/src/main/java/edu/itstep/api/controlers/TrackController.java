@@ -44,7 +44,10 @@ public class TrackController {
     public Set<Track> getAllTracksByPlaylist(@PathVariable Long id) {
         return playlistRepository.findById(id).orElseThrow(RuntimeException::new).getTracks();
     }
-
+    @GetMapping("/lastTrack")
+    public Track getLastAdded() {
+        return trackRepository.findFirstByOrderByIdDesc();
+    }
     @PostMapping
     public ResponseEntity createTrack(@RequestBody Track track) throws URISyntaxException {
         Track savedTrack = trackRepository.save(track);

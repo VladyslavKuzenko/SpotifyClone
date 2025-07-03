@@ -6,9 +6,8 @@ export const APIContext = createContext(undefined);
 
 export const APIProvider = ({ children }) => {
   const [isProfileConfirmed, setIsProfileConfirmed] = useState(false);
-  const [profileConfirmationLoading, setProfileConfirmationLoading] =
-    useState(true);
-  const { user, getAccessTokenSilently, isAuthenticated } = useAuth0();
+  const [profileConfirmationLoading, setProfileConfirmationLoading] = useState(true);
+  const { user, getAccessTokenSilently,getAccessTokenWithPopup, isAuthenticated } = useAuth0();
   const [currentSong, setCurrentSong] = useState("");
   const [currentSongList, setCurrentSongList] = useState("");
   const audioRef = useRef(null);
@@ -16,13 +15,24 @@ export const APIProvider = ({ children }) => {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(0);
+
   const nextSong = () => {
     if (currentSongList.indexOf(currentSong) + 1 < currentSongList.length)
       setCurrentSong(currentSongList[currentSongList.indexOf(currentSong) + 1]);
   };
+
   const prevSong = () => {
     if (currentSongList.indexOf(currentSong) - 1 >= 0)
       setCurrentSong(currentSongList[currentSongList.indexOf(currentSong) - 1]);
+  };
+  const playAudio = () => {
+    audioRef.current?.play();
+    setIsSongPlayed(true);
+  };
+
+  const pauseAudio = () => {
+    audioRef.current?.pause();
+    setIsSongPlayed(false);
   };
 
   const apiFetch = async (path, options = {}) => {
@@ -98,6 +108,8 @@ export const APIProvider = ({ children }) => {
         setDuration,
         volume,
         setVolume,
+        playAudio,
+        pauseAudio
       }}
     >
       <>{children}</>

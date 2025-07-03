@@ -108,6 +108,7 @@ const YourLibrary = ({
       songs.sort((a, b) => a.title.localeCompare(b.title));
     }
   }
+  
   useEffect(() => {
     if (isPlaylistsChangesControl.isPlaylistsChanges || !isLoading) {
       async function fetchData() {
@@ -118,6 +119,7 @@ const YourLibrary = ({
       isPlaylistsChangesControl.setIsPlaylistsChanges(false);
     }
   }, [isLoading, isPlaylistsChangesControl.isPlaylistsChanges]);
+
   useEffect(() => {
     if (songs.length > 0) {
       handleSortSongs("recent");

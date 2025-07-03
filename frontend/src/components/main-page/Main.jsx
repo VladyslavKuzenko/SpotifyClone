@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, use } from "react";
 import styles from "./main.module.css";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Navigate } from "react-router-dom";
@@ -9,6 +9,7 @@ import NewSongs from "./NewSongs";
 import ContainerVibe from "./ContainerVibe";
 import SearchModal from "./SearchModal";
 import NewPost from "./NewPost";
+import { useAPI } from "../../hooks/useApi";
 
 const Main = () => {
   const { isAuthenticated, isLoading } = useAuth0();
@@ -17,7 +18,7 @@ const Main = () => {
   const [selectedTab, setSelectedTab] = useState("all");
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [notificationTab, setNotificationTab] = useState("all");
-
+  const { apiFetch } = useAPI();
   const notificationRef = useRef(null);
 
   useEffect(() => {
@@ -40,6 +41,13 @@ const Main = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isNotificationOpen]);
+  useEffect(() => {
+    const fetchData = async () => {
+      /* const response = await apiFetch(""); */
+    };
+
+    fetchData();
+  }, [isLoading]);
 
   if (isLoading) return <div>Loading...</div>;
   if (!isAuthenticated) return <Navigate to="/login" replace />;
@@ -110,10 +118,7 @@ const Main = () => {
             />
 
             {isNotificationOpen && (
-              <div
-                className={styles.notificationMenu}
-                ref={notificationRef}
-              >
+              <div className={styles.notificationMenu} ref={notificationRef}>
                 <div className={styles.notificationHeader}>Notification</div>
 
                 <div className={styles.notificationTabs}>
@@ -183,9 +188,7 @@ const Main = () => {
         </div>
       </div>
 
-      {isPostModalOpen && (
-        <NewPost onClose={() => setIsPostModalOpen(false)} />
-      )}
+      {isPostModalOpen && <NewPost onClose={() => setIsPostModalOpen(false)} />}
     </>
   );
 };
