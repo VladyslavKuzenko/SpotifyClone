@@ -299,13 +299,21 @@ const YourLibrary = ({
                   onChange={(e) => setTitlePlaylist(e.target.value)}
 
                 />
-                <input
-                  type="text"
-                  className={styles["playlist-description"]}
-                  name=""
-                  id=""
-                  placeholder="Description"
-                />
+               <div className={styles["cancel-create"]}>
+                <button
+                  className={styles["cancel-btn"]}
+                  onClick={() => setIsModalOpen(false)}
+                >
+                  Cancel
+                </button>
+                <button
+                  className={styles["create-btn"]}
+                  onClick={handleCreatePlaylist}
+                >
+                  Create
+                </button>
+
+              </div>
               </div>
 
               {/*  <div className={styles["access"]}>
@@ -324,21 +332,7 @@ const YourLibrary = ({
               </div> */}
 
 
-              <div className={styles["cancel-create"]}>
-                <button
-                  className={styles["cancel-btn"]}
-                  onClick={() => setIsModalOpen(false)}
-                >
-                  Cancel
-                </button>
-                <button
-                  className={styles["create-btn"]}
-                  onClick={handleCreatePlaylist}
-                >
-                  Create
-                </button>
-
-              </div>
+              
             </div>
           </div>
         </div>

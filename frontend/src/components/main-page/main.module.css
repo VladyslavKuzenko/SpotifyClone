@@ -559,7 +559,6 @@
   .users-content {
     width: 100%;
     height: 1000px;
-    background-color: rgb(173, 173, 173);
   }
 
   .new-song-div {
@@ -1110,15 +1109,16 @@
     height: 87px;
     width: 540px;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     margin-top: 7px;
+    gap:15px
   }
 
   .at-music,
   .at-gallery,
   .at-video,
   .at-document,
-  .at-add-tag {
+  .at-album {
     height: 100%;
     width: 100px;
     border: none;
@@ -1351,3 +1351,147 @@
     height: 100%;
     overflow-y: auto;
   }
+
+  
+
+
+.main {
+    width: 100%;
+    background-color: #F2F2F2;
+    padding-bottom: 50px;
+    margin-bottom: 50px;
+}
+
+.post-item {
+    min-height: 390px;
+    display: flex;
+    justify-content: center;
+}
+
+.post-content {
+    width: 90%;
+    height: auto;
+    margin-top: 30px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.upper-content {
+    width: 100%;
+    height: 56px;
+    display: flex;
+}
+
+.post-ava-plat {
+    width: 56px;
+    height: 56px;
+}
+
+.name-time {
+    width: calc(55% - 56px);
+    align-content: center;
+    height: 100%;
+    margin-right: 60px;
+    text-indent: 21px;
+}
+
+.like-coment-repost {
+    width: auto;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.post-author {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    margin-bottom: 7px;
+
+    white-space: nowrap;
+    overflow: hidden;
+    height: 50%;
+    text-overflow: ellipsis;
+    align-content: center;
+}
+
+.post-time {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: #B3B3B3;
+    height: 50%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.post-like,
+.post-coment,
+.post-repost {
+    height: 100%;
+    text-align: center;
+    align-content: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    
+}
+
+.post-ava {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background-color: #B3B3B3;
+}
+
+.middle-content {
+  width: 100%;
+  margin-top: 30px;
+}
+
+.text-content {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.2;
+  letter-spacing: 0;
+  padding-bottom: 50px;
+  text-align: justify;
+  text-align-last: left;
+  white-space: normal;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+
+.post-photos-container {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;  
+  justify-content: space-between;  
+  box-sizing: border-box;
+}
+
+.post-photo {
+  flex: 1 1 30%;  
+  min-width: 190px;  
+  aspect-ratio: 1 / 1;  
+  background-color: #C1C1C1;
+}
+
+.radio-post  {
+  width: 27px;
+  height: 27px;
+  margin-left: 15px;
+  margin-right: 5px;
+}

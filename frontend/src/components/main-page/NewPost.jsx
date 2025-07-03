@@ -58,20 +58,21 @@ const NewPost = ({ onClose }) => {
                 </div>
 
                 <div className={styles["attributes"]}>
-                  <button className={styles["at-music"]}>Music</button>
                   <button className={styles["at-gallery"]}>Gallery</button>
-                  <button className={styles["at-video"]}>Video</button>
-                  <button className={styles["at-document"]}>Document</button>
-                  <button className={styles["at-add-tag"]}>Add tag</button>
+
+                  {/*<button className={styles["at-gallery"]}>Gallery</button>            
+                  <button className={styles["at-music"]}>Music</button>
+                  <button className={styles["at-album"]}>Album</button> */}     {/* !!!ДЛЯ АРТИСТА*/}
+
                 </div>
 
-                <div className={styles["tag-container"]}>
+                {/*<div className={styles["tag-container"]}>
                   {Array.from({ length: 15 }).map((_, index) => (
                     <button key={index} className={styles["tag-item"]}>
                       Tag {index + 1}
                     </button>
                   ))}
-                </div>
+                </div>*/}
               </>
             )}
 
@@ -104,6 +105,7 @@ const NewPost = ({ onClose }) => {
                     type="radio"
                     checked={selectedPrivacy === "public"}
                     onChange={() => handlePrivacyChange("public")}
+                    className={styles["radio-post"]}
                   />
                   <span>Public</span>
                 </label>
@@ -113,6 +115,8 @@ const NewPost = ({ onClose }) => {
                     type="radio"
                     checked={selectedPrivacy === "friends"}
                     onChange={() => handlePrivacyChange("friends")}
+                    className={styles["radio-post"]}
+
                   />
                   <span>Friends</span>
                 </label>
@@ -122,6 +126,8 @@ const NewPost = ({ onClose }) => {
                     type="radio"
                     checked={selectedPrivacy === "privacy"}
                     onChange={() => handlePrivacyChange("privacy")}
+                    className={styles["radio-post"]}
+
                   />
                   <span>Privacy</span>
                 </label>
@@ -135,6 +141,8 @@ const NewPost = ({ onClose }) => {
                     type="radio"
                     checked={selectedComments === "open-comments"}
                     onChange={() => handleCommentsChange("open-comments")}
+                    className={styles["radio-post"]}
+
                   />
                   <span>Open</span>
                 </label>
@@ -144,6 +152,8 @@ const NewPost = ({ onClose }) => {
                     type="radio"
                     checked={selectedComments === "closed-comments"}
                     onChange={() => handleCommentsChange("closed-comments")}
+                    className={styles["radio-post"]}
+
                   />
                   <span>Closed</span>
                 </label>
