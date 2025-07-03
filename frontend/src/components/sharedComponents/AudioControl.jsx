@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import styles from "./player.module.css";
+import stylesPlayer from "../player-page/player.module.css";
 import {convertTime} from "../../js/functions/functions";
 
 export default function AudioControl({songControl}) {
@@ -38,8 +38,8 @@ export default function AudioControl({songControl}) {
   };
   return (
     <>
-      <div className={styles["mrb-center"]}>
-        <div className={styles["bmr-controls"]}>
+      <div className={stylesPlayer["mrb-center"]}>
+        <div className={stylesPlayer["bmr-controls"]}>
           <audio
             id="myAudio"
             ref={audioRef}
@@ -60,31 +60,31 @@ export default function AudioControl({songControl}) {
             }}
           ></audio>
 
-          <button className={styles["bmr-btn"]}>⏺</button>
-          <button className={styles["bmr-btn"]} onClick={songControl.prevSong}>
+          <button className={stylesPlayer["bmr-btn"]}>⏺</button>
+          <button className={stylesPlayer["bmr-btn"]} onClick={songControl.prevSong}>
             ⏮
           </button>
           {isSongPlayed ? (
-            <button className={styles["bmr-btn"]} onClick={pauseAudio}>
+            <button className={stylesPlayer["bmr-btn"]} onClick={pauseAudio}>
               ⏸
             </button>
           ) : (
-            <button className={styles["bmr-btn"]} onClick={playAudio}>
+            <button className={stylesPlayer["bmr-btn"]} onClick={playAudio}>
               ▶
             </button>
           )}
-          <button className={styles["bmr-btn"]} onClick={songControl.nextSong}>
+          <button className={stylesPlayer["bmr-btn"]} onClick={songControl.nextSong}>
             ⏭
           </button>
-          <button className={styles["bmr-btn"]}>⏺</button>
+          <button className={stylesPlayer["bmr-btn"]}>⏺</button>
         </div>
 
-        <div className={styles["bmr-progress"]}>
-          <div className={styles["current-time-start"]}>
+        <div className={stylesPlayer["bmr-progress"]}>
+          <div className={stylesPlayer["current-time-start"]}>
             {convertTime(currentTime)}
           </div>
           <input
-            className={styles["bmr-bar-wrapper"]}
+            className={stylesPlayer["bmr-bar-wrapper"]}
             type="range"
             min="0"
             max={duration}
@@ -92,14 +92,14 @@ export default function AudioControl({songControl}) {
             value={currentTime}
             onChange={handleProgressChange}
           />
-          <div className={styles["current-time-end"]}>
+          <div className={stylesPlayer["current-time-end"]}>
             {convertTime(duration)}
           </div>
         </div>
       </div>
-      <div className={styles["mrb-right"]}>
+      <div className={stylesPlayer["mrb-right"]}>
         <button
-          className={styles["bmr-plus"]}
+          className={stylesPlayer["bmr-plus"]}
           onClick={() => {
             reduceVolume();
           }}
@@ -109,7 +109,7 @@ export default function AudioControl({songControl}) {
 
         <progress id="file" value={volume} max="1"></progress>
 
-        <button className={styles["bmr-plus"]} onClick={() => increaseVolume()}>
+        <button className={stylesPlayer["bmr-plus"]} onClick={() => increaseVolume()}>
           +
         </button>
       </div>

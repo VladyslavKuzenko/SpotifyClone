@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./player.module.css";
 import YourLibrary from "./YourLibrary";
 import SongItem from "./SongItem";
-import FooterPlayer from "./FooterPlayer";
+import MusicPlayer from "../sharedComponents/MusicPlayer";
 import LeftSide from "../main-components/LeftSide";
 import MiddleItem from "./MiddleItem";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -202,7 +202,7 @@ const PlayerPage = () => {
             />
           </div>
 
-          <FooterPlayer songControl={{ currentSong, nextSong, prevSong }} />
+          <MusicPlayer songControl={{ currentSong, nextSong, prevSong }} footerPlayer />
         </div>
       </div>
     </>
