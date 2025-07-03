@@ -52,7 +52,6 @@ const NewSongs = () => {
                 playAudio();
               }}
             >
-              ▶
             </button>
           )}
         </div>
