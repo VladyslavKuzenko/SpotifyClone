@@ -919,7 +919,7 @@
       color: #575757;
     }
 
-        .dropdown-itemup1 {
+    .dropdown-itemup1 {
       cursor: pointer;
       border-radius: 4px;
       user-select: none;
@@ -1335,7 +1335,7 @@
 
       overflow-x: auto;
       scrollbar-width: none;
-      
+
 
 
     }
@@ -1375,9 +1375,6 @@
       width: 95%;
       height: 100%;
       padding-top: 30px;
-
-
-
     }
 
     .albums-songs {
@@ -1542,7 +1539,7 @@
       height: 37px;
       flex-shrink: 0;
       align-content: center;
-      color:black;
+      color: black;
     }
 
     .atp-item:hover {
