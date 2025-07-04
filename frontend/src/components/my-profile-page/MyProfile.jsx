@@ -28,11 +28,12 @@ const MyProfile = () => {
         </div>
 
         <div className={styles['functional-container1']}>
+
           <div className={styles['saved-album-container']}>
             <div className={styles['saved-album-text']}>Saved Albums</div>
             <div className={styles['album-array']}>
-              {Array.from({ length: 13 }).map((_, index) => (
-                <AlbumItem />
+              {Array(12).fill(0).map((_, idx) => (
+                <AlbumItem key={idx} />
               ))}
             </div>
           </div>
@@ -47,14 +48,25 @@ const MyProfile = () => {
           </div>
         </div>
 
-        <div className={styles['bottom-place']}>
+     <div className={styles['bottom-place']}>
           <div className={styles['posts-place']}>
             <div className={styles['posts-text']}>Posts</div>
             <div className={styles['posts-array']}></div>
           </div>
           <div className={styles['groups-place']}>
-            <div className={styles['group-text']}></div>
-            <div className={styles['groups-container']}></div>
+            <div className={styles['groups-text']}>Groups</div>
+            <div className={styles['groups-container']}>
+              {[...Array(12)].map((_, i) => (
+                <div key={i} className={styles["grp-hiphop-heads"]}>
+                  <div className={styles["grp-avatar"]}></div>
+                  <div className={styles["grp-info"]}>
+                    <div className={styles["grp-name"]}>Hip-Hop Heads</div>
+                    <div className={styles["grp-followers"]}>35477 followers</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
           </div>
         </div>
       </div>
