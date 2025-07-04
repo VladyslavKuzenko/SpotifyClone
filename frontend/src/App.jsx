@@ -9,6 +9,7 @@ import { Route, Routes } from 'react-router-dom';
 
 import ChatPage from './components/chat-page/ChatPage';
 import ProfileSetup from './components/profile-page/ProfileSetup';
+import Test from './components/exampleAuth0/Test';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
       <Route path="/rating" element={<Rating />} />
       <Route path="/likes" element={<Likes />} />
       <Route path="/profileSetup" element={<ProfileSetup />} />
+      <Route path="/test" element={<Test />} />
    {/*    <Route path="/profile" element={<Profile />} /> */}
 
 

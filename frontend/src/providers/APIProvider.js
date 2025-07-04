@@ -16,7 +16,7 @@ export const APIProvider = ({ children }) => {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(0);
-  const [autoStart, setAutoStart] = useState(false);
+ /*  const [autoStart, setAutoStart] = useState(false); */
 
   const nextSong = () => {
     if (currentSongList.indexOf(currentSong) + 1 < currentSongList.length)
@@ -146,8 +146,8 @@ const apiAxiosPost= async (path, data, options = {}) => {
         playAudio,
         pauseAudio,
         isLoading,
-        autoStart,
-        setAutoStart,
+        /* autoStart,
+        setAutoStart, */
         apiAxiosPost
       }}
     >

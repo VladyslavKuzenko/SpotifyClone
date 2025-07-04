@@ -5,5 +5,6 @@ public enum ContentType {
     VOICE,
     IMAGE,
     POST,
-    ARTIST
+    ARTIST,
+    VIDEO
 }

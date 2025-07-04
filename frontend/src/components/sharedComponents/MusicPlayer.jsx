@@ -62,7 +62,7 @@ const MusicPlayer = ({ footerPlayer }) => {
     setIsModalOpen(false);
   };
 
-  const fetchPlaylist = async () => {
+ /*  const fetchPlaylist = async () => {
     const response = await apiFetch(`/playlists/playlists/${user?.sub}/Like`);
     const data = await response.json();
     console.log("Playlist fetched:", data);
@@ -80,7 +80,7 @@ const MusicPlayer = ({ footerPlayer }) => {
   };
   useEffect(() => {
     fetchSong();
-  }, [isLoading]);
+  }, [isLoading]); */
   return (
     <>
       {footerPlayer ? (

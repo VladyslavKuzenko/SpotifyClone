@@ -10,7 +10,7 @@ export default function AudioControl({ footerPlayer }) {
   const { duration, setDuration } = useAPI();
   const { volume, setVolume } = useAPI();
   const { playAudio, pauseAudio } = useAPI();
-  const { autoStart, setAutoStart } = useAPI();
+  /*   const { autoStart, setAutoStart } = useAPI(); */
   const reduceVolume = () => {
     audioRef.current.volume - 0.1 >= 0
       ? (audioRef.current.volume -= 0.1)
@@ -43,9 +43,7 @@ export default function AudioControl({ footerPlayer }) {
                 onLoadedMetadata={() => {
                   setDuration(Math.floor(audioRef.current.duration));
                   setVolume(audioRef.current.volume);
-                  if (autoStart) playAudio();
-                  else setAutoStart(true);
-
+                  playAudio();
                   console.log("Volume: " + audioRef.current.volume);
                 }}
                 onTimeUpdate={() => {
@@ -127,8 +125,7 @@ export default function AudioControl({ footerPlayer }) {
                 onLoadedMetadata={() => {
                   setDuration(Math.floor(audioRef.current.duration));
                   setVolume(audioRef.current.volume);
-                  if (autoStart) playAudio();
-                  else setAutoStart(true);
+                  playAudio();
                   console.log("Volume: " + audioRef.current.volume);
                 }}
                 onTimeUpdate={() => {

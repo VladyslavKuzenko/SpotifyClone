@@ -7,17 +7,14 @@ import jakarta.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "posts")
-public class Post {
+@Table(name = "stories")
+public class Story {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-    @Column(nullable = false)
-    private String title;
-    private String description;
     @Column(name = "media_type", nullable = false)
     private ContentType mediaType;
     @Column(name = "media_url", nullable = false)
@@ -26,19 +23,9 @@ public class Post {
     private int likesCount;
     @Column(name = "views_count")
     private int viewsCount;
-    @Column(name = "comments_count")
-    private int commentsCount;
-    @Column(name = "reposts_count")
-    private int repostsCount;
-    @ManyToMany
-    @JoinTable(
-            name = "posts_hashtags",
-            joinColumns = @JoinColumn(name = "post_id"),
-            inverseJoinColumns = @JoinColumn(name = "hashtag_id"))
-    @JsonIgnore
-    private Set<HashTag> hashtags;
 
-    public Post() {
+
+    public Story() {
     }
 
     public Long getId() {
@@ -55,22 +42,6 @@ public class Post {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public ContentType getMediaType() {
@@ -103,30 +74,6 @@ public class Post {
 
     public void setViewsCount(int viewsCount) {
         this.viewsCount = viewsCount;
-    }
-
-    public int getCommentsCount() {
-        return commentsCount;
-    }
-
-    public void setCommentsCount(int commentsCount) {
-        this.commentsCount = commentsCount;
-    }
-
-    public int getRepostsCount() {
-        return repostsCount;
-    }
-
-    public void setRepostsCount(int repostsCount) {
-        this.repostsCount = repostsCount;
-    }
-
-    public Set<HashTag> getHashtags() {
-        return hashtags;
-    }
-
-    public void setHashtags(Set<HashTag> hashtags) {
-        this.hashtags = hashtags;
     }
 }
 

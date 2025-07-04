@@ -5,6 +5,8 @@ import edu.itstep.api.models.Track;
 import edu.itstep.api.repositories.ArtistRepository;
 import edu.itstep.api.repositories.PlaylistRepository;
 import edu.itstep.api.repositories.TrackRepository;
+import edu.itstep.api.services.PostService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +21,7 @@ import java.util.Set;
 public class TrackController {
     private final TrackRepository trackRepository;
     private final PlaylistRepository playlistRepository;
+
 
     public TrackController(TrackRepository trackRepository, PlaylistRepository playlistRepository) {
         this.trackRepository = trackRepository;
@@ -44,10 +47,12 @@ public class TrackController {
     public Set<Track> getAllTracksByPlaylist(@PathVariable Long id) {
         return playlistRepository.findById(id).orElseThrow(RuntimeException::new).getTracks();
     }
+
     @GetMapping("/lastTrack")
     public Track getLastAdded() {
         return trackRepository.findFirstByOrderByIdDesc();
     }
+
     @PostMapping
     public ResponseEntity createTrack(@RequestBody Track track) throws URISyntaxException {
         Track savedTrack = trackRepository.save(track);
