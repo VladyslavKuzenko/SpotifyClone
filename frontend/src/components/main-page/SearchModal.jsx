@@ -6,6 +6,19 @@ const SearchModal = ({ isSearchModalOpen, setIsSearchModalOpen }) => {
   const [showLeftBtn, setShowLeftBtn] = useState(false);
   const [showRightBtn, setShowRightBtn] = useState(false);
 
+  // ⛔ Блокування скролу при відкритті модалки
+  useEffect(() => {
+    if (isSearchModalOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isSearchModalOpen]);
+
   useEffect(() => {
     const container = peopleRef.current;
     if (!container) return;
@@ -19,7 +32,7 @@ const SearchModal = ({ isSearchModalOpen, setIsSearchModalOpen }) => {
     checkButtons();
 
     container.addEventListener("scroll", checkButtons);
-    const timeoutId = setTimeout(checkButtons, 100); // затримка після відкриття
+    const timeoutId = setTimeout(checkButtons, 100);
 
     return () => {
       container.removeEventListener("scroll", checkButtons);
@@ -53,34 +66,13 @@ const SearchModal = ({ isSearchModalOpen, setIsSearchModalOpen }) => {
           onClick={() => setIsSearchModalOpen(false)}
         ></button>
 
+        <div className={styles["xxxtext"]}>Search</div>
+
         <div className={styles["modal-container"]}>
           <div className={styles["modal-content"]}>
             <div className={styles["mpp-container"]}>
-              <div className={styles["music"]}>Music</div>
               <div className={styles["people"]}>People</div>
-              <div className={styles["position"]}>Position</div>
             </div>
-
-            <div className={styles["search-array"]}>
-              {[...Array(20)].map((_, i) => (
-                <div key={i} className={styles["song-item"]}>
-                  <div className={styles["song-image"]}></div>
-                  <div className={styles["tittle-artist"]}>
-                    <div className={styles["song-tittle"]}>Song tittle</div>
-                    <div className={styles["song-artist"]}>Artist</div>
-                  </div>
-                  <div className={styles["song-duration"]}>13:21</div>
-                  <button className={styles["song-playbtn"]}>▶</button>
-                  <button className={styles["song-menu"]}>
-                    <div className={styles["menu-circle"]}></div>
-                    <div className={styles["menu-circle"]}></div>
-                    <div className={styles["menu-circle"]}></div>
-                  </button>
-                </div>
-              ))}
-            </div>
-
-            <div className={styles["empty1"]}></div>
 
             <div className={styles["people-slider"]}>
               {showLeftBtn && (
@@ -106,13 +98,28 @@ const SearchModal = ({ isSearchModalOpen, setIsSearchModalOpen }) => {
               )}
             </div>
 
-            <div className={styles["grid-container"]}>
+            <div className={styles["music"]}>Music</div>
+
+            <div className={styles["search-array"]}>
               {[...Array(20)].map((_, i) => (
-                <button key={i} className={styles["grid-item"]}>
-                  Warsaw
-                </button>
+                <div key={i} className={styles["song-item"]}>
+                  <div className={styles["song-image"]}></div>
+                  <div className={styles["tittle-artist"]}>
+                    <div className={styles["song-tittle"]}>Song tittle</div>
+                    <div className={styles["song-artist"]}>Artist</div>
+                  </div>
+                  <div className={styles["song-duration"]}>13:21</div>
+                  <button className={styles["song-playbtn"]}>▶</button>
+                  <button className={styles["song-menu"]}>
+                    <div className={styles["menu-circle"]}></div>
+                    <div className={styles["menu-circle"]}></div>
+                    <div className={styles["menu-circle"]}></div>
+                  </button>
+                </div>
               ))}
             </div>
+
+            <div className={styles["empty1"]}></div>
           </div>
         </div>
       </div>

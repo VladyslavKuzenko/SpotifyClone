@@ -15,9 +15,32 @@ export default function PostItem() {
                             <div className={styles["post-time"]}>10 days ago</div>
                         </div>
                         <div className={styles["like-coment-repost"]}>
-                            <div className={styles["post-like"]}>1999 likes</div>
-                            <div className={styles["post-coment"]}>999 comments</div>
-                            <div className={styles["post-repost"]}>999 reposts</div>
+
+                            <div className={styles["post-like"]}>
+                                <button className={styles["post-like-btn"]}>
+                                </button>
+                                <div className={styles["likes-count"]}>1999</div>
+
+
+                            </div>
+
+                            <div className={styles["post-coment"]}>
+                                <button className={styles["post-coment-btn"]}>
+                                </button>
+                                <div className={styles["coment-count"]}>1999</div>
+
+
+                            </div>
+
+                            <div className={styles["post-repost"]}>
+                                <button className={styles["post-repost-btn"]}>
+                                </button>
+                                <div className={styles["repost-count"]}>1999</div>
+
+
+                            </div>
+
+
                         </div>
                     </div>
 

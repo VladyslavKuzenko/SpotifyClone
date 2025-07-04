@@ -11,11 +11,11 @@ const LeftSide = () => {
       </div>
 
       <div className={styles["pages-btns-div"]}>
-        <button className={styles["page-btn"]}></button>
-        <button className={styles["page-btn"]}></button>
-        <button className={styles["page-btn"]}></button>
-        <button className={styles["page-btn"]}></button>
-        <button className={styles["page-btn"]}></button>
+        <button className={styles["home-btn"]}></button>
+        <button className={styles["chat-btn"]}></button>
+        <button className={styles["star-btn"]}></button>
+        <button className={styles["playlist-btn"]}></button>
+        <button className={styles["people-btn"]}></button>
       </div>
 
      {/*  <div className={styles["song-place-div"]}>

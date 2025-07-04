@@ -6,7 +6,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { API_URL } from "../../js/properties/properties";
 
 export default function ProfileSetup() {
-  const { isAuthenticated,isLoading, user, getAccessTokenWithPopup } = useAuth0();
+  const { isAuthenticated, isLoading, user, getAccessTokenWithPopup } = useAuth0();
   const { apiFetch } = useAPI();
   const navigate = useNavigate();
   const [goalDropdownOpen, setGoalDropdownOpen] = useState(false);
@@ -45,7 +45,7 @@ export default function ProfileSetup() {
     setVibes(data);
   };
 
-  const isUsernameUnique = async (username) =>{
+  const isUsernameUnique = async (username) => {
     const response = await apiFetch(`/users/isUsernameUnique/${username}`);
     const data = await response.json();
     return data;
@@ -69,7 +69,7 @@ export default function ProfileSetup() {
     };
   }, []);
 
-  if(isLoading){
+  if (isLoading) {
     return <div>Loading...</div>;
   }
   if (!isAuthenticated) {
@@ -110,15 +110,14 @@ export default function ProfileSetup() {
   }
 
   async function submitProfileSetup() {
-    
+
     await getAccessTokenWithPopup({
       authorizationParams: {
         audience: API_URL
       },
     });
 
-    if(!isUsernameUnique(username))
-    {
+    if (!isUsernameUnique(username)) {
       return;
     }
 
@@ -153,87 +152,90 @@ export default function ProfileSetup() {
   }
 
   return (
-    <div className={styles["main-container"]}>
-      <div className={styles.text1}>Profile Setup</div>
-      <div className={styles.picture}></div>
-      <div className={styles.container}>
-        <button className={styles["change-picture"]}>Change picture</button>
-        <button className={styles["delete-picture"]}>Delete picture</button>
-      </div>
-      <div className={styles.username}>Username</div>
-      <input
-        type="text"
-        id="user-name"
-        placeholder="@Name"
-        className={styles["user-name"]}
-        onChange={(e) => { setUsername(e.target.value) }}
-      />
+    <div className={styles["background"]}>
 
-      <div className={styles["bottom-block"]}>
-        <div className={styles.ocnt}>
-          <div className={styles.b1}>
-            <div className={styles.text11}>Location</div>
-            <input
-              type="text"
-              id="location"
-              placeholder="City or Country"
-              className={styles.location}
-              list="genres"
-            />
-            <datalist id="genres">
-              {countries.map(country => (
-                <option key={country.id} value={country.name} />
-              ))}
-            </datalist>
-          </div>
-
-          <div className={styles.b2}>
-            <div className={styles.text11}>Your Role</div>
-            <div className={styles.dropdown} ref={dropdownRef}>
-              <div className={styles["dropdown-toggle"]} onClick={() => { setGoalDropdownOpen(!goalDropdownOpen) }}>
-                <span className={styles.label}>{selectedGoal.title}</span>
-                <span className={styles.arrow}>{goalDropdownOpen ? "˄" : "˅"}</span>
-              </div>
-              {goalDropdownOpen && (
-                <div className={styles["dropdown-options"]}>
-                  {goals.map((goal) => (
-                    <div key={goal.id} onClick={() => selectGoalOption(goal)}>
-                      {goal.title}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
+      <div className={styles["main-container"]}>
+        <div className={styles.text1}>Profile Setup</div>
+        <div className={styles.picture}></div>
+        <div className={styles.container}>
+          <button className={styles["change-picture"]}>Change picture</button>
+          <button className={styles["delete-picture"]}>Delete picture</button>
         </div>
-
-        <div className={styles.text11}>Short Bio</div>
+        <div className={styles.username}>Username</div>
         <input
           type="text"
-          id="bio"
-          placeholder="Add a few words about your music taste..."
-          className={styles.bio}
-          onChange={(e) => { setShortBio(e.target.value) }}
+          id="user-name"
+          placeholder="@Name"
+          className={styles["user-name"]}
+          onChange={(e) => { setUsername(e.target.value) }}
         />
 
-        <div className={styles.text11}>Select your favorite genres:</div>
-        <div className={styles["cont-block"]}>
-          <div className={styles.up}>
-            {genres.map((genre) => (
-              <div className={`${styles.block} ${isGenreSelected(genre) ? styles['block-selected'] : ''}`} onClick={() => { selectGenre(genre) }}>{genre.title}</div>
+        <div className={styles["bottom-block"]}>
+          <div className={styles.ocnt}>
+            <div className={styles.b1}>
+              <div className={styles.text11}>Location</div>
+              <input
+                type="text"
+                id="location"
+                placeholder="City or Country"
+                className={styles.location}
+                list="genres"
+              />
+              <datalist id="genres">
+                {countries.map(country => (
+                  <option key={country.id} value={country.name} />
+                ))}
+              </datalist>
+            </div>
+
+            <div className={styles.b2}>
+              <div className={styles.text11}>Your Role</div>
+              <div className={styles.dropdown} ref={dropdownRef}>
+                <div className={styles["dropdown-toggle"]} onClick={() => { setGoalDropdownOpen(!goalDropdownOpen) }}>
+                  <span className={styles.label}>{selectedGoal.title}</span>
+                  <span className={styles.arrow}>{goalDropdownOpen ? "˄" : "˅"}</span>
+                </div>
+                {goalDropdownOpen && (
+                  <div className={styles["dropdown-options"]}>
+                    {goals.map((goal) => (
+                      <div key={goal.id} onClick={() => selectGoalOption(goal)}>
+                        {goal.title}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          <div className={styles.text11}>Short Bio</div>
+          <input
+            type="text"
+            id="bio"
+            placeholder="Add a few words about your music taste..."
+            className={styles.bio}
+            onChange={(e) => { setShortBio(e.target.value) }}
+          />
+
+          <div className={styles.text11}>Select your favorite genres:</div>
+          <div className={styles["cont-block"]}>
+            <div className={styles.up}>
+              {genres.map((genre) => (
+                <div className={`${styles.block} ${isGenreSelected(genre) ? styles['block-selected'] : ''}`} onClick={() => { selectGenre(genre) }}>{genre.title}</div>
+              ))}
+            </div>
+          </div>
+
+          <div className={styles.text11}>Pick Your Vibe:</div>
+          <div className={styles.bottom}>
+            {vibes.map((vibe) => (
+              <div className={`${styles.block} ${isVibeSelected(vibe) ? styles['block-selected'] : ''}`} onClick={() => { selectVibe(vibe) }}>{vibe.title}</div>
             ))}
           </div>
-        </div>
 
-        <div className={styles.text11}>Pick Your Vibe:</div>
-        <div className={styles.bottom}>
-          {vibes.map((vibe) => (
-            <div className={`${styles.block} ${isVibeSelected(vibe) ? styles['block-selected'] : ''}`} onClick={() => { selectVibe(vibe) }}>{vibe.title}</div>
-          ))}
-        </div>
-
-        <div className={styles.f}>
-          <button className={styles["cnt-btn"]} onClick={submitProfileSetup}>Continue</button>
+          <div className={styles.f}>
+            <button className={styles["cnt-btn"]} onClick={submitProfileSetup}>Continue</button>
+          </div>
         </div>
       </div>
     </div>

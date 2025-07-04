@@ -107,12 +107,14 @@ const MusicPlayer = ({ footerPlayer }) => {
         </div>
       ) : (
         <div className={stylesLeft["song-place-div"]}>
+
           <div className={stylesLeft["song-name"]}>{currentSong?.title}</div>
           <div className={stylesLeft.singer}>
             {currentSong?.artist?.user?.username}
           </div>
           <div className={stylesLeft["circle-song"]}></div>
           <AudioControl footerPlayer />
+
         </div>
       )}
     </>

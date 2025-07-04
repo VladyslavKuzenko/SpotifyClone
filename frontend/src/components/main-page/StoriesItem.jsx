@@ -48,27 +48,37 @@ const StoriesItem = () => {
       window.removeEventListener("resize", updateScrollState);
     };
   }, []);
-
+const getRandomGradient = () => {
+  const angle = Math.floor(Math.random() * 360);
+  const lightOrange = '#FFA500'; 
+  const deepOrange = '#FF4500';  
+  return `linear-gradient(${angle}deg, ${lightOrange}, ${deepOrange})`;
+};
   return (
     <div className={styles.wrapper}>
       {canScroll.left && (
         <div className={styles.leftplat}>
-          <button onClick={() => handleScroll("left")}>‹</button>
+          <button onClick={() => handleScroll("left")}></button>
         </div>
       )}
 
-      <div className={styles["container-stories"]} ref={scrollRef}>
-        {[...Array(41)].map((_, i) => (
-          <div key={i} className={styles["stories-plat"]} onClick={openModal}>
-            <div className={styles.stories}></div>
-            <div className={styles.nickname}>Name</div>
-          </div>
-        ))}
+     <div className={styles["container-stories"]} ref={scrollRef}>
+  {[...Array(41)].map((_, i) => (
+    <div key={i} className={styles["stories-plat"]} onClick={openModal}>
+      <div
+        className={styles.stories}
+        style={{ background: getRandomGradient() }}
+      >
+        <div className={styles["stories-inner"]}></div>
       </div>
+      <div className={styles.nickname}>Just A Long Name</div>
+    </div>
+  ))}
+</div>
 
       {canScroll.right && (
         <div className={styles.rightplat}>
-          <button onClick={() => handleScroll("right")}>›</button>
+          <button onClick={() => handleScroll("right")}></button>
         </div>
       )}
 

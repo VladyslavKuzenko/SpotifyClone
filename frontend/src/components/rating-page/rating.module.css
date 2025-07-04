@@ -35,7 +35,7 @@ html {
 .bottom-platform {
     width: calc(100% - 225px);
     height: 900px;
-    background-color: #4B4B4B;
+    background-color: #16171E;
     margin-left: 225px;
     align-content: center;
 }
@@ -50,7 +50,7 @@ html {
 .upper-right {
     width: 37%;
     height: 100%;
-    background-color: #373737;
+    background-color: #303135;
     display: flex;
     justify-content: center;
 }
@@ -75,12 +75,14 @@ html {
     display: flex;
     justify-content: end;
 
-    font-family: 'Inter', sans-serif;
+    font-family: 'Manrope', sans-serif;
     font-weight: 400;
+    font-style: Regular;
     font-size: 64px;
     line-height: 100%;
     letter-spacing: 0%;
-    color: rgba(255, 255, 255, 0.13);
+
+    color: #FFFFFF21;
     align-items: center;
     padding-right: 30px;
 
@@ -95,10 +97,11 @@ html {
 }
 
 .info-artist {
-    width: 100%;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Manrope', sans-serif;
     font-weight: 400;
+    font-style: Regular;
     font-size: 26px;
+    leading-trim: NONE;
     line-height: 100%;
     letter-spacing: 0%;
     color: #FFFFFF4D;
@@ -108,22 +111,27 @@ html {
 .info-song-name {
     width: 100%;
     color: white;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Manrope', sans-serif;
     font-weight: 400;
+    font-style: Regular;
     font-size: 64px;
+    color: white;
     line-height: 100%;
     letter-spacing: 0%;
+
     padding-bottom: 20px;
 
 
 }
 
 .info-listeners {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Manrope', sans-serif;
     font-weight: 400;
+    font-style: Regular;
     font-size: 18px;
     line-height: 100%;
     letter-spacing: 0%;
+
     color: white;
 
 }
@@ -160,6 +168,7 @@ html {
     font-size: 16px;
     line-height: 100%;
     letter-spacing: 0%;
+    border-radius: 5px;
 
     text-indent: 10px;
 }
@@ -199,6 +208,7 @@ html {
 
 .dropdown-item:hover {
     background-color: #a8a8a88f;
+
 }
 
 .arrow {
@@ -216,10 +226,12 @@ html {
     margin: 5px;
     text-align: start;
     text-indent: 20px;
+    border-radius: 5px;
 
 }
 
 .worldwide {
+    border-radius: 5px;
     border: none;
     width: 270px;
     height: 46px;
@@ -230,7 +242,7 @@ html {
     text-align: start;
     text-indent: 20px;
     outline: none;
-        color: rgb(255, 255, 255);
+    color: rgb(255, 255, 255);
 
 }
 
@@ -343,7 +355,7 @@ html {
 .raite-item1 {
     width: 75%;
     height: 132px;
-    background-color: #8F8F8F;
+    background-color: #515259;
     display: flex;
     justify-content: space-between;
 }
@@ -351,7 +363,7 @@ html {
 .raite-item2 {
     width: 60%;
     height: 132px;
-    background-color: #8F8F8F;
+    background-color: #515259;
     display: flex;
     justify-content: space-between;
 }
@@ -359,7 +371,7 @@ html {
 .raite-item3 {
     width: 45%;
     height: 132px;
-    background-color: #8F8F8F;
+    background-color: #515259;
     display: flex;
     justify-content: space-between;
 }
@@ -367,7 +379,7 @@ html {
 .raite-item4 {
     width: 35%;
     height: 132px;
-    background-color: #8F8F8F;
+    background-color: #515259;
     display: flex;
     justify-content: space-between;
 }
@@ -375,7 +387,7 @@ html {
 .raite-item5 {
     width: 25%;
     height: 132px;
-    background-color: #8F8F8F;
+    background-color: #515259;
     display: flex;
     justify-content: space-between;
 }
@@ -408,7 +420,7 @@ html {
 .raite-end {
     height: 100%;
     width: 11px;
-    background-color: #292929;
+    background-color: #FF4400;
 }
 
 .text2 {

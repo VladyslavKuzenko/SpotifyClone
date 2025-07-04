@@ -12,7 +12,6 @@ const UserProfile = () => {
     setMenuOpen((prev) => !prev);
   };
 
-  // Закриття меню при кліку поза ним
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
@@ -96,8 +95,19 @@ const UserProfile = () => {
             <div className={styles['posts-array']}></div>
           </div>
           <div className={styles['groups-place']}>
-            <div className={styles['group-text']}></div>
-            <div className={styles['groups-container']}></div>
+            <div className={styles['groups-text']}>Groups</div>
+            <div className={styles['groups-container']}>
+              {[...Array(12)].map((_, i) => (
+                <div key={i} className={styles["grp-hiphop-heads"]}>
+                  <div className={styles["grp-avatar"]}></div>
+                  <div className={styles["grp-info"]}>
+                    <div className={styles["grp-name"]}>Hip-Hop Heads</div>
+                    <div className={styles["grp-followers"]}>35477 followers</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
           </div>
         </div>
       </div>

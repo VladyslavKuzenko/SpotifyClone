@@ -92,11 +92,10 @@ const Main = () => {
         <LeftSide />
 
         <div className={styles["home-text"]}>
-          <div className={styles["text-home"]}>Home</div>
         </div>
 
         <div className={styles.middle}>
-          <div className={styles["empty-div2"]}></div>
+          <div className={styles["empty-div2"]}>Home</div>
 
           <div className={styles.platform1} style={{ position: "relative" }}>
             <input

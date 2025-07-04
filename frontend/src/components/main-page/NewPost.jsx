@@ -180,6 +180,7 @@ const NewPost = ({ onClose }) => {
                       "Post"
                     )}
                   </button>
+                  {/* <button className={styles["add-stories"]}>Choose photo</button> */}
                 </div>
                 <div className={styles["post-stories"]}>
                   <button

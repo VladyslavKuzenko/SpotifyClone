@@ -180,9 +180,11 @@ const YourLibrary = ({ isPlaylistsChangesControl }) => {
               <Select
                 classNamePrefix="sr-select"
                 value={options.find((opt) => opt.value === sortType)}
+
                 onChange={(e) => {
                   setSortType(e.value);
                   handleSortSongs(e.value);
+
                 }}
                 options={options}
                 isSearchable={false}

@@ -19,7 +19,7 @@ export default function Likes() {
                         <div className={styles["upper"]}>
 
                             <div className={styles["back-search"]}>
-                                <button className={styles["backbtn"]}>Back</button>
+                                <button className={styles["backbtn"]}></button>
                                 <input type="text" className={styles["search-likes"]} placeholder="Search" />
                             </div>
 
@@ -47,7 +47,6 @@ export default function Likes() {
 
                         <div className={styles["bottom"]}>
                             <div className={styles["bottom-wrapper"]}>
-                                <div className={styles["rec-text"]}>Recommended</div>
                                 {[...Array(10)].map((_, i) => (
                                     <div key={i} className={styles["liked-song"]}></div>
                                 ))}

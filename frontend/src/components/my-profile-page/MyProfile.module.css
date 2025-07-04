@@ -8,102 +8,6 @@ html {
     display: flex;
 }
 
-.left-side {
-    width: 225px;
-    height: 100vh;
-    background-color: #E7E7E7;
-    position: fixed;
-}
-
-.ava-place {
-    width: 100%;
-    height: 90px;
-    align-items: center;
-    margin-top: 121px;
-    display: flex;
-    justify-content: center;
-}
-
-.avatarka {
-    width: 89px;
-    height: 89px;
-    border-radius: 50%;
-    background-color: #BFBFBF;
-    cursor: pointer;
-}
-
-.pages-btns-div {
-    width: 100%;
-    height: 310px;
-    display: flex;
-    justify-content: center;
-    margin-top: 48px;
-}
-
-.page-btn {
-    width: 43px;
-    height: 43px;
-    background-color: #8F8F8F;
-    border-radius: 50%;
-    cursor: pointer;
-}
-
-.btns-div {
-    width: 44px;
-    height: 310px;
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
-}
-
-.song-place-div {
-    width: 100%;
-    height: 150px;
-    margin-top: 80px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.song-div {
-    width: 111px;
-    height: 145px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.song-name {
-    width: 100%;
-    height: 25px;
-    font-family: 'Inter', sans-serif;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 100%;
-    letter-spacing: 0%;
-    text-align: center;
-}
-
-.singer {
-    width: 100%;
-    height: 15px;
-    margin-top: 3px;
-    font-family: 'Inter', sans-serif;
-    font-weight: 400;
-    font-size: 10px;
-    line-height: 100%;
-    letter-spacing: 0%;
-    color: #999999;
-    text-align: center;
-}
-
-.circle-song {
-    width: 81px;
-    height: 81px;
-    border-radius: 50%;
-    background-color: #A7A7A7;
-    margin-top: 13px;
-}
 
 .profile-side {
     width: 85%;
@@ -137,13 +41,13 @@ html {
     top: 20px;
     position: relative;
     cursor: pointer;
-    font-family: 'Inter',sans-serif;
+    font-family: 'Inter', sans-serif;
     font-weight: 400;
     font-size: 16px;
     line-height: 100%;
     letter-spacing: 0%;
     background-color: transparent;
-    border:none;
+    border: none;
 
 }
 
@@ -168,11 +72,14 @@ html {
 }
 
 .profile-bio {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Manrope', sans-serif;
     font-weight: 400;
+    font-style: Regular;
     font-size: 16px;
+    color: white;
     line-height: 100%;
     letter-spacing: 0%;
+
     text-align: center;
     width: 100%;
     margin-top: 25px;
@@ -183,11 +90,14 @@ html {
 .ff-followers {
     width: 48%;
     height: 100%;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Manrope',sans-serif;
     font-weight: 400;
+    font-style: Regular;
     font-size: 18px;
+    color:white;
     line-height: 100%;
     letter-spacing: 0%;
+
     text-align: end;
     align-content: center;
 }
@@ -195,11 +105,14 @@ html {
 .ff-follows {
     width: 48%;
     height: 100%;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Manrope',sans-serif;
     font-weight: 400;
+    font-style: Regular;
     font-size: 18px;
+    color:white;
     line-height: 100%;
     letter-spacing: 0%;
+
     text-align: start;
     align-content: center;
 
@@ -231,6 +144,7 @@ html {
     height: 100%;
 }
 
+
 .saved-songs-container {
     flex: 1;
     height: 100%;
@@ -240,21 +154,23 @@ html {
 .saved-album-text {
     width: 100%;
     height: 50px;
-    font-family: 'Inter', sans-serif;
-    font-weight: 400;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 500;
     font-size: 18px;
     line-height: 100%;
     letter-spacing: 0%;
+    color:white
 }
 
 .saved-songs-text {
-    width: 100%;
+ width: 100%;
     height: 50px;
-    font-family: 'Inter', sans-serif;
-    font-weight: 400;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 500;
     font-size: 18px;
     line-height: 100%;
     letter-spacing: 0%;
+    color:white
 }
 
 .album-array {
@@ -273,11 +189,16 @@ html {
     display: none;
 }
 
+
 .album-item {
     width: 32%;
     height: 279px;
     background-color: #D9D9D9;
+    aspect-ratio: 1 / 1;
+    border-radius: 15px;
+
 }
+
 
 .it-container {
     margin-top: 200px;
@@ -323,6 +244,8 @@ html {
     width: 66px;
     height: 66px;
     background-color: #DBDBDB;
+    border-radius: 5px;
+
 }
 
 .name-artist {
@@ -330,17 +253,25 @@ html {
     height: 100%;
     text-indent: 30px;
     align-content: center;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: white;
 }
 
 .listeners-count {
     width: 20%;
     height: 100%;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Manrope', sans-serif;
     font-weight: 400;
+    font-style: Regular;
     font-size: 14px;
     line-height: 100%;
     letter-spacing: 0%;
-    color: #868686;
+    color: #FFFFFF;
     text-align: center;
     align-content: center;
 }
@@ -356,17 +287,21 @@ html {
     color: #868686;
     text-align: center;
     align-content: center;
+    border: none;
+    background-color: transparent;
 }
 
 .duration {
     width: 15%;
     height: 100%;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Manrope', sans-serif;
     font-weight: 400;
+    font-style: Regular;
     font-size: 14px;
     line-height: 100%;
     letter-spacing: 0%;
-    color: #868686;
+
+    color: #FFFFFF;
     text-align: center;
     align-content: center;
 }
@@ -406,7 +341,7 @@ html {
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background-color: #868686;
+    background-color: #FFFFFF;
     margin: 2px;
 }
 
@@ -418,7 +353,7 @@ html {
 }
 
 .posts-place {
-    width: 70%;
+    width: 58%;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -426,12 +361,29 @@ html {
 
 .posts-text {
     width: 100%;
-    font-family: 'Inter', sans-serif;
-    font-weight: 400;
-    font-size: 18px;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 20px;
+    color: white;
     line-height: 100%;
     letter-spacing: 0%;
+
     height: 35px;
+}
+
+.groups-text {
+    width: 100%;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 20px;
+    color: white;
+    line-height: 100%;
+    letter-spacing: 0%;
+
+    height: 35px;
+    text-indent: 5%;
 }
 
 .posts-array {
@@ -442,17 +394,72 @@ html {
 .groups-place {
     display: flex;
     flex-direction: column;
-    flex: 1;
     align-items: flex-end;
+    width: 50%;
 }
 
 .groups-container {
-    width: 90%;
-    height: 500px;
-    background-color: #919191;
+    width: 95%;
+    flex:1;
+    gap:10px;
+    overflow: auto;
+    scrollbar-width: none;
+    display: flex;
+    flex-direction: column;
+
 }
 
 .group-text {
     width: 100%;
     height: 35px;
+}
+
+.grp-hiphop-heads {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 8px;
+    width: fit-content;
+    color: white;
+    font-family: sans-serif;
+    width: 48%;
+    height: 72px;
+    margin-bottom: 12px;
+}
+
+.grp-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background-color: #D9D9D9;
+    margin-right: 12px;
+}
+
+.grp-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 80%;
+}
+
+.grp-name {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: white;
+
+}
+
+.grp-info,
+.grp-followers {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: 0%;
+
 }
