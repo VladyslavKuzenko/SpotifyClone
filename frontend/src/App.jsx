@@ -12,8 +12,6 @@ import LoginButton from './components/exampleAuth0/LoginButton';
 import LogoutButton from './components/exampleAuth0/LogoutButton';
 import { Route, Routes } from 'react-router-dom';
 
-import ChatPage from './components/chat-page/ChatPage';
-import ProfileSetup from './components/profile-page/ProfileSetup';
 import Test from './components/exampleAuth0/Test';
 
 function App() {
