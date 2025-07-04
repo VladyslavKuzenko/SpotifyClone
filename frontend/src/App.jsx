@@ -1,6 +1,8 @@
 import Main from './components/main-page/Main';
 import PlayerPage from './components/player-page/PlayerPage';
 import UserProfile from './components/user-profile-page/UserProfile';
+import MyProfile from './components/my-profile-page/MyProfile';
+
 import Rating from './components/rating-page/Rating';
 import Likes from './components/likes-page/Likes';
 import LoginButton from './components/exampleAuth0/LoginButton';
@@ -19,10 +21,12 @@ function App() {
       <Route path="/logout" element={<LogoutButton />} />
       <Route path="/chat" element={<ChatPage />} />
       <Route path="/user-profile" element={<UserProfile />} />
+      <Route path="/my-profile" element={<MyProfile />} />
+
       <Route path="/rating" element={<Rating />} />
       <Route path="/likes" element={<Likes />} />
       <Route path="/profileSetup" element={<ProfileSetup />} />
-   {/*    <Route path="/profile" element={<Profile />} /> */}
+      {/*    <Route path="/profile" element={<Profile />} /> */}
 
 
     </Routes>
@@ -43,7 +47,7 @@ function App() {
 
     //<ChatPage/>
 
-    
+
     /*   <>
       <LoginButton/>
       <LogoutButton/>
