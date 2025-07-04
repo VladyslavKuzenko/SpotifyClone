@@ -46,6 +46,7 @@ const NewSongs = () => {
           ) : (
             <button
               className={styles["ns-play-btn"]}
+              
               onClick={() => {
                 setCurrentSong(song);
                 setCurrentSongList([song]);

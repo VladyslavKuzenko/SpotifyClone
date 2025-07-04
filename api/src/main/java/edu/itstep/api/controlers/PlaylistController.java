@@ -45,6 +45,10 @@ public class PlaylistController {
     public List<Playlist> getPlaylist(@PathVariable String id) {
         return PlaylistRepository.findAllByUser_Id(id);
     }
+    @GetMapping("/playlists/{id}/{title}")
+    public Playlist getPlaylist(@PathVariable String id,@PathVariable String title) {
+        return PlaylistRepository.findByTitleAndUser_Id(title,id);
+    }
 
     @PostMapping
     public ResponseEntity createPlaylist(@RequestBody Playlist Playlist) throws URISyntaxException {
