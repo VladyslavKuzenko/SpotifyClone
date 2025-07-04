@@ -72,7 +72,7 @@
    background-position: center;
 
  }
-.active {
+.active1 {
      background-color: #4D4D4D!important;
 
 }
@@ -195,7 +195,7 @@
  }
 
  .middle {
-   width: 50%;
+   width: 45%;
    margin-left: 40px;
    margin-right: 40px;
 
