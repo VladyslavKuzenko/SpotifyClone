@@ -394,6 +394,7 @@
       justify-content: center;
 
 
+
     }
 
     .sr-select {
@@ -419,6 +420,11 @@
       text-indent: 15px;
       box-sizing: border-box;
       border-radius: 5px;
+
+      background-image: url(/public/images/Search.png);
+      background-repeat: no-repeat;
+      background-position-x: 95%;
+      background-position-y: center;
     }
 
 
@@ -609,6 +615,10 @@
       margin-top: 10px;
       margin-left: 30px;
       border-radius: 5px;
+      background-image: url(/public/images/Search.png);
+      background-repeat: no-repeat;
+      background-position-x: 95%;
+      background-position-y: center;
     }
 
     .as-search::placeholder {
@@ -1090,7 +1100,6 @@
       width: 97%;
       height: 100%;
       display: flex;
-      box-sizing: border-box;
 
       background-color: rgba(147, 148, 153, 0.13);
 
@@ -1114,7 +1123,6 @@
       cursor: pointer;
       display: flex;
       align-items: center;
-      /* решта стилів */
     }
 
     .mrb-center {
