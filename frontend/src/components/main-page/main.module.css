@@ -146,19 +146,22 @@
    font-size: 14px;
    line-height: 100%;
    letter-spacing: 0%;
+   color: white;
 
  }
 
  .singer {
    width: 100%;
    margin-top: 3px;
-   font-family: 'Inter', sans-serif;
+   font-family: 'Inter',sans-serif;
    font-weight: 400;
+   font-style: Regular;
    font-size: 10px;
    line-height: 100%;
    letter-spacing: 0%;
-   color: #999999;
+
    text-align: center;
+   color:white;
 
  }
 
@@ -166,8 +169,13 @@
    width: 81px;
    height: 81px;
    border-radius: 50%;
-   background-color: #A7A7A7;
+   background-color: #FFFFFF;
    margin-top: 13px;
+   border: none;
+   cursor: pointer;
+   background-image: url(/public/images/play-btn.png);
+   background-repeat: no-repeat;
+   background-position: center;
  }
 
  .home-text {
@@ -1512,11 +1520,11 @@
    cursor: pointer;
    margin-top: 10px;
 
-   font-family: 'Manrope',sans-serif;
+   font-family: 'Manrope', sans-serif;
    font-weight: 600;
    font-style: SemiBold;
    font-size: 18px;
-   color:white;
+   color: white;
    line-height: 100%;
    letter-spacing: 0%;
 

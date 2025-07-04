@@ -168,13 +168,11 @@ export default function MiddleItem({
                     className={styles["left-btn-plat"]}
                     onClick={prevArtist}
                   >
-                    {"<"}
                   </button>
                   <button
                     className={styles["right-btn-plat"]}
                     onClick={nextArtist}
                   >
-                    {">"}
                   </button>
                 </div>
                 <div className={styles["al-artist"]}>
