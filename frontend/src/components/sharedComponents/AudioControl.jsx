@@ -133,26 +133,14 @@ export default function AudioControl({ footerPlayer }) {
               ></audio>
 
               <button className={stylesPlayer["bmr-btn"]}>⏺</button>
-              <button className={stylesPlayer["bmr-btn"]} onClick={prevSong}>
-                ⏮
-              </button>
+              <button className={stylesPlayer["bmr-btn"]} onClick={prevSong}>⏮</button>
               {isSongPlayed ? (
-                <button
-                  className={stylesPlayer["bmr-btn"]}
-                  onClick={pauseAudio}
-                >
-                  ⏸
-                </button>
+                <button className={stylesPlayer["bmr-btn"]}onClick={pauseAudio}>⏸</button>
               ) : (
-                <button className={stylesPlayer["bmr-btn"]} onClick={playAudio}>
-                  ▶
-                </button>
+                <button className={stylesPlayer["bmr-btn"]} onClick={playAudio}>▶</button>
               )}
-              <button className={stylesPlayer["bmr-btn"]} onClick={nextSong}>
-                ⏭
-              </button>
-              <button className={stylesPlayer["bmr-btn"]}>⏺</button>
-            </div>
+              <button className={stylesPlayer["bmr-btn"]} onClick={nextSong}>⏭</button>
+              <button className={stylesPlayer["bmr-btn"]}>⏺</button></div>
 
             <div className={stylesPlayer["bmr-progress"]}>
               <div className={stylesPlayer["current-time-start"]}>
