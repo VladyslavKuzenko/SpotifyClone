@@ -119,7 +119,6 @@ export default function MiddleItem({
 
   return (
     <div className={styles["mr-midd"]}>
-      {/* Верхня частина UI */}
       <div className={styles["artist-songs"]}>
         <div className={styles["as-plat1"]}>
           <div className={styles["as-search-plat"]}>
@@ -131,7 +130,6 @@ export default function MiddleItem({
                 if (activeTab === "artist" && activeArtistTab === "songs") {
                   searchSongs(songsFullList, e.target.value, setSongs);
                 }
-                // Можна додати пошук для Recommended, якщо треба
               }}
               value={search}
               placeholder="Search"
@@ -157,7 +155,6 @@ export default function MiddleItem({
           </div>
         </div>
 
-        {/* Вміст вкладок */}
         {activeTab === "artist" && (
           <>
             <div className={styles["as-plat2"]}>
@@ -205,11 +202,11 @@ export default function MiddleItem({
               </div>
             </div>
 
-            {/* Вкладки Songs / Albums */}
+            
             <div className={styles["recommended-text"]}>
               <div
                 className={`${styles["rec-songs"]} ${
-                  activeArtistTab === "songs" ? styles.activeTab : ""
+                  activeArtistTab === "songs" ? styles.activeTab1 : ""
                 }`}
                 onClick={() => setActiveArtistTab("songs")}
               >
@@ -220,7 +217,7 @@ export default function MiddleItem({
               </div>
               <div
                 className={`${styles["rec-album"]} ${
-                  activeArtistTab === "albums" ? styles.activeTab : ""
+                  activeArtistTab === "albums" ? styles.activeTab1 : ""
                 }`}
                 onClick={() => setActiveArtistTab("albums")}
               >

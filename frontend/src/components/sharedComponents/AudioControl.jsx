@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import stylesPlayer from "../player-page/player.module.css";
 import { convertTime } from "../../js/functions/functions";
 import { useAPI } from "../../hooks/useApi";
+import styles from "../player-page/player.module.css";
 
 export default function AudioControl({ footerPlayer }) {
   const { currentSong, nextSong, prevSong, audioRef } = useAPI();
@@ -58,24 +59,16 @@ export default function AudioControl({ footerPlayer }) {
                 }}
               ></audio>
 
-              <button className={stylesPlayer["bmr-btn"]} onClick={prevSong}>
-                ⏮
-              </button>
+              <button className={`${stylesPlayer["bmr-btn"]} ${styles["btn1"]}`} onClick={prevSong}></button>
+
               {isSongPlayed ? (
-                <button
-                  className={stylesPlayer["bmr-btn"]}
-                  onClick={pauseAudio}
-                >
-                  ⏸
-                </button>
+                <button className={`${stylesPlayer["bmr-btn"]} ${styles["btn2"]}`} onClick={pauseAudio}></button>
               ) : (
-                <button className={stylesPlayer["bmr-btn"]} onClick={playAudio}>
-                  ▶
-                </button>
+                <button className={`${stylesPlayer["bmr-btn"]} ${styles["btn3"]}`} onClick={playAudio}></button>
+
               )}
-              <button className={stylesPlayer["bmr-btn"]} onClick={nextSong}>
-                ⏭
-              </button>
+              <button className={`${stylesPlayer["bmr-btn"]} ${styles["btn4"]}`} onClick={nextSong}></button>
+
             </div>
 
             <div className={stylesPlayer["bmr-progress"]}>
@@ -95,6 +88,7 @@ export default function AudioControl({ footerPlayer }) {
                 {convertTime(duration)}
               </div>
             </div>
+
           </div>
           <div className={stylesPlayer["mrb-right"]}>
             <button
@@ -191,7 +185,7 @@ export default function AudioControl({ footerPlayer }) {
               -
             </button>
 
-            <progress id="file" value={volume} max="1"></progress>
+            <progress id="file" value={volume} max="1" ></progress>
 
             <button
               className={stylesPlayer["bmr-plus"]}
