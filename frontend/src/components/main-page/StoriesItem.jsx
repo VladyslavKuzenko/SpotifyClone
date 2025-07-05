@@ -1,10 +1,16 @@
 import React, { useRef, useEffect, useState } from "react";
 import styles from "./main.module.css";
+import { useAuth0 } from "@auth0/auth0-react";
+import { useAPI } from "../../hooks/useApi";
 
 const StoriesItem = () => {
   const scrollRef = useRef(null);
   const [canScroll, setCanScroll] = useState({ left: false, right: false });
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentStory, setCurrentStory] = useState(null);
+  const [stories, setStories] = useState([]);
+  const { apiFetch } = useAPI();
+  const { user, isLoading } = useAuth0();
 
   const updateScrollState = () => {
     const el = scrollRef.current;
@@ -38,6 +44,17 @@ const StoriesItem = () => {
     }
   };
 
+  const fetchStories = async () => {
+    const response = await apiFetch(`/story/followings/${user.sub}`);
+    const data = await response.json();
+    setStories(data);
+  };
+  useEffect(() => {
+    if (!isLoading) {
+      fetchStories();
+    }
+  }, [isLoading]);
+
   useEffect(() => {
     updateScrollState();
     const el = scrollRef.current;
@@ -48,12 +65,12 @@ const StoriesItem = () => {
       window.removeEventListener("resize", updateScrollState);
     };
   }, []);
-const getRandomGradient = () => {
-  const angle = Math.floor(Math.random() * 360);
-  const lightOrange = '#FFA500'; 
-  const deepOrange = '#FF4500';  
-  return `linear-gradient(${angle}deg, ${lightOrange}, ${deepOrange})`;
-};
+  const getRandomGradient = () => {
+    const angle = Math.floor(Math.random() * 360);
+    const lightOrange = "#FFA500";
+    const deepOrange = "#FF4500";
+    return `linear-gradient(${angle}deg, ${lightOrange}, ${deepOrange})`;
+  };
   return (
     <div className={styles.wrapper}>
       {canScroll.left && (
@@ -62,19 +79,31 @@ const getRandomGradient = () => {
         </div>
       )}
 
-     <div className={styles["container-stories"]} ref={scrollRef}>
-  {[...Array(41)].map((_, i) => (
-    <div key={i} className={styles["stories-plat"]} onClick={openModal}>
-      <div
-        className={styles.stories}
-        style={{ background: getRandomGradient() }}
-      >
-        <div className={styles["stories-inner"]}></div>
+      <div className={styles["container-stories"]} ref={scrollRef}>
+        {stories.map((i) => (
+          <div
+            key={i}
+            className={styles["stories-plat"]}
+            onClick={() => {
+              openModal();
+              setCurrentStory(i);
+            }}
+          >
+            <div
+              className={styles.stories}
+              style={{ background: getRandomGradient() }}
+            >
+              <div className={styles["stories-inner"]}></div>
+               <img
+                className={styles["preview-image"]}
+                src={i.mediaUrl}
+                alt="Story"
+              />
+            </div>
+            <div className={styles.nickname}>{i.user.username}</div>
+          </div>
+        ))}
       </div>
-      <div className={styles.nickname}>Just A Long Name</div>
-    </div>
-  ))}
-</div>
 
       {canScroll.right && (
         <div className={styles.rightplat}>
@@ -83,13 +112,20 @@ const getRandomGradient = () => {
       )}
 
       {isModalOpen && (
-        <div className={styles["sts-modal-overlay"]} onClick={handleOverlayClick}>
+        <div
+          className={styles["sts-modal-overlay"]}
+          onClick={handleOverlayClick}
+        >
           <div className={styles["sts-modal-window"]}>
             <button className={styles["sts-modal-close"]} onClick={closeModal}>
               ×
             </button>
             <div className={styles["sts-modal-content"]}>
-              <p>Stories content goes here...</p>
+              <img
+                className={styles["preview-image"]}
+                src={currentStory.mediaUrl}
+                alt="Story"
+              />
             </div>
           </div>
         </div>

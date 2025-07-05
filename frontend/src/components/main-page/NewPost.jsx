@@ -45,18 +45,17 @@ const NewPost = ({ onClose }) => {
 
     story.mediaUrl = storyImgUrl;
     console.log("Story uploaded:", story.mediaUrl);
-    const responseUpdate = await apiFetch(`/story/${story.id}`,{
+    const responseUpdate = await apiFetch(`/story/${story.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(resultStory),
+      body: JSON.stringify(story),
     });
     if (responseUpdate.ok) {
       alert("Story successfully posted!");
-    }else{
+    } else {
       alert("Помилка при оновленні історії: " + responseUpdate.statusText);
-
     }
   };
 
