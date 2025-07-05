@@ -7,6 +7,7 @@ import { Navigate } from "react-router-dom";
 import { API_URL } from "../../js/properties/properties";
 import { useAPI } from "../../hooks/useApi";
 import Select from "react-select";
+import { useNavigate } from "react-router-dom";
 
 const options = [
   { value: "recent", label: "Recent" },
@@ -24,6 +25,7 @@ const YourLibrary = ({ isPlaylistsChangesControl }) => {
   const [titlePlaylist, setTitlePlaylist] = useState("");
   const [sortType, setSortType] = useState("recent");
   const dropdownRef = useRef();
+const navigate = useNavigate();
 
   // Hooks
   const { setCurrentSongList } = useAPI();
@@ -145,7 +147,7 @@ const YourLibrary = ({ isPlaylistsChangesControl }) => {
               <div className={styles["yl-plus"]}>+</div>
             </div>
             <div className={styles["go-likes"]}>
-              <button className={styles["golikes-btn"]}></button>
+              <button className={styles["golikes-btn"]} onClick={() => navigate("/likes")}></button>
             </div>
           </div>
 

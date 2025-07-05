@@ -768,7 +768,7 @@
       scrollbar-width: none;
       display: flex;
       justify-content: center;
-
+      padding-bottom: 120px;
 
     }
 
@@ -854,11 +854,12 @@
       text-align: center;
       align-content: center;
       cursor: pointer;
+
+
     }
 
     .liked {
-      color: #b91d1d;
-
+      color: red;
     }
 
     .as-duration {
@@ -1425,6 +1426,7 @@
       width: 95%;
       height: 100%;
       padding-top: 30px;
+      padding-bottom: 120px;
     }
 
     .albums-songs {

@@ -35,7 +35,7 @@ const LeftSide = () => {
         ></button>
 
         <button
-          className={`${styles["people-btn"]} ${location.pathname === "/edit-profile" ? styles["active1"] : ""}`}
+          className={`${styles["people-btn"]} ${location.pathname === "/my-profile" ? styles["active1"] : ""}`}
           onClick={() => navigate("/my-profile")}
         ></button>
       </div>
