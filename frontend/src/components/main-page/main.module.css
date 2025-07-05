@@ -843,6 +843,7 @@ html {
   height: 880px;
   background: #1A1A20;
   z-index: 10;
+  border-radius: 10px;
 }
 
 .back-btn {
@@ -880,6 +881,7 @@ html {
   height: 89%;
   position: absolute;
   bottom: 0;
+
 }
 
 .modal-content {
@@ -903,7 +905,7 @@ html {
   line-height: 100%;
   letter-spacing: 0%;
 
-  margin-bottom: 10px;
+  margin-top: 50px;
 }
 
 .music {

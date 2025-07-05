@@ -56,14 +56,12 @@ const StoriesItem = () => {
     }
   }, [isLoading]);
 
-  // 👉 Оновити scroll state після рендеру stories
   useEffect(() => {
     if (stories.length) {
       requestAnimationFrame(updateScrollState);
     }
   }, [stories]);
 
-  // 👉 Слухачі scroll і resize
   useEffect(() => {
     const el = scrollRef.current;
     if (el) el.addEventListener("scroll", updateScrollState);
