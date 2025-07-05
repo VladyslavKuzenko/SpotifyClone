@@ -79,7 +79,7 @@
     }
 
     .yl-text {
-      width: 70%;
+      width: 65%;
       height: 100%;
       font-family: 'Manrope', sans-serif;
       font-weight: 400;
@@ -442,12 +442,13 @@
     .sr-recent {
       height: 100%;
       align-content: center;
-      width: 171px;
+      width: 200px;
 
       font-family: 'Inter', sans-serif;
       font-weight: 400;
       font-size: 18px;
       margin-left: 10px;
+      margin-right: 10px;
 
     }
 
@@ -948,7 +949,7 @@
       height: 8px;
       border-radius: 50%;
       margin: 2px;
-      background-color: #868686;
+      background-color: #FFFFFF;
 
     }
 
@@ -1200,6 +1201,13 @@
       height: 40px;
     }
 
+    .btn0 {
+      background-image: url(/public/images/shuffle\ \(1\)\ 1.png);
+      background-size: 30px;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
     .btn1 {
       background-image: url(/public/images/Group\ 1171275925\ \(1\).svg);
       background-size: 30px;
@@ -1227,7 +1235,12 @@
       background-repeat: no-repeat;
       background-position: center;
     }
-
+    .btn5 {
+      background-image: url(/public/images/arrows-clockwise\ 1.png);
+      background-size: 30px;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
 
     .bmr-bar-wrapper {
       width: 80%;
