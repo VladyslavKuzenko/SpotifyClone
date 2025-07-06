@@ -56,6 +56,7 @@ export default function AudioControl({ footerPlayer }) {
                   nextSong();
                 }}
               ></audio>
+              <button className={`${stylesPlayer["bmr-btn"]} ${styles["btn0"]}`} onClick={''}></button>
 
               <button className={`${stylesPlayer["bmr-btn"]} ${styles["btn1"]}`} onClick={prevSong}></button>
 
@@ -66,6 +67,7 @@ export default function AudioControl({ footerPlayer }) {
 
               )}
               <button className={`${stylesPlayer["bmr-btn"]} ${styles["btn4"]}`} onClick={nextSong}></button>
+              <button className={`${stylesPlayer["bmr-btn"]} ${styles["btn5"]}`} onClick={''}></button>
 
             </div>
 

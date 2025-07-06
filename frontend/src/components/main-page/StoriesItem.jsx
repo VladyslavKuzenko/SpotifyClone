@@ -49,6 +49,7 @@ const StoriesItem = () => {
     const data = await response.json();
     setStories(data);
   };
+
   useEffect(() => {
     if (!isLoading) {
       fetchStories();
@@ -56,21 +57,29 @@ const StoriesItem = () => {
   }, [isLoading]);
 
   useEffect(() => {
-    updateScrollState();
+    if (stories.length) {
+      requestAnimationFrame(updateScrollState);
+    }
+  }, [stories]);
+
+  useEffect(() => {
     const el = scrollRef.current;
     if (el) el.addEventListener("scroll", updateScrollState);
     window.addEventListener("resize", updateScrollState);
+
     return () => {
       if (el) el.removeEventListener("scroll", updateScrollState);
       window.removeEventListener("resize", updateScrollState);
     };
   }, []);
+
   const getRandomGradient = () => {
     const angle = Math.floor(Math.random() * 360);
     const lightOrange = "#FFA500";
     const deepOrange = "#FF4500";
     return `linear-gradient(${angle}deg, ${lightOrange}, ${deepOrange})`;
   };
+
   return (
     <div className={styles.wrapper}>
       {canScroll.left && (
@@ -82,7 +91,7 @@ const StoriesItem = () => {
       <div className={styles["container-stories"]} ref={scrollRef}>
         {stories.map((i) => (
           <div
-            key={i}
+            key={i.id || i.mediaUrl}
             className={styles["stories-plat"]}
             onClick={() => {
               openModal();
@@ -94,13 +103,13 @@ const StoriesItem = () => {
               style={{ background: getRandomGradient() }}
             >
               <div className={styles["stories-inner"]}></div>
-               <img
+              <img
                 className={styles["preview-image"]}
                 src={i.mediaUrl}
                 alt="Story"
               />
             </div>
-            <div className={styles.nickname}>{i.user.username}</div>
+            <div className={styles.nickname}>{i.user?.username}</div>
           </div>
         ))}
       </div>
@@ -111,21 +120,33 @@ const StoriesItem = () => {
         </div>
       )}
 
-      {isModalOpen && (
+      {isModalOpen && currentStory && (
         <div
           className={styles["sts-modal-overlay"]}
           onClick={handleOverlayClick}
         >
           <div className={styles["sts-modal-window"]}>
-            <button className={styles["sts-modal-close"]} onClick={closeModal}>
-              ×
-            </button>
+            <div className={styles["storie-upper"]}>
+              <button
+                className={styles["sts-modal-close"]}
+                onClick={closeModal}
+              ></button>
+            </div>
+
             <div className={styles["sts-modal-content"]}>
               <img
                 className={styles["preview-image"]}
                 src={currentStory.mediaUrl}
                 alt="Story"
               />
+            </div>
+
+            <div className={styles["storie-bottom"]}>
+              <div className={styles["avatar-author"]}>
+                <div className={styles["storie-avatar"]}></div>
+                <div className={styles["storie-author"]}>Name Surname</div>
+                <div className={styles["storie-like"]}></div>
+              </div>
             </div>
           </div>
         </div>
