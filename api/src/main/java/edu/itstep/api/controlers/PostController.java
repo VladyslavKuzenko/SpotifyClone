@@ -50,7 +50,7 @@ public class PostController {
     }
     @PostMapping("/upload/{postId}")
     public String handleFileUpload(@RequestParam("file") MultipartFile file,@PathVariable Long postId){
-        return postService.postFileToVM(file,"story"+postId);
+        return postService.postFileToVM(file,"post"+postId);
     }
     @PutMapping("/{id}")
     public ResponseEntity<Post> updatePost(@PathVariable Long id, @RequestBody Post updatedPost) {

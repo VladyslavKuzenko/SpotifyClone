@@ -4,16 +4,20 @@ import axios from "axios";
 import { API_URL } from "../../js/properties/properties";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useAPI } from "../../hooks/useApi";
+import { handleUploadFile } from "../../js/functions/functions";
 
 const NewPost = ({ onClose }) => {
   const [activeTab, setActiveTab] = useState("newpost"); // "newpost" або "stories"
 
   const [selectedPrivacy, setSelectedPrivacy] = useState(null);
   const [selectedComments, setSelectedComments] = useState(null);
-  const [file, setFile] = useState(null);
+  const [fileStory, setFileStory] = useState(null);
+  const [filesPost, setFilesPost] = useState([]);
+  const [description, setDescription] = useState("");
   const { user, isLoading } = useAuth0();
   const { apiAxiosPost, apiFetch } = useAPI();
-  const fileInputRef = useRef(null);
+  const fileStoryInputRef = useRef(null);
+  const filePostInputRef = useRef(null);
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -23,9 +27,10 @@ const NewPost = ({ onClose }) => {
   }, []);
 
   const submiteStories = async () => {
+    // console.log("File for story:", fileStory);
     const resultStory = {
       user: { id: user.sub },
-      mediaType: file.type.startsWith("image/") ? "IMAGE" : "VIDEO",
+      mediaType: fileStory.type.startsWith("image/") ? "IMAGE" : "VIDEO",
       mediaUrl: " ",
       likesCount: 0,
       viewsCount: 0,
@@ -41,7 +46,12 @@ const NewPost = ({ onClose }) => {
     console.log("POST SUCCESS");
     const story = await response.json();
 
-    const storyImgUrl = await handleUpload(story);
+    const storyImgUrl = await handleUploadFile(
+      story,
+      fileStory,
+      apiAxiosPost,
+      "/story/upload/"
+    );
 
     story.mediaUrl = storyImgUrl;
     console.log("Story uploaded:", story.mediaUrl);
@@ -59,22 +69,51 @@ const NewPost = ({ onClose }) => {
     }
   };
 
-  const handleUpload = async (story) => {
-    if (!file) return;
+  const submitePost = async () => {
+    const resultPost = {
+      user: { id: user.sub },
+      description: description,
+      likesCount: 0,
+      viewsCount: 0,
+      commentsCount: 0,
+      repostsCount: 0,
+    };
 
-    console.log(file);
-    const formData = new FormData();
-    formData.append("file", file);
+    const response = await apiFetch("/posts", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(resultPost),
+    });
 
-    try {
-      const res = await apiAxiosPost(`/story/upload/${story.id}`, formData);
-      const data = res.data;
+    const post = await response.json();
 
-      alert("Файл успішно надіслано: " + res.data);
-
-      return data;
-    } catch (err) {
-      alert("Помилка: " + err.message);
+    for (const file of filesPost) {
+      const postImgUrl = await handleUploadFile(
+        post,
+        file,
+        apiAxiosPost,
+        "/posts/upload/"
+      );
+      post.contents.push({
+        mediaType: file.type.startsWith("image/") ? "IMAGE" : "VIDEO",
+        mediaUrl: postImgUrl,
+        post: { id: post.id },
+      });
+    }
+    console.log("Post uploaded:", post.contents);
+    const responseUpdate = await apiFetch(`/posts/${post.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(post),
+    });
+    if (responseUpdate.ok) {
+      alert("Post successfully posted!");
+    } else {
+      alert("Помилка при оновленні посту: " + responseUpdate.statusText);
     }
   };
 
@@ -84,6 +123,10 @@ const NewPost = ({ onClose }) => {
 
   const handleCommentsChange = (value) => {
     setSelectedComments((prev) => (prev === value ? null : value));
+  };
+
+  const handleRemoveFile = (fileToRemove) => {
+    setFilesPost(filesPost.filter((file) => file !== fileToRemove));
   };
 
   if (isLoading) {
@@ -128,14 +171,67 @@ const NewPost = ({ onClose }) => {
                     className={styles["share-thoughts"]}
                     placeholder="Share your thoughts..."
                     rows={4}
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
                   />
                 </div>
 
                 <div className={styles["attributes"]}>
-                  <button className={styles["at-gallery"]}>Gallery</button>
-                  {/*<button className={styles["at-gallery"]}>Gallery</button>            
-                  <button className={styles["at-music"]}>Music</button>
-                  <button className={styles["at-album"]}>Album</button> */}{" "}
+                  {/*  <button className={styles["at-gallery"]}>Gallery</button> */}
+                  <>
+                    <input
+                      style={{ display: "none" }}
+                      type="file"
+                      ref={filePostInputRef}
+                      onChange={(e) => {
+                        const newFiles = Array.from(e.target.files);
+
+                        if (filesPost.length + newFiles.length > 6) {
+                          alert("Максимум 6 файлів!"); //Ярослав, отут можеш краще продумати виведення цієї помилки,я так зробив як тимчасове рішення
+                          return;
+                        }
+                        setFilesPost([...filesPost, ...newFiles]);
+                      }}
+                      accept="image/*,video/*"
+                      multiple
+                    />
+                    <button
+                      className={styles["at-gallery"]}
+                      onClick={() => filePostInputRef.current.click()}
+                    >
+                      Add Content
+                    </button>
+                  </>
+                  <>
+                    {filesPost.length > 0
+                      ? filesPost.map((file) => (
+                          <>
+                            {file.type.startsWith("image/") ? (
+                              <img
+                                key={file.id}
+                                className={styles["preview-image"]}
+                                src={URL.createObjectURL(file)}
+                                alt="preview"
+                              />
+                            ) : (
+                              <>
+                                <video
+                                  key={file.id}
+                                  className={styles["preview-image"]}
+                                  src={URL.createObjectURL(file)}
+                                  alt="preview"
+                                />
+                              </>
+                            )}
+                            <button onClick={() => handleRemoveFile(file)}>
+                              x
+                            </button>
+                          </>
+                        ))
+                      : "No files selected"}
+                  </>
+                  {/*       <button className={styles["at-music"]}>Music</button>
+                  <button className={styles["at-album"]}>Album</button>{" "} */}
                   {/* !!!ДЛЯ АРТИСТА*/}
                 </div>
 
@@ -147,6 +243,7 @@ const NewPost = ({ onClose }) => {
                   ))}
                 </div>*/}
               </>
+              
             )}
 
             {activeTab === "stories" && (
@@ -158,27 +255,29 @@ const NewPost = ({ onClose }) => {
                   ×
                 </button>
                 <div className={styles["file-stories"]}>
-                  <input
-                    style={{ display: "none" }}
-                    type="file"
-                    ref={fileInputRef}
-                    onChange={(e) => setFile(e.target.files[0])}
-                    accept="image/* video/* "
-                  />
-                  <button
-                    className={styles["add-stories"]}
-                    onClick={() => fileInputRef.current.click()}
-                  >
-                    {file ? (
-                      <img
-                        className={styles["preview-image"]}
-                        src={URL.createObjectURL(file)}
-                        alt="preview"
-                      />
-                    ) : (
-                      "Post"
-                    )}
-                  </button>
+                  <>
+                    <input
+                      style={{ display: "none" }}
+                      type="file"
+                      ref={fileStoryInputRef}
+                      onChange={(e) => setFileStory(e.target.files[0])}
+                      accept="image/* video/* "
+                    />
+                    <button
+                      className={styles["add-stories"]}
+                      onClick={() => fileStoryInputRef.current.click()}
+                    >
+                      {fileStory ? (
+                        <img
+                          className={styles["preview-image"]}
+                          src={URL.createObjectURL(fileStory)}
+                          alt="preview"
+                        />
+                      ) : (
+                        "Post"
+                      )}
+                    </button>
+                  </>
                   {/* <button className={styles["add-stories"]}>Choose photo</button> */}
                 </div>
                 <div className={styles["post-stories"]}>
@@ -264,7 +363,9 @@ const NewPost = ({ onClose }) => {
                 </label>
               </div>
 
-              <button className={styles["post-modal"]}>Post</button>
+              <button className={styles["post-modal"]} onClick={submitePost}>
+                Post
+              </button>
             </div>
           )}
         </div>

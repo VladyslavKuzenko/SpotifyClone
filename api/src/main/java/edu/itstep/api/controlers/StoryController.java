@@ -62,7 +62,6 @@ public class StoryController {
     }
     @PostMapping("/upload/{storyId}")
     public String handleFileUpload(@RequestParam("file") MultipartFile file,@PathVariable Long storyId){
-
         return postService.postFileToVM(file,"story"+storyId);
     }
     @PutMapping("/{id}")
