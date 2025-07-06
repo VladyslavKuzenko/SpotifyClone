@@ -1819,6 +1819,7 @@ html {
   background-color: transparent;
   border: none;
   cursor: pointer;
+  margin-bottom: 5px;
 }
 
 .post-coment-btn {
@@ -1832,6 +1833,7 @@ html {
   background-color: transparent;
   border: none;
   cursor: pointer;
+  margin-bottom: 5px;
 }
 
 .post-repost-btn {
@@ -1845,6 +1847,7 @@ html {
   background-color: transparent;
   border: none;
   cursor: pointer;
+  margin-bottom: 5px;
 }
 
 .post-ava {
@@ -1899,4 +1902,10 @@ html {
   height: 27px;
   margin-left: 15px;
   margin-right: 5px;
+}
+
+.post-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

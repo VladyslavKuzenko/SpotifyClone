@@ -18,7 +18,7 @@ export default function PostItem() {
 
   const submiteUserLike = async (post) => {
     const isPostlIked = await isLiked(post, user, apiFetch);
-    console.log("isLiked in Submite",isPostlIked);
+    console.log("isLiked in Submite", isPostlIked);
     const response = await apiFetch(`/users/like/${post.id}/${user.sub}`, {
       method: isPostlIked ? "DELETE" : "POST",
     });
@@ -50,28 +50,35 @@ export default function PostItem() {
                 </div>
                 <div className={styles["like-coment-repost"]}>
                   <div
-                    className={isLiked(post, user, apiFetch)?styles["post-like-btn-active"]:styles["post-like"]}
+                    className={isLiked(post, user, apiFetch) ? styles["post-like-btn-active"] : styles["post-like"]}
                     onClick={() => {
                       submiteUserLike(post);
                     }}
                   >
-                    <button className={styles["post-like-btn"]}></button>
-                    <div className={styles["likes-count"]}>
-                      {post.likesCount}
+                    <div className={styles["post-wrap"]}>
+
+                      <button className={styles["post-like-btn"]}></button>
+                      <div className={styles["likes-count"]}>
+                        {post.likesCount}
+                      </div>
                     </div>
                   </div>
 
                   <div className={styles["post-coment"]}>
-                    <button className={styles["post-coment-btn"]}></button>
-                    <div className={styles["coment-count"]}>
-                      {post.commentsCount}
+                    <div className={styles["post-wrap"]}>
+                      <button className={styles["post-coment-btn"]}></button>
+                      <div className={styles["coment-count"]}>
+                        {post.commentsCount}
+                      </div>
                     </div>
                   </div>
 
                   <div className={styles["post-repost"]}>
-                    <button className={styles["post-repost-btn"]}></button>
-                    <div className={styles["repost-count"]}>
-                      {post.repostsCount}
+                    <div className={styles["post-wrap"]}>
+                      <button className={styles["post-repost-btn"]}></button>
+                      <div className={styles["repost-count"]}>
+                        {post.repostsCount}
+                      </div>
                     </div>
                   </div>
                 </div>
