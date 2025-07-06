@@ -15,8 +15,8 @@ public class Post {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-    @Column(nullable = false)
-    private String title;
+//    @Column(nullable = false)
+//    private String title;
     private String description;
     @Column(name = "media_type", nullable = false)
     private ContentType mediaType;
@@ -57,13 +57,13 @@ public class Post {
         this.user = user;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
+//    public String getTitle() {
+//        return title;
+//    }
+//
+//    public void setTitle(String title) {
+//        this.title = title;
+//    }
 
     public String getDescription() {
         return description;

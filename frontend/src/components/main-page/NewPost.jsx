@@ -10,10 +10,12 @@ const NewPost = ({ onClose }) => {
 
   const [selectedPrivacy, setSelectedPrivacy] = useState(null);
   const [selectedComments, setSelectedComments] = useState(null);
-  const [file, setFile] = useState(null);
+  const [fileStory, setFileStory] = useState(null);
+  const [filesPost, setFilesPost] = useState([]);
   const { user, isLoading } = useAuth0();
   const { apiAxiosPost, apiFetch } = useAPI();
-  const fileInputRef = useRef(null);
+  const fileStoryInputRef = useRef(null);
+  const filePostInputRef = useRef(null);
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -23,9 +25,10 @@ const NewPost = ({ onClose }) => {
   }, []);
 
   const submiteStories = async () => {
+    console.log("File for story:", fileStory);
     const resultStory = {
       user: { id: user.sub },
-      mediaType: file.type.startsWith("image/") ? "IMAGE" : "VIDEO",
+      mediaType: fileStory.type.startsWith("image/") ? "IMAGE" : "VIDEO",
       mediaUrl: " ",
       likesCount: 0,
       viewsCount: 0,
@@ -41,7 +44,11 @@ const NewPost = ({ onClose }) => {
     console.log("POST SUCCESS");
     const story = await response.json();
 
-    const storyImgUrl = await handleUpload(story);
+    const storyImgUrl = await handleUploadFile(
+      story,
+      fileStory,
+      "/story/upload/"
+    );
 
     story.mediaUrl = storyImgUrl;
     console.log("Story uploaded:", story.mediaUrl);
@@ -59,7 +66,17 @@ const NewPost = ({ onClose }) => {
     }
   };
 
-  const handleUpload = async (story) => {
+  const submitePost = async () => {
+      const resultPost = {
+      user: { id: user.sub },
+      // description: 
+      mediaType: fileStory.type.startsWith("image/") ? "IMAGE" : "VIDEO",
+      mediaUrl: " ",
+      likesCount: 0,
+      viewsCount: 0,
+    };
+  }
+  const handleUploadFile = async (story, file, path) => {
     if (!file) return;
 
     console.log(file);
@@ -67,7 +84,7 @@ const NewPost = ({ onClose }) => {
     formData.append("file", file);
 
     try {
-      const res = await apiAxiosPost(`/story/upload/${story.id}`, formData);
+      const res = await apiAxiosPost(`${path}${story.id}`, formData);
       const data = res.data;
 
       alert("Файл успішно надіслано: " + res.data);
@@ -84,6 +101,10 @@ const NewPost = ({ onClose }) => {
 
   const handleCommentsChange = (value) => {
     setSelectedComments((prev) => (prev === value ? null : value));
+  };
+
+  const handleRemoveFile = (fileToRemove) => {
+    setFilesPost(filesPost.filter((file) => file !== fileToRemove));
   };
 
   if (isLoading) {
@@ -132,10 +153,58 @@ const NewPost = ({ onClose }) => {
                 </div>
 
                 <div className={styles["attributes"]}>
-                  <button className={styles["at-gallery"]}>Gallery</button>
-                  {/*<button className={styles["at-gallery"]}>Gallery</button>            
-                  <button className={styles["at-music"]}>Music</button>
-                  <button className={styles["at-album"]}>Album</button> */}{" "}
+                  {/*  <button className={styles["at-gallery"]}>Gallery</button> */}
+                  <>
+                    <input
+                      style={{ display: "none" }}
+                      type="file"
+                      ref={filePostInputRef}
+                      onChange={(e) =>
+                        setFilesPost([
+                          ...filesPost,
+                          ...Array.from(e.target.files),
+                        ])
+                      }
+                      accept="image/*,video/*"
+                      multiple
+                    />
+                    <button
+                      className={styles["at-gallery"]}
+                      onClick={() => filePostInputRef.current.click()}
+                    >
+                      Add Content
+                    </button>
+                  </>
+                  <>
+                    {filesPost.length > 0
+                      ? filesPost.map((file) => (
+                          <>
+                            {file.type.startsWith("image/") ? (
+                              <img
+                                key={file.id}
+                                className={styles["preview-image"]}
+                                src={URL.createObjectURL(file)}
+                                alt="preview"
+                              />
+                            ) : (
+                              <>
+                                <video
+                                  key={file.id}
+                                  className={styles["preview-image"]}
+                                  src={URL.createObjectURL(file)}
+                                  alt="preview"
+                                />
+                              </>
+                            )}
+                            <button onClick={() => handleRemoveFile(file)}>
+                              x
+                            </button>
+                          </>
+                        ))
+                      : "No files selected"}
+                  </>
+                  {/*       <button className={styles["at-music"]}>Music</button>
+                  <button className={styles["at-album"]}>Album</button>{" "} */}
                   {/* !!!ДЛЯ АРТИСТА*/}
                 </div>
 
@@ -158,27 +227,29 @@ const NewPost = ({ onClose }) => {
                   ×
                 </button>
                 <div className={styles["file-stories"]}>
-                  <input
-                    style={{ display: "none" }}
-                    type="file"
-                    ref={fileInputRef}
-                    onChange={(e) => setFile(e.target.files[0])}
-                    accept="image/* video/* "
-                  />
-                  <button
-                    className={styles["add-stories"]}
-                    onClick={() => fileInputRef.current.click()}
-                  >
-                    {file ? (
-                      <img
-                        className={styles["preview-image"]}
-                        src={URL.createObjectURL(file)}
-                        alt="preview"
-                      />
-                    ) : (
-                      "Post"
-                    )}
-                  </button>
+                  <>
+                    <input
+                      style={{ display: "none" }}
+                      type="file"
+                      ref={fileStoryInputRef}
+                      onChange={(e) => setFileStory(e.target.files[0])}
+                      accept="image/* video/* "
+                    />
+                    <button
+                      className={styles["add-stories"]}
+                      onClick={() => fileStoryInputRef.current.click()}
+                    >
+                      {fileStory ? (
+                        <img
+                          className={styles["preview-image"]}
+                          src={URL.createObjectURL(fileStory)}
+                          alt="preview"
+                        />
+                      ) : (
+                        "Post"
+                      )}
+                    </button>
+                  </>
                   {/* <button className={styles["add-stories"]}>Choose photo</button> */}
                 </div>
                 <div className={styles["post-stories"]}>

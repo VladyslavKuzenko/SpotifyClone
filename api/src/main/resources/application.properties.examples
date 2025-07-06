@@ -18,3 +18,5 @@ okta.oauth2.issuer=URL_TO_YOUR_APPLICATION(AUTH0)
 okta.oauth2.client-id=YOUR_CLIENT-ID
 okta.oauth2.client-secret=YOUR_CLIENT-SECRET
 okta.oauth2.audience=URL_TO_YOUR_API(AUTH0)
+
+app.secret.key=KEY
