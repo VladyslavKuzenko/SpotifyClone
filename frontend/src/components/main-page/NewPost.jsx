@@ -4,6 +4,7 @@ import axios from "axios";
 import { API_URL } from "../../js/properties/properties";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useAPI } from "../../hooks/useApi";
+import { handleUploadFile } from "../../js/functions/functions";
 
 const NewPost = ({ onClose }) => {
   const [activeTab, setActiveTab] = useState("newpost"); // "newpost" або "stories"
@@ -12,6 +13,7 @@ const NewPost = ({ onClose }) => {
   const [selectedComments, setSelectedComments] = useState(null);
   const [fileStory, setFileStory] = useState(null);
   const [filesPost, setFilesPost] = useState([]);
+  const [description, setDescription] = useState("");
   const { user, isLoading } = useAuth0();
   const { apiAxiosPost, apiFetch } = useAPI();
   const fileStoryInputRef = useRef(null);
@@ -25,7 +27,7 @@ const NewPost = ({ onClose }) => {
   }, []);
 
   const submiteStories = async () => {
-    console.log("File for story:", fileStory);
+    // console.log("File for story:", fileStory);
     const resultStory = {
       user: { id: user.sub },
       mediaType: fileStory.type.startsWith("image/") ? "IMAGE" : "VIDEO",
@@ -47,6 +49,7 @@ const NewPost = ({ onClose }) => {
     const storyImgUrl = await handleUploadFile(
       story,
       fileStory,
+      apiAxiosPost,
       "/story/upload/"
     );
 
@@ -67,31 +70,50 @@ const NewPost = ({ onClose }) => {
   };
 
   const submitePost = async () => {
-      const resultPost = {
+    const resultPost = {
       user: { id: user.sub },
-      // description: 
-      mediaType: fileStory.type.startsWith("image/") ? "IMAGE" : "VIDEO",
-      mediaUrl: " ",
+      description: description,
       likesCount: 0,
       viewsCount: 0,
+      commentsCount: 0,
+      repostsCount: 0,
     };
-  }
-  const handleUploadFile = async (story, file, path) => {
-    if (!file) return;
 
-    console.log(file);
-    const formData = new FormData();
-    formData.append("file", file);
+    const response = await apiFetch("/posts", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(resultPost),
+    });
 
-    try {
-      const res = await apiAxiosPost(`${path}${story.id}`, formData);
-      const data = res.data;
+    const post = await response.json();
 
-      alert("Файл успішно надіслано: " + res.data);
-
-      return data;
-    } catch (err) {
-      alert("Помилка: " + err.message);
+    for (const file of filesPost) {
+      const postImgUrl = await handleUploadFile(
+        post,
+        file,
+        apiAxiosPost,
+        "/posts/upload/"
+      );
+      post.contents.push({
+        mediaType: file.type.startsWith("image/") ? "IMAGE" : "VIDEO",
+        mediaUrl: postImgUrl,
+        post: { id: post.id },
+      });
+    }
+    console.log("Post uploaded:", post.contents);
+    const responseUpdate = await apiFetch(`/posts/${post.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(post),
+    });
+    if (responseUpdate.ok) {
+      alert("Post successfully posted!");
+    } else {
+      alert("Помилка при оновленні посту: " + responseUpdate.statusText);
     }
   };
 
@@ -149,6 +171,8 @@ const NewPost = ({ onClose }) => {
                     className={styles["share-thoughts"]}
                     placeholder="Share your thoughts..."
                     rows={4}
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
                   />
                 </div>
 
@@ -159,12 +183,15 @@ const NewPost = ({ onClose }) => {
                       style={{ display: "none" }}
                       type="file"
                       ref={filePostInputRef}
-                      onChange={(e) =>
-                        setFilesPost([
-                          ...filesPost,
-                          ...Array.from(e.target.files),
-                        ])
-                      }
+                      onChange={(e) => {
+                        const newFiles = Array.from(e.target.files);
+
+                        if (filesPost.length + newFiles.length > 6) {
+                          alert("Максимум 6 файлів!"); //Ярослав, отут можеш краще продумати виведення цієї помилки,я так зробив як тимчасове рішення
+                          return;
+                        }
+                        setFilesPost([...filesPost, ...newFiles]);
+                      }}
                       accept="image/*,video/*"
                       multiple
                     />
@@ -216,6 +243,7 @@ const NewPost = ({ onClose }) => {
                   ))}
                 </div>*/}
               </>
+              
             )}
 
             {activeTab === "stories" && (
@@ -335,7 +363,9 @@ const NewPost = ({ onClose }) => {
                 </label>
               </div>
 
-              <button className={styles["post-modal"]}>Post</button>
+              <button className={styles["post-modal"]} onClick={submitePost}>
+                Post
+              </button>
             </div>
           )}
         </div>

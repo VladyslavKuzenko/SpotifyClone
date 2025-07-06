@@ -85,3 +85,38 @@ export async function isSubscribed(user,userToCheckSubscription,getAccessTokenSi
   );
   return isSubscribed;
 } 
+
+export async function isLiked(post,user,apiFetch) {
+  
+  console.log("isLiked called");
+  console.log("user",user);
+  console.log("post",post);
+  const response =await apiFetch(`/users/userLikedPosts/${user.sub}`);
+  const body = await response.json();  
+  console.log("body",body);
+
+  var isLiked = body.some(
+    (i) => i.id === post.id
+  );
+  console.log("isLiked: " + isLiked);
+  return isLiked;
+}
+
+export async function handleUploadFile(content, file, apiAxiosPost, path) {
+  if (!file) return;
+
+  console.log(file);
+  const formData = new FormData();
+  formData.append("file", file);
+
+  try {
+    const res = await apiAxiosPost(`${path}${content.id}`, formData);
+    const data = res.data;
+
+    alert("Файл успішно надіслано: " + res.data);
+
+    return data;
+  } catch (err) {
+    alert("Помилка: " + err.message);
+  }
+}

@@ -1790,6 +1790,23 @@ html {
   justify-content: space-evenly;
 
 }
+.post-like-btn-active {
+  height: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 12px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  color: red;
+  width: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
 
 .post-like-btn {
   background-image: url('/public/images/like-image.png');

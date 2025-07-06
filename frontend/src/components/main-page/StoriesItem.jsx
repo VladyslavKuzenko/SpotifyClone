@@ -144,7 +144,7 @@ const StoriesItem = () => {
             <div className={styles["storie-bottom"]}>
               <div className={styles["avatar-author"]}>
                 <div className={styles["storie-avatar"]}></div>
-                <div className={styles["storie-author"]}>Name Surname</div>
+                <div className={styles["storie-author"]}>{currentStory.user.username}</div>
                 <div className={styles["storie-like"]}></div>
               </div>
             </div>

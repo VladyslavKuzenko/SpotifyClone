@@ -7,8 +7,15 @@ export const APIContext = createContext(undefined);
 
 export const APIProvider = ({ children }) => {
   const [isProfileConfirmed, setIsProfileConfirmed] = useState(false);
-  const [profileConfirmationLoading, setProfileConfirmationLoading] = useState(true);
-  const { user, getAccessTokenSilently,getAccessTokenWithPopup, isAuthenticated,isLoading } = useAuth0();
+  const [profileConfirmationLoading, setProfileConfirmationLoading] =
+    useState(true);
+  const {
+    user,
+    getAccessTokenSilently,
+    getAccessTokenWithPopup,
+    isAuthenticated,
+    isLoading,
+  } = useAuth0();
   const [currentSong, setCurrentSong] = useState("");
   const [currentSongList, setCurrentSongList] = useState("");
   const audioRef = useRef(null);
@@ -16,7 +23,7 @@ export const APIProvider = ({ children }) => {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(0);
- /*  const [autoStart, setAutoStart] = useState(false); */
+  /*  const [autoStart, setAutoStart] = useState(false); */
 
   const nextSong = () => {
     if (currentSongList.indexOf(currentSong) + 1 < currentSongList.length)
@@ -35,8 +42,9 @@ export const APIProvider = ({ children }) => {
   const pauseAudio = () => {
     audioRef.current?.pause();
     setIsSongPlayed(false);
-  }; 
-const apiAxiosPost= async (path, data, options = {}) => {
+  };
+  
+  const apiAxiosPost = async (path, data, options = {}) => {
     let headers = options.headers || {};
 
     if (isAuthenticated) {
@@ -57,19 +65,16 @@ const apiAxiosPost= async (path, data, options = {}) => {
     }
 
     try {
-      
-
-    return await axios.post(`${BASE_API_URL}${path}`,data, {
-      headers: {
-        ...options,
-        headers,
-      },
-    });
+      return await axios.post(`${BASE_API_URL}${path}`, data, {
+        headers: {
+          ...options,
+          headers,
+        },
+      });
     } catch (err) {
       alert("Помилка: " + err.message);
     }
-
-}
+  };
   const apiFetch = async (path, options = {}) => {
     let headers = options.headers || {};
 
@@ -148,7 +153,7 @@ const apiAxiosPost= async (path, data, options = {}) => {
         isLoading,
         /* autoStart,
         setAutoStart, */
-        apiAxiosPost
+        apiAxiosPost,
       }}
     >
       <>{children}</>

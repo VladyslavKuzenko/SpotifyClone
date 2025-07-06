@@ -53,9 +53,11 @@ const Main = () => {
   if (!isAuthenticated) return <Navigate to="/login" replace />;
 
   const renderContent = () => {
+    
+    console.log("renderContent called")
     switch (selectedTab) {
       case "all":
-        return <div><PostItem/><PostItem/></div>;
+        return <div><PostItem/></div>;
 
 
       case "artists":

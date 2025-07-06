@@ -1,9 +1,6 @@
 package edu.itstep.api.controlers;
 
-import edu.itstep.api.models.Genre;
-import edu.itstep.api.models.Goal;
-import edu.itstep.api.models.User;
-import edu.itstep.api.models.Vibe;
+import edu.itstep.api.models.*;
 import edu.itstep.api.models.dto.UserCreationDTO;
 import edu.itstep.api.repositories.GenreRepository;
 import edu.itstep.api.repositories.GoalRepository;
@@ -60,6 +57,10 @@ public class UserController {
     public Set<User> getUserFollowing(@PathVariable String id) {
         return userRepository.findById(id).orElseThrow(RuntimeException::new).getFollowings();
     }
+    @GetMapping("/userLikedPosts/{id}")
+    public Set<Post> getUserLikedPosts(@PathVariable String id) {
+        return userRepository.findById(id).orElseThrow(RuntimeException::new).getLikedPosts();
+    }
     @GetMapping("/userByFollowers/{count}")
     public List<User> getUserOrderByFollowersCount(@PathVariable Integer count) {
         Pageable pageable = PageRequest.of(0, count);
@@ -110,11 +111,19 @@ public class UserController {
         String encodedId = URLEncoder.encode(savedUser.getId(), StandardCharsets.UTF_8);
         return ResponseEntity.created(new URI("/users/" + encodedId)).body(savedUser);
     }
+
     @PostMapping("/follow/{follower_id}/{followed_id}")
     public ResponseEntity<?> addFollowing(@PathVariable String follower_id,@PathVariable String followed_id) throws URISyntaxException {
         userService.addFollowing(follower_id,followed_id);
-        return ResponseEntity.ok("Genre added");
+        return ResponseEntity.ok("Follow added");
     }
+
+    @PostMapping("/like/{post_id}/{user_id}")
+    public ResponseEntity<User> addLike(@PathVariable Long post_id,@PathVariable String user_id) throws URISyntaxException {
+        User user =userService.addLike(post_id,user_id);
+        return ResponseEntity.ok(user);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity deleteUser(@PathVariable String id) {
         userRepository.deleteById(id);
@@ -124,6 +133,11 @@ public class UserController {
     public ResponseEntity<?> deleteFollowing(@PathVariable String follower_id,@PathVariable String followed_id) throws URISyntaxException {
         userService.deleteFollowing(follower_id,followed_id);
         return ResponseEntity.ok("Genre added");
+    }
+    @DeleteMapping("/like/{post_id}/{user_id}")
+    public ResponseEntity<User> deleteLike(@PathVariable Long post_id,@PathVariable String user_id) throws URISyntaxException {
+        User user =userService.deleteLike(post_id,user_id);
+        return ResponseEntity.ok(user);
     }
 
 
