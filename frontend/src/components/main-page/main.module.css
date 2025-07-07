@@ -194,7 +194,7 @@ html {
 }
 
 .middle {
-  width: 45%;
+  width: 50%;
   margin-left: 40px;
   margin-right: 40px;
 
@@ -1341,6 +1341,7 @@ html {
   scrollbar-width: thin;
   background-color: #9F9F9F;
   border-radius: 5px;
+  color: white;
 }
 
 .share-thoughts::placeholder {
@@ -1355,12 +1356,13 @@ html {
 
 .attributes {
   margin-left: 40px;
-  height: 87px;
+  height: 120px;
   width: 540px;
   display: flex;
   justify-content: flex-start;
   margin-top: 7px;
-  gap: 15px
+  overflow: auto;
+  scrollbar-color: #4E5059 transparent;
 }
 
 .at-music,
@@ -1368,7 +1370,7 @@ html {
 .at-video,
 .at-document,
 .at-album {
-  height: 100%;
+  height: 100px;
   width: 100px;
   border: none;
   cursor: pointer;
@@ -1381,10 +1383,32 @@ html {
   line-height: 100%;
   letter-spacing: 0%;
   color: white;
+  flex-shrink: 0;
+  margin-right: 15px;
 
 
 }
 
+.pomh-close {
+  background-color: crimson;
+  border: none;
+  height: 100px;
+  width: 30px;
+  margin-right: 15px;
+  background-image: url('/public/images/trash.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 22px 22px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  cursor: pointer;
+  flex-shrink: 0;
+
+}
+.pomh-close:hover {
+background-color: rgb(199, 18, 54);
+
+}
 .tag-container {
   display: flex;
   flex-wrap: wrap;
@@ -1917,12 +1941,25 @@ html {
   background-color: #C1C1C1;
 }
 
+.preview-image1 {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  display: block;
+  flex-shrink: 0;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+
+}
+
 .preview-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
+
 }
+
 .pomh-modal-overlay {
   position: fixed;
   top: 0;
@@ -1933,7 +1970,7 @@ html {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 999;
+  z-index: 1999;
 }
 
 .pomh-modal-content {
@@ -1951,6 +1988,12 @@ html {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
   display: block;
   margin: 0 auto;
+}
+
+.sts-modal-content img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .pomh-modal-close {

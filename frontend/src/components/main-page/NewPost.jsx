@@ -209,7 +209,7 @@ const NewPost = ({ onClose }) => {
                             {file.type.startsWith("image/") ? (
                               <img
                                 key={file.id}
-                                className={styles["preview-image"]}
+                                className={styles["preview-image1"]}
                                 src={URL.createObjectURL(file)}
                                 alt="preview"
                               />
@@ -217,15 +217,13 @@ const NewPost = ({ onClose }) => {
                               <>
                                 <video
                                   key={file.id}
-                                  className={styles["preview-image"]}
+                                  className={styles["preview-image1"]}
                                   src={URL.createObjectURL(file)}
                                   alt="preview"
                                 />
                               </>
                             )}
-                            <button onClick={() => handleRemoveFile(file)}>
-                              x
-                            </button>
+                            <button onClick={() => handleRemoveFile(file)} className={styles["pomh-close"]}> </button>
                           </>
                         ))
                       : "No files selected"}
