@@ -36,12 +36,12 @@ const NewSongs = () => {
         <div className={styles["ns-play-btn-div"]}>
           {isSongPlayed ? (
             <button
-              className={styles["ns-play-btn"]}
+              className={styles["ns-play-btn1"]}
               onClick={() => {
                 pauseAudio();
               }}
             >
-              ⏸
+              
             </button>
           ) : (
             <button

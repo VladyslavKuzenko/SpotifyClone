@@ -795,7 +795,19 @@ html {
   background-position-x: 20px;
 
 }
+.ns-play-btn1 {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: #92AA7F;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: none;
+  background-image: url(/public/images/pause1.png);
+  background-size:40%;
 
+}
 
 .ns-song {
   width: 100%;
