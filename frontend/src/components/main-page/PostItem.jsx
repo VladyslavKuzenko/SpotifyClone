@@ -100,12 +100,6 @@ export default function PostItem() {
                     </div>
                   </>
                 ))}
-                {/*    <div className={styles["post-photo"]}></div>
-                <div className={styles["post-photo"]}></div>
-                <div className={styles["post-photo"]}></div>
-                <div className={styles["post-photo"]}></div>
-                <div className={styles["post-photo"]}></div>
-                <div className={styles["post-photo"]}></div> */}
               </div>
             </div>
           </div>

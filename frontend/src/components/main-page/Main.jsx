@@ -57,7 +57,7 @@ const Main = () => {
     console.log("renderContent called")
     switch (selectedTab) {
       case "all":
-        return <div><PostItem/></div>;
+        return <div className={styles["all-post-content"]}><PostItem/></div>;
 
 
       case "artists":

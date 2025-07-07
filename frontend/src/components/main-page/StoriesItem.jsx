@@ -102,57 +102,61 @@ const StoriesItem = () => {
               className={styles.stories}
               style={{ background: getRandomGradient() }}
             >
-              <div className={styles["stories-inner"]}></div>
-              <img
-                className={styles["preview-image"]}
-                src={i.mediaUrl}
-                alt="Story"
-              />
+              <div className={styles["stories-inner"]}>
+
+                <img
+                  className={styles["preview-image"]}
+                  src={i.mediaUrl}
+                  alt="Story"
+                />
+              </div>
+              </div>
+              <div className={styles.nickname}>{i.user?.username}</div>
             </div>
-            <div className={styles.nickname}>{i.user?.username}</div>
-          </div>
         ))}
-      </div>
+          </div>
 
-      {canScroll.right && (
-        <div className={styles.rightplat}>
-          <button onClick={() => handleScroll("right")}></button>
-        </div>
-      )}
+      {
+            canScroll.right && (
+              <div className={styles.rightplat}>
+                <button onClick={() => handleScroll("right")}></button>
+              </div>
+            )
+          }
 
-      {isModalOpen && currentStory && (
-        <div
-          className={styles["sts-modal-overlay"]}
-          onClick={handleOverlayClick}
-        >
-          <div className={styles["sts-modal-window"]}>
-            <div className={styles["storie-upper"]}>
-              <button
-                className={styles["sts-modal-close"]}
-                onClick={closeModal}
-              ></button>
-            </div>
+      { isModalOpen && currentStory && (
+            <div
+              className={styles["sts-modal-overlay"]}
+              onClick={handleOverlayClick}
+            >
+              <div className={styles["sts-modal-window"]}>
+                <div className={styles["storie-upper"]}>
+                  <button
+                    className={styles["sts-modal-close"]}
+                    onClick={closeModal}
+                  ></button>
+                </div>
 
-            <div className={styles["sts-modal-content"]}>
-              <img
-                className={styles["preview-image"]}
-                src={currentStory.mediaUrl}
-                alt="Story"
-              />
-            </div>
+                <div className={styles["sts-modal-content"]}>
+                  <img
+                    className={styles["preview-image"]}
+                    src={currentStory.mediaUrl}
+                    alt="Story"
+                  />
+                </div>
 
-            <div className={styles["storie-bottom"]}>
-              <div className={styles["avatar-author"]}>
-                <div className={styles["storie-avatar"]}></div>
-                <div className={styles["storie-author"]}>{currentStory.user.username}</div>
-                <div className={styles["storie-like"]}></div>
+                <div className={styles["storie-bottom"]}>
+                  <div className={styles["avatar-author"]}>
+                    <div className={styles["storie-avatar"]}></div>
+                    <div className={styles["storie-author"]}>{currentStory.user.username}</div>
+                    <div className={styles["storie-like"]}></div>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-      )}
-    </div>
-  );
+          )}
+      </div>
+      );
 };
 
-export default StoriesItem;
+      export default StoriesItem;
