@@ -570,9 +570,10 @@ html {
   cursor: pointer;
 
 }
+
 .all-post-content {
   display: flex;
-  flex-direction: column-reverse; 
+  flex-direction: column-reverse;
 }
 
 .artists-div {
@@ -799,6 +800,7 @@ html {
   background-position-x: 20px;
 
 }
+
 .ns-play-btn1 {
   width: 56px;
   height: 56px;
@@ -809,7 +811,7 @@ html {
   background-position: center;
   border: none;
   background-image: url(/public/images/pause1.png);
-  background-size:40%;
+  background-size: 40%;
 
 }
 
@@ -1575,7 +1577,7 @@ html {
   font-size: 16px;
   line-height: 100%;
   letter-spacing: 0%;
-  
+
 
 }
 
@@ -1807,6 +1809,7 @@ html {
   justify-content: space-evenly;
 
 }
+
 .post-like-btn-active {
   height: 100%;
   white-space: nowrap;
@@ -1900,7 +1903,7 @@ html {
 
 .post-photos-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
   gap: 15px;
   width: 100%;
   box-sizing: border-box;
@@ -1920,6 +1923,50 @@ html {
   object-fit: cover;
   display: block;
 }
+.pomh-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.pomh-modal-content {
+  position: relative;
+  max-width: 90%;
+  max-height: 90%;
+}
+
+.pomh-modal-image {
+  max-width: 100%;
+  max-height: 90vh;
+  width: auto;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+  display: block;
+  margin: 0 auto;
+}
+
+.pomh-modal-close {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background-color: white;
+  color: black;
+  border: none;
+  font-size: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+}
+
 .radio-post {
   width: 27px;
   height: 27px;

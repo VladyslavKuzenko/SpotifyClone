@@ -9,18 +9,29 @@ export default function PostItem() {
   const { apiFetch } = useAPI();
   const { user, isLoading } = useAuth0();
 
+  const [pomhIsModalOpen, setPomhIsModalOpen] = useState(false);
+  const [pomhModalImageUrl, setPomhModalImageUrl] = useState("");
+
+  const openPomhModal = (url) => {
+    setPomhModalImageUrl(url);
+    setPomhIsModalOpen(true);
+  };
+
+  const closePomhModal = () => {
+    setPomhIsModalOpen(false);
+    setPomhModalImageUrl("");
+  };
+
   const fetchPosts = async () => {
     const response = await apiFetch("/posts");
     const data = await response.json();
     setPosts(data);
-    console.log("Posts fetched:", data);
   };
 
   const submiteUserLike = async (post) => {
-    const isPostlIked = await isLiked(post, user, apiFetch);
-    console.log("isLiked in Submite", isPostlIked);
+    const isPostLiked = await isLiked(post, user, apiFetch);
     const response = await apiFetch(`/users/like/${post.id}/${user.sub}`, {
-      method: isPostlIked ? "DELETE" : "POST",
+      method: isPostLiked ? "DELETE" : "POST",
     });
     if (response.ok) {
       fetchPosts();
@@ -28,14 +39,17 @@ export default function PostItem() {
       console.error("Failed to like/unlike the post");
     }
   };
+
   useEffect(() => {
     fetchPosts();
   }, []);
+
   if (isLoading) return <div>Loading...</div>;
+
   return (
     <>
       {posts?.map((post) => (
-        <div className={styles.main}>
+        <div className={styles.main} key={post.id}>
           <div className={styles["post-item"]}>
             <div className={styles["post-content"]}>
               <div className={styles["upper-content"]}>
@@ -50,13 +64,14 @@ export default function PostItem() {
                 </div>
                 <div className={styles["like-coment-repost"]}>
                   <div
-                    className={isLiked(post, user, apiFetch) ? styles["post-like-btn-active"] : styles["post-like"]}
-                    onClick={() => {
-                      submiteUserLike(post);
-                    }}
+                    className={
+                      isLiked(post, user, apiFetch)
+                        ? styles["post-like-btn-active"]
+                        : styles["post-like"]
+                    }
+                    onClick={() => submiteUserLike(post)}
                   >
                     <div className={styles["post-wrap"]}>
-
                       <button className={styles["post-like-btn"]}></button>
                       <div className={styles["likes-count"]}>
                         {post.likesCount}
@@ -90,21 +105,34 @@ export default function PostItem() {
 
               <div className={styles["post-photos-container"]}>
                 {post.contents?.map((content) => (
-                  <>
-                    <div className={styles["post-photo"]} key={content.id}>
-                      <img
-                        className={styles["preview-image"]}
-                        src={content.mediaUrl}
-                        alt="Post content"
-                      />
-                    </div>
-                  </>
+                  <div className={styles["post-photo"]} key={content.id}>
+                    <img
+                      className={styles["preview-image"]}
+                      src={content.mediaUrl}
+                      alt="Post content"
+                      onClick={() => openPomhModal(content.mediaUrl)}
+                    />
+                  </div>
                 ))}
               </div>
             </div>
           </div>
         </div>
       ))}
+
+      {/* POMH MODAL */}
+      {pomhIsModalOpen && (
+        <div className={styles["pomh-modal-overlay"]} onClick={closePomhModal}>
+          <div className={styles["pomh-modal-content"]} onClick={(e) => e.stopPropagation()}>
+            <img
+              src={pomhModalImageUrl}
+              alt="Preview"
+              className={styles["pomh-modal-image"]}
+            />
+           
+          </div>
+        </div>
+      )}
     </>
   );
 }
