@@ -2,12 +2,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
 
 html {
-  scrollbar-width: none;
   background-color: #181920;
   background-image: url('/public/images/shum-main.jpg');
   background-repeat: repeat;
   background-size: auto;
   opacity: 1;
+  scrollbar-width: none;;
 }
 
 .container {
@@ -471,9 +471,9 @@ html {
   height: 135px;
   justify-content: flex-start;
   align-items: center;
-  gap: 4%;
   overflow: auto;
   scrollbar-width: none;
+  gap:2%;
 }
 
 
@@ -482,7 +482,7 @@ html {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: center;
+  align-items: start;
   width: 160px;
   flex: 0 0 auto;
 }
@@ -517,6 +517,7 @@ html {
   letter-spacing: 0%;
   text-align: center;
   color: white;
+  width: 100px;
 
 
   white-space: nowrap;
@@ -1371,7 +1372,7 @@ html {
 .at-document,
 .at-album {
   height: 100px;
-  width: 100px;
+  width: 140px;
   border: none;
   cursor: pointer;
   background-color: #4E5059;
@@ -1409,25 +1410,7 @@ html {
 background-color: rgb(199, 18, 54);
 
 }
-.tag-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-left: 40px;
-  overflow: auto;
-  height: 90px;
-  scrollbar-width: none;
-  margin-top: 20px;
-}
 
-.tag-item {
-  background-color: #D1D1D1;
-  border: none;
-
-  width: 100px;
-  height: 33px;
-  cursor: pointer;
-}
 
 .privacy-container {
   width: 100%;
@@ -1669,6 +1652,7 @@ background-color: rgb(199, 18, 54);
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   padding-bottom: 5px;
+
 }
 
 .sts-modal-content {
@@ -1686,8 +1670,8 @@ background-color: rgb(199, 18, 54);
   width: 100%;
   height: 12%;
   background-color: #232428;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
   display: flex;
   align-items: center;
 
