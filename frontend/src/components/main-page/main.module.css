@@ -1681,7 +1681,7 @@ html {
   padding-right: 15px;
   padding-left: 15px;
   padding-bottom: 10px;
-box-shadow: 0 80px 80px 0 rgba(255, 255, 255, 0.3);
+  box-shadow: 0 80px 80px 0 rgba(255, 255, 255, 0.3);
 }
 
 .storie-bottom {
@@ -1795,7 +1795,6 @@ box-shadow: 0 80px 80px 0 rgba(255, 255, 255, 0.3);
   line-height: 100%;
   letter-spacing: 0%;
   color: white;
-
   white-space: nowrap;
   overflow: hidden;
   height: 50%;
@@ -1944,7 +1943,6 @@ box-shadow: 0 80px 80px 0 rgba(255, 255, 255, 0.3);
   aspect-ratio: 1 / 1;
   border-radius: 5px;
   overflow: hidden;
-  background-color: #C1C1C1;
 }
 
 .preview-image1 {
@@ -1964,6 +1962,38 @@ box-shadow: 0 80px 80px 0 rgba(255, 255, 255, 0.3);
   object-fit: cover;
   display: block;
 
+}
+
+.psb-modal-prev-button,
+.psb-modal-next-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  color: white;
+  border: none;
+  font-size: 24px;
+  height: 50px;
+  width: 50px;
+  cursor: pointer;
+  z-index: 10;
+  border-radius: 50%;
+}
+
+.psb-modal-prev-button {
+  left: -60px;
+  background-image: url('/public/images/Vector\ 32.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 40%;
+}
+
+.psb-modal-next-button {
+  right: -60px;
+  background-image: url('/public/images/Vector\ 31.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 40%;
 }
 
 .pomh-modal-overlay {

@@ -9,6 +9,8 @@ const StoriesItem = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentStory, setCurrentStory] = useState(null);
   const [stories, setStories] = useState([]);
+  const [currentIndex2, setCurrentIndex2] = useState(null); // Додано
+
   const { apiFetch } = useAPI();
   const { user, isLoading } = useAuth0();
 
@@ -36,7 +38,11 @@ const StoriesItem = () => {
   };
 
   const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setCurrentStory(null);
+    setCurrentIndex2(null); // Очистка індексу при закритті
+  };
 
   const handleOverlayClick = (e) => {
     if (e.target.classList.contains(styles["sts-modal-overlay"])) {
@@ -48,6 +54,29 @@ const StoriesItem = () => {
     const response = await apiFetch(`/story/followings/${user.sub}`);
     const data = await response.json();
     setStories(data);
+  };
+
+  const getRandomGradient = () => {
+    const angle = Math.floor(Math.random() * 360);
+    const lightOrange = "#FFA500";
+    const deepOrange = "#FF4500";
+    return `linear-gradient(${angle}deg, ${lightOrange}, ${deepOrange})`;
+  };
+
+  const goToNextStory2 = () => {
+    if (currentIndex2 < stories.length - 1) {
+      const newIndex = currentIndex2 + 1;
+      setCurrentIndex2(newIndex);
+      setCurrentStory(stories[newIndex]);
+    }
+  };
+
+  const goToPrevStory2 = () => {
+    if (currentIndex2 > 0) {
+      const newIndex = currentIndex2 - 1;
+      setCurrentIndex2(newIndex);
+      setCurrentStory(stories[newIndex]);
+    }
   };
 
   useEffect(() => {
@@ -73,13 +102,6 @@ const StoriesItem = () => {
     };
   }, []);
 
-  const getRandomGradient = () => {
-    const angle = Math.floor(Math.random() * 360);
-    const lightOrange = "#FFA500";
-    const deepOrange = "#FF4500";
-    return `linear-gradient(${angle}deg, ${lightOrange}, ${deepOrange})`;
-  };
-
   return (
     <div className={styles.wrapper}>
       {canScroll.left && (
@@ -89,13 +111,14 @@ const StoriesItem = () => {
       )}
 
       <div className={styles["container-stories"]} ref={scrollRef}>
-        {stories.map((i) => (
+        {stories.map((i, index) => (
           <div
             key={i.id || i.mediaUrl}
             className={styles["stories-plat"]}
             onClick={() => {
               openModal();
               setCurrentStory(i);
+              setCurrentIndex2(index); // встановлюємо індекс
             }}
           >
             <div
@@ -103,60 +126,75 @@ const StoriesItem = () => {
               style={{ background: getRandomGradient() }}
             >
               <div className={styles["stories-inner"]}>
-
                 <img
                   className={styles["preview-image"]}
                   src={i.mediaUrl}
                   alt="Story"
                 />
               </div>
-              </div>
-              <div className={styles.nickname}>{i.user?.username}</div>
             </div>
-        ))}
+            <div className={styles.nickname}>{i.user?.username}</div>
           </div>
+        ))}
+      </div>
 
-      {
-            canScroll.right && (
-              <div className={styles.rightplat}>
-                <button onClick={() => handleScroll("right")}></button>
-              </div>
-            )
-          }
+      {canScroll.right && (
+        <div className={styles.rightplat}>
+          <button onClick={() => handleScroll("right")}></button>
+        </div>
+      )}
 
-      { isModalOpen && currentStory && (
-            <div
-              className={styles["sts-modal-overlay"]}
-              onClick={handleOverlayClick}
-            >
-              <div className={styles["sts-modal-window"]}>
-                <div className={styles["storie-upper"]}>
-                  <button
-                    className={styles["sts-modal-close"]}
-                    onClick={closeModal}
-                  ></button>
+      {isModalOpen && currentStory && (
+        <div
+          className={styles["sts-modal-overlay"]}
+          onClick={handleOverlayClick}
+        >
+          <div className={styles["sts-modal-window"]}>
+            <div className={styles["storie-upper"]}>
+              <button
+                className={styles["sts-modal-close"]}
+                onClick={closeModal}
+              ></button>
+            </div>
+            {currentIndex2 > 0 && (
+              <button
+                className={styles["psb-modal-prev-button"]}
+                onClick={goToPrevStory2}
+              >
+              </button>
+            )}
+            <div className={styles["sts-modal-content"]}>
+
+
+              <img
+                className={styles["preview-image"]}
+                src={currentStory.mediaUrl}
+                alt="Story"
+              />
+
+
+            </div>
+            {currentIndex2 < stories.length - 1 && (
+              <button
+                className={styles["psb-modal-next-button"]}
+                onClick={goToNextStory2}
+              >
+              </button>
+            )}
+            <div className={styles["storie-bottom"]}>
+              <div className={styles["avatar-author"]}>
+                <div className={styles["storie-avatar"]}></div>
+                <div className={styles["storie-author"]}>
+                  {currentStory.user.username}
                 </div>
-
-                <div className={styles["sts-modal-content"]}>
-                  <img
-                    className={styles["preview-image"]}
-                    src={currentStory.mediaUrl}
-                    alt="Story"
-                  />
-                </div>
-
-                <div className={styles["storie-bottom"]}>
-                  <div className={styles["avatar-author"]}>
-                    <div className={styles["storie-avatar"]}></div>
-                    <div className={styles["storie-author"]}>{currentStory.user.username}</div>
-                    <div className={styles["storie-like"]}></div>
-                  </div>
-                </div>
+                <div className={styles["storie-like"]}></div>
               </div>
             </div>
-          )}
-      </div>
-      );
+          </div>
+        </div>
+      )}
+    </div>
+  );
 };
 
-      export default StoriesItem;
+export default StoriesItem;
