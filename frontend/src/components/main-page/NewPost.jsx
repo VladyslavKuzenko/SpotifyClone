@@ -13,7 +13,7 @@ const NewPost = ({ onClose }) => {
   const [fileStory, setFileStory] = useState(null);
   const [filesPost, setFilesPost] = useState([]);
   const [description, setDescription] = useState("");
-  const [isUploading, setIsUploading] = useState(false); // 👈 додано
+  const [isUploading, setIsUploading] = useState(false);
   const { user, isLoading } = useAuth0();
   const { apiAxiosPost, apiFetch } = useAPI();
   const fileStoryInputRef = useRef(null);
@@ -27,6 +27,8 @@ const NewPost = ({ onClose }) => {
   }, []);
 
   const submiteStories = async () => {
+    setIsUploading(true);
+
     const resultStory = {
       user: { id: user.sub },
       mediaType: fileStory.type.startsWith("image/") ? "IMAGE" : "VIDEO",
@@ -35,37 +37,43 @@ const NewPost = ({ onClose }) => {
       viewsCount: 0,
     };
 
-    const response = await apiFetch("/story", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(resultStory),
-    });
+    try {
+      const response = await apiFetch("/story", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(resultStory),
+      });
 
-    const story = await response.json();
+      const story = await response.json();
 
-    const storyImgUrl = await handleUploadFile(
-      story,
-      fileStory,
-      apiAxiosPost,
-      "/story/upload/"
-    );
+      const storyImgUrl = await handleUploadFile(
+        story,
+        fileStory,
+        apiAxiosPost,
+        "/story/upload/"
+      );
 
-    story.mediaUrl = storyImgUrl;
+      story.mediaUrl = storyImgUrl;
 
-    const responseUpdate = await apiFetch(`/story/${story.id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(story),
-    });
+      const responseUpdate = await apiFetch(`/story/${story.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(story),
+      });
 
-    if (responseUpdate.ok) {
-      {/*alert("Story successfully posted!");*/}
-    } else {
-      {/*alert("Помилка при оновленні історії: " + responseUpdate.statusText);*/}
+      if (responseUpdate.ok) {
+        onClose(); // Закриваємо модалку після успішного завантаження
+      } else {
+        console.error("Помилка при оновленні історії: ", responseUpdate.statusText);
+      }
+    } catch (error) {
+      console.error("Помилка при створенні сторіс:", error);
+    } finally {
+      setIsUploading(false);
     }
   };
 
@@ -117,14 +125,12 @@ const NewPost = ({ onClose }) => {
       });
 
       if (responseUpdate.ok) {
-        {/*alert("Post successfully posted!");*/}
         onClose();
       } else {
-        {/*alert("Помилка при оновленні посту: " + responseUpdate.statusText);*/}
+        console.error("Помилка при оновленні посту: ", responseUpdate.statusText);
       }
     } catch (error) {
-     {/* alert("Помилка при створенні посту.");
-      console.error(error);*/}
+      console.error("Помилка при створенні посту:", error);
     } finally {
       setIsUploading(false);
     }
@@ -204,10 +210,7 @@ const NewPost = ({ onClose }) => {
                     ref={filePostInputRef}
                     onChange={(e) => {
                       const newFiles = Array.from(e.target.files);
-                      if (filesPost.length + newFiles.length > 6) {
-                        {/*alert("Максимум 6 файлів!");*/}
-                        return;
-                      }
+                      if (filesPost.length + newFiles.length > 6) return;
                       setFilesPost([...filesPost, ...newFiles]);
                     }}
                     accept="image/*,video/*"
@@ -263,7 +266,7 @@ const NewPost = ({ onClose }) => {
                     type="file"
                     ref={fileStoryInputRef}
                     onChange={(e) => setFileStory(e.target.files[0])}
-                    accept="image/* video/* "
+                    accept="image/*,video/*"
                   />
                   <button
                     className={styles["add-stories"]}
@@ -284,6 +287,7 @@ const NewPost = ({ onClose }) => {
                   <button
                     className={styles["post-stories-btn"]}
                     onClick={submiteStories}
+                    disabled={isUploading}
                   >
                     Post
                   </button>
@@ -356,7 +360,11 @@ const NewPost = ({ onClose }) => {
                 </label>
               </div>
 
-              <button className={styles["post-modal"]} onClick={submitePost}>
+              <button
+                className={styles["post-modal"]}
+                onClick={submitePost}
+                disabled={isUploading}
+              >
                 Post
               </button>
             </div>
