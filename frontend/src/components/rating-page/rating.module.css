@@ -5,7 +5,6 @@ body {
 
 html {
     scrollbar-width: none;
-
 }
 
 .left-side {
@@ -101,7 +100,7 @@ html {
     font-weight: 400;
     font-style: Regular;
     font-size: 26px;
-    leading-trim: NONE;
+
     line-height: 100%;
     letter-spacing: 0%;
     color: #FFFFFF4D;

@@ -7,8 +7,6 @@ html {
   background-repeat: repeat;
   background-size: auto;
   opacity: 1;
-  scrollbar-width: none;
-  ;
 }
 
 .container {
@@ -389,6 +387,7 @@ html {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  
 
 }
 
