@@ -66,6 +66,10 @@ public class UserController {
         Pageable pageable = PageRequest.of(0, count);
         return userRepository.findAllByOrderByFollowersCountDesc(pageable);
     }
+    @GetMapping("/usersToSubscribe/{count}/{user_id}")
+    public Set<User> getUserToSubscribe(@PathVariable Integer count,@PathVariable String user_id) {
+        return userService.userToSubscribe(count,user_id);
+    }
 
     @PostMapping
     public ResponseEntity<?> createUser(@RequestBody UserCreationDTO dto) throws URISyntaxException {

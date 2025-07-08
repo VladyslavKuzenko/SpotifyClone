@@ -5,7 +5,11 @@ import edu.itstep.api.models.User;
 import edu.itstep.api.repositories.PostRepository;
 import edu.itstep.api.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.Set;
 
 @Service
 public class UserService {
@@ -77,6 +81,21 @@ public class UserService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
         Post post = postRepository.findById(post_id)
                 .orElseThrow(() -> new RuntimeException("Post not found"));
+
+
+        user.getLikedPosts().remove(post);
+
+        post.getLikedBy().remove(user);
+        post.setLikesCount(post.getLikesCount() - 1);
+
+        postRepository.save(post);
+        return userRepository.save(user);
+    }
+    public Set<User> userToSubscribe(Integer count, String user_id) {
+        User user = userRepository.findById(user_id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        Pageable pageable = PageRequest.of(0, count);
+
 
 
         user.getLikedPosts().remove(post);
