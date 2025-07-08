@@ -151,11 +151,14 @@ const StoriesItem = () => {
         >
           <div className={styles["sts-modal-window"]}>
             <div className={styles["storie-upper"]}>
-              <button
+
+              {/*<button
                 className={styles["sts-modal-close"]}
                 onClick={closeModal}
-              ></button>
+              ></button>*/}
+
             </div>
+            
             {currentIndex2 > 0 && (
               <button
                 className={styles["psb-modal-prev-button"]}

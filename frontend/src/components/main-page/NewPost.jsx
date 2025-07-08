@@ -7,13 +7,13 @@ import { useAPI } from "../../hooks/useApi";
 import { handleUploadFile } from "../../js/functions/functions";
 
 const NewPost = ({ onClose }) => {
-  const [activeTab, setActiveTab] = useState("newpost"); // "newpost" або "stories"
-
+  const [activeTab, setActiveTab] = useState("newpost");
   const [selectedPrivacy, setSelectedPrivacy] = useState(null);
   const [selectedComments, setSelectedComments] = useState(null);
   const [fileStory, setFileStory] = useState(null);
   const [filesPost, setFilesPost] = useState([]);
   const [description, setDescription] = useState("");
+  const [isUploading, setIsUploading] = useState(false); // 👈 додано
   const { user, isLoading } = useAuth0();
   const { apiAxiosPost, apiFetch } = useAPI();
   const fileStoryInputRef = useRef(null);
@@ -27,7 +27,6 @@ const NewPost = ({ onClose }) => {
   }, []);
 
   const submiteStories = async () => {
-    // console.log("File for story:", fileStory);
     const resultStory = {
       user: { id: user.sub },
       mediaType: fileStory.type.startsWith("image/") ? "IMAGE" : "VIDEO",
@@ -43,7 +42,7 @@ const NewPost = ({ onClose }) => {
       },
       body: JSON.stringify(resultStory),
     });
-    console.log("POST SUCCESS");
+
     const story = await response.json();
 
     const storyImgUrl = await handleUploadFile(
@@ -54,7 +53,7 @@ const NewPost = ({ onClose }) => {
     );
 
     story.mediaUrl = storyImgUrl;
-    console.log("Story uploaded:", story.mediaUrl);
+
     const responseUpdate = await apiFetch(`/story/${story.id}`, {
       method: "PUT",
       headers: {
@@ -62,14 +61,17 @@ const NewPost = ({ onClose }) => {
       },
       body: JSON.stringify(story),
     });
+
     if (responseUpdate.ok) {
-      alert("Story successfully posted!");
+      {/*alert("Story successfully posted!");*/}
     } else {
-      alert("Помилка при оновленні історії: " + responseUpdate.statusText);
+      {/*alert("Помилка при оновленні історії: " + responseUpdate.statusText);*/}
     }
   };
 
   const submitePost = async () => {
+    setIsUploading(true);
+
     const resultPost = {
       user: { id: user.sub },
       description: description,
@@ -77,43 +79,54 @@ const NewPost = ({ onClose }) => {
       viewsCount: 0,
       commentsCount: 0,
       repostsCount: 0,
+      contents: [],
     };
 
-    const response = await apiFetch("/posts", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(resultPost),
-    });
-
-    const post = await response.json();
-
-    for (const file of filesPost) {
-      const postImgUrl = await handleUploadFile(
-        post,
-        file,
-        apiAxiosPost,
-        "/posts/upload/"
-      );
-      post.contents.push({
-        mediaType: file.type.startsWith("image/") ? "IMAGE" : "VIDEO",
-        mediaUrl: postImgUrl,
-        post: { id: post.id },
+    try {
+      const response = await apiFetch("/posts", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(resultPost),
       });
-    }
-    console.log("Post uploaded:", post.contents);
-    const responseUpdate = await apiFetch(`/posts/${post.id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(post),
-    });
-    if (responseUpdate.ok) {
-      alert("Post successfully posted!");
-    } else {
-      alert("Помилка при оновленні посту: " + responseUpdate.statusText);
+
+      const post = await response.json();
+
+      for (const file of filesPost) {
+        const postImgUrl = await handleUploadFile(
+          post,
+          file,
+          apiAxiosPost,
+          "/posts/upload/"
+        );
+
+        post.contents.push({
+          mediaType: file.type.startsWith("image/") ? "IMAGE" : "VIDEO",
+          mediaUrl: postImgUrl,
+          post: { id: post.id },
+        });
+      }
+
+      const responseUpdate = await apiFetch(`/posts/${post.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(post),
+      });
+
+      if (responseUpdate.ok) {
+        {/*alert("Post successfully posted!");*/}
+        onClose();
+      } else {
+        {/*alert("Помилка при оновленні посту: " + responseUpdate.statusText);*/}
+      }
+    } catch (error) {
+     {/* alert("Помилка при створенні посту.");
+      console.error(error);*/}
+    } finally {
+      setIsUploading(false);
     }
   };
 
@@ -132,8 +145,16 @@ const NewPost = ({ onClose }) => {
   if (isLoading) {
     return <div>Loading...</div>;
   }
+
   return (
     <div className={styles["post-modal-overlay"]}>
+      {isUploading && (
+        <div className={styles["upload-modal"]}>
+          <div className={styles["upload-spinner"]}></div>
+          <div className={styles["upload-text"]}>Uploading...</div>
+        </div>
+      )}
+
       <div
         className={styles["post-modal-window"]}
         onClick={(e) => e.stopPropagation()}
@@ -177,71 +198,55 @@ const NewPost = ({ onClose }) => {
                 </div>
 
                 <div className={styles["attributes"]}>
-                  {/*  <button className={styles["at-gallery"]}>Gallery</button> */}
-                  <>
-                    <input
-                      style={{ display: "none" }}
-                      type="file"
-                      ref={filePostInputRef}
-                      onChange={(e) => {
-                        const newFiles = Array.from(e.target.files);
+                  <input
+                    style={{ display: "none" }}
+                    type="file"
+                    ref={filePostInputRef}
+                    onChange={(e) => {
+                      const newFiles = Array.from(e.target.files);
+                      if (filesPost.length + newFiles.length > 6) {
+                        {/*alert("Максимум 6 файлів!");*/}
+                        return;
+                      }
+                      setFilesPost([...filesPost, ...newFiles]);
+                    }}
+                    accept="image/*,video/*"
+                    multiple
+                  />
+                  <button
+                    className={styles["at-gallery"]}
+                    onClick={() => filePostInputRef.current.click()}
+                  >
+                    Add Content
+                  </button>
 
-                        if (filesPost.length + newFiles.length > 6) {
-                          alert("Максимум 6 файлів!"); //Ярослав, отут можеш краще продумати виведення цієї помилки,я так зробив як тимчасове рішення
-                          return;
-                        }
-                        setFilesPost([...filesPost, ...newFiles]);
-                      }}
-                      accept="image/*,video/*"
-                      multiple
-                    />
-                    <button
-                      className={styles["at-gallery"]}
-                      onClick={() => filePostInputRef.current.click()}
-                    >
-                      Add Content
-                    </button>
-                  </>
-                  <>
-                    {filesPost.length > 0
-                      ? filesPost.map((file) => (
-                          <>
-                            {file.type.startsWith("image/") ? (
-                              <img
-                                key={file.id}
-                                className={styles["preview-image1"]}
-                                src={URL.createObjectURL(file)}
-                                alt="preview"
-                              />
-                            ) : (
-                              <>
-                                <video
-                                  key={file.id}
-                                  className={styles["preview-image1"]}
-                                  src={URL.createObjectURL(file)}
-                                  alt="preview"
-                                />
-                              </>
-                            )}
-                            <button onClick={() => handleRemoveFile(file)} className={styles["pomh-close"]}> </button>
-                          </>
-                        ))
-                      : "No files selected"}
-                  </>
-                  {/*       <button className={styles["at-music"]}>Music</button>
-                  <button className={styles["at-album"]}>Album</button>{" "} */}
-                  {/* !!!ДЛЯ АРТИСТА*/}
+                  {filesPost.length > 0
+                    ? filesPost.map((file) => (
+                        <div key={file.name} style={{ position: "relative" }}>
+                          {file.type.startsWith("image/") ? (
+                            <img
+                              className={styles["preview-image1"]}
+                              src={URL.createObjectURL(file)}
+                              alt="preview"
+                            />
+                          ) : (
+                            <video
+                              className={styles["preview-image1"]}
+                              src={URL.createObjectURL(file)}
+                              controls
+                            />
+                          )}
+                          <button
+                            onClick={() => handleRemoveFile(file)}
+                            className={styles["pomh-close"]}
+                          >
+                            ×
+                          </button>
+                        </div>
+                      ))
+                    : "No files selected"}
                 </div>
-
-                {/*<div className={styles["tag-container"]}>
-                  {Array.from({ length: 15 }).map((_, index) => (
-                    <button key={index} className={styles["tag-item"]}>
-                      Tag {index + 1}
-                    </button>
-                  ))}
-                </div>*/}
               </>
-              
             )}
 
             {activeTab === "stories" && (
@@ -253,30 +258,27 @@ const NewPost = ({ onClose }) => {
                   ×
                 </button>
                 <div className={styles["file-stories"]}>
-                  <>
-                    <input
-                      style={{ display: "none" }}
-                      type="file"
-                      ref={fileStoryInputRef}
-                      onChange={(e) => setFileStory(e.target.files[0])}
-                      accept="image/* video/* "
-                    />
-                    <button
-                      className={styles["add-stories"]}
-                      onClick={() => fileStoryInputRef.current.click()}
-                    >
-                      {fileStory ? (
-                        <img
-                          className={styles["preview-image"]}
-                          src={URL.createObjectURL(fileStory)}
-                          alt="preview"
-                        />
-                      ) : (
-                        "Post"
-                      )}
-                    </button>
-                  </>
-                  {/* <button className={styles["add-stories"]}>Choose photo</button> */}
+                  <input
+                    style={{ display: "none" }}
+                    type="file"
+                    ref={fileStoryInputRef}
+                    onChange={(e) => setFileStory(e.target.files[0])}
+                    accept="image/* video/* "
+                  />
+                  <button
+                    className={styles["add-stories"]}
+                    onClick={() => fileStoryInputRef.current.click()}
+                  >
+                    {fileStory ? (
+                      <img
+                        className={styles["preview-image"]}
+                        src={URL.createObjectURL(fileStory)}
+                        alt="preview"
+                      />
+                    ) : (
+                      "Post"
+                    )}
+                  </button>
                 </div>
                 <div className={styles["post-stories"]}>
                   <button
@@ -287,13 +289,6 @@ const NewPost = ({ onClose }) => {
                   </button>
                 </div>
               </div>
-              /*  <div>
-                <input
-                  type="file"
-                  onChange={(e) => setFile(e.target.files[0])}
-                />
-                <button onClick={handleUpload}>Завантажити</button>
-              </div> */
             )}
           </div>
 
