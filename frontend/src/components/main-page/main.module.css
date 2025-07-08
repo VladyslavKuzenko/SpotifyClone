@@ -7,7 +7,8 @@ html {
   background-repeat: repeat;
   background-size: auto;
   opacity: 1;
-  scrollbar-width: none;;
+  scrollbar-width: none;
+  ;
 }
 
 .container {
@@ -473,7 +474,7 @@ html {
   align-items: center;
   overflow: auto;
   scrollbar-width: none;
-  gap:2%;
+  gap: 2%;
 }
 
 
@@ -1406,8 +1407,9 @@ html {
   flex-shrink: 0;
 
 }
+
 .pomh-close:hover {
-background-color: rgb(199, 18, 54);
+  background-color: rgb(199, 18, 54);
 
 }
 
@@ -1607,7 +1609,7 @@ background-color: rgb(199, 18, 54);
   left: 0;
   width: calc(100% - 225px);
   height: 100vh;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1616,12 +1618,11 @@ background-color: rgb(199, 18, 54);
 }
 
 .sts-modal-window {
-  height: 800px;
+  height: 820px;
   max-width: 1000px;
   width: auto;
   background: transparent;
   position: relative;
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
   scrollbar-width: none;
   display: flex;
   justify-content: center;
@@ -1645,13 +1646,20 @@ background-color: rgb(199, 18, 54);
 }
 
 .storie-upper {
-  width: 100%;
+  width: 630px;
   background-color: #232428;
   height: 6%;
   align-content: end;
+  backdrop-filter: blur(10px);
+  border-bottom: none;
+
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  padding-bottom: 5px;
+  padding-bottom: 0px;
+  background-color: transparent;
+  border-top: 1px solid white;
+  border-left: 1px solid white;
+  border-right: 1px solid white;
 
 }
 
@@ -1662,18 +1670,32 @@ background-color: rgb(199, 18, 54);
   background-color: #232428;
   width: 600px;
   overflow: hidden;
-
-
+  background-color: transparent;
+  border-left: 1px solid white;
+  border-right: 1px solid white;
+  border-bottom: 1px solid white;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  backdrop-filter: blur(10px);
+  border-top: none;
+  padding-right: 15px;
+  padding-left: 15px;
+  padding-bottom: 10px;
+box-shadow: 0 80px 80px 0 rgba(255, 255, 255, 0.3);
 }
 
 .storie-bottom {
-  width: 100%;
-  height: 12%;
+  width: 630px;
+  height: 10%;
   background-color: #232428;
-  border-bottom-left-radius: 15px;
-  border-bottom-right-radius: 15px;
   display: flex;
   align-items: center;
+  border: 1px solid white;
+  border-radius: 10px;
+  backdrop-filter: blur(5px);
+  margin-top: 2%;
+  box-shadow: 0 0 40px 0 rgba(255, 255, 255, 0.3);
+
 
 }
 
@@ -1682,7 +1704,7 @@ background-color: rgb(199, 18, 54);
   height: 63px;
   background-color: #060708;
   border-radius: 50%;
-  margin-left: 25px;
+  margin-left: 45px;
 }
 
 .storie-author {
@@ -1709,7 +1731,7 @@ background-color: rgb(199, 18, 54);
   width: 25px;
   height: 25px;
   position: absolute;
-  left: 90%;
+  left: 85%;
   cursor: pointer;
   background-repeat: no-repeat;
 }
@@ -1968,10 +1990,9 @@ background-color: rgb(199, 18, 54);
   max-height: 90vh;
   width: auto;
   height: auto;
-  border-radius: 10px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
   display: block;
   margin: 0 auto;
+  border: 1px solid white;
 }
 
 .sts-modal-content img {
