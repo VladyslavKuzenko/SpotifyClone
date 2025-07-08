@@ -36,6 +36,7 @@ const NewPost = ({ onClose }) => {
       viewsCount: 0,
     };
 
+
     const response = await apiFetch("/story", {
       method: "POST",
       headers: {
@@ -62,11 +63,11 @@ const NewPost = ({ onClose }) => {
       },
       body: JSON.stringify(story),
     });
-    if (responseUpdate.ok) {
-      alert("Story successfully posted!");
-    } else {
+    onClose();
+
+    if (!responseUpdate.ok) {
       alert("Помилка при оновленні історії: " + responseUpdate.statusText);
-    }
+    } 
   };
 
   const submitePost = async () => {
@@ -78,6 +79,7 @@ const NewPost = ({ onClose }) => {
       commentsCount: 0,
       repostsCount: 0,
     };
+
 
     const response = await apiFetch("/posts", {
       method: "POST",
@@ -110,9 +112,9 @@ const NewPost = ({ onClose }) => {
       },
       body: JSON.stringify(post),
     });
-    if (responseUpdate.ok) {
-      alert("Post successfully posted!");
-    } else {
+    onClose();
+
+    if (!responseUpdate.ok) {
       alert("Помилка при оновленні посту: " + responseUpdate.statusText);
     }
   };
