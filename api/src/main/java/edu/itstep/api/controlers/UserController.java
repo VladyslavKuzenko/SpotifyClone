@@ -1,5 +1,4 @@
 package edu.itstep.api.controlers;
-
 import edu.itstep.api.models.*;
 import edu.itstep.api.models.dto.UserCreationDTO;
 import edu.itstep.api.repositories.GenreRepository;
@@ -12,7 +11,6 @@ import org.springframework.data.domain.Pageable;
 import edu.itstep.api.repositories.VibeRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLEncoder;
@@ -67,7 +65,7 @@ public class UserController {
         return userRepository.findAllByOrderByFollowersCountDesc(pageable);
     }
     @GetMapping("/usersToSubscribe/{count}/{user_id}")
-    public Set<User> getUserToSubscribe(@PathVariable Integer count,@PathVariable String user_id) {
+    public List<User> getUserToSubscribe(@PathVariable Integer count,@PathVariable String user_id) {
         return userService.userToSubscribe(count,user_id);
     }
 
