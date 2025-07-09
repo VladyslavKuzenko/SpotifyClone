@@ -20,16 +20,6 @@ const LeftSide = () => {
         ></button>
 
         <button
-          className={`${styles["chat-btn"]} ${location.pathname === "/chat" ? styles["active1"] : ""}`}
-          onClick={() => navigate("/chat")}
-        ></button>
-
-        <button
-          className={`${styles["star-btn"]} ${location.pathname === "/rating" ? styles["active1"] : ""}`}
-          onClick={() => navigate("/rating")}
-        ></button>
-
-        <button
           className={`${styles["playlist-btn"]} ${location.pathname === "/player" ? styles["active1"] : ""}`}
           onClick={() => navigate("/player")}
         ></button>
@@ -38,6 +28,22 @@ const LeftSide = () => {
           className={`${styles["people-btn"]} ${location.pathname === "/my-profile" ? styles["active1"] : ""}`}
           onClick={() => navigate("/my-profile")}
         ></button>
+
+        <button
+          className={`${styles["star-btn"]} ${location.pathname === "/rating" ? styles["active1"] : ""}`}
+          onClick={() => navigate("/rating")}
+        ></button>
+
+        <button
+          className={`${styles["chat-btn"]} ${location.pathname === "/chat" ? styles["active1"] : ""}`}
+          onClick={() => navigate("/chat")}
+        ></button>
+
+
+
+
+
+
       </div>
 
       <MusicPlayer />
