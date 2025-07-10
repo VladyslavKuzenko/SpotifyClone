@@ -5,6 +5,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { isLiked } from "../../js/functions/functions";
 
 export default function PostItem() {
+
   const [posts, setPosts] = useState([]);
   const { apiFetch } = useAPI();
   const { user, isLoading } = useAuth0();
@@ -45,6 +46,14 @@ export default function PostItem() {
   }, []);
 
   if (isLoading) return <div>Loading...</div>;
+  const getGridStyle = (count) => {
+    if (count === 1) return { gridTemplateColumns: "1fr" };
+    if (count === 2) return { gridTemplateColumns: "1fr 1fr" };
+    if (count === 3) return { gridTemplateColumns: "1fr 1fr", gridTemplateRows: "1fr 1fr" };
+    if (count === 4) return { gridTemplateColumns: "1fr 1fr" };
+    if (count === 5 || count === 6) return { gridTemplateColumns: "repeat(3, 1fr)" };
+    return { gridTemplateColumns: "repeat(auto-fit, minmax(230px, 1fr))" };
+  };
 
   return (
     <>
@@ -103,7 +112,10 @@ export default function PostItem() {
                 <div className={styles["text-content"]}>{post.description}</div>
               </div>
 
-              <div className={styles["post-photos-container"]}>
+              <div
+                className={styles["post-photos-container"]}
+                style={getGridStyle(post.contents.length)}
+              >
                 {post.contents?.map((content) => (
                   <div className={styles["post-photo"]} key={content.id}>
                     <img
@@ -117,6 +129,31 @@ export default function PostItem() {
               </div>
             </div>
           </div>
+
+          <div className={styles["post-comment"]}>
+            <textarea
+              className={styles["send-comment"]}
+              placeholder="Write a comment..."
+              rows={1}
+              onInput={(e) => {
+                const target = e.target;
+                target.style.height = "auto";
+                target.style.height = Math.min(target.scrollHeight, 100) + "px";
+              }}
+              onBlur={(e) => {
+                const target = e.target;
+                if (target.value.trim() === "") {
+                  target.style.height = "31px";
+                }
+              }}
+            />
+            <div className={styles["post-comment-btn"]}>
+              <button className={styles["publish-btn"]}>Publish</button>
+            </div>
+          </div>
+
+
+
         </div>
       ))}
 
@@ -129,7 +166,7 @@ export default function PostItem() {
               alt="Preview"
               className={styles["pomh-modal-image"]}
             />
-           
+
           </div>
         </div>
       )}

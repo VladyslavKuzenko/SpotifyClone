@@ -387,7 +387,7 @@ html {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  
+
 
 }
 
@@ -482,9 +482,10 @@ html {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: start;
-  width: 160px;
+  align-items: center;
+  width: 180px;
   flex: 0 0 auto;
+
 }
 
 .stories {
@@ -517,7 +518,7 @@ html {
   letter-spacing: 0%;
   text-align: center;
   color: white;
-  width: 100px;
+  width: 100%;
 
 
   white-space: nowrap;
@@ -1367,10 +1368,8 @@ html {
   scrollbar-color: #4E5059 transparent;
 }
 
-.at-music,
+
 .at-gallery,
-.at-video,
-.at-document,
 .at-album {
   height: 100px;
   width: 140px;
@@ -1835,11 +1834,12 @@ html {
   font-size: 12px;
   line-height: 100%;
   letter-spacing: 0%;
-  color: red;
+  color: yellow;
   width: 60px;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+
 }
 
 .post-like-btn {
@@ -1917,17 +1917,25 @@ html {
 
 .post-photos-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: 15px;
+  gap: 10px;
   width: 100%;
   box-sizing: border-box;
 }
 
 .post-photo {
   width: 100%;
-  aspect-ratio: 1 / 1;
+  height: 100%;
   border-radius: 5px;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.preview-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .preview-image1 {
@@ -1936,18 +1944,11 @@ html {
   object-fit: cover;
   display: block;
   flex-shrink: 0;
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
+  border-radius: 5px;
+  margin-right: 15px;
 
 }
 
-.preview-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-
-}
 
 .psb-modal-prev-button,
 .psb-modal-next-button {
@@ -2083,7 +2084,7 @@ html {
 .pomh-close {
   position: absolute;
   top: 0px;
-  right: 0px;
+  right: 15px;
   background: rgba(0, 0, 0, 0.6);
   border: none;
   color: white;
@@ -2093,4 +2094,65 @@ html {
   height: 24px;
   cursor: pointer;
   z-index: 10;
+}
+
+.post-comment {
+  width: 100%;
+  height: auto;
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+}
+
+.send-comment {
+  width:78%;
+  min-height: 31px;
+  max-height: 100px;
+  outline: none;
+  border: 1px solid #FFFFFF69;
+  background-color: transparent;
+  border-radius: 5px 0px 0px 5px;
+  color: white;
+  text-indent: 20px;
+  border-right: none;
+  resize: none;
+  padding-top: 15px;
+  overflow-y: auto;
+  transition: height 0.2s ease;
+  scrollbar-color: #FFFFFF69 transparent;
+}
+.send-comment::placeholder {
+  text-indent: 20px;
+  color: white;
+}
+
+.post-comment-btn {
+  width: 12%;
+  border: 1px solid #FFFFFF69;
+  background-color: transparent;
+  border-left: none;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+
+
+}
+
+.publish-btn {
+  width: 86px;
+  height: 26px;
+  border-radius: 5px;
+  background-color: #FF4400;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-family: Manrope;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 12px;
+  line-height: 100%;
+  letter-spacing: 0%;
+
 }
