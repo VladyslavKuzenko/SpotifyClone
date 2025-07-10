@@ -1941,9 +1941,9 @@ html {
 /* Абсолютні кнопки */
 .prl-slider-btn {
   position: absolute;
-  top: 300px;
+  top: 50%;
   transform: translateY(-50%);
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: transparent;
   color: white;
   border: none;
   font-size: 24px;
@@ -1959,10 +1959,24 @@ html {
 
 .prl-left {
   left: -50px;
+   background-image: url('/public/images/btn-right.png');
+  background-repeat: no-repeat;
+  background-size: 50%;
+  background-position: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
 }
 
 .prl-right {
   right: -50px;
+  background-image: url('/public/images/btn-left.png');
+  background-repeat: no-repeat;
+  background-size: 50%;
+  background-position: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
 }
 
 .prl-dot-container {
@@ -2220,4 +2234,19 @@ html {
   transition: color 0.2s ease;
   margin-top: 10px;
 
+}
+
+.show-more-container {
+  display: flex;
+  justify-content: center;
+}
+
+.show-more-btn {
+  width: 100px;
+  height: 40px;
+  border-radius: 10px;
+  color:white;
+  border:1px solid rgb(151, 151, 151);
+  background-color: #1F212B;
+  cursor: pointer;
 }
