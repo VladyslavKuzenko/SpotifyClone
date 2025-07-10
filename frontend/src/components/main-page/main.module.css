@@ -1630,7 +1630,7 @@ html {
 }
 
 .storie-upper {
-  width: 630px;
+  width: 600px;
   background-color: #232428;
   height: 6%;
   align-content: end;
@@ -1662,14 +1662,13 @@ html {
   border-bottom-right-radius: 10px;
   backdrop-filter: blur(10px);
   border-top: none;
-  padding-right: 15px;
-  padding-left: 15px;
+
   padding-bottom: 10px;
   box-shadow: 0 80px 80px 0 rgba(255, 255, 255, 0.3);
 }
 
 .storie-bottom {
-  width: 630px;
+  width: 600px;
   height: 10%;
   background-color: #232428;
   display: flex;
@@ -1748,6 +1747,8 @@ html {
   width: 100%;
   height: 56px;
   display: flex;
+  margin-bottom: 20px;
+
 }
 
 .post-ava-plat {
@@ -1913,24 +1914,75 @@ html {
   hyphens: auto;
 }
 
-
-
 .post-photos-container {
-  display: grid;
-  gap: 10px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
-  box-sizing: border-box;
 }
 
-.post-photo {
-  width: 100%;
-  height: 100%;
-  border-radius: 5px;
-  overflow: hidden;
+.prl-photo-wrapper {
+  max-width: 100%;
+  max-height: 600px;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
 }
+
+.prl-preview-image {
+  max-width: 100%;
+  max-height: 600px;
+  object-fit: contain;
+  border-radius: 5px;
+
+}
+
+/* Абсолютні кнопки */
+.prl-slider-btn {
+  position: absolute;
+  top: 300px;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: none;
+  font-size: 24px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.prl-left {
+  left: -50px;
+}
+
+.prl-right {
+  right: -50px;
+}
+
+.prl-dot-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.prl-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #ccc;
+  margin: 0 4px;
+}
+
+.prl-active {
+  background-color: #333;
+}
+
 
 .preview-image {
   width: 100%;
@@ -2105,7 +2157,7 @@ html {
 }
 
 .send-comment {
-  width:78%;
+  width: 78%;
   min-height: 31px;
   max-height: 100px;
   outline: none;
@@ -2121,6 +2173,7 @@ html {
   transition: height 0.2s ease;
   scrollbar-color: #FFFFFF69 transparent;
 }
+
 .send-comment::placeholder {
   text-indent: 20px;
   color: white;
