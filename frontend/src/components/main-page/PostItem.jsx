@@ -153,6 +153,7 @@ export default function PostItem() {
           </div>
 
 
+          <div className={styles["see-coments"]}>View discussion (12)</div>
 
         </div>
       ))}
