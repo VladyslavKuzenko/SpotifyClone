@@ -15,6 +15,7 @@ const Main = () => {
   const { isAuthenticated, isLoading } = useAuth0();
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
+  const [searchParams,setSearchParams]=useState('')
   const [selectedTab, setSelectedTab] = useState("all");
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [notificationTab, setNotificationTab] = useState("all");
@@ -53,9 +54,13 @@ const Main = () => {
   if (!isAuthenticated) return <Navigate to="/login" replace />;
 
   const renderContent = () => {
-        return <div className={styles["all-post-content"]}><PostItem selectedTab={selectedTab}/></div>;
-    
-/*     console.log("renderContent called")
+    return (
+      <div className={styles["all-post-content"]}>
+        <PostItem selectedTab={selectedTab} />
+      </div>
+    );
+
+    /*     console.log("renderContent called")
     switch (selectedTab) {
       case "all":
 
@@ -94,15 +99,19 @@ const Main = () => {
       <div className={styles.container}>
         <LeftSide />
 
-        <div className={styles["home-text"]}>
-        </div>
+        <div className={styles["home-text"]}></div>
 
         <div className={styles.middle}>
           <div className={styles["empty-div2"]}>Home</div>
 
           <div className={styles.platform1} style={{ position: "relative" }}>
             <input
-              type="search"
+              type="text"
+              onChange={(e) => {
+                setSearchParams(e.target.value);
+              }}
+              value={searchParams}
+              // type="search"
               placeholder="Search"
               className={styles.search}
               onFocus={() => setIsSearchModalOpen(true)}
@@ -123,6 +132,7 @@ const Main = () => {
             <SearchModal
               isSearchModalOpen={isSearchModalOpen}
               setIsSearchModalOpen={setIsSearchModalOpen}
+              searchParams={searchParams}
             />
 
             {isNotificationOpen && (

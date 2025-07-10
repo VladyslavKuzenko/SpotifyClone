@@ -25,8 +25,8 @@ export default function PostItem({ selectedTab }) {
   const fetchPosts = async () => {
     if(isLoading) return;
     var response;
-    console.log("FETCH POST. SELECTED TAB: ",selectedTab)
-    console.log("FETCH POST. user sub: ",user.sub)
+    // console.log("FETCH POST. SELECTED TAB: ",selectedTab)
+    // console.log("FETCH POST. user sub: ",user.sub)
 
 
     if (selectedTab==="artists") response = await apiFetch("/posts");

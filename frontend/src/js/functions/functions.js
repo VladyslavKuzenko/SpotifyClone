@@ -21,6 +21,22 @@ export function searchSongs(songs, searchParameter, setSongs) {
   setSongs(newSongs);
 }
 
+export function searchUsers(users, searchParameter, setUsers) {
+  // console.log("users list inside function");
+  // console.log(users);
+  if (searchParameter.length > 0) {
+    const newUsersList = users.filter((user) => {
+      if (
+        user.firstName.toLowerCase().includes(searchParameter.toLowerCase()) ||
+        user.lastName.toLowerCase().includes(searchParameter.toLowerCase()) ||
+        user.username.toLowerCase().includes(searchParameter.toLowerCase())
+      )
+        return user;
+    });
+    setUsers(newUsersList);
+  } else setUsers(users);
+}
+
 export function getUser_metadata_firstName(user) {
   return user["https://diplomaapp.com/firstName"];
 }
@@ -29,12 +45,16 @@ export function getUser_metadata_lastName(user) {
   return user["https://diplomaapp.com/lastName"];
 }
 
-export async function isUserPlaylistContainsSong(song,user,getAccessTokenSilently) {
-    const token = await getAccessTokenSilently({
-          authorizationParams: {
-            audience: API_URL,
-          },
-        });
+export async function isUserPlaylistContainsSong(
+  song,
+  user,
+  getAccessTokenSilently
+) {
+  const token = await getAccessTokenSilently({
+    authorizationParams: {
+      audience: API_URL,
+    },
+  });
   const responsePlaylist = await fetch(
     `http://localhost:8080/playlists/playlists/${user.sub}`,
     {
@@ -44,7 +64,7 @@ export async function isUserPlaylistContainsSong(song,user,getAccessTokenSilentl
     }
   );
   const body = await responsePlaylist.json();
-  const playlist =body.find((i) => i.title === "Like");
+  const playlist = body.find((i) => i.title === "Like");
   const responsePlaylistTracks = await fetch(
     `http://localhost:8080/tracks/tracks/${playlist.id}`,
     {
@@ -53,22 +73,25 @@ export async function isUserPlaylistContainsSong(song,user,getAccessTokenSilentl
       },
     }
   );
-  const tracks=await responsePlaylistTracks.json();
+  const tracks = await responsePlaylistTracks.json();
 
   //var playlist = body;
   /* console.log(song) */
-  const result=tracks.some(track => track.id === song.id);
-/*   console.log("isUserPlaylistContainsSong: " + result); */
-  return result
+  const result = tracks.some((track) => track.id === song.id);
+  /*   console.log("isUserPlaylistContainsSong: " + result); */
+  return result;
 }
 
-export async function isSubscribed(user,userToCheckSubscription,getAccessTokenSilently){
-  
-    const token = await getAccessTokenSilently({
-          authorizationParams: {
-            audience: API_URL,
-          },
-        });
+export async function isSubscribed(
+  user,
+  userToCheckSubscription,
+  getAccessTokenSilently
+) {
+  const token = await getAccessTokenSilently({
+    authorizationParams: {
+      audience: API_URL,
+    },
+  });
   const response = await fetch(
     `http://localhost:8080/users/userFollowing/${user.sub}`,
     {
@@ -78,34 +101,29 @@ export async function isSubscribed(user,userToCheckSubscription,getAccessTokenSi
     }
   );
   const body = await response.json();
-  console.log("isSubscribed: ");
-  console.log(body);
-  var isSubscribed = body.some(
-    (i) => i.id === userToCheckSubscription.id
-  );
+  // console.log("isSubscribed: ");
+  // console.log(body);
+  var isSubscribed = body.some((i) => i.id === userToCheckSubscription.id);
   return isSubscribed;
-} 
+}
 
-export async function isLiked(post,user,apiFetch) {
-  
-  console.log("isLiked called");
-  console.log("user",user);
-  console.log("post",post);
-  const response =await apiFetch(`/users/userLikedPosts/${user.sub}`);
-  const body = await response.json();  
-  console.log("body",body);
+export async function isLiked(post, user, apiFetch) {
+  // console.log("isLiked called");
+  // console.log("user",user);
+  // console.log("post",post);
+  const response = await apiFetch(`/users/userLikedPosts/${user.sub}`);
+  const body = await response.json();
+  // console.log("body",body);
 
-  var isLiked = body.some(
-    (i) => i.id === post.id
-  );
-  console.log("isLiked: " + isLiked);
+  var isLiked = body.some((i) => i.id === post.id);
+  // console.log("isLiked: " + isLiked);
   return isLiked;
 }
 
 export async function handleUploadFile(content, file, apiAxiosPost, path) {
   if (!file) return;
 
-  console.log(file);
+  // console.log(file);
   const formData = new FormData();
   formData.append("file", file);
 

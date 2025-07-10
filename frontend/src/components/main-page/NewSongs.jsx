@@ -17,7 +17,7 @@ const NewSongs = () => {
     const response = await apiFetch("/tracks/lastTrack");
     const data = await response.json();
     setSong(data);
-    console.log("New song fetched:", data);
+    // console.log("New song fetched:", data);
   }
   useState(() => {
     fetchSong();

@@ -1,12 +1,36 @@
 import React, { useRef, useState, useEffect } from "react";
 import styles from "./main.module.css";
+import { useAPI } from "../../hooks/useApi";
+import { searchUsers } from "../../js/functions/functions";
 
-const SearchModal = ({ isSearchModalOpen, setIsSearchModalOpen }) => {
+const SearchModal = ({
+  isSearchModalOpen,
+  setIsSearchModalOpen,
+  searchParams,
+}) => {
   const peopleRef = useRef(null);
+  const { apiFetch } = useAPI();
+  const [usersOriginalList, setUsersOriginalList] = useState([]);
+  const [usersFilteredList, setUsersFilteredList] = useState([]);
   const [showLeftBtn, setShowLeftBtn] = useState(false);
   const [showRightBtn, setShowRightBtn] = useState(false);
 
-  // ⛔ Блокування скролу при відкритті модалки
+  const fetchUsers = async () => {
+    const response = await apiFetch("/users");
+    const data = await response.json();
+    setUsersOriginalList(data);
+    setUsersFilteredList(data);
+  };
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  useEffect(() => {
+    if (usersOriginalList.length>0) 
+      searchUsers(usersOriginalList, searchParams, setUsersFilteredList);
+  }, [searchParams,usersOriginalList]);
+
+  // Блокування скролу при відкритті модалки
   useEffect(() => {
     if (isSearchModalOpen) {
       document.body.style.overflow = "hidden";
@@ -45,7 +69,10 @@ const SearchModal = ({ isSearchModalOpen, setIsSearchModalOpen }) => {
     if (!container) return;
 
     const scrollAmount = 400;
-    container.scrollBy({ left: direction === "left" ? -scrollAmount : scrollAmount, behavior: "smooth" });
+    container.scrollBy({
+      left: direction === "left" ? -scrollAmount : scrollAmount,
+      behavior: "smooth",
+    });
   };
 
   if (!isSearchModalOpen) return null;
@@ -76,23 +103,33 @@ const SearchModal = ({ isSearchModalOpen, setIsSearchModalOpen }) => {
 
             <div className={styles["people-slider"]}>
               {showLeftBtn && (
-                <button className={styles["scroll-btn-left"]} onClick={() => scroll("left")}>
+                <button
+                  className={styles["scroll-btn-left"]}
+                  onClick={() => scroll("left")}
+                >
                   ◀
                 </button>
               )}
 
               <div className={styles["people-array"]} ref={peopleRef}>
-                {[...Array(15)].map((_, i) => (
-                  <div key={i} className={styles["people-icon"]}>
+                {usersFilteredList.map((item, index) => (
+                  <div key={index} className={styles["people-icon"]}>
                     <div className={styles["people-photo"]}></div>
-                    <div className={styles["name-surname"]}>Name Surname {i + 1}</div>
-                    <div className={styles["people-nickname"]}>@nickname{i + 1}</div>
+                    <div className={styles["name-surname"]}>
+                      {item.firstName} {item.lastName}
+                    </div>
+                    <div className={styles["people-nickname"]}>
+                      {item.username}
+                    </div>
                   </div>
                 ))}
               </div>
 
               {showRightBtn && (
-                <button className={styles["scroll-btn-right"]} onClick={() => scroll("right")}>
+                <button
+                  className={styles["scroll-btn-right"]}
+                  onClick={() => scroll("right")}
+                >
                   ▶
                 </button>
               )}
