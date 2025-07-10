@@ -53,11 +53,11 @@ const Main = () => {
   if (!isAuthenticated) return <Navigate to="/login" replace />;
 
   const renderContent = () => {
+        return <div className={styles["all-post-content"]}><PostItem selectedTab={selectedTab}/></div>;
     
-    console.log("renderContent called")
+/*     console.log("renderContent called")
     switch (selectedTab) {
       case "all":
-        return <div className={styles["all-post-content"]}><PostItem/></div>;
 
 
       case "artists":
@@ -65,12 +65,13 @@ const Main = () => {
 
 
       case "friends":
-        return <div>Це контент для Friends</div>;
+        return <div className={styles["all-post-content"]}><PostItem friends/></div>;
+
 
 
       default:
         return null;
-    }
+    } */
   };
 
   const renderNotificationContent = () => {

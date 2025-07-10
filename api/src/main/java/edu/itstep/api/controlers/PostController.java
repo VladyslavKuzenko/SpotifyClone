@@ -43,6 +43,10 @@ public class PostController {
         return PostRepository.findById(id).orElseThrow(RuntimeException::new);
     }
 
+    @GetMapping("/byFollowing/{id}")
+    public List<Post> getPostByFollowing(@PathVariable String id) {
+        return postService.getPostByFollowing(id);
+    }
     @PostMapping
     public ResponseEntity createPost(@RequestBody Post Post) throws URISyntaxException {
         Post savedPost = PostRepository.save(Post);

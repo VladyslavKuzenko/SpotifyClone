@@ -4,7 +4,7 @@ import { useAPI } from "../../hooks/useApi";
 import { useAuth0 } from "@auth0/auth0-react";
 import { isLiked } from "../../js/functions/functions";
 
-export default function PostItem() {
+export default function PostItem({ selectedTab }) {
   const [posts, setPosts] = useState([]);
   const { apiFetch } = useAPI();
   const { user, isLoading } = useAuth0();
@@ -23,8 +23,21 @@ export default function PostItem() {
   };
 
   const fetchPosts = async () => {
-    const response = await apiFetch("/posts");
+    if(isLoading) return;
+    var response;
+    console.log("FETCH POST. SELECTED TAB: ",selectedTab)
+    console.log("FETCH POST. user sub: ",user.sub)
+
+
+    if (selectedTab==="artists") response = await apiFetch("/posts");
+    else if (selectedTab==="friends") {
+      response = await apiFetch(`/posts/byFollowing/${user.sub}`);
+    } else {
+      response = await apiFetch("/posts");
+    }
+
     const data = await response.json();
+
     setPosts(data);
   };
 
@@ -42,12 +55,13 @@ export default function PostItem() {
 
   useEffect(() => {
     fetchPosts();
-  }, []);
+  }, [selectedTab,isLoading]);
 
   if (isLoading) return <div>Loading...</div>;
 
   return (
     <>
+      {/* {friends&&<div>TEEEEEEEEEEEST</div>} */}
       {posts?.map((post) => (
         <div className={styles.main} key={post.id}>
           <div className={styles["post-item"]}>
@@ -123,13 +137,15 @@ export default function PostItem() {
       {/* POMH MODAL */}
       {pomhIsModalOpen && (
         <div className={styles["pomh-modal-overlay"]} onClick={closePomhModal}>
-          <div className={styles["pomh-modal-content"]} onClick={(e) => e.stopPropagation()}>
+          <div
+            className={styles["pomh-modal-content"]}
+            onClick={(e) => e.stopPropagation()}
+          >
             <img
               src={pomhModalImageUrl}
               alt="Preview"
               className={styles["pomh-modal-image"]}
             />
-           
           </div>
         </div>
       )}

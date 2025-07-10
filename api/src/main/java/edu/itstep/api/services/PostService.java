@@ -7,13 +7,18 @@ import com.jcraft.jsch.Session;
 import edu.itstep.api.models.Content;
 import edu.itstep.api.models.Post;
 import edu.itstep.api.models.Story;
+import edu.itstep.api.models.User;
 import edu.itstep.api.repositories.PostRepository;
+import edu.itstep.api.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
 @Service
 
@@ -21,6 +26,8 @@ public class PostService {
 
     @Autowired
     private PostRepository postRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Value("${app.secret.key}")
     private String privateKeyPath;
@@ -96,5 +103,18 @@ public class PostService {
             e.printStackTrace();
             return "Помилка при завантаженні: " + e.getMessage();
         }
+    }
+
+    public List<Post> getPostByFollowing(String userId){
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        Set<User> followings = user.getFollowings();
+
+        if (followings.isEmpty()) {
+            return Collections.emptyList(); // або обробити якось інакше
+        }
+
+        return postRepository.findByUserIn(followings);
     }
 }
