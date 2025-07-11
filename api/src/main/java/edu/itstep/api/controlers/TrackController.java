@@ -7,6 +7,8 @@ import edu.itstep.api.repositories.PlaylistRepository;
 import edu.itstep.api.repositories.TrackRepository;
 import edu.itstep.api.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,7 +49,11 @@ public class TrackController {
     public Set<Track> getAllTracksByPlaylist(@PathVariable Long id) {
         return playlistRepository.findById(id).orElseThrow(RuntimeException::new).getTracks();
     }
-
+    @GetMapping("/top/{first}/{count}")
+    public List<Track> getAllByOrderByListeningCountDescWithParams(@PathVariable Integer first,@PathVariable Integer count) {
+        Pageable pageable = PageRequest.of(first, first+count);
+        return trackRepository.findAllByOrderByListeningCountDesc(pageable);
+    }
     @GetMapping("/lastTrack")
     public Track getLastAdded() {
         return trackRepository.findFirstByOrderByIdDesc();

@@ -10,10 +10,11 @@ export function convertTime(timeInSeconds) {
 }
 
 export function searchSongs(songs, searchParameter, setSongs) {
+  console.log("Track inside search",songs)
   const newSongs = songs.filter((song) => {
     if (
-      song.title.toLowerCase().includes(searchParameter.toLowerCase()) /* || */
-      //song.artist.toLowerCase().includes(searchParameter.toLowerCase())
+      song.title.toLowerCase().includes(searchParameter.toLowerCase()) ||
+      song.artist.user.username.toLowerCase().includes(searchParameter.toLowerCase())
     )
       return song;
   });
@@ -24,7 +25,7 @@ export function searchSongs(songs, searchParameter, setSongs) {
 export function searchUsers(users, searchParameter, setUsers) {
   // console.log("users list inside function");
   // console.log(users);
-  if (searchParameter.length > 0) {
+  // if (searchParameter.length > 0) {
     const newUsersList = users.filter((user) => {
       if (
         user.firstName.toLowerCase().includes(searchParameter.toLowerCase()) ||
@@ -34,7 +35,7 @@ export function searchUsers(users, searchParameter, setUsers) {
         return user;
     });
     setUsers(newUsersList);
-  } else setUsers(users);
+  // } else setUsers(users);
 }
 
 export function getUser_metadata_firstName(user) {

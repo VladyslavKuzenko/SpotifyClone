@@ -95,7 +95,7 @@ const SongItem = ({
 
       if (response.ok) {
         setIsLiked(!isLiked);
-        isPlaylistsChangesControl.setIsPlaylistsChanges(true);
+        isPlaylistsChangesControl?.setIsPlaylistsChanges(true);
       } else {
         console.error("Failed to like/unlike the song");
       }

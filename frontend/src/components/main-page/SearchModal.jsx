@@ -1,7 +1,8 @@
 import React, { useRef, useState, useEffect } from "react";
 import styles from "./main.module.css";
 import { useAPI } from "../../hooks/useApi";
-import { searchUsers } from "../../js/functions/functions";
+import { searchSongs, searchUsers } from "../../js/functions/functions";
+import SongItem from "../player-page/SongItem";
 
 const SearchModal = ({
   isSearchModalOpen,
@@ -12,8 +13,11 @@ const SearchModal = ({
   const { apiFetch } = useAPI();
   const [usersOriginalList, setUsersOriginalList] = useState([]);
   const [usersFilteredList, setUsersFilteredList] = useState([]);
+  const [songsOriginalList, setSongsOriginalList] = useState([]);
+  const [songsFilteredList, setSongsFilteredList] = useState([]);
   const [showLeftBtn, setShowLeftBtn] = useState(false);
   const [showRightBtn, setShowRightBtn] = useState(false);
+  const { setCurrentSongList } = useAPI();
 
   const fetchUsers = async () => {
     const response = await apiFetch("/users");
@@ -21,14 +25,24 @@ const SearchModal = ({
     setUsersOriginalList(data);
     setUsersFilteredList(data);
   };
+  const fetchTracks = async () => {
+    const response = await apiFetch("/tracks");
+    const data = await response.json();
+    setSongsOriginalList(data);
+    setSongsFilteredList(data);
+    console.log("Track", data);
+  };
   useEffect(() => {
     fetchUsers();
+    fetchTracks();
   }, []);
 
   useEffect(() => {
-    if (usersOriginalList.length>0) 
+    if (usersOriginalList.length > 0)
       searchUsers(usersOriginalList, searchParams, setUsersFilteredList);
-  }, [searchParams,usersOriginalList]);
+    if (songsOriginalList.length > 0)
+      searchSongs(songsOriginalList, searchParams, setSongsFilteredList);
+  }, [searchParams, usersOriginalList, songsOriginalList]);
 
   // Блокування скролу при відкритті модалки
   useEffect(() => {
@@ -138,12 +152,19 @@ const SearchModal = ({
             <div className={styles["music"]}>Music</div>
 
             <div className={styles["search-array"]}>
-              {[...Array(20)].map((_, i) => (
-                <div key={i} className={styles["song-item"]}>
+              {songsFilteredList.map((item, index) => (
+                <>
+                  <SongItem
+                    key={index}
+                    song={item}
+                    onSetCurrentSongList={() => setCurrentSongList(songsFilteredList)}
+                    moreInfo
+                  />
+                  {/* <div key={index} className={styles["song-item"]}>
                   <div className={styles["song-image"]}></div>
                   <div className={styles["tittle-artist"]}>
-                    <div className={styles["song-tittle"]}>Song tittle</div>
-                    <div className={styles["song-artist"]}>Artist</div>
+                    <div className={styles["song-tittle"]}>{item.title}</div>
+                    <div className={styles["song-artist"]}>{item.artist.user.username}</div>
                   </div>
                   <div className={styles["song-duration"]}>13:21</div>
                   <button className={styles["song-playbtn"]}>▶</button>
@@ -152,7 +173,8 @@ const SearchModal = ({
                     <div className={styles["menu-circle"]}></div>
                     <div className={styles["menu-circle"]}></div>
                   </button>
-                </div>
+                </div> */}
+                </>
               ))}
             </div>
 

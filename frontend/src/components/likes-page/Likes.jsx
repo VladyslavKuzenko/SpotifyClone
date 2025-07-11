@@ -10,7 +10,7 @@ export default function Likes() {
       const navigate = useNavigate();
     return (
         <div>
-            <LeftSide />
+            {/* <LeftSide /> */}
             <div className={styles["likes-container"]}>
                 <div className={styles["empty1"]}></div>
 

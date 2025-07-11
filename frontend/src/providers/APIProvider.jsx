@@ -80,7 +80,7 @@ export const APIProvider = ({ children }) => {
 
     if (isAuthenticated) {
       try {
-        // console.log("token start");
+        console.log("token start");
 
         const token = await getAccessTokenSilently({
           authorizationParams: {
@@ -88,7 +88,7 @@ export const APIProvider = ({ children }) => {
           },
         });
 
-        // console.log("Token: " + token);
+        console.log("Token: " + token);
 
         headers = {
           ...headers,

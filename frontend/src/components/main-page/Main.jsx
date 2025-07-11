@@ -15,7 +15,7 @@ const Main = () => {
   const { isAuthenticated, isLoading } = useAuth0();
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
-  const [searchParams,setSearchParams]=useState('')
+  const [searchParams, setSearchParams] = useState("");
   const [selectedTab, setSelectedTab] = useState("all");
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [notificationTab, setNotificationTab] = useState("all");
@@ -53,31 +53,31 @@ const Main = () => {
   if (isLoading) return <div>Loading...</div>;
   if (!isAuthenticated) return <Navigate to="/login" replace />;
 
-  const renderContent = () => {
-    return (
-      <div className={styles["all-post-content"]}>
-        <PostItem selectedTab={selectedTab} />
-      </div>
-    );
+  // const renderContent = () => {
+  //   return (
+  //     <div className={styles["all-post-content"]}>
+  //       <PostItem selectedTab={selectedTab} />
+  //     </div>
+  //   );
 
-    /*     console.log("renderContent called")
-    switch (selectedTab) {
-      case "all":
-
-
-      case "artists":
-        return <div>Це контент для Artists</div>;
+  //   /*     console.log("renderContent called")
+  //   switch (selectedTab) {
+  //     case "all":
 
 
-      case "friends":
-        return <div className={styles["all-post-content"]}><PostItem friends/></div>;
+  //     case "artists":
+  //       return <div>Це контент для Artists</div>;
+
+
+  //     case "friends":
+  //       return <div className={styles["all-post-content"]}><PostItem friends/></div>;
 
 
 
-      default:
-        return null;
-    } */
-  };
+  //     default:
+  //       return null;
+  //   } */
+  // };
 
   const renderNotificationContent = () => {
     switch (notificationTab) {
@@ -97,7 +97,7 @@ const Main = () => {
   return (
     <>
       <div className={styles.container}>
-        <LeftSide />
+        {/* <LeftSide /> */}
 
         <div className={styles["home-text"]}></div>
 
@@ -194,7 +194,12 @@ const Main = () => {
             </div>
           </div>
 
-          <div className={styles["users-content"]}>{renderContent()}</div>
+          {/* <div className={styles["users-content"]}>{renderContent()}</div> */}
+          <div className={styles["users-content"]}>
+            <div className={styles["all-post-content"]}>
+              <PostItem selectedTab={selectedTab} />
+            </div>
+          </div>
         </div>
 
         <div className={styles["empty-div1"]}></div>
