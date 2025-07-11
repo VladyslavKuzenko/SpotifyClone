@@ -149,9 +149,7 @@ const Main = () => {
             )}
           </div>
 
-          <div className={styles["empty-div3"]}></div>
 
-          <ContainerVibe />
           <div className={styles["empty-div4"]}></div>
           <StoriesItem />
           <div className={styles["empty-div5"]}></div>
