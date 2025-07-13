@@ -13,8 +13,6 @@ const PlayerPage = () => {
   const { isAuthenticated, isLoading } = useAuth0();
   const { getAccessTokenSilently, getAccessTokenWithPopup } = useAuth0();
   const [isPlaylistsChanges, setIsPlaylistsChanges] = useState(false);
-  // const { currentSong, setCurrentSong } = useAPI();
-  // const { currentSongList, setCurrentSongList } = useAPI();
   const [currentArtist, setCurrentArtist] = useState({});
   const [artists, setArtists] = useState();
 

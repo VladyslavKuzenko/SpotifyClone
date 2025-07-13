@@ -3,15 +3,15 @@ import stylesPlayer from "../player-page/player.module.css";
 import { convertTime } from "../../js/functions/functions";
 import { useAPI } from "../../hooks/useApi";
 import styles from "../player-page/player.module.css";
+import { useAudio } from "../../hooks/useAudio";
 
 export default function AudioControl({ footerPlayer }) {
-  const { currentSong, nextSong, prevSong, audioRef } = useAPI();
-  const { isSongPlayed, setIsSongPlayed } = useAPI();
-  const { currentTime, setCurrentTime } = useAPI();
-  const { duration, setDuration } = useAPI();
-  const { volume, setVolume } = useAPI();
-  const { playAudio, pauseAudio } = useAPI();
-  /*   const { autoStart, setAutoStart } = useAPI(); */
+  const { currentSong, nextSong, prevSong, audioRef } = useAudio();
+  const { isSongPlayed, setIsSongPlayed } = useAudio();
+  const { currentTime, setCurrentTime } = useAudio();
+  const { duration, setDuration } = useAudio();
+  const { volume, setVolume } = useAudio();
+  const { playAudio, pauseAudio } = useAudio();
   const reduceVolume = () => {
     audioRef.current.volume - 0.1 >= 0
       ? (audioRef.current.volume -= 0.1)
@@ -37,25 +37,7 @@ export default function AudioControl({ footerPlayer }) {
         <>
           <div className={stylesPlayer["mrb-center"]}>
             <div className={stylesPlayer["bmr-controls"]}>
-              <audio
-                id="myAudio"
-                ref={audioRef}
-                src={currentSong.sourceUrl}
-                onLoadedMetadata={() => {
-                  setDuration(Math.floor(audioRef.current.duration));
-                  setVolume(audioRef.current.volume);
-                  playAudio();
-                  console.log("Volume: " + audioRef.current.volume);
-                }}
-                onTimeUpdate={() => {
-                  setCurrentTime(Math.floor(audioRef.current.currentTime));
-                }}
-                onEnded={() => {
-                  /*     setIsSongPlayed(false); */
-
-                  nextSong();
-                }}
-              ></audio>
+          
               <button className={`${stylesPlayer["bmr-btn"]} ${styles["btn0"]}`} /* onClick={''} */></button>
 
               <button className={`${stylesPlayer["bmr-btn"]} ${styles["btn1"]}`} onClick={prevSong}></button>

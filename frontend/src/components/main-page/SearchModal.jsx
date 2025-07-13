@@ -3,6 +3,7 @@ import styles from "./main.module.css";
 import { useAPI } from "../../hooks/useApi";
 import { searchSongs, searchUsers } from "../../js/functions/functions";
 import SongItem from "../player-page/SongItem";
+import { useAudio } from "../../hooks/useAudio";
 
 const SearchModal = ({
   isSearchModalOpen,
@@ -17,7 +18,7 @@ const SearchModal = ({
   const [songsFilteredList, setSongsFilteredList] = useState([]);
   const [showLeftBtn, setShowLeftBtn] = useState(false);
   const [showRightBtn, setShowRightBtn] = useState(false);
-  const { setCurrentSongList } = useAPI();
+  const { setCurrentSongList } = useAudio();
 
   const fetchUsers = async () => {
     const response = await apiFetch("/users");
