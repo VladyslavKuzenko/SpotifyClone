@@ -48,7 +48,7 @@ const NewSongs = () => {
               onClick={() => {
                 setCurrentSong(song);
                 setCurrentSongList([song]);
-                playAudio();
+                //playAudio();
               }}
             ></button>
           )}
