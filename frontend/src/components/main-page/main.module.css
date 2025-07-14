@@ -24,6 +24,74 @@ html {
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: 11999;
+  transition: width 0.3s ease;
+}
+
+.left-side:hover {
+  width: 350px;
+}
+
+.pages-btns-div {
+  width: 100%;
+}
+
+.menu-btn {
+  width: 30px;
+  border: none;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 24px 24px;
+  cursor: pointer;
+  padding: 15px 10px 15px 50px;
+  color: white;
+  transition: justify-content 0.3s ease;
+  position: relative;
+  font-size: 16px;
+  background-color: transparent;
+
+}
+
+.left-side:hover .menu-btn {
+  justify-content: center;
+}
+
+.pages-btns-div button:nth-child(1) {
+  background-image: url('/public/images/home.svg');
+}
+
+.pages-btns-div button:nth-child(2) {
+  background-image: url('/public/images/music_note.svg');
+}
+
+.pages-btns-div button:nth-child(3) {
+  background-image: url('/public/images/cards_star.svg');
+}
+
+.pages-btns-div button:nth-child(4) {
+  background-image: url('/public/images/person.svg');
+}
+
+.pages-btns-div button:nth-child(5) {
+  background-image: url('/public/images/sms.svg');
+}
+
+.label {
+  display: inline-block; 
+  opacity: 0;
+  pointer-events: none;
+  white-space: nowrap;
+  user-select: none;
+  transition: opacity 0.3s ease;
+  width: 80px;
+  text-align: start;
+  margin-left: 20px;
+}
+
+
+.left-side:hover .label {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .ava-place {
@@ -1960,7 +2028,7 @@ html {
 
 .prl-left {
   left: -50px;
-   background-image: url('/public/images/btn-right.png');
+  background-image: url('/public/images/btn-right.png');
   background-repeat: no-repeat;
   background-size: 50%;
   background-position: center;
@@ -2246,8 +2314,8 @@ html {
   width: 100px;
   height: 40px;
   border-radius: 10px;
-  color:white;
-  border:1px solid rgb(151, 151, 151);
+  color: white;
+  border: 1px solid rgb(151, 151, 151);
   background-color: #1F212B;
   cursor: pointer;
 }
@@ -2277,6 +2345,7 @@ html {
   from {
     transform: translateX(100%);
   }
+
   to {
     transform: translateX(0);
   }
@@ -2337,7 +2406,7 @@ html {
   font-size: 15px;
   line-height: 1.6;
   color: #333;
-  white-space: pre-wrap; 
+  white-space: pre-wrap;
   word-break: break-word;
   hyphens: auto;
 }
@@ -2350,10 +2419,10 @@ html {
 }
 
 .message1 {
-  max-width: 350px; 
+  max-width: 350px;
   word-break: break-word;
   overflow-wrap: break-word;
   hyphens: auto;
-  white-space: normal; 
+  white-space: normal;
   display: inline-block;
 }
