@@ -1,5 +1,4 @@
 package edu.itstep.api.controlers;
-
 import edu.itstep.api.models.*;
 import edu.itstep.api.models.dto.UserCreationDTO;
 import edu.itstep.api.repositories.GenreRepository;
@@ -12,7 +11,6 @@ import org.springframework.data.domain.Pageable;
 import edu.itstep.api.repositories.VibeRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLEncoder;
@@ -65,6 +63,10 @@ public class UserController {
     public List<User> getUserOrderByFollowersCount(@PathVariable Integer count) {
         Pageable pageable = PageRequest.of(0, count);
         return userRepository.findAllByOrderByFollowersCountDesc(pageable);
+    }
+    @GetMapping("/usersToSubscribe/{count}/{user_id}")
+    public List<User> getUserToSubscribe(@PathVariable Integer count,@PathVariable String user_id) {
+        return userService.userToSubscribe(count,user_id);
     }
 
     @PostMapping
@@ -148,10 +150,10 @@ public class UserController {
 
     @GetMapping("/isUsernameUnique/{username}")
     public Boolean isUsernameUnique(@PathVariable String username) {
-        System.out.println("!!!!!!!!!!");
-        System.out.println(username);
+//        System.out.println("!!!!!!!!!!");
+//        System.out.println(username);
         boolean value = userRepository.existsById(username);
-        System.out.println(value);
+//        System.out.println(value);
         return value;
     }
 }

@@ -13,7 +13,8 @@ const WhoToFollow = () => {
   const { apiFetch } = useAPI();
 
   const fetchUsers = async () => {
-    const response = await apiFetch("/users/userByFollowers/15");
+    // const response = await apiFetch("/users/usersToSubscribe/15");
+    const response = await apiFetch(`/users/usersToSubscribe/15/${user.sub}`);
     const data = await response.json();
     setUsers(data);
   };

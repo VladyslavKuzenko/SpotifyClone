@@ -7,11 +7,14 @@ import edu.itstep.api.repositories.PlaylistRepository;
 import edu.itstep.api.repositories.TrackRepository;
 import edu.itstep.api.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -46,6 +49,33 @@ public class TrackController {
     @GetMapping("/tracks/{id}")
     public Set<Track> getAllTracksByPlaylist(@PathVariable Long id) {
         return playlistRepository.findById(id).orElseThrow(RuntimeException::new).getTracks();
+    }
+
+    @GetMapping("/top")
+    public List<Track> getAllByOrderByListeningCountDescWithParams(@RequestParam Integer first, @RequestParam Integer count, @RequestParam(required = false, defaultValue = "all") String period) {
+        Pageable pageable = PageRequest.of(first, count);
+        LocalDateTime from;
+        switch (period.toLowerCase()) {
+            case "day":
+                from = LocalDateTime.now().minusDays(1);
+                break;
+            case "week":
+                from = LocalDateTime.now().minusWeeks(1);
+                break;
+            case "month":
+                from = LocalDateTime.now().minusMonths(1);
+                break;
+            case "year":
+                from = LocalDateTime.now().minusYears(1);
+                break;
+            default:
+                from = null;
+                break;
+        }
+        if (from == null)
+            return trackRepository.findAllByOrderByListeningCountDesc(pageable);
+        else
+            return trackRepository.findByCreatedAtAfterOrderByListeningCountDesc(from, pageable);
     }
 
     @GetMapping("/lastTrack")

@@ -26,9 +26,8 @@ const NewPost = ({ onClose }) => {
     };
   }, []);
 
-  const submiteStories = async () => {
-    setIsUploading(true);
-
+ const submiteStories = async () => {
+    // console.log("File for story:", fileStory);
     const resultStory = {
       user: { id: user.sub },
       mediaType: fileStory.type.startsWith("image/") ? "IMAGE" : "VIDEO",
@@ -37,44 +36,38 @@ const NewPost = ({ onClose }) => {
       viewsCount: 0,
     };
 
-    try {
-      const response = await apiFetch("/story", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(resultStory),
-      });
 
-      const story = await response.json();
+    const response = await apiFetch("/story", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(resultStory),
+    });
+    console.log("POST SUCCESS");
+    const story = await response.json();
 
-      const storyImgUrl = await handleUploadFile(
-        story,
-        fileStory,
-        apiAxiosPost,
-        "/story/upload/"
-      );
+    const storyImgUrl = await handleUploadFile(
+      story,
+      fileStory,
+      apiAxiosPost,
+      "/story/upload/"
+    );
 
-      story.mediaUrl = storyImgUrl;
+    story.mediaUrl = storyImgUrl;
+    console.log("Story uploaded:", story.mediaUrl);
+    const responseUpdate = await apiFetch(`/story/${story.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(story),
+    });
+    onClose();
 
-      const responseUpdate = await apiFetch(`/story/${story.id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(story),
-      });
-
-      if (responseUpdate.ok) {
-        onClose(); // Закриваємо модалку після успішного завантаження
-      } else {
-        console.error("Помилка при оновленні історії: ", responseUpdate.statusText);
-      }
-    } catch (error) {
-      console.error("Помилка при створенні сторіс:", error);
-    } finally {
-      setIsUploading(false);
-    }
+    if (!responseUpdate.ok) {
+      alert("Помилка при оновленні історії: " + responseUpdate.statusText);
+    } 
   };
 
   const submitePost = async () => {
@@ -90,49 +83,43 @@ const NewPost = ({ onClose }) => {
       contents: [],
     };
 
-    try {
-      const response = await apiFetch("/posts", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(resultPost),
+
+    const response = await apiFetch("/posts", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(resultPost),
+    });
+
+    const post = await response.json();
+
+    for (const file of filesPost) {
+      const postImgUrl = await handleUploadFile(
+        post,
+        file,
+        apiAxiosPost,
+        "/posts/upload/"
+      );
+      post.contents.push({
+        mediaType: file.type.startsWith("image/") ? "IMAGE" : "VIDEO",
+        mediaUrl: postImgUrl,
+        post: { id: post.id },
       });
+    }
+    console.log("Post uploaded:", post.contents);
+    const responseUpdate = await apiFetch(`/posts/${post.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(post),
+    });
+    onClose();
 
-      const post = await response.json();
+    if (!responseUpdate.ok) {
+      alert("Помилка при оновленні посту: " + responseUpdate.statusText);
 
-      for (const file of filesPost) {
-        const postImgUrl = await handleUploadFile(
-          post,
-          file,
-          apiAxiosPost,
-          "/posts/upload/"
-        );
-
-        post.contents.push({
-          mediaType: file.type.startsWith("image/") ? "IMAGE" : "VIDEO",
-          mediaUrl: postImgUrl,
-          post: { id: post.id },
-        });
-      }
-
-      const responseUpdate = await apiFetch(`/posts/${post.id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(post),
-      });
-
-      if (responseUpdate.ok) {
-        onClose();
-      } else {
-        console.error("Помилка при оновленні посту: ", responseUpdate.statusText);
-      }
-    } catch (error) {
-      console.error("Помилка при створенні посту:", error);
-    } finally {
-      setIsUploading(false);
     }
   };
 

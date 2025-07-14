@@ -15,17 +15,17 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
-                .csrf().disable()
-                .authorizeHttpRequests((authorize) -> authorize
-//                        .requestMatchers(HttpMethod.POST, "/users").permitAll()
-                        .anyRequest().permitAll()
-                )
+//                .csrf().disable()
 //                .authorizeHttpRequests((authorize) -> authorize
+////                        .requestMatchers(HttpMethod.POST, "/users").permitAll()
+//                        .anyRequest().permitAll()
+//                )
+                .authorizeHttpRequests((authorize) -> authorize
 //                        .requestMatchers("/api/public").permitAll()
 //                        .requestMatchers("/api/private").authenticated()
 //                        .requestMatchers("/api/private-scoped").hasAuthority("SCOPE_read:messages")
-//                        .anyRequest().authenticated()
-//                )
+                        .anyRequest().authenticated()
+                )
                 .cors(withDefaults())
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(withDefaults())

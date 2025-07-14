@@ -1,12 +1,51 @@
 import React, { useRef, useState, useEffect } from "react";
 import styles from "./main.module.css";
+import { useAPI } from "../../hooks/useApi";
+import { searchSongs, searchUsers } from "../../js/functions/functions";
+import SongItem from "../player-page/SongItem";
+import { useAudio } from "../../hooks/useAudio";
 
-const SearchModal = ({ isSearchModalOpen, setIsSearchModalOpen }) => {
+const SearchModal = ({
+  isSearchModalOpen,
+  setIsSearchModalOpen,
+  searchParams,
+}) => {
   const peopleRef = useRef(null);
+  const { apiFetch } = useAPI();
+  const [usersOriginalList, setUsersOriginalList] = useState([]);
+  const [usersFilteredList, setUsersFilteredList] = useState([]);
+  const [songsOriginalList, setSongsOriginalList] = useState([]);
+  const [songsFilteredList, setSongsFilteredList] = useState([]);
   const [showLeftBtn, setShowLeftBtn] = useState(false);
   const [showRightBtn, setShowRightBtn] = useState(false);
+  const { setCurrentSongList } = useAudio();
 
-  // ⛔ Блокування скролу при відкритті модалки
+  const fetchUsers = async () => {
+    const response = await apiFetch("/users");
+    const data = await response.json();
+    setUsersOriginalList(data);
+    setUsersFilteredList(data);
+  };
+  const fetchTracks = async () => {
+    const response = await apiFetch("/tracks");
+    const data = await response.json();
+    setSongsOriginalList(data);
+    setSongsFilteredList(data);
+    console.log("Track", data);
+  };
+  useEffect(() => {
+    fetchUsers();
+    fetchTracks();
+  }, []);
+
+  useEffect(() => {
+    if (usersOriginalList.length > 0)
+      searchUsers(usersOriginalList, searchParams, setUsersFilteredList);
+    if (songsOriginalList.length > 0)
+      searchSongs(songsOriginalList, searchParams, setSongsFilteredList);
+  }, [searchParams, usersOriginalList, songsOriginalList]);
+
+  // Блокування скролу при відкритті модалки
   useEffect(() => {
     if (isSearchModalOpen) {
       document.body.style.overflow = "hidden";
@@ -45,7 +84,10 @@ const SearchModal = ({ isSearchModalOpen, setIsSearchModalOpen }) => {
     if (!container) return;
 
     const scrollAmount = 400;
-    container.scrollBy({ left: direction === "left" ? -scrollAmount : scrollAmount, behavior: "smooth" });
+    container.scrollBy({
+      left: direction === "left" ? -scrollAmount : scrollAmount,
+      behavior: "smooth",
+    });
   };
 
   if (!isSearchModalOpen) return null;
@@ -76,23 +118,33 @@ const SearchModal = ({ isSearchModalOpen, setIsSearchModalOpen }) => {
 
             <div className={styles["people-slider"]}>
               {showLeftBtn && (
-                <button className={styles["scroll-btn-left"]} onClick={() => scroll("left")}>
+                <button
+                  className={styles["scroll-btn-left"]}
+                  onClick={() => scroll("left")}
+                >
                   ◀
                 </button>
               )}
 
               <div className={styles["people-array"]} ref={peopleRef}>
-                {[...Array(15)].map((_, i) => (
-                  <div key={i} className={styles["people-icon"]}>
+                {usersFilteredList.map((item, index) => (
+                  <div key={index} className={styles["people-icon"]}>
                     <div className={styles["people-photo"]}></div>
-                    <div className={styles["name-surname"]}>Name Surname {i + 1}</div>
-                    <div className={styles["people-nickname"]}>@nickname{i + 1}</div>
+                    <div className={styles["name-surname"]}>
+                      {item.firstName} {item.lastName}
+                    </div>
+                    <div className={styles["people-nickname"]}>
+                      {item.username}
+                    </div>
                   </div>
                 ))}
               </div>
 
               {showRightBtn && (
-                <button className={styles["scroll-btn-right"]} onClick={() => scroll("right")}>
+                <button
+                  className={styles["scroll-btn-right"]}
+                  onClick={() => scroll("right")}
+                >
                   ▶
                 </button>
               )}
@@ -101,12 +153,19 @@ const SearchModal = ({ isSearchModalOpen, setIsSearchModalOpen }) => {
             <div className={styles["music"]}>Music</div>
 
             <div className={styles["search-array"]}>
-              {[...Array(20)].map((_, i) => (
-                <div key={i} className={styles["song-item"]}>
+              {songsFilteredList.map((item, index) => (
+                <>
+                  <SongItem
+                    key={index}
+                    song={item}
+                    onSetCurrentSongList={() => setCurrentSongList(songsFilteredList)}
+                    moreInfo
+                  />
+                  {/* <div key={index} className={styles["song-item"]}>
                   <div className={styles["song-image"]}></div>
                   <div className={styles["tittle-artist"]}>
-                    <div className={styles["song-tittle"]}>Song tittle</div>
-                    <div className={styles["song-artist"]}>Artist</div>
+                    <div className={styles["song-tittle"]}>{item.title}</div>
+                    <div className={styles["song-artist"]}>{item.artist.user.username}</div>
                   </div>
                   <div className={styles["song-duration"]}>13:21</div>
                   <button className={styles["song-playbtn"]}>▶</button>
@@ -115,7 +174,8 @@ const SearchModal = ({ isSearchModalOpen, setIsSearchModalOpen }) => {
                     <div className={styles["menu-circle"]}></div>
                     <div className={styles["menu-circle"]}></div>
                   </button>
-                </div>
+                </div> */}
+                </>
               ))}
             </div>
 

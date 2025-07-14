@@ -5,6 +5,7 @@ import stylesLeft from "../main-page/main.module.css";
 import AudioControl from "./AudioControl";
 import { useAPI } from "../../hooks/useApi";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useAudio } from "../../hooks/useAudio";
 
 const Modal = ({ onClose, song }) => {
   return (
@@ -47,8 +48,9 @@ const Modal = ({ onClose, song }) => {
 };
 
 const MusicPlayer = ({ footerPlayer }) => {
-  const { currentSong, setCurrentSong, setCurrentSongList, apiFetch } =
-    useAPI();
+  const { apiFetch}=useAPI()
+  const { currentSong, setCurrentSong, setCurrentSongList } =
+    useAudio();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { user, isLoading } = useAuth0();

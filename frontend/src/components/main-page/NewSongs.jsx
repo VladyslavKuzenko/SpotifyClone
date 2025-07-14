@@ -1,23 +1,24 @@
 import React, { use, useState } from "react";
 import styles from "./main.module.css";
 import { useAPI } from "../../hooks/useApi";
+import { useAudio } from "../../hooks/useAudio";
 
 const NewSongs = () => {
   const [song, setSong] = useState();
 
+  const { apiFetch } = useAPI();
   const {
-    apiFetch,
     isSongPlayed,
     pauseAudio,
     playAudio,
     setCurrentSong,
     setCurrentSongList,
-  } = useAPI();
+  } = useAudio();
   async function fetchSong() {
     const response = await apiFetch("/tracks/lastTrack");
     const data = await response.json();
     setSong(data);
-    console.log("New song fetched:", data);
+    // console.log("New song fetched:", data);
   }
   useState(() => {
     fetchSong();
@@ -40,20 +41,16 @@ const NewSongs = () => {
               onClick={() => {
                 pauseAudio();
               }}
-            >
-              
-            </button>
+            ></button>
           ) : (
             <button
               className={styles["ns-play-btn"]}
-              
               onClick={() => {
                 setCurrentSong(song);
                 setCurrentSongList([song]);
-                playAudio();
+                //playAudio();
               }}
-            >
-            </button>
+            ></button>
           )}
         </div>
       </div>
