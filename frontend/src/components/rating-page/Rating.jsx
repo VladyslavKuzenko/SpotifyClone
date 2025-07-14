@@ -121,7 +121,6 @@ export default function Rating() {
                   )}
                 </div>
 
-                <input type="text" className={styles["worldwide"]} placeholder='Worldwide'/>
               </div>
             </div>
 

@@ -149,6 +149,7 @@ html {
     letter-spacing: 0%;
     text-indent: 20px;
     padding-right: 20px;
+    padding-left: 40px;
 
 }
 
@@ -253,7 +254,6 @@ html {
     height: 100%;
     width: 70%;
     display: flex;
-    justify-content: space-evenly;
     align-items: center;
 
 }
@@ -512,3 +512,4 @@ html {
 .period-dropdown-item:hover {
     background-color: #a8a8a88f;
 }
+

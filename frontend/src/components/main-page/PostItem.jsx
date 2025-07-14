@@ -3,7 +3,7 @@ import styles from "./main.module.css";
 import { useAPI } from "../../hooks/useApi";
 import { useAuth0 } from "@auth0/auth0-react";
 import { isLiked } from "../../js/functions/functions";
-
+import ChatMessage from "./ChatMessage";
 export default function PostItem() {
   const [posts, setPosts] = useState([]);
   const { apiFetch } = useAPI();
@@ -13,6 +13,10 @@ export default function PostItem() {
   const [pomhModalImageUrl, setPomhModalImageUrl] = useState("");
   const [currentImageIndexes, setCurrentImageIndexes] = useState({});
   const [visibleCount, setVisibleCount] = useState(15);
+
+  const [isDiscussionOpen, setIsDiscussionOpen] = useState(false);
+  const openDiscussion = () => setIsDiscussionOpen(true);
+  const closeDiscussion = () => setIsDiscussionOpen(false);
 
   const openPomhModal = (url) => {
     setPomhModalImageUrl(url);
@@ -70,8 +74,8 @@ export default function PostItem() {
 
   const totalPosts = [...posts];
   const start = Math.max(totalPosts.length - visibleCount, 0);
-  const visiblePosts = totalPosts.slice(start); // без reverse
-  const reversedVisiblePosts = [...visiblePosts].reverse(); // для відображення знизу вгору
+  const visiblePosts = totalPosts.slice(start);
+  const reversedVisiblePosts = [...visiblePosts].reverse();
 
   return (
     <>
@@ -206,12 +210,16 @@ export default function PostItem() {
                 </div>
               </div>
 
-              <div className={styles["see-coments"]}>View discussion (12)</div>
+              <div
+                className={styles["see-coments"]}
+                onClick={openDiscussion}
+              >
+                View discussion (12)
+              </div>
             </div>
           );
         })}
 
-        {/* КНОПКА В НИЗУ */}
         {visibleCount < posts.length && (
           <div className={styles["show-more-container"]}>
             <button
@@ -235,6 +243,25 @@ export default function PostItem() {
               alt="Preview"
               className={styles["pomh-modal-image"]}
             />
+          </div>
+        </div>
+      )}
+
+      {isDiscussionOpen && (
+        <div className={styles["discussion-modal"]} >
+          <div
+            className={styles["discussion-content"]}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className={styles["discussion-header"]}>
+              <h3>Discussion</h3>
+              <button onClick={closeDiscussion} className={styles["close-btn"]}>
+                ✕
+              </button>
+            </div>
+            <div className={styles["discussion-body"]}>
+              <ChatMessage/>
+            </div>
           </div>
         </div>
       )}

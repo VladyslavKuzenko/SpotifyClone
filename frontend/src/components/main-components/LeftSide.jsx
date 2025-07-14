@@ -5,10 +5,10 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 const LeftSide = () => {
   const navigate = useNavigate();
-  const location = useLocation(); // <-- визначає поточний шлях
+  const location = useLocation(); 
 
   return (
-    <div className={styles["left-side"]}>
+    <div className={styles["left-side"]} >
       <div className={styles["ava-place"]}>
         <div className={styles.avatarka}></div>
       </div>
