@@ -64,10 +64,11 @@ html {
   border-radius: 50%;
   cursor: pointer;
   border: none;
-  background-image: url(/public/images/home-svg.svg);
+  background-image: url(/public/images/home.svg);
   background-repeat: no-repeat;
-  background-size: 75%;
+  background-size: 60%;
   background-position: center;
+  background-position-y: 5px;
 
 }
 
@@ -83,9 +84,9 @@ html {
   border-radius: 50%;
   cursor: pointer;
   border: none;
-  background-image: url(/public/images/chat-svg.svg);
+  background-image: url(/public/images/sms.svg);
   background-repeat: no-repeat;
-  background-size: 75%;
+  background-size: 60%;
   background-position: center;
 
 }
@@ -97,9 +98,9 @@ html {
   border-radius: 50%;
   cursor: pointer;
   border: none;
-  background-image: url(/public/images/star-svg.svg);
+  background-image: url(/public/images/cards_star.svg);
   background-repeat: no-repeat;
-  background-size: 75%;
+  background-size: 60%;
   background-position: center;
 
 }
@@ -111,9 +112,9 @@ html {
   border-radius: 50%;
   cursor: pointer;
   border: none;
-  background-image: url(/public/images/playlist-svg.svg);
+  background-image: url(/public/images/music_note.svg);
   background-repeat: no-repeat;
-  background-size: 75%;
+  background-size: 48%;
   background-position: center;
 
 }
@@ -125,9 +126,9 @@ html {
   border-radius: 50%;
   cursor: pointer;
   border: none;
-  background-image: url(/public/images/u.png);
+  background-image: url(/public/images/person.svg);
   background-repeat: no-repeat;
-  background-size: 75%;
+  background-size: 60%;
   background-position: center;
 
 }
