@@ -1,17 +1,20 @@
 import React from "react";
 import styles from "./EditProfile.module.css";
 import LeftSide from "../main-components/LeftSide";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export default function EditProfile() {
+      const navigate = useNavigate(); 
+  
   return (
     <div className={styles.container}>
-      <LeftSide />
+      {/* <LeftSide /> */}
 
       <div className={styles["empty-div1"]}></div>
 
       <div className={styles["profile-side"]}>
         <div className={styles["channel-hat"]}>
-          <button className={styles["return-profile"]}>Return to profile</button>
+          <button className={styles["return-profile"]} onClick={() => navigate("/my-profile")}>Return to profile</button>
           <div className={styles["profile-photo"]}>
             <div className={styles.status}></div>
           </div>

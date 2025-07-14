@@ -1,42 +1,43 @@
-import Main from './components/main-page/Main';
-import PlayerPage from './components/player-page/PlayerPage';
-import UserProfile from './components/user-profile-page/UserProfile';
-import MyProfile from './components/my-profile-page/MyProfile';
-import Rating from './components/rating-page/Rating';
-import Likes from './components/likes-page/Likes';
-import ChatPage from './components/chat-page/ChatPage';
-import ProfileSetup from './components/profile-page/ProfileSetup';
-import EditProfile from './components/edit-profile-page/EditProfile';
+import Main from "./components/main-page/Main";
+import PlayerPage from "./components/player-page/PlayerPage";
+import UserProfile from "./components/user-profile-page/UserProfile";
+import MyProfile from "./components/my-profile-page/MyProfile";
+import Rating from "./components/rating-page/Rating";
+import Likes from "./components/likes-page/Likes";
+import ChatPage from "./components/chat-page/ChatPage";
+import ProfileSetup from "./components/profile-page/ProfileSetup";
+import EditProfile from "./components/edit-profile-page/EditProfile";
 
-import LoginButton from './components/exampleAuth0/LoginButton';
-import LogoutButton from './components/exampleAuth0/LogoutButton';
-import { Route, Routes } from 'react-router-dom';
+import LoginButton from "./components/exampleAuth0/LoginButton";
+import LogoutButton from "./components/exampleAuth0/LogoutButton";
+import { Route, Routes } from "react-router-dom";
 
-import ChatPage from './components/chat-page/ChatPage';
-import ProfileSetup from './components/profile-page/ProfileSetup';
-import Test from './components/exampleAuth0/Test';
+import Test from "./components/exampleAuth0/Test";
+import LeftSide from "./components/main-components/LeftSide";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Main />} />
-      <Route path="/player" element={<PlayerPage />} />
-      <Route path="/login" element={<LoginButton />} />
-      <Route path="/logout" element={<LogoutButton />} />
-      <Route path="/chat" element={<ChatPage />} />
-      <Route path="/user-profile" element={<UserProfile />} />
-      <Route path="/my-profile" element={<MyProfile />} />
-      <Route path="/edit-profile" element={<EditProfile />} />
+    <>
+    <LeftSide/>
+      <Routes>
+        <Route path="/" element={<Main />} />
+        <Route path="/player" element={<PlayerPage />} />
+        <Route path="/login" element={<LoginButton />} />
+        <Route path="/logout" element={<LogoutButton />} />
+        <Route path="/chat" element={<ChatPage />} />
+        <Route path="/user-profile" element={<UserProfile />} />
+        <Route path="/my-profile" element={<MyProfile />} />
+        <Route path="/edit-profile" element={<EditProfile />} />
 
-      <Route path="/rating" element={<Rating />} />
-      <Route path="/likes" element={<Likes />} />
-      <Route path="/profileSetup" element={<ProfileSetup />} />
-      <Route path="/test" element={<Test />} />
-   {/*    <Route path="/profile" element={<Profile />} /> */}
-      {/*    <Route path="/profile" element={<Profile />} /> */}
+        <Route path="/rating" element={<Rating />} />
+        <Route path="/likes" element={<Likes />} />
+        <Route path="/profileSetup" element={<ProfileSetup />} />
+        <Route path="/test" element={<Test />} />
+        {/*    <Route path="/profile" element={<Profile />} /> */}
+        {/*    <Route path="/profile" element={<Profile />} /> */}
+      </Routes>
+    </>
 
-
-    </Routes>
     //<Login/>
     //<Register/>
 
@@ -54,7 +55,6 @@ function App() {
 
     //<ChatPage/>
 
-
     /*   <>
       <LoginButton/>
       <LogoutButton/>
@@ -65,7 +65,6 @@ function App() {
   
   
       </> */
-
   );
 }
 

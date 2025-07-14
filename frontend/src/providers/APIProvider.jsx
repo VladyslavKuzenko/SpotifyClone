@@ -7,36 +7,17 @@ export const APIContext = createContext(undefined);
 
 export const APIProvider = ({ children }) => {
   const [isProfileConfirmed, setIsProfileConfirmed] = useState(false);
-  const [profileConfirmationLoading, setProfileConfirmationLoading] = useState(true);
-  const { user, getAccessTokenSilently,getAccessTokenWithPopup, isAuthenticated,isLoading } = useAuth0();
-  const [currentSong, setCurrentSong] = useState("");
-  const [currentSongList, setCurrentSongList] = useState("");
-  const audioRef = useRef(null);
-  const [isSongPlayed, setIsSongPlayed] = useState(false);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0);
-  const [volume, setVolume] = useState(0);
- /*  const [autoStart, setAutoStart] = useState(false); */
-
-  const nextSong = () => {
-    if (currentSongList.indexOf(currentSong) + 1 < currentSongList.length)
-      setCurrentSong(currentSongList[currentSongList.indexOf(currentSong) + 1]);
-  };
-
-  const prevSong = () => {
-    if (currentSongList.indexOf(currentSong) - 1 >= 0)
-      setCurrentSong(currentSongList[currentSongList.indexOf(currentSong) - 1]);
-  };
-  const playAudio = () => {
-    audioRef.current?.play();
-    setIsSongPlayed(true);
-  };
-
-  const pauseAudio = () => {
-    audioRef.current?.pause();
-    setIsSongPlayed(false);
-  }; 
-const apiAxiosPost= async (path, data, options = {}) => {
+  const [profileConfirmationLoading, setProfileConfirmationLoading] =
+    useState(true);
+  const {
+    user,
+    getAccessTokenSilently,
+    getAccessTokenWithPopup,
+    isAuthenticated,
+    isLoading,
+  } = useAuth0();
+  
+  const apiAxiosPost = async (path, data, options = {}) => {
     let headers = options.headers || {};
 
     if (isAuthenticated) {
@@ -57,19 +38,16 @@ const apiAxiosPost= async (path, data, options = {}) => {
     }
 
     try {
-      
-
-    return await axios.post(`${BASE_API_URL}${path}`,data, {
-      headers: {
-        ...options,
-        headers,
-      },
-    });
+      return await axios.post(`${BASE_API_URL}${path}`, data, {
+        headers: {
+          ...options,
+          headers,
+        },
+      });
     } catch (err) {
       alert("Помилка: " + err.message);
     }
-
-}
+  };
   const apiFetch = async (path, options = {}) => {
     let headers = options.headers || {};
 
@@ -127,28 +105,9 @@ const apiAxiosPost= async (path, data, options = {}) => {
         isProfileConfirmed,
         profileConfirmationLoading,
         apiFetch,
-        currentSong,
-        setCurrentSong,
-        currentSongList,
-        setCurrentSongList,
         refreshProfileConfirmation,
-        nextSong,
-        prevSong,
-        audioRef,
-        isSongPlayed,
-        setIsSongPlayed,
-        currentTime,
-        setCurrentTime,
-        duration,
-        setDuration,
-        volume,
-        setVolume,
-        playAudio,
-        pauseAudio,
         isLoading,
-        /* autoStart,
-        setAutoStart, */
-        apiAxiosPost
+        apiAxiosPost,
       }}
     >
       <>{children}</>

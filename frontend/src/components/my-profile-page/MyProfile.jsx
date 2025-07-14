@@ -4,16 +4,20 @@ import styles from './MyProfile.module.css';
 import LeftSide from '../main-components/LeftSide';
 import SongItem from './SongItem';
 import AlbumItem from './AlbumItem'
+import { useNavigate, useLocation } from "react-router-dom";
+
 const MyProfile = () => {
+    const navigate = useNavigate(); 
+
   return (
     <div className={styles.container}>
-      <LeftSide />
+      {/* <LeftSide /> */}
 
       <div className={styles['empty-div1']}></div>
 
       <div className={styles['profile-side']}>
         <div className={styles['channel-hat']}>
-          <button className={styles['edit-profile']}>Edit profile</button>
+          <button className={styles['edit-profile']} onClick={() => navigate("/edit-profile")}>Edit profile</button>
           <div className={styles['profile-photo']}></div>
           <div className={styles['you-name']}>You</div>
         </div>

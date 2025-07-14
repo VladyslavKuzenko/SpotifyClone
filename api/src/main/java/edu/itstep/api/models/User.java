@@ -74,6 +74,13 @@ public class User {
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     private Set<TracksListenings> tracksListenings;
+    @ManyToMany
+    @JsonIgnore
+    @JoinTable(
+            name = "likes",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "posts_id"))
+    private Set<Post> likedPosts;
 
     public User() {
     }
@@ -228,5 +235,13 @@ public class User {
 
     public void setTracksListenings(Set<TracksListenings> tracksListenings) {
         this.tracksListenings = tracksListenings;
+    }
+
+    public Set<Post> getLikedPosts() {
+        return likedPosts;
+    }
+
+    public void setLikedPosts(Set<Post> likedPosts) {
+        this.likedPosts = likedPosts;
     }
 }

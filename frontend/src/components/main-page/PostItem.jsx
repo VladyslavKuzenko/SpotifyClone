@@ -1,80 +1,154 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./main.module.css";
+import { useAPI } from "../../hooks/useApi";
+import { useAuth0 } from "@auth0/auth0-react";
+import { isLiked } from "../../js/functions/functions";
 
-export default function PostItem() {
-    return (
-        <div className={styles.main}>
-            <div className={styles["post-item"]}>
-                <div className={styles["post-content"]}>
-                    <div className={styles["upper-content"]}>
-                        <div className={styles["post-ava-plat"]}>
-                            <div className={styles["post-ava"]}></div>
-                        </div>
-                        <div className={styles["name-time"]}>
-                            <div className={styles["post-author"]}>Author`s name very long</div>
-                            <div className={styles["post-time"]}>10 days ago</div>
-                        </div>
-                        <div className={styles["like-coment-repost"]}>
+export default function PostItem({ selectedTab }) {
+  const [posts, setPosts] = useState([]);
+  const { apiFetch } = useAPI();
+  const { user, isLoading } = useAuth0();
 
-                            <div className={styles["post-like"]}>
-                                <button className={styles["post-like-btn"]}>
-                                </button>
-                                <div className={styles["likes-count"]}>1999</div>
+  const [pomhIsModalOpen, setPomhIsModalOpen] = useState(false);
+  const [pomhModalImageUrl, setPomhModalImageUrl] = useState("");
 
+  const openPomhModal = (url) => {
+    setPomhModalImageUrl(url);
+    setPomhIsModalOpen(true);
+  };
 
-                            </div>
+  const closePomhModal = () => {
+    setPomhIsModalOpen(false);
+    setPomhModalImageUrl("");
+  };
 
-                            <div className={styles["post-coment"]}>
-                                <button className={styles["post-coment-btn"]}>
-                                </button>
-                                <div className={styles["coment-count"]}>1999</div>
-
-
-                            </div>
-
-                            <div className={styles["post-repost"]}>
-                                <button className={styles["post-repost-btn"]}>
-                                </button>
-                                <div className={styles["repost-count"]}>1999</div>
+  const fetchPosts = async () => {
+    if(isLoading) return;
+    var response;
+    // console.log("FETCH POST. SELECTED TAB: ",selectedTab)
+    // console.log("FETCH POST. user sub: ",user.sub)
 
 
-                            </div>
+    if (selectedTab==="artists") response = await apiFetch("/posts");
+    else if (selectedTab==="friends") {
+      response = await apiFetch(`/posts/byFollowing/${user.sub}`);
+    } else {
+      response = await apiFetch("/posts");
+    }
 
+    const data = await response.json();
 
-                        </div>
-                    </div>
+    setPosts(data);
+  };
 
-                    <div className={styles["middle-content"]}>
-                        <div className={styles["text-content"]}>
-                            Hello!
+  const submiteUserLike = async (post) => {
+    const isPostLiked = await isLiked(post, user, apiFetch);
+    const response = await apiFetch(`/users/like/${post.id}/${user.sub}`, {
+      method: isPostLiked ? "DELETE" : "POST",
+    });
+    if (response.ok) {
+      fetchPosts();
+    } else {
+      console.error("Failed to like/unlike the post");
+    }
+  };
 
-                            I hope this message finds you well. I wanted to take a moment to introduce myself and share a little bit about who I am. My name is [Your Name], and I’m really excited to connect with you.
+  useEffect(() => {
+    fetchPosts();
+  }, [selectedTab,isLoading]);
 
-                            A bit about me: I am passionate about learning new things and meeting people from different backgrounds. I believe that every person has a unique story to tell, and I enjoy listening and exchanging experiences. In my free time, I love reading books, exploring nature, and trying out new hobbies. Recently, I’ve been interested in improving my skills in [a hobby or skill, e.g., photography, cooking, or programming], which has been both challenging and rewarding.
+  if (isLoading) return <div>Loading...</div>;
 
-                            I think it’s important to stay positive and open-minded, especially when facing challenges. Life is full of ups and downs, but each experience teaches us something valuable. I try to approach each day with gratitude and a willingness to grow.
-
-                            I’m also a big fan of traveling and discovering new cultures. Experiencing different ways of life broadens one’s perspective and helps build understanding and empathy. One of my favorite trips was to [a place you visited], where I had the chance to meet wonderful people and see incredible sights.
-
-                            I would love to learn more about you as well — your interests, goals, and what motivates you. If you’re open to it, please feel free to share a little about yourself. I’m looking forward to hearing from you and hopefully building a meaningful connection.
-
-                            Thank you for taking the time to read my message. Wishing you a great day ahead!
-
-                            Best regards,
-                            [Your Name]
-                        </div>
-                    </div>
-
-                    <div className={styles["post-photos-container"]}>
-                        <div className={styles["post-photo"]}></div>
-                        <div className={styles["post-photo"]}></div>
-                        <div className={styles["post-photo"]}></div>
-                        <div className={styles["post-photo"]}></div>
-                        <div className={styles["post-photo"]}></div>
-                        <div className={styles["post-photo"]}></div>
-                    </div>
+  return (
+    <>
+      {/* {friends&&<div>TEEEEEEEEEEEST</div>} */}
+      {posts?.map((post) => (
+        <div className={styles.main} key={post.id}>
+          <div className={styles["post-item"]}>
+            <div className={styles["post-content"]}>
+              <div className={styles["upper-content"]}>
+                <div className={styles["post-ava-plat"]}>
+                  <div className={styles["post-ava"]}></div>
                 </div>
+                <div className={styles["name-time"]}>
+                  <div className={styles["post-author"]}>
+                    {post.user.username}
+                  </div>
+                  <div className={styles["post-time"]}>10 days ago</div>
+                </div>
+                <div className={styles["like-coment-repost"]}>
+                  <div
+                    className={
+                      isLiked(post, user, apiFetch)
+                        ? styles["post-like-btn-active"]
+                        : styles["post-like"]
+                    }
+                    onClick={() => submiteUserLike(post)}
+                  >
+                    <div className={styles["post-wrap"]}>
+                      <button className={styles["post-like-btn"]}></button>
+                      <div className={styles["likes-count"]}>
+                        {post.likesCount}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className={styles["post-coment"]}>
+                    <div className={styles["post-wrap"]}>
+                      <button className={styles["post-coment-btn"]}></button>
+                      <div className={styles["coment-count"]}>
+                        {post.commentsCount}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className={styles["post-repost"]}>
+                    <div className={styles["post-wrap"]}>
+                      <button className={styles["post-repost-btn"]}></button>
+                      <div className={styles["repost-count"]}>
+                        {post.repostsCount}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className={styles["middle-content"]}>
+                <div className={styles["text-content"]}>{post.description}</div>
+              </div>
+
+              <div className={styles["post-photos-container"]}>
+                {post.contents?.map((content) => (
+                  <div className={styles["post-photo"]} key={content.id}>
+                    <img
+                      className={styles["preview-image"]}
+                      src={content.mediaUrl}
+                      alt="Post content"
+                      onClick={() => openPomhModal(content.mediaUrl)}
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
+          </div>
         </div>
-    );
+      ))}
+
+      {/* POMH MODAL */}
+      {pomhIsModalOpen && (
+        <div className={styles["pomh-modal-overlay"]} onClick={closePomhModal}>
+          <div
+            className={styles["pomh-modal-content"]}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img
+              src={pomhModalImageUrl}
+              alt="Preview"
+              className={styles["pomh-modal-image"]}
+            />
+          </div>
+        </div>
+      )}
+    </>
+  );
 }

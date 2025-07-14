@@ -79,7 +79,7 @@
     }
 
     .yl-text {
-      width: 70%;
+      width: 65%;
       height: 100%;
       font-family: 'Manrope', sans-serif;
       font-weight: 400;
@@ -394,6 +394,7 @@
       justify-content: center;
 
 
+
     }
 
     .sr-select {
@@ -419,6 +420,11 @@
       text-indent: 15px;
       box-sizing: border-box;
       border-radius: 5px;
+
+      background-image: url(/public/images/Search.png);
+      background-repeat: no-repeat;
+      background-position-x: 95%;
+      background-position-y: center;
     }
 
 
@@ -436,12 +442,13 @@
     .sr-recent {
       height: 100%;
       align-content: center;
-      width: 171px;
+      width: 200px;
 
       font-family: 'Inter', sans-serif;
       font-weight: 400;
       font-size: 18px;
       margin-left: 10px;
+      margin-right: 10px;
 
     }
 
@@ -609,6 +616,10 @@
       margin-top: 10px;
       margin-left: 30px;
       border-radius: 5px;
+      background-image: url(/public/images/Search.png);
+      background-repeat: no-repeat;
+      background-position-x: 95%;
+      background-position-y: center;
     }
 
     .as-search::placeholder {
@@ -758,7 +769,7 @@
       scrollbar-width: none;
       display: flex;
       justify-content: center;
-
+      padding-bottom: 120px;
 
     }
 
@@ -844,11 +855,12 @@
       text-align: center;
       align-content: center;
       cursor: pointer;
+
+
     }
 
     .liked {
-      color: #b91d1d;
-
+      color: red;
     }
 
     .as-duration {
@@ -932,12 +944,13 @@
       background-color: #f0f0f0;
     }
 
+
     .as-mp-circle {
       width: 8px;
       height: 8px;
       border-radius: 50%;
       margin: 2px;
-      background-color: #868686;
+      background-color: #FFFFFF;
 
     }
 
@@ -1090,7 +1103,6 @@
       width: 97%;
       height: 100%;
       display: flex;
-      box-sizing: border-box;
 
       background-color: rgba(147, 148, 153, 0.13);
 
@@ -1114,7 +1126,6 @@
       cursor: pointer;
       display: flex;
       align-items: center;
-      /* решта стилів */
     }
 
     .mrb-center {
@@ -1191,6 +1202,13 @@
       height: 40px;
     }
 
+    .btn0 {
+      background-image: url(/public/images/shuffle\ \(1\)\ 1.png);
+      background-size: 30px;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
     .btn1 {
       background-image: url(/public/images/Group\ 1171275925\ \(1\).svg);
       background-size: 30px;
@@ -1218,7 +1236,12 @@
       background-repeat: no-repeat;
       background-position: center;
     }
-
+    .btn5 {
+      background-image: url(/public/images/arrows-clockwise\ 1.png);
+      background-size: 30px;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
 
     .bmr-bar-wrapper {
       width: 80%;
@@ -1417,6 +1440,7 @@
       width: 95%;
       height: 100%;
       padding-top: 30px;
+      padding-bottom: 120px;
     }
 
     .albums-songs {

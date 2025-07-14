@@ -43,6 +43,10 @@ public class PostController {
         return PostRepository.findById(id).orElseThrow(RuntimeException::new);
     }
 
+    @GetMapping("/byFollowing/{id}")
+    public List<Post> getPostByFollowing(@PathVariable String id) {
+        return postService.getPostByFollowing(id);
+    }
     @PostMapping
     public ResponseEntity createPost(@RequestBody Post Post) throws URISyntaxException {
         Post savedPost = PostRepository.save(Post);
@@ -50,7 +54,7 @@ public class PostController {
     }
     @PostMapping("/upload/{postId}")
     public String handleFileUpload(@RequestParam("file") MultipartFile file,@PathVariable Long postId){
-        return postService.postFileToVM(file,"story"+postId);
+        return postService.postFileToVM(file,"post"+postId);
     }
     @PutMapping("/{id}")
     public ResponseEntity<Post> updatePost(@PathVariable Long id, @RequestBody Post updatedPost) {

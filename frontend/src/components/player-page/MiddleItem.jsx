@@ -9,6 +9,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { Navigate } from "react-router-dom";
 import FollowingButton from "../sharedComponents/FollowingButton";
 import { useAPI } from "../../hooks/useApi";
+import { useAudio } from "../../hooks/useAudio";
 
 export default function MiddleItem({
  /*  
@@ -23,7 +24,7 @@ export default function MiddleItem({
   const [currentArtist, setCurrentArtist] = useState(null);
   const { user, isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0();
   const [openMenuSongId, setOpenMenuSongId] = useState(null);
-  const { setCurrentSong, setCurrentSongList } = useAPI();
+  const { setCurrentSong, setCurrentSongList } = useAudio();
   // Вкладка для артиста: 'songs' або 'albums'
   const [activeArtistTab, setActiveArtistTab] = useState("songs");
 

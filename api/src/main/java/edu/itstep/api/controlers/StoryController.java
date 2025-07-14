@@ -48,6 +48,11 @@ public class StoryController {
     public Story getPost(@PathVariable Long id) {
         return storyRepository.findById(id).orElseThrow(RuntimeException::new);
     }
+    @GetMapping("/followings/{userId}")
+    public ResponseEntity<List<Story>> getStoriesOfFollowings(@PathVariable String userId) {
+        List<Story> stories = storyService.getStoriesOfFollowings(userId);
+        return ResponseEntity.ok(stories);
+    }
 
     @PostMapping
     public Story createPost(@RequestBody Story Story) throws URISyntaxException {
@@ -57,7 +62,6 @@ public class StoryController {
     }
     @PostMapping("/upload/{storyId}")
     public String handleFileUpload(@RequestParam("file") MultipartFile file,@PathVariable Long storyId){
-
         return postService.postFileToVM(file,"story"+storyId);
     }
     @PutMapping("/{id}")
