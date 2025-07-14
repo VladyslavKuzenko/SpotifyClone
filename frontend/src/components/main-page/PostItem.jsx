@@ -12,6 +12,8 @@ export default function PostItem({ selectedTab }) {
 
   const [pomhIsModalOpen, setPomhIsModalOpen] = useState(false);
   const [pomhModalImageUrl, setPomhModalImageUrl] = useState("");
+  const [currentImageIndexes, setCurrentImageIndexes] = useState({});
+  const [visibleCount, setVisibleCount] = useState(15);
 
   const [isDiscussionOpen, setIsDiscussionOpen] = useState(false);
   const openDiscussion = () => setIsDiscussionOpen(true);
