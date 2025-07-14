@@ -3,18 +3,20 @@ import styles from "./rating.module.css";
 import LeftSide from "../main-components/LeftSide";
 import { useAPI } from "../../hooks/useApi";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useAudio } from "../../hooks/useAudio";
 
 export default function Rating() {
   const [isTypeDropdownOpen, setTypeDropdownOpen] = useState(false);
   const [selectedType, setSelectedType] = useState("All Types");
   const typeDropdownRef = useRef(null);
   const [periodIsDropdownOpen, setPeriodIsDropdownOpen] = useState(false);
-  const [periodSelectedOption, setPeriodSelectedOption] = useState("Monthly");
+  const [periodSelectedOption, setPeriodSelectedOption] = useState("All time");
   const periodDropdownRef = useRef(null);
   const [artist,setArtists]=useState([])
   const [tracks,setTracks]=useState([])
   const {apiFetch}=useAPI();
   const {isLoading}=useAuth0();
+  const {setCurrentSong,setCurrentSongList}=useAudio();
 
 
 
@@ -31,8 +33,28 @@ export default function Rating() {
   const fetchTracks = async () => {
      if(isLoading) return;
     console.log("Rating: fetchTracks()");
-
-    const response=await apiFetch("/tracks/top/0/10");
+    var period;
+    switch (periodSelectedOption) {
+      case "Last 24 hours":
+        period="day";
+        break;
+       case "Last 7 days":
+        period="week";
+        break;
+       case "Monthly":
+        period="month";
+        break;
+       case "Year":
+        period="year";
+        break;
+       case "All time":
+        period="all";
+        break;
+    
+      default:
+        break;
+    }
+    const response=await apiFetch(`/tracks/top?first=0&count=10&period=${period}`);
     const data=await response.json();
     setTracks(data);
 
@@ -54,6 +76,7 @@ export default function Rating() {
   };
 
   const handlePeriodSelect = (period) => {
+
     setPeriodSelectedOption(period);
     setPeriodIsDropdownOpen(false);
   };
@@ -61,7 +84,7 @@ export default function Rating() {
   useEffect(()=>{
     fetchUsers();
     fetchTracks();
-  },[isLoading])
+  },[isLoading,periodSelectedOption])
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -203,7 +226,10 @@ export default function Rating() {
           <div className={styles["upper-right"]}>
             <div className={styles["scroll-container"]}>
               {tracks.map((item, index) => (
-                <div key={index} className={styles["scroll-item"]}>
+                <div key={index} className={styles["scroll-item"]} onClick={()=>{
+                  setCurrentSong(item);
+                  setCurrentSongList(tracks);
+                }}>
                   <div className={styles["item-place"]}>{index}</div>
                   <div className={styles["item-info"]}>
                     <div className={styles["item-photo"]}></div>

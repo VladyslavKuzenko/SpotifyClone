@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -49,11 +50,34 @@ public class TrackController {
     public Set<Track> getAllTracksByPlaylist(@PathVariable Long id) {
         return playlistRepository.findById(id).orElseThrow(RuntimeException::new).getTracks();
     }
-    @GetMapping("/top/{first}/{count}")
-    public List<Track> getAllByOrderByListeningCountDescWithParams(@PathVariable Integer first,@PathVariable Integer count) {
-        Pageable pageable = PageRequest.of(first, first+count);
-        return trackRepository.findAllByOrderByListeningCountDesc(pageable);
+
+    @GetMapping("/top")
+    public List<Track> getAllByOrderByListeningCountDescWithParams(@RequestParam Integer first, @RequestParam Integer count, @RequestParam(required = false, defaultValue = "all") String period) {
+        Pageable pageable = PageRequest.of(first, count);
+        LocalDateTime from;
+        switch (period.toLowerCase()) {
+            case "day":
+                from = LocalDateTime.now().minusDays(1);
+                break;
+            case "week":
+                from = LocalDateTime.now().minusWeeks(1);
+                break;
+            case "month":
+                from = LocalDateTime.now().minusMonths(1);
+                break;
+            case "year":
+                from = LocalDateTime.now().minusYears(1);
+                break;
+            default:
+                from = null;
+                break;
+        }
+        if (from == null)
+            return trackRepository.findAllByOrderByListeningCountDesc(pageable);
+        else
+            return trackRepository.findByCreatedAtAfterOrderByListeningCountDesc(from, pageable);
     }
+
     @GetMapping("/lastTrack")
     public Track getLastAdded() {
         return trackRepository.findFirstByOrderByIdDesc();
