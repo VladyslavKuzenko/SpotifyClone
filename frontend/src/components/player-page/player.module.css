@@ -1,21 +1,16 @@
     @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap');
 
-    body {
-      margin: 0;
-      padding: 0;
-    }
-
     .container {
       width: 100%;
       display: flex;
       flex-direction: row;
+
 
     }
 
     .middle-right {
       margin-left: 225px;
       width: calc(100% - 225px);
-      height: 100vh;
     }
 
     .empty-div1 {
@@ -30,9 +25,7 @@
 
     .mr-middle {
       width: 100%;
-      height: 100vh;
       display: flex;
-
     }
 
     .mr-left {
@@ -54,11 +47,18 @@
 
     .your-library {
       width: 94%;
-      height: calc(86.5% - 50px);
+      height: calc(86.5vh - 50px);
       display: flex;
       flex-direction: row;
       background-color: #2C2C31;
+      overflow: auto;
+      scrollbar-width: thin;
+      scrollbar-color: #232327 transparent;
+      position: sticky;
+      top: 50px;
+      z-index: 1000;
     }
+
 
 
 
@@ -454,13 +454,13 @@
 
 
 
-    .yl-song-container {
-      width: 100%;
-      height: 533px;
-      overflow-y: auto;
-      scrollbar-width: none;
+.yl-song-container {
+  width: 100%;
+  flex: 1; /* займе весь вільний простір */
+  overflow-y: auto;
+  scrollbar-width: none;
+}
 
-    }
 
 
     .song-item {
@@ -764,7 +764,7 @@
 
     .as-plat3 {
       width: 100%;
-      height: 100%;
+      height: auto;
       overflow-y: auto;
       scrollbar-width: none;
       display: flex;
@@ -1236,6 +1236,7 @@
       background-repeat: no-repeat;
       background-position: center;
     }
+
     .btn5 {
       background-image: url(/public/images/arrows-clockwise\ 1.png);
       background-size: 30px;
