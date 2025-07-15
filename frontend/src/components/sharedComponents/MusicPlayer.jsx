@@ -99,7 +99,7 @@ const MusicPlayer = ({ footerPlayer }) => {
               </div>
             </div>
 
-            <AudioControl AudioControl footerPlayer  />
+            <AudioControl footerPlayer/>
           </div>
 
           {isModalOpen && (
@@ -114,7 +114,7 @@ const MusicPlayer = ({ footerPlayer }) => {
             {currentSong?.artist?.user?.username}
           </div>
           <div className={stylesLeft["circle-song"]}></div>
-          <AudioControl footerPlayer />
+          <AudioControl />
 
         </div>
       )}

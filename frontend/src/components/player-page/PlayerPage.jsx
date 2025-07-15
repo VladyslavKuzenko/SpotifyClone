@@ -80,10 +80,7 @@ const PlayerPage = () => {
           </div>
         </div>
 
-        <MusicPlayer
-         /*  songControl={{ currentSong, nextSong, prevSong }} */
-          footerPlayer
-        />
+        <MusicPlayer footerPlayer/>
       </div>
     </>
   );

@@ -24,6 +24,74 @@ html {
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: 11999;
+  transition: width 0.3s ease;
+}
+
+.left-side:hover {
+  width: 350px;
+}
+
+.pages-btns-div {
+  width: 100%;
+}
+
+.menu-btn {
+  width: 30px;
+  border: none;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 24px 24px;
+  cursor: pointer;
+  padding: 15px 10px 15px 50px;
+  color: white;
+  transition: justify-content 0.3s ease;
+  position: relative;
+  font-size: 16px;
+  background-color: transparent;
+
+}
+
+.left-side:hover .menu-btn {
+  justify-content: center;
+}
+
+.pages-btns-div button:nth-child(1) {
+  background-image: url('/public/images/home.svg');
+}
+
+.pages-btns-div button:nth-child(2) {
+  background-image: url('/public/images/music_note.svg');
+}
+
+.pages-btns-div button:nth-child(3) {
+  background-image: url('/public/images/cards_star.svg');
+}
+
+.pages-btns-div button:nth-child(4) {
+  background-image: url('/public/images/person.svg');
+}
+
+.pages-btns-div button:nth-child(5) {
+  background-image: url('/public/images/sms.svg');
+}
+
+.label {
+  display: inline-block; 
+  opacity: 0;
+  pointer-events: none;
+  white-space: nowrap;
+  user-select: none;
+  transition: opacity 0.3s ease;
+  width: 80px;
+  text-align: start;
+  margin-left: 20px;
+}
+
+
+.left-side:hover .label {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .ava-place {
@@ -64,10 +132,11 @@ html {
   border-radius: 50%;
   cursor: pointer;
   border: none;
-  background-image: url(/public/images/home-svg.svg);
+  background-image: url(/public/images/home.svg);
   background-repeat: no-repeat;
-  background-size: 75%;
+  background-size: 60%;
   background-position: center;
+  background-position-y: 5px;
 
 }
 
@@ -83,9 +152,9 @@ html {
   border-radius: 50%;
   cursor: pointer;
   border: none;
-  background-image: url(/public/images/chat-svg.svg);
+  background-image: url(/public/images/sms.svg);
   background-repeat: no-repeat;
-  background-size: 75%;
+  background-size: 60%;
   background-position: center;
 
 }
@@ -97,9 +166,9 @@ html {
   border-radius: 50%;
   cursor: pointer;
   border: none;
-  background-image: url(/public/images/star-svg.svg);
+  background-image: url(/public/images/cards_star.svg);
   background-repeat: no-repeat;
-  background-size: 75%;
+  background-size: 60%;
   background-position: center;
 
 }
@@ -111,9 +180,9 @@ html {
   border-radius: 50%;
   cursor: pointer;
   border: none;
-  background-image: url(/public/images/playlist-svg.svg);
+  background-image: url(/public/images/music_note.svg);
   background-repeat: no-repeat;
-  background-size: 75%;
+  background-size: 48%;
   background-position: center;
 
 }
@@ -125,9 +194,9 @@ html {
   border-radius: 50%;
   cursor: pointer;
   border: none;
-  background-image: url(/public/images/u.png);
+  background-image: url(/public/images/person.svg);
   background-repeat: no-repeat;
-  background-size: 75%;
+  background-size: 60%;
   background-position: center;
 
 }
@@ -1959,7 +2028,7 @@ html {
 
 .prl-left {
   left: -50px;
-   background-image: url('/public/images/btn-right.png');
+  background-image: url('/public/images/btn-right.png');
   background-repeat: no-repeat;
   background-size: 50%;
   background-position: center;
@@ -2245,8 +2314,115 @@ html {
   width: 100px;
   height: 40px;
   border-radius: 10px;
-  color:white;
-  border:1px solid rgb(151, 151, 151);
+  color: white;
+  border: 1px solid rgb(151, 151, 151);
   background-color: #1F212B;
   cursor: pointer;
+}
+
+.discussion-modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: calc(100% - 225px);
+  z-index: 1000;
+  display: flex;
+  justify-content: flex-end;
+  margin-left: 225px;
+}
+
+.discussion-content {
+  background-color: #fff;
+  width: 500px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  animation: slideInRight 0.3s ease forwards;
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+.discussion-header {
+  padding: 16px;
+  background: #f5f5f5;
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.discussion-body {
+  padding: 16px;
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+
+.chatMessage1 {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 16px;
+  background-color: #f4f4f4;
+  max-width: 600px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.avatar1 {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: #ccc;
+  flex-shrink: 0;
+}
+
+.messageContent1 {
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  overflow-wrap: break-word;
+}
+
+.messageLine1 {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #333;
+  white-space: pre-wrap;
+  word-break: break-word;
+  hyphens: auto;
+}
+
+.username1 {
+  font-weight: 600;
+  font-size: 14px;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.message1 {
+  max-width: 350px;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+  white-space: normal;
+  display: inline-block;
 }

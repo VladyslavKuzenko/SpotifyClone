@@ -1,6 +1,5 @@
 import React from "react";
 import LeftSide from '../main-components/LeftSide'
-import MusicPlayer from '../sharedComponents/MusicPlayer'
 import SongItem from '../player-page/SongItem'
 import { useNavigate } from "react-router-dom";
 
