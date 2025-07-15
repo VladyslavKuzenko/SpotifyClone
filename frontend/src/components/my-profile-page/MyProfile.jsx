@@ -10,6 +10,8 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useAudio } from "../../hooks/useAudio";
 import SongItem from "../player-page/SongItem";
 import PostItem from "../main-page/PostItem";
+import AddMusicModal from "./AddMusicModal";
+import AddAlbumModal from "./AddAlbumModal"
 
 const MyProfile = () => {
   const navigate = useNavigate();
