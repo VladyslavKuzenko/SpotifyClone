@@ -4,7 +4,6 @@ import ChatList from './ChatList';
 import MyMessageItem from './MyMessageItem';
 import UserMessageItem from './UserMessageItem';
 import Footer from './Footer';
-import LeftSide from '../main-components/LeftSide';
 import { useNavigate } from "react-router-dom";
 
 import UpperContent from "./UpperContent";

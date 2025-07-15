@@ -56,7 +56,7 @@
   scrollbar-color: #232327 transparent;
   position: sticky;
   top: 50px;
-  z-index: 1000;
+  z-index: 999;
   overflow-x: hidden;
 }
 
@@ -1092,7 +1092,7 @@
   width: calc(100% - 225px);
   height: 119px;
   display: flex;
-  z-index: 1000;
+  z-index: 999;
   justify-content: center;
   margin-left: 225px;
 

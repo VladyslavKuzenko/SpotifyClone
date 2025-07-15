@@ -178,6 +178,12 @@ const NewPost = ({ onClose }) => {
                 <div className={styles["location-mention"]}>
                   <button className={styles["location"]}>Location</button>
                   <button className={styles["mention"]}>Mention</button>
+                   <button
+                    className={styles["at-gallery"]}
+                    onClick={() => filePostInputRef.current.click()}
+                  >
+                    Add file
+                  </button>
                 </div>
 
                 <div className={styles["share-thoughts-plat"]}>
@@ -203,12 +209,7 @@ const NewPost = ({ onClose }) => {
                     accept="image/*,video/*"
                     multiple
                   />
-                  <button
-                    className={styles["at-gallery"]}
-                    onClick={() => filePostInputRef.current.click()}
-                  >
-                    Add Content
-                  </button>
+                 
 
                   {filesPost.length > 0
                     ? filesPost.map((file) => (
@@ -289,39 +290,7 @@ const NewPost = ({ onClose }) => {
                 ×
               </button>
 
-              <div className={styles["privacy-container"]}>
-                <div className={styles["privacy-text"]}>Privacy</div>
-
-                <label className={styles["check-text"]}>
-                  <input
-                    type="radio"
-                    checked={selectedPrivacy === "public"}
-                    onChange={() => handlePrivacyChange("public")}
-                    className={styles["radio-post"]}
-                  />
-                  <span>Public</span>
-                </label>
-
-                <label className={styles["check-text"]}>
-                  <input
-                    type="radio"
-                    checked={selectedPrivacy === "friends"}
-                    onChange={() => handlePrivacyChange("friends")}
-                    className={styles["radio-post"]}
-                  />
-                  <span>Friends</span>
-                </label>
-
-                <label className={styles["check-text"]}>
-                  <input
-                    type="radio"
-                    checked={selectedPrivacy === "privacy"}
-                    onChange={() => handlePrivacyChange("privacy")}
-                    className={styles["radio-post"]}
-                  />
-                  <span>Privacy</span>
-                </label>
-              </div>
+              
 
               <div className={styles["comments"]}>
                 <div className={styles["comments-text"]}>Comments</div>

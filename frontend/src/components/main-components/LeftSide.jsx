@@ -11,8 +11,8 @@ const LeftSide = () => {
   return (
     <div className={styles["left-side"]} onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}>
-      <div className={styles["ava-place"]}>
-        <div className={styles.avatarka}></div>
+      <div className={styles["ava-place"]} >
+        <div className={styles.avatarka} onClick={() => navigate("/my-profile")}></div>
       </div>
 
       <div className={styles["pages-btns-div"]}>

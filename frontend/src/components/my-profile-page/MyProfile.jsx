@@ -13,7 +13,7 @@ const MyProfile = () => {
 
   return (
     <div className={styles.container}>
-      {/* <LeftSide /> */}
+      <LeftSide /> 
 
       <div className={styles['empty-div1']}></div>
 

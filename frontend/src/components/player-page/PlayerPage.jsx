@@ -58,7 +58,7 @@ const PlayerPage = () => {
   return (
     <>
       <div className={styles.container}>
-        {/* <LeftSide /> */}
+         <LeftSide /> 
         <div className={styles["middle-right"]}>
           <div className={styles["empty-div11"]}></div>
 

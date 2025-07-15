@@ -24,10 +24,10 @@ html {
   display: flex;
   flex-direction: column;
   align-items: center;
-  z-index: 11999;
+  z-index: 1000;
   transition: width 0.3s ease;
   scrollbar-width: none;
-    overflow-x: hidden;
+  overflow-x: hidden;
 }
 
 .left-side:hover {
@@ -79,7 +79,7 @@ html {
 }
 
 .label {
-  display: inline-block; 
+  display: inline-block;
   opacity: 0;
   pointer-events: none;
   white-space: nowrap;
@@ -1255,13 +1255,14 @@ html {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
   height: 100vh;
   background: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  width: 100%;
+
 }
 
 .post-modal-window {
@@ -1372,7 +1373,7 @@ html {
 
   cursor: pointer;
   height: 38px;
-  width: 159px;
+  width: 33%;
   border-radius: 10px;
 }
 
@@ -1390,7 +1391,7 @@ html {
 
   cursor: pointer;
   height: 38px;
-  width: 159px;
+  width: 33%;
   border-radius: 10px;
 
 }
@@ -1442,58 +1443,28 @@ html {
 }
 
 
-.at-gallery,
-.at-album {
-  height: 100px;
-  width: 140px;
+.at-gallery {
+  height: 38px;
+  width: 33%;
   border: none;
   cursor: pointer;
   background-color: #4E5059;
   border-radius: 10px;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter',sans-serif;
   font-weight: 300;
   font-style: Light;
   font-size: 16px;
   line-height: 100%;
   letter-spacing: 0%;
+
   color: white;
   flex-shrink: 0;
-  margin-right: 15px;
-
+  margin-left: 10px;
 
 }
-
-
 
 .pomh-close:hover {
   background-color: rgb(199, 18, 54);
-
-}
-
-
-.privacy-container {
-  width: 100%;
-  height: 135px;
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-  margin-top: 100px;
-  margin-bottom: 10px;
-}
-
-.public,
-.friends,
-.privacy {
-  font-family: 'Inter', sans-serif;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 100%;
-  letter-spacing: 0%;
-  width: 27px;
-  height: 27px;
-  margin-left: 20px;
-  margin-right: 20px;
-  cursor: pointer;
 }
 
 .check-text {
@@ -1510,18 +1481,6 @@ html {
   text-indent: 10px;
 }
 
-.privacy-text {
-  margin-left: 15px;
-  font-family: 'Manrope', sans-serif;
-  font-weight: 400;
-  font-style: Regular;
-  font-size: 16px;
-  line-height: 100%;
-  letter-spacing: 0%;
-
-  color: black;
-
-}
 
 .comments {
   width: 100%;
@@ -1529,7 +1488,7 @@ html {
   display: flex;
   justify-content: space-between;
   flex-direction: column;
-  margin-top: 15px;
+  margin-top: 38%;
 }
 
 .open-comments,
@@ -1576,6 +1535,7 @@ html {
   cursor: pointer;
   background-color: #FF4400;
   border-radius: 10px;
+  margin-top: 65%;
 }
 
 .stories-design {

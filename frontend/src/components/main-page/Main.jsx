@@ -97,7 +97,7 @@ const Main = () => {
   return (
     <>
       <div className={styles.container}>
-        {/* <LeftSide /> */}
+        <LeftSide /> 
 
         <div className={styles["home-text"]}></div>
 

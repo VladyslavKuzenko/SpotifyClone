@@ -137,7 +137,7 @@ export default function Rating() {
 
   return (
     <>
-      {/* <LeftSide /> */}
+      <LeftSide /> 
       <div className={styles["raitinig-container"]}>
         <div className={styles["upper-platform"]}>
           <div className={styles["upper-left"]}>
