@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "../main-page/main.module.css";
 import MusicPlayer from "../sharedComponents/MusicPlayer";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -6,9 +6,11 @@ import { useNavigate, useLocation } from "react-router-dom";
 const LeftSide = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <div className={styles["left-side"]}>
+    <div className={styles["left-side"]} onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}>
       <div className={styles["ava-place"]}>
         <div className={styles.avatarka}></div>
       </div>
@@ -40,7 +42,7 @@ const LeftSide = () => {
         </button>
       </div>
 
-      <MusicPlayer />
+      <MusicPlayer isHovered={isHovered}/>
     </div>
   );
 };

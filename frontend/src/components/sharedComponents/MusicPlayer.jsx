@@ -47,7 +47,7 @@ const Modal = ({ onClose, song }) => {
   );
 };
 
-const MusicPlayer = ({ footerPlayer }) => {
+const MusicPlayer = ({ footerPlayer, isHovered }) => {
   const { apiFetch}=useAPI()
   const { currentSong, setCurrentSong, setCurrentSongList } =
     useAudio();
@@ -113,8 +113,8 @@ const MusicPlayer = ({ footerPlayer }) => {
           <div className={stylesLeft.singer}>
             {currentSong?.artist?.user?.username}
           </div>
-          <div className={stylesLeft["circle-song"]}></div>
-          <AudioControl />
+          <AudioControl isHovered={isHovered}/>
+
 
         </div>
       )}
