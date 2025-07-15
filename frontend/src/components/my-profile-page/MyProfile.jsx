@@ -1,13 +1,15 @@
-// MyProfile.jsx
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './MyProfile.module.css';
 import LeftSide from '../main-components/LeftSide';
 import SongItem from './SongItem';
 import AlbumItem from './AlbumItem'
-import { useNavigate, useLocation } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
+import AddMusicModal from './AddMusicModal';
+import AddAlbumModal from './AddAlbumModal';
 const MyProfile = () => {
-    const navigate = useNavigate(); 
+  const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
+  const [showModal1, setShowModal1] = useState(false);
 
   return (
     <div className={styles.container}>
@@ -32,9 +34,11 @@ const MyProfile = () => {
         </div>
 
         <div className={styles['functional-container1']}>
-
           <div className={styles['saved-album-container']}>
-            <div className={styles['saved-album-text']}>Saved Albums</div>
+            <div className={styles['svyazka']}>
+              <div className={styles['saved-album-text']}>Your Albums</div>
+              <button className={styles['add-btn']} onClick={() => setShowModal1(true)}>Add +</button>
+            </div>
             <div className={styles['album-array']}>
               {Array(12).fill(0).map((_, idx) => (
                 <AlbumItem key={idx} />
@@ -43,16 +47,19 @@ const MyProfile = () => {
           </div>
 
           <div className={styles['saved-songs-container']}>
-            <div className={styles['saved-songs-text']}>Saved Songs</div>
+            <div className={styles['svyazka']}>
+              <div className={styles['saved-songs-text']}>Your Songs</div>
+              <button className={styles['add-btn']} onClick={() => setShowModal(true)}>Add +</button>
+            </div>
             <div className={styles['song-array']}>
               {Array.from({ length: 10 }).map((_, index) => (
-                <SongItem />
+                <SongItem key={index} />
               ))}
             </div>
           </div>
         </div>
 
-     <div className={styles['bottom-place']}>
+        <div className={styles['bottom-place']}>
           <div className={styles['posts-place']}>
             <div className={styles['posts-text']}>Posts</div>
             <div className={styles['posts-array']}></div>
@@ -70,10 +77,13 @@ const MyProfile = () => {
                 </div>
               ))}
             </div>
-
           </div>
         </div>
       </div>
+
+      {showModal && <AddMusicModal onClose={() => setShowModal(false)} />}
+      {showModal1 && <AddAlbumModal onClose={() => setShowModal1(false)} />}
+
     </div>
   );
 };
