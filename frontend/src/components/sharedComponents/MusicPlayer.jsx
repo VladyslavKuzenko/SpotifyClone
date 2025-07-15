@@ -1,5 +1,5 @@
 import React, { use, useEffect, useState } from "react";
-import stylesFooter from "../player-page/player.module.css"; 
+import stylesFooter from "../player-page/player.module.css";
 import stylesLeft from "../main-page/main.module.css";
 
 import AudioControl from "./AudioControl";
@@ -63,7 +63,7 @@ const MusicPlayer = ({ footerPlayer, isHovered }) => {
     setIsModalOpen(false);
   };
 
- /*  const fetchPlaylist = async () => {
+  /*  const fetchPlaylist = async () => {
     const response = await apiFetch(`/playlists/playlists/${user?.sub}/Like`);
     const data = await response.json();
     console.log("Playlist fetched:", data);
@@ -99,7 +99,7 @@ const MusicPlayer = ({ footerPlayer, isHovered }) => {
               </div>
             </div>
 
-            <AudioControl footerPlayer/>
+            <AudioControl footerPlayer />
           </div>
 
           {isModalOpen && (
@@ -108,7 +108,6 @@ const MusicPlayer = ({ footerPlayer, isHovered }) => {
         </div>
       ) : (
         <div className={stylesLeft["song-place-div"]}>
-
           <div className={stylesLeft["song-name"]}>{currentSong?.title}</div>
           <div className={stylesLeft.singer}>
             {currentSong?.artist?.user?.username}
@@ -116,6 +115,8 @@ const MusicPlayer = ({ footerPlayer, isHovered }) => {
           <AudioControl isHovered={isHovered}/>
 
 
+          {/* <div className={stylesLeft["circle-song"]}></div> */}
+          {/* <AudioControl /> */}
         </div>
       )}
     </>

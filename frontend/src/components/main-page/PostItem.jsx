@@ -194,6 +194,9 @@ export default function PostItem({ selectedTab }) {
     if (selectedTab==="artists") response = await apiFetch("/posts");
     else if (selectedTab==="friends") {
       response = await apiFetch(`/posts/byFollowing/${user.sub}`);
+    }
+    else if (selectedTab==="user") {
+      response = await apiFetch(`/posts/userPosts/${user.sub}`);
     } else {
       response = await apiFetch("/posts");
     }

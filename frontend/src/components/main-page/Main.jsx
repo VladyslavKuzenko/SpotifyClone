@@ -42,13 +42,13 @@ const Main = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isNotificationOpen]);
-  useEffect(() => {
-    const fetchData = async () => {
-      /* const response = await apiFetch(""); */
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     /* const response = await apiFetch(""); */
+  //   };
 
-    fetchData();
-  }, [isLoading]);
+  //   fetchData();
+  // }, [isLoading]);
 
   if (isLoading) return <div>Loading...</div>;
   if (!isAuthenticated) return <Navigate to="/login" replace />;

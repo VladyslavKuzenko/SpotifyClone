@@ -37,11 +37,12 @@ export const APIProvider = ({ children }) => {
       }
     }
 
+    console.log("HERE Everything is ok")
     try {
       return await axios.post(`${BASE_API_URL}${path}`, data, {
+        ...options,
         headers: {
-          ...options,
-          headers,
+          ...headers,
         },
       });
     } catch (err) {

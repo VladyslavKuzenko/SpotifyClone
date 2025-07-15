@@ -18,6 +18,8 @@ import LeftSide from "./components/main-components/LeftSide";
 function App() {
   return (
     <>
+
+      <LeftSide />
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/player" element={<PlayerPage />} />
@@ -36,34 +38,6 @@ function App() {
         {/*    <Route path="/profile" element={<Profile />} /> */}
       </Routes>
     </>
-
-    //<Login/>
-    //<Register/>
-
-    //<Main/>
-
-    //<PlayerPage />
-
-    //<Profile/>
-
-    //<UserProfile/>
-
-    //<MyProfile/>
-
-    //<EditProfile/>
-
-    //<ChatPage/>
-
-    /*   <>
-      <LoginButton/>
-      <LogoutButton/>
-      <ExampleCrud/>
-  
-      <ChatPage/>
-      //<AuthForm/>
-  
-  
-      </> */
   );
 }
 

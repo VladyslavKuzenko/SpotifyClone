@@ -129,6 +129,7 @@ export async function handleUploadFile(content, file, apiAxiosPost, path) {
   formData.append("file", file);
 
   try {
+    console.log("apiAxiosPost")
     const res = await apiAxiosPost(`${path}${content.id}`, formData);
     const data = res.data;
 
