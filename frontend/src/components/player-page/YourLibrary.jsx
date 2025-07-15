@@ -26,7 +26,7 @@ const YourLibrary = ({ isPlaylistsChangesControl }) => {
   const [titlePlaylist, setTitlePlaylist] = useState("");
   const [sortType, setSortType] = useState("recent");
   const dropdownRef = useRef();
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
   // Hooks
   const { setCurrentSongList } = useAudio();
@@ -148,7 +148,10 @@ const navigate = useNavigate();
               <div className={styles["yl-plus"]}>+</div>
             </div>
             <div className={styles["go-likes"]}>
-              <button className={styles["golikes-btn"]} onClick={() => navigate("/likes")}></button>
+              <button
+                className={styles["golikes-btn"]}
+                onClick={() => navigate("/likes")}
+              ></button>
             </div>
           </div>
 
@@ -183,11 +186,9 @@ const navigate = useNavigate();
               <Select
                 classNamePrefix="sr-select"
                 value={options.find((opt) => opt.value === sortType)}
-
                 onChange={(e) => {
                   setSortType(e.value);
                   handleSortSongs(e.value);
-
                 }}
                 options={options}
                 isSearchable={false}

@@ -1,6 +1,5 @@
 import React from "react";
 import LeftSide from '../main-components/LeftSide'
-import SongItem from '../player-page/SongItem'
 import { useNavigate } from "react-router-dom";
 
 import styles from "./likes.module.css";

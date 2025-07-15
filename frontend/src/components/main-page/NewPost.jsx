@@ -28,6 +28,7 @@ const NewPost = ({ onClose }) => {
 
  const submiteStories = async () => {
     // console.log("File for story:", fileStory);
+    console.log("START !!!!!!!!!!!!!!!!!!!!!!!")
     const resultStory = {
       user: { id: user.sub },
       mediaType: fileStory.type.startsWith("image/") ? "IMAGE" : "VIDEO",
@@ -36,7 +37,7 @@ const NewPost = ({ onClose }) => {
       viewsCount: 0,
     };
 
-
+console.log("/story");
     const response = await apiFetch("/story", {
       method: "POST",
       headers: {
@@ -47,6 +48,7 @@ const NewPost = ({ onClose }) => {
     console.log("POST SUCCESS");
     const story = await response.json();
 
+console.log("/story/upload");
     const storyImgUrl = await handleUploadFile(
       story,
       fileStory,

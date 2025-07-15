@@ -237,6 +237,7 @@ export default function MiddleItem({
                         moreInfo
                         onSetCurrentSongList={() => setCurrentSongList(songs)}
                         isPlaylistsChangesControl={isPlaylistsChangesControl}
+                       
                         openMenu={openMenuSongId === song.id}
                         toggleMenu={() =>
                           setOpenMenuSongId(

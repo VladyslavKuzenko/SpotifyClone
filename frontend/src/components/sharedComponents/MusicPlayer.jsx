@@ -1,5 +1,5 @@
 import React, { use, useEffect, useState } from "react";
-import stylesFooter from "../player-page/player.module.css"; 
+import stylesFooter from "../player-page/player.module.css";
 import stylesLeft from "../main-page/main.module.css";
 
 import AudioControl from "./AudioControl";
@@ -48,9 +48,8 @@ const Modal = ({ onClose, song }) => {
 };
 
 const MusicPlayer = ({ footerPlayer }) => {
-  const { apiFetch}=useAPI()
-  const { currentSong, setCurrentSong, setCurrentSongList } =
-    useAudio();
+  const { apiFetch } = useAPI();
+  const { currentSong, setCurrentSong, setCurrentSongList } = useAudio();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { user, isLoading } = useAuth0();
@@ -63,7 +62,7 @@ const MusicPlayer = ({ footerPlayer }) => {
     setIsModalOpen(false);
   };
 
- /*  const fetchPlaylist = async () => {
+  /*  const fetchPlaylist = async () => {
     const response = await apiFetch(`/playlists/playlists/${user?.sub}/Like`);
     const data = await response.json();
     console.log("Playlist fetched:", data);
@@ -99,7 +98,7 @@ const MusicPlayer = ({ footerPlayer }) => {
               </div>
             </div>
 
-            <AudioControl footerPlayer/>
+            <AudioControl footerPlayer />
           </div>
 
           {isModalOpen && (
@@ -108,14 +107,12 @@ const MusicPlayer = ({ footerPlayer }) => {
         </div>
       ) : (
         <div className={stylesLeft["song-place-div"]}>
-
           <div className={stylesLeft["song-name"]}>{currentSong?.title}</div>
           <div className={stylesLeft.singer}>
             {currentSong?.artist?.user?.username}
           </div>
           <div className={stylesLeft["circle-song"]}></div>
           <AudioControl />
-
         </div>
       )}
     </>
