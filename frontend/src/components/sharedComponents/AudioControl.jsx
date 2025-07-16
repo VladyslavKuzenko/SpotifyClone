@@ -105,7 +105,6 @@ export default function AudioControl({ footerPlayer, isHovered }) {
       ) : (
         <>
           <div className={stylesPlayer["mrb-centerls"]}>
-            <audio ref={audioRef} />
             <div className={stylesPlayer["bmr-controls"]}>
               {/* Додано style для керування видимістю */}
               <button
