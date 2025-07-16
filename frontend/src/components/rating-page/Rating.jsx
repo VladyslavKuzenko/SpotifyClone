@@ -12,53 +12,53 @@ export default function Rating() {
   const [periodIsDropdownOpen, setPeriodIsDropdownOpen] = useState(false);
   const [periodSelectedOption, setPeriodSelectedOption] = useState("All time");
   const periodDropdownRef = useRef(null);
-  const [artist,setArtists]=useState([])
-  const [tracks,setTracks]=useState([])
-  const {apiFetch}=useAPI();
-  const {isLoading}=useAuth0();
-  const {setCurrentSong,setCurrentSongList}=useAudio();
+  const [artist, setArtists] = useState([])
+  const [tracks, setTracks] = useState([])
+  const { apiFetch } = useAPI();
+  const { isLoading } = useAuth0();
+  const { setCurrentSong, setCurrentSongList } = useAudio();
 
 
 
   const fetchUsers = async () => {
-    if(isLoading) return;
+    if (isLoading) return;
     console.log("Rating: fetchUsers()");
 
-    const response=await apiFetch("/artists/top/0/5");
-    const data=await response.json();
+    const response = await apiFetch("/artists/top/0/5");
+    const data = await response.json();
     setArtists(data);
 
-    console.log("Rating: data: ",data)
+    console.log("Rating: data: ", data)
   };
   const fetchTracks = async () => {
-     if(isLoading) return;
+    if (isLoading) return;
     console.log("Rating: fetchTracks()");
     var period;
     switch (periodSelectedOption) {
       case "Last 24 hours":
-        period="day";
+        period = "day";
         break;
-       case "Last 7 days":
-        period="week";
+      case "Last 7 days":
+        period = "week";
         break;
-       case "Monthly":
-        period="month";
+      case "Monthly":
+        period = "month";
         break;
-       case "Year":
-        period="year";
+      case "Year":
+        period = "year";
         break;
-       case "All time":
-        period="all";
+      case "All time":
+        period = "all";
         break;
-    
+
       default:
         break;
     }
-    const response=await apiFetch(`/tracks/top?first=0&count=10&period=${period}`);
-    const data=await response.json();
+    const response = await apiFetch(`/tracks/top?first=0&count=10&period=${period}`);
+    const data = await response.json();
     setTracks(data);
 
-    console.log("Rating: track data: ",data)
+    console.log("Rating: track data: ", data)
   };
   const toggleTypeDropdown = () => {
     setTypeDropdownOpen(!isTypeDropdownOpen);
@@ -81,10 +81,10 @@ export default function Rating() {
     setPeriodIsDropdownOpen(false);
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchUsers();
     fetchTracks();
-  },[isLoading,periodSelectedOption])
+  }, [isLoading, periodSelectedOption])
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -131,9 +131,9 @@ export default function Rating() {
     periodSelectedOption === "Monthly"
       ? periodOptions
       : [
-          periodSelectedOption,
-          ...periodOptions.filter((opt) => opt !== periodSelectedOption),
-        ];
+        periodSelectedOption,
+        ...periodOptions.filter((opt) => opt !== periodSelectedOption),
+      ];
 
   return (
     <>
@@ -203,7 +203,7 @@ export default function Rating() {
                   )}
                 </div>
 
-               
+
               </div>
             </div>
 
@@ -217,33 +217,33 @@ export default function Rating() {
               </div>
             </div>
 
- <div className={styles["upper-right"]}>
-            <div className={styles["scroll-container"]}>
-              {tracks.map((item, index) => (
-                <div key={index} className={styles["scroll-item"]} onClick={()=>{
-                  setCurrentSong(item);
-                  setCurrentSongList(tracks);
-                }}>
-                  <div className={styles["item-place"]}>{index + 1}</div>
-                  <div className={styles["item-info"]}>
-                    <div className={styles["item-photo"]}></div>
-                    <div className={styles["inside-info"]}>
-                      <div className={styles["inside-name"]}>{item.title}</div>
-                      <div className={styles["inside-singer"]}>
-                        {item.artist.user.username}
-                      </div>
-                      <div className={styles["inside-listeners"]}>
-                        {item.listeningCount} listeners
+            <div className={styles["upper-right"]}>
+              <div className={styles["scroll-container"]}>
+                {tracks.map((item, index) => (
+                  <div key={index} className={styles["scroll-item"]} onClick={() => {
+                    setCurrentSong(item);
+                    setCurrentSongList(tracks);
+                  }}>
+                    <div className={styles["item-place"]}>{index + 1}</div>
+                    <div className={styles["item-info"]}>
+                      <div className={styles["item-photo"]}></div>
+                      <div className={styles["inside-info"]}>
+                        <div className={styles["inside-name"]}>{item.title}</div>
+                        <div className={styles["inside-singer"]}>
+                          {item.artist.user.username}
+                        </div>
+                        <div className={styles["inside-listeners"]}>
+                          {item.listeningCount} listeners
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
-          </div>
 
-         
+
         </div>
 
         <div className={styles["bottom-platform"]}>

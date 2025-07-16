@@ -51,8 +51,9 @@ html {
   position: relative;
   font-size: 16px;
   background-color: transparent;
-
+  border-radius: 32px; 
 }
+
 
 .left-side:hover .menu-btn {
   justify-content: center;
@@ -139,6 +140,7 @@ html {
   background-size: 60%;
   background-position: center;
   background-position-y: 5px;
+
 
 }
 
