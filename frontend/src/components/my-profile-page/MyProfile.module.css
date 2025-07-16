@@ -1,3 +1,7 @@
+body * {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 .container {
     width: 100%;
     height: 2000px;
@@ -223,7 +227,6 @@
 .functional-container1 {
     width: 100%;
     height: auto;
-    margin-top: 100px;
     display: flex;
     flex-wrap: wrap;
 }
@@ -231,6 +234,7 @@
 .saved-album-container {
     width: 54%;
     height: 100%;
+
 }
 
 
@@ -270,30 +274,41 @@
     display: flex;
     flex-wrap: wrap;
     width: 100%;
-    height: 570px;
+    max-height: 570px;
     justify-content: flex-start;
-    gap: 10px;
+    gap: 15px;
     overflow-y: auto;
     overflow-x: hidden;
     scrollbar-width: none;
-    padding: 10px;
     box-sizing: border-box;
 }
 
 .album-item {
-    flex: 1 1 270px;
-    /* базова ширина: 270px, але може стискатись */
-    min-width: 200px;
-    /* не менше 200px */
-    height: auto;
-    aspect-ratio: 1 / 1;
-    background-color: #D9D9D9;
-    border-radius: 15px;
+  position: relative;
+  flex: 1 1 30%;
+  max-width: 270px;
+  min-width: 200px;
+  aspect-ratio: 1 / 1;
+  border-radius: 15px;
+  box-sizing: border-box;
+  overflow: hidden;
+  isolation: isolate;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+    background-color: rgb(95, 93, 93);
+
 }
 
+
+
 .it-container {
-    margin-top: 77%;
-    text-indent: 23px;
+    position: absolute;
+    bottom: 7%;
+    left: 0;
+    width: 100%;
+    padding-left: 23px;
+    box-sizing: border-box;
+    z-index: 2;
 }
 
 .ait-name {
@@ -302,7 +317,7 @@
     font-size: 24px;
     line-height: 120%;
     letter-spacing: 0%;
-    color: #161616;
+    color: #FFFFFF;
 }
 
 .ait-author {
@@ -310,7 +325,7 @@
     font-weight: 400;
     font-size: 10px;
     letter-spacing: 0%;
-    color: #161616;
+    color: #FFFFFF;
 }
 
 .song-array {
@@ -893,4 +908,23 @@
     display: flex;
     justify-content: space-between;
     align-items: end;
+}
+
+.delete-item {
+    position: relative;
+    top: 3%;
+    left: calc(97% - 35px);
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: white;
+    font-size: 30px;
+    background-image: url('/public/images/cross.png');
+    background-size: 40%;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 2;
 }

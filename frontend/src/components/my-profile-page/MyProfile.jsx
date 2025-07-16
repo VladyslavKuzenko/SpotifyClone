@@ -110,7 +110,7 @@ const MyProfile = ({ profileInfo }) => {
         <div className={styles['functional-container1']}>
           <div className={styles['saved-album-container']}>
             <div className={styles['svyazka']}>
-              <div className={styles['saved-album-text']}>Your Albums</div>
+              <div className={styles['saved-album-text']}>Saved Albums</div>
               <button className={styles['add-btn']} onClick={() => setShowModal1(true)}>Add +</button>
             </div>
             <div className={styles['album-array']}>
