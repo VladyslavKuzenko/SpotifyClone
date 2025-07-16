@@ -12,8 +12,9 @@ import SongItem from "../player-page/SongItem";
 import PostItem from "../main-page/PostItem";
 import AddAlbumModal from "./AddAlbumModal"
 import AddMusicModal from "./AddMusicModal"
+import FollowersModal from "./FollowersModal";
 
-const MyProfile = () => {
+const MyProfile = ({ profileInfo }) => {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [showModal1, setShowModal1] = useState(false);
@@ -22,7 +23,17 @@ const MyProfile = () => {
   const { setCurrentSong, setCurrentSongList } = useAudio();
   const [userFullInfo, setUserFullInfo] = useState("");
   const [songs, setSongs] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState("followers");
 
+  const openModal = (tab) => {
+    setActiveTab(tab);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
   const fetchUser = async () => {
     const respose = await apiFetch(`/users/${user.sub}`);
     const data = await respose.json();
@@ -77,14 +88,24 @@ const MyProfile = () => {
 
         <div className={styles["profile-bio"]}>{userFullInfo?.shortBio}</div>
 
-        <div className={styles["followers-follows"]}>
-          <div className={styles["ff-followers"]}>
-            {userFullInfo?.followersCount} followers
-          </div>
-          <div className={styles["ff-follows"]}>
-            {userFullInfo?.followingsCount} follows
-          </div>
+         <div className={styles["followers-follows"]}>
+        <div
+          className={styles["ff-followers"]}
+          onClick={() => openModal("followers")}
+        >
+          {userFullInfo?.followersCount} followers
         </div>
+        <div
+          className={styles["ff-follows"]}
+          onClick={() => openModal("follows")}
+        >
+          {userFullInfo.followingsCount} follows
+        </div>
+      </div>
+
+      {isModalOpen && (
+        <FollowersModal activeTab={activeTab} onClose={closeModal} />
+      )}
 
         <div className={styles['functional-container1']}>
           <div className={styles['saved-album-container']}>
@@ -120,8 +141,6 @@ const MyProfile = () => {
             </div>
             <div className={styles["song-array"]}>
               {songs.map((song, index) => (
-                //  <>
-                //  </>
                 <SongItem
                   key={song.id}
                   song={song}

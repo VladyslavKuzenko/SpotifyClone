@@ -45,7 +45,7 @@ const AddAlbumModal = ({ onClose }) => {
         <div className={styles['amm-overlay']}>
             <div className={styles['abm-modal']}>
                 <div className={styles['amm-left']}>
-                    <h3 className={styles['h3']}>Add music</h3>
+                    <h3 className={styles['h3']}>Add album</h3>
                     <div className={styles['amm-photo']}></div>
                     <button className={styles['cover-btn']}>+ Cover</button>
                 </div>
