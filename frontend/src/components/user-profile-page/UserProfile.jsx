@@ -32,7 +32,6 @@ const UserProfile = () => {
 
   return (
     <div className={styles.container}>
-      {/* <LeftSide /> */}
       <div className={styles['empty-div1']}></div>
       <div className={styles['profile-side']}>
         <div className={styles['channel-hat']}>

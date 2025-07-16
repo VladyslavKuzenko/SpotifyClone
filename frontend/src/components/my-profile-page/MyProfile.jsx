@@ -69,7 +69,6 @@ const MyProfile = ({ profileInfo }) => {
 
   return (
     <div className={styles.container}>
-      <LeftSide />
 
       <div className={styles["empty-div1"]}></div>
 

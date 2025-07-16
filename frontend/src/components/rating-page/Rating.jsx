@@ -137,7 +137,6 @@ export default function Rating() {
 
   return (
     <>
-      <LeftSide /> 
       <div className={styles["raitinig-container"]}>
         <div className={styles["upper-platform"]}>
           <div className={styles["upper-left"]}>
@@ -217,16 +216,15 @@ export default function Rating() {
                 <div className={styles["info-listeners"]}>{tracks[0]?.listeningCount} listeners</div>
               </div>
             </div>
-          </div>
 
-          <div className={styles["upper-right"]}>
+ <div className={styles["upper-right"]}>
             <div className={styles["scroll-container"]}>
               {tracks.map((item, index) => (
                 <div key={index} className={styles["scroll-item"]} onClick={()=>{
                   setCurrentSong(item);
                   setCurrentSongList(tracks);
                 }}>
-                  <div className={styles["item-place"]}>{index}</div>
+                  <div className={styles["item-place"]}>{index + 1}</div>
                   <div className={styles["item-info"]}>
                     <div className={styles["item-photo"]}></div>
                     <div className={styles["inside-info"]}>
@@ -243,6 +241,9 @@ export default function Rating() {
               ))}
             </div>
           </div>
+          </div>
+
+         
         </div>
 
         <div className={styles["bottom-platform"]}>
@@ -254,7 +255,7 @@ export default function Rating() {
                 <div className={styles["raite-center"]}>
                   <div className={styles["raite-text"]}>{artist[0]?.user?.username}</div>
                 </div>
-                <div className={styles["raite-end"]}></div>
+                <div className={styles["raite-end1"]}></div>
               </div>
               <div className={styles["raite-listeners"]}>{artist[0]?.listeningCount} listeners</div>
             </div>
@@ -265,7 +266,7 @@ export default function Rating() {
                 <div className={styles["raite-center"]}>
                   <div className={styles["raite-text"]}>{artist[1]?.user?.username}</div>
                 </div>
-                <div className={styles["raite-end"]}></div>
+                <div className={styles["raite-end2"]}></div>
               </div>
               <div className={styles["raite-listeners"]}>{artist[1]?.listeningCount} listeners</div>
             </div>
@@ -276,7 +277,7 @@ export default function Rating() {
                 <div className={styles["raite-center"]}>
                   <div className={styles["raite-text"]}>{artist[2]?.user?.username}</div>
                 </div>
-                <div className={styles["raite-end"]}></div>
+                <div className={styles["raite-end3"]}></div>
               </div>
               <div className={styles["raite-listeners"]}>{artist[2]?.listeningCount} listeners</div>
             </div>
@@ -287,7 +288,7 @@ export default function Rating() {
                 <div className={styles["raite-center"]}>
                   <div className={styles["raite-text"]}>{artist[3]?.user?.username}</div>
                 </div>
-                <div className={styles["raite-end"]}></div>
+                <div className={styles["raite-end4"]}></div>
               </div>
               <div className={styles["raite-listeners"]}>{artist[3]?.listeningCount} listeners</div>
             </div>
@@ -298,7 +299,7 @@ export default function Rating() {
                 <div className={styles["raite-center"]}>
                   <div className={styles["raite-text"]}>{artist[4]?.user?.username}</div>
                 </div>
-                <div className={styles["raite-end"]}></div>
+                <div className={styles["raite-end5"]}></div>
               </div>
               <div className={styles["raite-listeners"]}>{artist[4]?.listeningCount} listeners</div>
             </div>
