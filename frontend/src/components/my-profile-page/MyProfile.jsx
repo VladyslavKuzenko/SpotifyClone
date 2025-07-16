@@ -10,12 +10,12 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useAudio } from "../../hooks/useAudio";
 import SongItem from "../player-page/SongItem";
 import PostItem from "../main-page/PostItem";
-import AddMusicModal from "./AddMusicModal";
 import AddAlbumModal from "./AddAlbumModal"
+import AddMusicModal from "./AddMusicModal"
 
 const MyProfile = () => {
   const navigate = useNavigate();
-   const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [showModal1, setShowModal1] = useState(false);
   const { user, isLoading } = useAuth0();
   const { apiFetch } = useAPI();
@@ -58,7 +58,7 @@ const MyProfile = () => {
 
   return (
     <div className={styles.container}>
-      <LeftSide /> 
+      <LeftSide />
 
       <div className={styles["empty-div1"]}></div>
 
@@ -99,8 +99,8 @@ const MyProfile = () => {
             </div>
           </div>
 
-      
-        {/* // <div className={styles["functional-container1"]}>
+
+          {/* // <div className={styles["functional-container1"]}>
         //   <div className={styles["saved-album-container"]}>
         //     <div className={styles["saved-album-text"]}>Saved Albums</div>
         //     <div className={styles["album-array"]}>
@@ -113,12 +113,16 @@ const MyProfile = () => {
         //   </div> */}
 
           <div className={styles["saved-songs-container"]}>
-            <div className={styles["saved-songs-text"]}>Saved Songs</div>
+            <div className={styles['svyazka']}>
+
+              <div className={styles["saved-songs-text"]}>Saved Songs</div>
+              <button className={styles['add-btn']} onClick={() => setShowModal(true)}>Add +</button>
+            </div>
             <div className={styles["song-array"]}>
               {songs.map((song, index) => (
-            //  <>
-            //  </>
-             <SongItem
+                //  <>
+                //  </>
+                <SongItem
                   key={song.id}
                   song={song}
                   moreInfo
@@ -133,7 +137,7 @@ const MyProfile = () => {
         <div className={styles["bottom-place"]}>
           <div className={styles["posts-place"]}>
             <div className={styles["posts-text"]}>Posts</div>
-            <PostItem selectedTab="user"/>
+            <PostItem selectedTab="user" />
             <div className={styles["posts-array"]}></div>
           </div>
           <div className={styles["groups-place"]}>
