@@ -13,7 +13,8 @@ import PostItem from "../main-page/PostItem";
 import AddAlbumModal from "./AddAlbumModal"
 import AddMusicModal from "./AddMusicModal"
 import FollowersModal from "./FollowersModal";
-
+import UserLikedMediaLibrary from "./UserLikedMediaLibrary";
+import ArtistOwnMediaLibrary from "./ArtistOwnMediaLibrary";
 const MyProfile = ({ profileInfo }) => {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
@@ -25,6 +26,7 @@ const MyProfile = ({ profileInfo }) => {
   const [songs, setSongs] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("followers");
+  const [activeTab1, setActiveTab1] = useState("profile");
 
   const openModal = (tab) => {
     setActiveTab(tab);
@@ -67,6 +69,10 @@ const MyProfile = ({ profileInfo }) => {
     return <div>Loading...</div>;
   }
 
+
+  const isArtist = true; //перевірка чи артист
+
+
   return (
     <div className={styles.container}>
 
@@ -87,94 +93,121 @@ const MyProfile = ({ profileInfo }) => {
 
         <div className={styles["profile-bio"]}>{userFullInfo?.shortBio}</div>
 
-         <div className={styles["followers-follows"]}>
-        <div
-          className={styles["ff-followers"]}
-          onClick={() => openModal("followers")}
-        >
-          {userFullInfo?.followersCount} followers
+        <div className={styles["followers-follows"]}>
+          <div
+            className={styles["ff-followers"]}
+            onClick={() => openModal("followers")}
+          >
+            {userFullInfo?.followersCount} followers
+          </div>
+          <div
+            className={styles["ff-follows"]}
+            onClick={() => openModal("follows")}
+          >
+            {userFullInfo.followingsCount} follows
+          </div>
         </div>
-        <div
-          className={styles["ff-follows"]}
-          onClick={() => openModal("follows")}
-        >
-          {userFullInfo.followingsCount} follows
-        </div>
-      </div>
 
-      {isModalOpen && (
-        <FollowersModal activeTab={activeTab} onClose={closeModal} />
-      )}
+        {isModalOpen && (
+          <FollowersModal activeTab={activeTab} onClose={closeModal} />
+        )}
 
-        <div className={styles['functional-container1']}>
-          <div className={styles['saved-album-container']}>
-            <div className={styles['svyazka']}>
-              <div className={styles['saved-album-text']}>Saved Albums</div>
-              <button className={styles['add-btn']} onClick={() => setShowModal1(true)}>Add +</button>
+
+        {isArtist ? ( //перевірка артист
+
+          <div>
+            {/* Вкладки */}
+            <div className={styles["tabs-container"]}>
+
+              <div className={styles["tabs-palce"]}>
+                <button
+                  className={activeTab1 === "profile" ? styles["tab-active"] : styles["tab"]}
+                  onClick={() => setActiveTab1("profile")}
+                >
+                  Profile
+                </button>
+                <button
+                  className={activeTab1 === "artistTools" ? styles["tab-active"] : styles["tab"]}
+                  onClick={() => setActiveTab1("artistTools")}
+                >
+                  Artist tools
+                </button>
+              </div>
             </div>
-            <div className={styles['album-array']}>
-              {Array(12).fill(0).map((_, idx) => (
-                <AlbumItem key={idx} />
-              ))}
+
+            {/* Контент вкладок */}
+            <div className={styles["tab-content"]}>
+              {activeTab1 === "profile" && (
+                <UserLikedMediaLibrary />
+                
+
+              )}
+
+              {activeTab1 === "artistTools" && (
+                <ArtistOwnMediaLibrary />
+
+              )}
             </div>
           </div>
 
 
-          {/* // <div className={styles["functional-container1"]}>
-        //   <div className={styles["saved-album-container"]}>
-        //     <div className={styles["saved-album-text"]}>Saved Albums</div>
-        //     <div className={styles["album-array"]}>
-        //       {Array(12)
-        //         .fill(0)
-        //         .map((_, idx) => (
-        //           <AlbumItem key={idx} />
-        //         ))}
-        //     </div>
-        //   </div> */}
-
-          <div className={styles["saved-songs-container"]}>
-            <div className={styles['svyazka']}>
-
-              <div className={styles["saved-songs-text"]}>Saved Songs</div>
-              <button className={styles['add-btn']} onClick={() => setShowModal(true)}>Add +</button>
+        ) : (  //перевірка не артист
+          <div> <div className={styles['functional-container1']}>
+            <div className={styles['saved-album-container']}>
+              <div className={styles['svyazka']}>
+                <div className={styles['saved-album-text']}>Saved Albums</div>
+                <button className={styles['add-btn']} onClick={() => setShowModal1(true)}>Add +</button>
+              </div>
+              <div className={styles['album-array']}>
+                {Array(12).fill(0).map((_, idx) => (
+                  <AlbumItem key={idx} />
+                ))}
+              </div>
             </div>
-            <div className={styles["song-array"]}>
-              {songs.map((song, index) => (
-                <SongItem
-                  key={song.id}
-                  song={song}
-                  moreInfo
-                  onSetCurrentSongList={() => setCurrentSongList(songs)}
-                />
-              ))}
+
+            <div className={styles["saved-songs-container"]}>
+              <div className={styles['svyazka']}>
+
+                <div className={styles["saved-songs-text"]}>Saved Songs</div>
+                <button className={styles['add-btn']} onClick={() => setShowModal(true)}>Add +</button>
+              </div>
+              <div className={styles["song-array"]}>
+                {songs.map((song, index) => (
+                  <SongItem
+                    key={song.id}
+                    song={song}
+                    moreInfo
+                    onSetCurrentSongList={() => setCurrentSongList(songs)}
+                  />
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-
-
-        <div className={styles["bottom-place"]}>
-          <div className={styles["posts-place"]}>
-            <div className={styles["posts-text"]}>Posts</div>
-            <PostItem selectedTab="user" />
-            <div className={styles["posts-array"]}></div>
-          </div>
-          <div className={styles["groups-place"]}>
-            <div className={styles["groups-text"]}>Groups</div>
-            <div className={styles["groups-container"]}>
-              {[...Array(12)].map((_, i) => (
-                <div key={i} className={styles["grp-hiphop-heads"]}>
-                  <div className={styles["grp-avatar"]}></div>
-                  <div className={styles["grp-info"]}>
-                    <div className={styles["grp-name"]}>Hip-Hop Heads</div>
-                    <div className={styles["grp-followers"]}>
-                      35477 followers
+            <div className={styles["bottom-place"]}>
+              <div className={styles["posts-place"]}>
+                <div className={styles["posts-text"]}>Posts</div>
+                <PostItem selectedTab="user" />
+                <div className={styles["posts-array"]}></div>
+              </div>
+              <div className={styles["groups-place"]}>
+                <div className={styles["groups-text"]}>Groups</div>
+                <div className={styles["groups-container"]}>
+                  {[...Array(12)].map((_, i) => (
+                    <div key={i} className={styles["grp-hiphop-heads"]}>
+                      <div className={styles["grp-avatar"]}></div>
+                      <div className={styles["grp-info"]}>
+                        <div className={styles["grp-name"]}>Hip-Hop Heads</div>
+                        <div className={styles["grp-followers"]}>
+                          35477 followers
+                        </div>
+                      </div>
                     </div>
-                  </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </div>
-        </div>
+              </div>
+            </div></div>
+        )}
+
       </div>
 
       {showModal && <AddMusicModal onClose={() => setShowModal(false)} />}
