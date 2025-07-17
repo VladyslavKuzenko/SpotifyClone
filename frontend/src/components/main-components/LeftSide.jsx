@@ -16,22 +16,34 @@ const LeftSide = () => {
       </div>
 
       <div className={styles["pages-btns-div"]}>
-        <button className={styles["menu-btn"]} onClick={() => navigate("/")}>
+        <button
+          className={`${styles["menu-btn"]} ${location.pathname === "/" ? styles.active1 : ""}`}
+          onClick={() => navigate("/")}
+        >
           <span className={`${styles.icon} ${styles.homeIcon}`}></span>
           <span className={styles.label}>Home</span>
         </button>
 
-        <button className={styles["menu-btn"]} onClick={() => navigate("/player")}>
+        <button
+          className={`${styles["menu-btn"]} ${location.pathname === "/player" ? styles.active1 : ""}`}
+          onClick={() => navigate("/player")}
+        >
           <span className={`${styles.icon} ${styles.playerIcon}`}></span>
           <span className={styles.label}>Player</span>
         </button>
 
-        <button className={styles["menu-btn"]} onClick={() => navigate("/my-profile")}>
+        <button
+          className={`${styles["menu-btn"]} ${location.pathname === "/my-profile" ? styles.active1 : ""}`}
+          onClick={() => navigate("/my-profile")}
+        >
           <span className={`${styles.icon} ${styles.profileIcon}`}></span>
           <span className={styles.label}>Profile</span>
         </button>
 
-        <button className={styles["menu-btn"]} onClick={() => navigate("/rating")}>
+        <button
+          className={`${styles["menu-btn"]} ${location.pathname === "/rating" ? styles.active1 : ""}`}
+          onClick={() => navigate("/rating")}
+        >
           <span className={`${styles.icon} ${styles.ratingIcon}`}></span>
           <span className={styles.label}>Rating</span>
         </button>
@@ -42,7 +54,7 @@ const LeftSide = () => {
         </button>
       </div>
 
-      <MusicPlayer isHovered={isHovered}/>
+      <MusicPlayer isHovered={isHovered} />
     </div>
   );
 };
