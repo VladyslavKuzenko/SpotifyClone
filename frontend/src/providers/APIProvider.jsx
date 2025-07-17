@@ -54,7 +54,7 @@ export const APIProvider = ({ children }) => {
 
     if (isAuthenticated) {
       try {
-        console.log("token start");
+        console.log("token start",API_URL);
 
         const token = await getAccessTokenSilently({
           authorizationParams: {
@@ -72,6 +72,14 @@ export const APIProvider = ({ children }) => {
         console.log("Failed to get token");
       }
     }
+
+    return await fetch(`${BASE_API_URL}${path}`, {
+      ...options,
+      headers,
+    });
+  };
+  const apiFetchWithoutAutorization = async (path, options = {}) => {
+    let headers = options.headers || {};
 
     return await fetch(`${BASE_API_URL}${path}`, {
       ...options,
@@ -108,6 +116,7 @@ export const APIProvider = ({ children }) => {
         apiFetch,
         refreshProfileConfirmation,
         refreshProfileConfirmation,
+        apiFetchWithoutAutorization,
         isLoading,
         apiAxiosPost,
       }}

@@ -27,10 +27,18 @@ public class SecurityConfig {
 //                        .requestMatchers("/api/public").permitAll()
 //                        .requestMatchers("/api/private").authenticated()
 //                        .requestMatchers("/api/private-scoped").hasAuthority("SCOPE_read:messages")
-                                .anyRequest().authenticated()
+//                         .anyRequest().permitAll()
+
+                                .requestMatchers("/users/hasProfileConfirmation/**").permitAll()
+                                .requestMatchers("/countries").permitAll()
+                                .requestMatchers("/goals").permitAll()
+                                .requestMatchers("/genres").permitAll()
+                                .requestMatchers("/vibes").permitAll()
+                      //   .anyRequest().permitAll()
+                    .anyRequest().authenticated()
                 )
                 .cors(withDefaults())
-               // .csrf(withDefaults())
+                // .csrf(withDefaults())
 
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(withDefaults())
