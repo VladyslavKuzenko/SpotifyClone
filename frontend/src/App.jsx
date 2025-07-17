@@ -22,39 +22,8 @@ function App() {
       <Route path="/rating" element={<Rating />} />
       <Route path="/likes" element={<Likes />} />
       <Route path="/profileSetup" element={<ProfileSetup />} />
-   {/*    <Route path="/profile" element={<Profile />} /> */}
-
-
+   {/*<Route path="/profile" element={<Profile />} /> */}
     </Routes>
-    //<Login/>
-    //<Register/>
-
-    //<Main/>
-
-    //<PlayerPage />
-
-    //<Profile/>
-
-    //<UserProfile/>
-
-    //<MyProfile/>
-
-    //<EditProfile/>
-
-    //<ChatPage/>
-
-    
-    /*   <>
-      <LoginButton/>
-      <LogoutButton/>
-      <ExampleCrud/>
-  
-      <ChatPage/>
-      //<AuthForm/>
-  
-  
-      </> */
-
   );
 }
 

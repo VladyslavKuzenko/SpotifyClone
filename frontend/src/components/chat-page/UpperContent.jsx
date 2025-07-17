@@ -1,14 +1,26 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import styles from "./ChatPage.module.css";
+import { useAPI } from "../../hooks/useApi";
 
-const UpperContent = () => {
+const UpperContent = ({ chat }) => {
+    const { apiFetch } = useAPI();
+
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [activeTab, setActiveTab] = useState("images");
+    const [title, setTitle] = useState("...");
     const modalRef = useRef(null);
 
     const toggleModal = () => {
         setIsModalOpen((prev) => !prev);
     };
+
+    const fetchTitle = async () => {
+        if (chat !== null) {
+            const response = await apiFetch(`/chats/${chat.id}/title`);
+            const data = await response.json();
+            setTitle(data.title);
+        }
+    }
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -21,15 +33,17 @@ const UpperContent = () => {
             }
         };
 
+        fetchTitle();
+
         document.addEventListener("mousedown", handleClickOutside);
         return () => document.removeEventListener("mousedown", handleClickOutside);
-    }, []);
+    }, [chat]);
 
     return (
         <div className={styles["upper-content"]}>
             <div className={styles["user-ava"]}></div>
             <div className={styles["user-ns"]}>
-                <div className={styles["user-name"]}>User Nickname</div>
+                <div className={styles["user-name"]}>{title}</div>
                 <div className={styles["user-status"]}>Online</div>
             </div>
             <div className={styles["user-listening"]}>

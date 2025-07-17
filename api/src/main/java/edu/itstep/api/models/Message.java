@@ -3,6 +3,7 @@ package edu.itstep.api.models;
 import edu.itstep.api.models.contentModels.ContentType;
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -12,15 +13,13 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "sent_datetime", nullable = false)
-    private Date sentDateTime;
+    private LocalDateTime sentDateTime;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
     @ManyToOne
     @JoinColumn(name = "chat_id")
     private Chat chat;
-    @Column(name = "content_type", nullable = false)
-    private ContentType contentType;
     @Column(name = "content_json", nullable = false)
     private String contentJson;
 
@@ -35,11 +34,11 @@ public class Message {
         this.id = id;
     }
 
-    public Date getSentDateTime() {
+    public LocalDateTime getSentDateTime() {
         return sentDateTime;
     }
 
-    public void setSentDateTime(Date sentDateTime) {
+    public void setSentDateTime(LocalDateTime sentDateTime) {
         this.sentDateTime = sentDateTime;
     }
 
@@ -57,14 +56,6 @@ public class Message {
 
     public void setChat(Chat chat) {
         this.chat = chat;
-    }
-
-    public ContentType getContentType() {
-        return contentType;
-    }
-
-    public void setContentType(ContentType contentType) {
-        this.contentType = contentType;
     }
 
     public String getContentJson() {

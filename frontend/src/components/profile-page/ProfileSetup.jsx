@@ -45,7 +45,7 @@ export default function ProfileSetup() {
     setVibes(data);
   };
 
-  const isUsernameUnique = async (username) =>{
+  const isUsernameUnique = async (username) => {
     const response = await apiFetch(`/users/isUsernameUnique/${username}`);
     const data = await response.json();
     return data;
@@ -105,17 +105,17 @@ export default function ProfileSetup() {
   function isVibeSelected(vibe) {
     return selectedVibes.find(v => v.id === vibe.id)
   }
-
+  
   async function submitProfileSetup() {
-    
+    navigate("/", { replace: true });
+
     await getAccessTokenWithPopup({
       authorizationParams: {
         audience: API_URL
       },
     });
 
-    if(!isUsernameUnique(username))
-    {
+    if (!await isUsernameUnique(username)) {
       return;
     }
 
@@ -146,7 +146,6 @@ export default function ProfileSetup() {
     } catch (err) {
       console.error(err);
     }
-    return <Navigate to="/" replace />;
   }
 
   return (
@@ -230,7 +229,7 @@ export default function ProfileSetup() {
         </div>
 
         <div className={styles.f}>
-          <button className={styles["cnt-btn"]} onClick={submitProfileSetup}>Continue</button>
+          <button className={styles["cnt-btn"]} onClick={async ()=>{await submitProfileSetup();}}>Continue</button>
         </div>
       </div>
     </div>

@@ -1,32 +1,83 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import styles from "./ChatPage.module.css";
-import ChatList from './ChatList'
-import MyMessageItem from './MyMessageItem'
-import UserMessageItem from './UserMessageItem'
-import Footer from './Footer'
+import ChatList from './ChatList';
+import MessageItem from './MessageItem';
+import MessageInputField from './MessageInputField';
 import UpperContent from "./UpperContent";
+import { useAuth0 } from "@auth0/auth0-react";
+import { useAPI } from "../../hooks/useApi";
+
 const ChatPage = () => {
+    const { user, isLoading } = useAuth0();
+    const { apiFetch } = useAPI();
+    const [currentChat, setCurrentChat] = useState(null);
+    const [messages, setMessages] = useState([]);
+    const [chatId, setChatId] = useState(null);
+
+    const fetchChat = async (id) => {
+        const response = await apiFetch(`/chats/${id}`);
+        const text = await response.text();
+        if (!text) return;
+        const data = JSON.parse(text);
+        setCurrentChat(data);
+    };
+
+    const fetchMessages = async (id) => {
+        const response = await apiFetch(`/messages/byChatId/${id}`);
+        const text = await response.text();
+        if (!text) return;
+        const data = JSON.parse(text);
+
+        const lastNew = data[data.length - 1]?.sentDateTime;
+        const lastOld = messages[messages.length - 1]?.sentDateTime;
+
+        if (lastNew !== lastOld) {
+            setMessages(data);
+        }
+
+        console.log(messages);
+        
+    };
+
+    useEffect(() => {
+        if (chatId !== null && chatId !== -1 && !isLoading) {
+            fetchChat(chatId);
+            fetchMessages(chatId);
+        }
+    }, [chatId, isLoading]);
+
+    useEffect(() => {
+        if (chatId === null || chatId === -1) return;
+
+        const interval = setInterval(() => {
+            fetchMessages(chatId);
+        }, 5000);
+
+        return () => clearInterval(interval);
+    }, [chatId]);
+
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
+
     return (
         <div className={styles.container}>
             <div className={styles["right-side"]}>
-                <ChatList />
-
+                <ChatList onChatSelected={setChatId} />
                 <div className={styles["chat-messages"]}>
                     <div className={styles["upper-side"]}>
-                     <UpperContent/>
+                        <UpperContent chat={currentChat} />
                     </div>
-
                     <div className={styles["middle-side"]}>
-                        {[...Array(12)].map((_, i) => (
-                            <React.Fragment key={i}>
-                                <MyMessageItem />
-                                <UserMessageItem />
-
-                            </React.Fragment>
-                        ))}
+                        {messages.map((msg) =>
+                            <MessageItem
+                                key={msg.id}
+                                message={msg}
+                                isFromSender={msg.user?.id === user.sub}
+                            />
+                        )}
                     </div>
-
-                    <Footer/>
+                    <MessageInputField chatId={currentChat?.id} onSend={() => fetchMessages(chatId)} />
                 </div>
             </div>
         </div>

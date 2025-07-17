@@ -134,10 +134,6 @@ public class UserController {
 
     @GetMapping("/isUsernameUnique/{username}")
     public Boolean isUsernameUnique(@PathVariable String username) {
-        System.out.println("!!!!!!!!!!");
-        System.out.println(username);
-        boolean value = userRepository.existsById(username);
-        System.out.println(value);
-        return value;
+        return !userRepository.existsById(username);
     }
 }

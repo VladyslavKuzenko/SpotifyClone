@@ -3,7 +3,7 @@ import { Auth0Provider } from "@auth0/auth0-react";
 import App from "./App.jsx";
 import { BrowserRouter } from "react-router-dom";
 import { CLIENT_ID, DOMAIN } from "./js/properties/properties.js";
-import { APIProvider } from "./providers/APIProvider.js";
+import { APIProvider } from "./providers/APIProvider.jsx";
 
 const root = createRoot(document.getElementById("root"));
 

@@ -16,6 +16,7 @@ export const APIProvider = ({ children }) => {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(0);
+  
   const nextSong = () => {
     if (currentSongList.indexOf(currentSong) + 1 < currentSongList.length)
       setCurrentSong(currentSongList[currentSongList.indexOf(currentSong) + 1]);
