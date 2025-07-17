@@ -4,6 +4,8 @@ import AlbumItem from "./AlbumItem";
 import SongItem from "../player-page/SongItem";
 import PostItem from "../main-page/PostItem";
 import { useAudio } from "../../hooks/useAudio";
+import AddAlbumModal from "./AddAlbumModal";
+import AddMusicModal from "./AddMusicModal";
 
 const ArtistOwnMediaLibrary = () => {
     const { setCurrentSong, setCurrentSongList } = useAudio();
@@ -66,7 +68,10 @@ const ArtistOwnMediaLibrary = () => {
                     </div>
                 </div>
             </div>
+            {showModal && <AddMusicModal onClose={() => setShowModal(false)} />}
+{showModal1 && <AddAlbumModal onClose={() => setShowModal1(false)} />}
         </div>
+        
     );
 };
 
