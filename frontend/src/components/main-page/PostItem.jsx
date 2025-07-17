@@ -160,7 +160,7 @@ import { useAPI } from "../../hooks/useApi";
 import { useAuth0 } from "@auth0/auth0-react";
 import { isLiked } from "../../js/functions/functions";
 import ChatMessage from "./ChatMessage";
-export default function PostItem({ selectedTab }) {
+export default function PostItem({ selectedTab,userId }) {
   const [posts, setPosts] = useState([]);
   const { apiFetch } = useAPI();
   const { user, isLoading } = useAuth0();
@@ -196,7 +196,7 @@ export default function PostItem({ selectedTab }) {
       response = await apiFetch(`/posts/byFollowing/${user.sub}`);
     }
     else if (selectedTab==="user") {
-      response = await apiFetch(`/posts/userPosts/${user.sub}`);
+      response = await apiFetch(`/posts/userPosts/${userId}`);
     } else {
       response = await apiFetch("/posts");
     }

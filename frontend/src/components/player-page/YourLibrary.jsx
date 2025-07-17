@@ -108,7 +108,7 @@ const YourLibrary = ({ isPlaylistsChangesControl }) => {
         authorizationParams: { audience: API_URL },
       });
       const response = await fetch(
-        `http://localhost:8080/tracks/tracks/${currentPlaylist.id}`,
+        `http://localhost:8080/tracks/tracks-by-postTime/${currentPlaylist.id}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }

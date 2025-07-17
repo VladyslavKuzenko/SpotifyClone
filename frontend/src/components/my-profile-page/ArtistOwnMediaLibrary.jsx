@@ -46,7 +46,7 @@ const ArtistOwnMediaLibrary = () => {
                     </div>
                 </div>
 
-                <div className={styles["bottom-place"]}>
+                {/* <div className={styles["bottom-place"]}>
                     <div className={styles["posts-place"]}>
                         <div className={styles["posts-text"]}>Posts</div>
                         <PostItem selectedTab="user" />
@@ -66,7 +66,7 @@ const ArtistOwnMediaLibrary = () => {
                             ))}
                         </div>
                     </div>
-                </div>
+                </div> */}
             </div>
             {showModal && <AddMusicModal onClose={() => setShowModal(false)} />}
 {showModal1 && <AddAlbumModal onClose={() => setShowModal1(false)} />}

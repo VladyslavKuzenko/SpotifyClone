@@ -196,8 +196,7 @@ const Main = () => {
             <div
               className={`${styles["friends-div"]} ${selectedTab === "friends" ? styles.active : ""
                 }`}
-              onClick={() => setSelectedTab("friends")}
-            >
+              onClick={() => setSelectedTab("friends")}>
               Friends
             </div>
           </div>

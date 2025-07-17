@@ -63,25 +63,7 @@ const MusicPlayer = ({ footerPlayer, isHovered }) => {
     setIsModalOpen(false);
   };
 
-  /*  const fetchPlaylist = async () => {
-    const response = await apiFetch(`/playlists/playlists/${user?.sub}/Like`);
-    const data = await response.json();
-    console.log("Playlist fetched:", data);
-    return data;
-  };
-  const fetchSong = async () => {
-    if (isLoading) return;
-    console.log(isLoading);
-    const playlist = await fetchPlaylist();
-    const response = await apiFetch(`/tracks/tracks/${playlist.id}`);
-    const data = await response.json();
-    console.log("Songs fetched:", data);
-    setCurrentSongList(data);
-    setCurrentSong(data[0]);
-  };
-  useEffect(() => {
-    fetchSong();
-  }, [isLoading]); */
+
   return (
     <>
       {footerPlayer ? (

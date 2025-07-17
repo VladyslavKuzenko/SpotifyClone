@@ -41,7 +41,7 @@ const UserLikedMediaLibrary= () => {
                         ))}
                     </div>
                 </div>
-                <div className={styles["bottom-place"]}>
+                {/* <div className={styles["bottom-place"]}>
                     <div className={styles["posts-place"]}>
                         <div className={styles["posts-text"]}>Posts</div>
                         <PostItem selectedTab="user" />
@@ -61,7 +61,7 @@ const UserLikedMediaLibrary= () => {
                             ))}
                         </div>
                     </div>
-                </div>
+                </div> */}
             </div>
         </div>
     );

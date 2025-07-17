@@ -1,4 +1,3 @@
-
 // MyProfile.jsx
 import React, { useEffect, useState } from "react";
 import styles from "./MyProfile.module.css";
@@ -10,8 +9,8 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useAudio } from "../../hooks/useAudio";
 import SongItem from "../player-page/SongItem";
 import PostItem from "../main-page/PostItem";
-import AddAlbumModal from "./AddAlbumModal"
-import AddMusicModal from "./AddMusicModal"
+import AddAlbumModal from "./AddAlbumModal";
+import AddMusicModal from "./AddMusicModal";
 import FollowersModal from "./FollowersModal";
 import UserLikedMediaLibrary from "./UserLikedMediaLibrary";
 import ArtistOwnMediaLibrary from "./ArtistOwnMediaLibrary";
@@ -53,7 +52,9 @@ const MyProfile = ({ profileInfo }) => {
   };
 
   const fetchCurrentPlaylistTracks = async (currentPlaylist) => {
-    const response = await apiFetch(`/tracks/tracks-by-postTime/${currentPlaylist.id}`);
+    const response = await apiFetch(
+      `/tracks/tracks-by-postTime/${currentPlaylist.id}`
+    );
     const body = await response.json();
     setSongs(body);
   };
@@ -69,13 +70,10 @@ const MyProfile = ({ profileInfo }) => {
     return <div>Loading...</div>;
   }
 
-
   const isArtist = true; //перевірка чи артист
-
 
   return (
     <div className={styles.container}>
-
       <div className={styles["empty-div1"]}></div>
 
       <div className={styles["profile-side"]}>
@@ -112,22 +110,27 @@ const MyProfile = ({ profileInfo }) => {
           <FollowersModal activeTab={activeTab} onClose={closeModal} />
         )}
 
-
         {isArtist ? ( //перевірка артист
-
           <div>
             {/* Вкладки */}
             <div className={styles["tabs-container"]}>
-
               <div className={styles["tabs-palce"]}>
                 <button
-                  className={activeTab1 === "profile" ? styles["tab-active"] : styles["tab"]}
+                  className={
+                    activeTab1 === "profile"
+                      ? styles["tab-active"]
+                      : styles["tab"]
+                  }
                   onClick={() => setActiveTab1("profile")}
                 >
                   Profile
                 </button>
                 <button
-                  className={activeTab1 === "artistTools" ? styles["tab-active"] : styles["tab"]}
+                  className={
+                    activeTab1 === "artistTools"
+                      ? styles["tab-active"]
+                      : styles["tab"]
+                  }
                   onClick={() => setActiveTab1("artistTools")}
                 >
                   Artist tools
@@ -137,57 +140,23 @@ const MyProfile = ({ profileInfo }) => {
 
             {/* Контент вкладок */}
             <div className={styles["tab-content"]}>
-              {activeTab1 === "profile" && (
-                <UserLikedMediaLibrary />
+              {activeTab1 === "profile" && <UserLikedMediaLibrary />}
 
-
-              )}
-
-              {activeTab1 === "artistTools" && (
-                <ArtistOwnMediaLibrary />
-
-              )}
+              {activeTab1 === "artistTools" && <ArtistOwnMediaLibrary />}
             </div>
           </div>
-
-
-        ) : (  //перевірка не артист
-          <div> <div className={styles['functional-container1']}>
-            <div className={styles['saved-album-container']}>
-              <div className={styles['svyazka']}>
-                <div className={styles['saved-album-text']}>Saved Albums</div>
-                <button className={styles['add-btn']} onClick={() => setShowModal1(true)}>Add +</button>
-              </div>
-              <div className={styles['album-array']}>
-                {Array(12).fill(0).map((_, idx) => (
-                  <AlbumItem key={idx} />
-                ))}
-              </div>
-            </div>
-
-            <div className={styles["saved-songs-container"]}>
-              <div className={styles['svyazka']}>
-
-                <div className={styles["saved-songs-text"]}>Saved Songs</div>
-                <button className={styles['add-btn']} onClick={() => setShowModal(true)}>Add +</button>
-              </div>
-              <div className={styles["song-array"]}>
-                {songs.map((song, index) => (
-                  <SongItem
-                    key={song.id}
-                    song={song}
-                    moreInfo
-                    onSetCurrentSongList={() => setCurrentSongList(songs)}
-                  />
-                ))}
-              </div>
-            </div>
-          </div>
-            <div className={styles["bottom-place"]}>
+        ) : (
+          //перевірка не артист
+          <>
+          <UserLikedMediaLibrary/>
+            
+          </>
+        )}
+        <div className={styles["bottom-place"]}>
               <div className={styles["posts-place"]}>
                 <div className={styles["posts-text"]}>Posts</div>
-                <PostItem selectedTab="user" />
-                <div className={styles["posts-array"]}></div>
+                <PostItem selectedTab="user" userId={user?.sub}/>
+                {/* <div className={styles["posts-array"]}></div> */}
               </div>
               <div className={styles["groups-place"]}>
                 <div className={styles["groups-text"]}>Groups</div>
@@ -205,14 +174,11 @@ const MyProfile = ({ profileInfo }) => {
                   ))}
                 </div>
               </div>
-            </div></div>
-        )}
-
+            </div>
       </div>
 
       {showModal && <AddMusicModal onClose={() => setShowModal(false)} />}
       {showModal1 && <AddAlbumModal onClose={() => setShowModal1(false)} />}
-
     </div>
   );
 };
