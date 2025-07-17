@@ -88,7 +88,8 @@ const MusicPlayer = ({ footerPlayer, isHovered }) => {
         <div className={stylesFooter["footer-container"]}>
           <div className={stylesFooter["mr-bottom"]}>
             <div className={stylesFooter["mrb-left"]} onClick={handleOpenModal}>
-              <div className={stylesFooter["bmr-cover"]}></div>
+              {/* <div className={stylesFooter["bmr-cover"]}></div> */}
+              <img className={stylesFooter["bmr-cover"]} src={currentSong.imageUrl}/>
               <div className={stylesFooter["bmr-song-info"]}>
                 <div className={stylesFooter["bmr-title"]}>
                   {currentSong?.title}

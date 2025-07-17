@@ -6,8 +6,8 @@ import jakarta.persistence.*;
 @Table(name = "artists")
 public class Artist {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String id;
     @OneToOne
     @JoinColumn(name="user_id", nullable=false)
     private User user;
@@ -21,11 +21,11 @@ public class Artist {
     public Artist() {
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

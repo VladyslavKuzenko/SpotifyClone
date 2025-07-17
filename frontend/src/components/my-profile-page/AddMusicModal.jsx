@@ -25,7 +25,7 @@ const AddMusicModal = ({ onClose }) => {
   };
 
   const fetchArtistData = async () => {
-    const response = await apiFetch(`/byUser/${user?.sub}`);
+    const response = await apiFetch(`/artists/byUser/${user?.sub}`);
     const data = await response.json();
     return data;
   };
@@ -38,6 +38,7 @@ const AddMusicModal = ({ onClose }) => {
       listeningCount: 0,
       createdAt: new Date(),
     };
+
 
     const response = await apiFetch("/tracks", {
       method: "POST",
@@ -62,16 +63,22 @@ const AddMusicModal = ({ onClose }) => {
       "/tracks/upload/"
     );
 
-    // const responseUpdate = await apiFetch(`/story/${music.id}`, {
-    //   method: "PUT",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(story),
-    // });
+    music.sourceUrl=musicUrl;
+    music.imageUrl=musicImgUrl;
+
+    const responseUpdate = await apiFetch(`/tracks/${music.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(music),
+    });
 
   };
 
+  useEffect(()=>{
+    console.log("SONG: ",song)
+  },[song])
   useEffect(() => {
     document.body.style.overflow = "hidden";
 
@@ -167,6 +174,15 @@ const AddMusicModal = ({ onClose }) => {
             onChange={(e) => setSong(e.target.files[0])}
             accept="audio/*"
           />
+          {/* <div>
+              TEEEEEST
+           {song && (
+              <audio
+                src={URL.createObjectURL(song)}
+                // alt="preview"
+              />
+            )}
+          </div> */}
           <button
             className={styles["music-file"]}
             onClick={() => songInputRef.current.click()}
@@ -177,7 +193,7 @@ const AddMusicModal = ({ onClose }) => {
             <button className={styles["cancel"]} onClick={onClose}>
               Cancel
             </button>
-            <button className={styles["create"]}>Create</button>
+            <button className={styles["create"]} onClick={submiteMusic}>Create</button>
           </div>
         </div>
       </div>
