@@ -25,7 +25,7 @@ public class ArtistController {
     }
 
     @GetMapping("/{id}")
-    public Artist getArtist(@PathVariable Long id) {
+    public Artist getArtist(@PathVariable String id) {
         return artistRepository.findById(id).orElseThrow(RuntimeException::new);
     }
     @GetMapping("/byUser/{id}")
@@ -51,7 +51,7 @@ public class ArtistController {
         return ResponseEntity.created(new URI("/artists/" + savedArtist.getId())).body(savedArtist);
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteArtist(@PathVariable Long id) {
+    public ResponseEntity deleteArtist(@PathVariable String id) {
         artistRepository.deleteById(id);
         return ResponseEntity.ok().build();
     }

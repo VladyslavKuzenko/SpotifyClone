@@ -1,11 +1,13 @@
 package edu.itstep.api.controlers;
 
 import edu.itstep.api.models.Artist;
+import edu.itstep.api.models.Story;
 import edu.itstep.api.models.Track;
 import edu.itstep.api.repositories.ArtistRepository;
 import edu.itstep.api.repositories.PlaylistRepository;
 import edu.itstep.api.repositories.TrackRepository;
 import edu.itstep.api.services.PostService;
+import edu.itstep.api.services.TrackService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -27,11 +29,13 @@ public class TrackController {
     private final PlaylistRepository playlistRepository;
     @Autowired
     private PostService postService;
+    private TrackService trackService;
 
 
-    public TrackController(TrackRepository trackRepository, PlaylistRepository playlistRepository) {
+    public TrackController(TrackRepository trackRepository, PlaylistRepository playlistRepository,TrackService trackService) {
         this.trackRepository = trackRepository;
         this.playlistRepository = playlistRepository;
+        this.trackService = trackService;
     }
 
     @GetMapping
@@ -45,7 +49,7 @@ public class TrackController {
     }
 
     @GetMapping("/tracks-by-artists/{id}")
-    public List<Track> getAllArtistTrack(@PathVariable Long id) {
+    public List<Track> getAllArtistTrack(@PathVariable String id) {
         return trackRepository.findAllByArtist_Id(id);
     }
 
@@ -94,6 +98,11 @@ public class TrackController {
     @PostMapping("/upload/{trackId}")
     public String handleFileUpload(@RequestParam("file") MultipartFile file, @PathVariable Long trackId){
         return postService.postFileToVM(file,"track"+trackId);
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<Track> updateTrack(@PathVariable Long id, @RequestBody Track updatedTrack) {
+        Track track = trackService.updateTrack(id, updatedTrack);
+        return ResponseEntity.ok(track);
     }
     @DeleteMapping("/{id}")
     public ResponseEntity deleteTrack(@PathVariable Long id) {
