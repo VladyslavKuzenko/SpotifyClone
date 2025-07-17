@@ -32,9 +32,13 @@ export default function FollowAccountCard({ userToFollow, styles }) {
       }
   };
 
-  return (
-    <button className={styles} onClick={handleFollow}>
-      {isFollowed ? "Unfollow" : "Follow"}
-    </button>
-  );
+ return (
+  <button
+    className={styles}
+    onClick={handleFollow}
+    style={{ backgroundColor: isFollowed ? "#232643" : "#414CC0" }}
+  >
+    {isFollowed ? "Unfollow" : "Follow"}
+  </button>
+);
 }

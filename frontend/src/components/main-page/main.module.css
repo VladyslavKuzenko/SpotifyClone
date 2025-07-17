@@ -91,6 +91,7 @@ html {
   width: 80px;
   text-align: start;
   margin-left: 20px;
+
 }
 
 
@@ -130,23 +131,14 @@ html {
   gap: 20px;
 }
 
-.home-btn {
-  width: 45px;
-  height: 45px;
-  background-color: transparent;
-  border-radius: 50%;
-  cursor: pointer;
-  border: none;
-  background-repeat: no-repeat;
-  background-size: 60%;
-  background-position: center;
-  background-position-y: 5px;
 
-
+.activeLabel {
+  color: #FE7C14;
 }
 
 .active1 {
   background-image: url(/public/images/orangehome.svg) !important;
+
 }
 
 .active2 {
@@ -161,58 +153,6 @@ html {
   background-image: url(/public/images/orangestar.svg) !important;
 }
 
-
-.chat-btn {
-  width: 45px;
-  height: 45px;
-  background-color: transparent;
-  border-radius: 50%;
-  cursor: pointer;
-  border: none;
-  background-repeat: no-repeat;
-  background-size: 60%;
-  background-position: center;
-
-}
-
-.star-btn {
-  width: 45px;
-  height: 45px;
-  background-color: transparent;
-  border-radius: 50%;
-  cursor: pointer;
-  border: none;
-  background-repeat: no-repeat;
-  background-size: 60%;
-  background-position: center;
-
-}
-
-.playlist-btn {
-  width: 45px;
-  height: 45px;
-  background-color: transparent;
-  border-radius: 50%;
-  cursor: pointer;
-  border: none;
-  background-repeat: no-repeat;
-  background-size: 48%;
-  background-position: center;
-
-}
-
-.people-btn {
-  width: 45px;
-  height: 45px;
-  background-color: transparent;
-  border-radius: 50%;
-  cursor: pointer;
-  border: none;
-  background-repeat: no-repeat;
-  background-size: 60%;
-  background-position: center;
-
-}
 
 .song-place-div {
   width: 100%;
@@ -720,9 +660,7 @@ html {
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  padding-top: 25px;
-
+  padding-top: 10px;
 }
 
 
@@ -731,34 +669,31 @@ html {
   width: 100%;
   height: 80px;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   flex-direction: row;
-  margin-top: 7px;
-
-
+  margin-bottom: 10px;
 }
 
 .place-for-ava {
   width: 80px;
   height: 100%;
   margin-left: 22px;
+  align-content: center;
 }
 
 .name-nickname {
   width: 170px;
-  height: 75%;
   display: flex;
   flex-direction: column;
-
-
+  align-content: center;
 }
 
 .follow-btn {
-  width: 115px;
-  height: 75%;
+  width: 117px;
+  height: 39px;
   margin-left: 10px;
-  color: black;
-  background-color: #F8F8F8;
+  color: rgb(255, 255, 255);
+  background-color: #414CC0;
   text-align: center;
   align-content: center;
   font-family: 'Manrope', sans-serif;
@@ -785,6 +720,7 @@ html {
   letter-spacing: 0%;
   color: white;
   cursor: pointer;
+  padding-bottom: 5px;
 
 }
 
@@ -1278,7 +1214,7 @@ html {
 
 .post-modal-window {
   width: 955px;
-  height: 557px;
+  height: 470px;
   background: #FFFFFF;
   position: relative;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
@@ -1388,25 +1324,6 @@ html {
   border-radius: 10px;
 }
 
-.mention {
-  margin-left: 7px;
-  border: none;
-  background-color: #1F212B;
-  font-family: 'Manrope', sans-serif;
-  font-weight: 400;
-  font-style: Regular;
-  font-size: 14px;
-  line-height: 100%;
-  letter-spacing: 0%;
-  color: white;
-
-  cursor: pointer;
-  height: 38px;
-  width: 33%;
-  border-radius: 10px;
-
-}
-
 .share-thoughts-plat {
   width: 100%;
   height: 206px;
@@ -1444,7 +1361,7 @@ html {
 
 .attributes {
   margin-left: 40px;
-  height: 120px;
+  height: 110px;
   width: 540px;
   display: flex;
   justify-content: flex-start;
@@ -1461,10 +1378,10 @@ html {
   cursor: pointer;
   background-color: #4E5059;
   border-radius: 10px;
-  font-family: 'Inter', sans-serif;
-  font-weight: 300;
-  font-style: Light;
-  font-size: 16px;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 400;
+  font-style: Regular;
+  font-size: 14px;
   line-height: 100%;
   letter-spacing: 0%;
 
@@ -1534,43 +1451,38 @@ html {
   width: 232px;
   height: 57px;
   border: none;
-  margin-top: 30px;
   font-family: 'Manrope', sans-serif;
   font-weight: 600;
   font-style: SemiBold;
   font-size: 18px;
   line-height: 100%;
   letter-spacing: 0%;
+  margin-top: 170px;
 
   color: #FFFFFF;
   cursor: pointer;
   background-color: #FF4400;
   border-radius: 10px;
-  margin-top: 65%;
 }
 
 .stories-design {
   width: 955px;
-  height: 472px;
+  height: 100%;
   margin-top: 15px;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
 
 .file-stories {
   width: 100%;
   height: 400px;
   display: flex;
-  justify-content: space-around;
 }
 
 .choose-file,
 .add-stories {
-  height: 100%;
-  width: 42%;
-  background-color: #D9D9D9;
+  height: 90%;
+  width: 50%;
+  background-color: transparent;
   border: none;
   cursor: pointer;
   font-family: 'Inter', sans-serif;
@@ -1579,7 +1491,16 @@ html {
   line-height: 100%;
   letter-spacing: 0%;
   border-radius: 10px;
+  margin-left: 40%;
+  border:1px solid black
 
+}
+
+.post-stories {
+  height: 77%;
+  align-content: end;
+  position: relative;
+  right: 40px;
 }
 
 .post-stories-btn {
@@ -1589,7 +1510,6 @@ html {
   background-color: #FF4400;
   border-radius: 10px;
   cursor: pointer;
-  margin-top: 10px;
 
   font-family: 'Manrope', sans-serif;
   font-weight: 600;
@@ -2400,4 +2320,36 @@ html {
   hyphens: auto;
   white-space: normal;
   display: inline-block;
+}
+
+.storiesbtn-place {
+  height: 100%;
+  width: 120px;
+  flex-shrink: 0;
+
+}
+
+.stories-btn {
+  width: 105px;
+  height: 105px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  flex-shrink: 0;
+
+}
+
+.storiesbtn-plus {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background-color: rgb(236, 126, 1);
+  background-image: url(/public/images/plus.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 50%;
+  position: relative;
+  left: calc(100% - 22px);
+  top: calc(63% - 25px);
+  border: 4px solid #1c1a16;
 }

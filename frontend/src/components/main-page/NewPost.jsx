@@ -6,8 +6,8 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useAPI } from "../../hooks/useApi";
 import { handleUploadFile } from "../../js/functions/functions";
 
-const NewPost = ({ onClose }) => {
-  const [activeTab, setActiveTab] = useState("newpost");
+const NewPost = ({ onClose, initialTab = "newpost" }) => {
+  const [activeTab, setActiveTab] = useState(initialTab);
   const [selectedPrivacy, setSelectedPrivacy] = useState(null);
   const [selectedComments, setSelectedComments] = useState(null);
   const [fileStory, setFileStory] = useState(null);
@@ -156,17 +156,15 @@ const NewPost = ({ onClose }) => {
           <div className={styles["post-left"]}>
             <div className={styles["newpost-stories"]}>
               <button
-                className={`${styles["newpost-text"]} ${
-                  activeTab === "newpost" ? styles["active-tab"] : ""
-                }`}
+                className={`${styles["newpost-text"]} ${activeTab === "newpost" ? styles["active-tab"] : ""
+                  }`}
                 onClick={() => setActiveTab("newpost")}
               >
                 New post
               </button>
               <button
-                className={`${styles["stories-text"]} ${
-                  activeTab === "stories" ? styles["active-tab"] : ""
-                }`}
+                className={`${styles["stories-text"]} ${activeTab === "stories" ? styles["active-tab"] : ""
+                  }`}
                 onClick={() => setActiveTab("stories")}
               >
                 Stories
@@ -176,8 +174,7 @@ const NewPost = ({ onClose }) => {
             {activeTab === "newpost" && (
               <>
                 <div className={styles["location-mention"]}>
-                  <button className={styles["location"]}>Location</button>
-                  <button className={styles["mention"]}>Mention</button>
+                  <button className={styles["location"]}>Add location</button>
                   <button
                     className={styles["at-gallery"]}
                     onClick={() => filePostInputRef.current.click()}
@@ -212,30 +209,32 @@ const NewPost = ({ onClose }) => {
 
                   {filesPost.length > 0
                     ? filesPost.map((file) => (
-                        <div key={file.name} style={{ position: "relative" }}>
-                          {file.type.startsWith("image/") ? (
-                            <img
-                              className={styles["preview-image1"]}
-                              src={URL.createObjectURL(file)}
-                              alt="preview"
-                            />
-                          ) : (
-                            <video
-                              className={styles["preview-image1"]}
-                              src={URL.createObjectURL(file)}
-                              controls
-                            />
-                          )}
-                          <button
-                            onClick={() => handleRemoveFile(file)}
-                            className={styles["pomh-close"]}
-                          >
-                            ×
-                          </button>
-                        </div>
-                      ))
-                    : "No files selected"}
+                      <div key={file.name} style={{ position: "relative" }}>
+                        {file.type.startsWith("image/") ? (
+                          <img
+                            className={styles["preview-image1"]}
+                            src={URL.createObjectURL(file)}
+                            alt="preview"
+                          />
+                        ) : (
+                          <video
+                            className={styles["preview-image1"]}
+                            src={URL.createObjectURL(file)}
+                            controls
+                          />
+                        )}
+                        <button
+                          onClick={() => handleRemoveFile(file)}
+                          className={styles["pomh-close"]}
+                        >
+                          ×
+                        </button>
+                      </div>
+                    ))
+                    : ""}
                 </div>
+
+
               </>
             )}
 
@@ -266,10 +265,11 @@ const NewPost = ({ onClose }) => {
                         alt="preview"
                       />
                     ) : (
-                      "Post"
+                      "Choose photo"
                     )}
                   </button>
                 </div>
+                
                 <div className={styles["post-stories"]}>
                   <button
                     className={styles["post-stories-btn"]}
@@ -318,7 +318,7 @@ const NewPost = ({ onClose }) => {
                 onClick={submitePost}
                 disabled={isUploading}
               >
-                Post
+                Post1
               </button>
             </div>
           )}
