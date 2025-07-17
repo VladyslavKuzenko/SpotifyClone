@@ -25,7 +25,7 @@ const LeftSide = () => {
         </button>
 
         <button
-          className={`${styles["menu-btn"]} ${location.pathname === "/player" ? styles.active1 : ""}`}
+          className={`${styles["menu-btn"]} ${location.pathname === "/player" ? styles.active2 : ""}`}
           onClick={() => navigate("/player")}
         >
           <span className={`${styles.icon} ${styles.playerIcon}`}></span>
@@ -33,7 +33,7 @@ const LeftSide = () => {
         </button>
 
         <button
-          className={`${styles["menu-btn"]} ${location.pathname === "/my-profile" ? styles.active1 : ""}`}
+          className={`${styles["menu-btn"]} ${location.pathname === "/my-profile" ? styles.active3 : ""}`}
           onClick={() => navigate("/my-profile")}
         >
           <span className={`${styles.icon} ${styles.profileIcon}`}></span>
@@ -41,7 +41,7 @@ const LeftSide = () => {
         </button>
 
         <button
-          className={`${styles["menu-btn"]} ${location.pathname === "/rating" ? styles.active1 : ""}`}
+          className={`${styles["menu-btn"]} ${location.pathname === "/rating" ? styles.active4 : ""}`}
           onClick={() => navigate("/rating")}
         >
           <span className={`${styles.icon} ${styles.ratingIcon}`}></span>

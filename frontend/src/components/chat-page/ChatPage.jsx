@@ -3,9 +3,6 @@ import styles from "./ChatPage.module.css";
 import ChatList from './ChatList';
 import MessageItem from './MessageItem';
 import MessageInputField from './MessageInputField';
-import MyMessageItem from './MyMessageItem';
-import UserMessageItem from './UserMessageItem';
-import Footer from './Footer';
 import { useNavigate } from "react-router-dom";
 
 import UpperContent from "./UpperContent";
@@ -18,6 +15,7 @@ const ChatPage = () => {
     const [currentChat, setCurrentChat] = useState(null);
     const [messages, setMessages] = useState([]);
     const [chatId, setChatId] = useState(null);
+      const navigate = useNavigate();
 
     const fetchChat = async (id) => {
         const response = await apiFetch(`/chats/${id}`);
@@ -65,7 +63,6 @@ const ChatPage = () => {
         return <div>Loading...</div>;
     }
 
-      const navigate = useNavigate();
     
     return (
 
@@ -91,7 +88,6 @@ const ChatPage = () => {
                     </div>
                     <MessageInputField chatId={currentChat?.id} onSend={() => fetchMessages(chatId)} />
 
-                    <Footer />
                 </div>
             </div>
         </div>

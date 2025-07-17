@@ -51,7 +51,7 @@ html {
   position: relative;
   font-size: 16px;
   background-color: transparent;
-  border-radius: 32px; 
+  border-radius: 32px;
 }
 
 
@@ -60,23 +60,25 @@ html {
 }
 
 .pages-btns-div button:nth-child(1) {
-  background-image: url('/public/images/home.svg');
+  background-image: url('/public/images/newhome.svg');
 }
 
 .pages-btns-div button:nth-child(2) {
-  background-image: url('/public/images/music_note.svg');
+  background-image: url('/public/images/newmusic.svg');
 }
 
 .pages-btns-div button:nth-child(3) {
-  background-image: url('/public/images/person.svg');
+  background-image: url('/public/images/Group.svg');
 }
 
 .pages-btns-div button:nth-child(4) {
-  background-image: url('/public/images/cards_star.svg');
+  background-image: url('/public/images/newstar.svg');
+  background-size: 50%;
+  background-position: center;
 }
 
 .pages-btns-div button:nth-child(5) {
-  background-image: url('/public/images/sms.svg');
+  background-image: url('/public/images/newchat.svg');
 }
 
 .label {
@@ -135,7 +137,6 @@ html {
   border-radius: 50%;
   cursor: pointer;
   border: none;
-  background-image: url(/public/images/home.svg);
   background-repeat: no-repeat;
   background-size: 60%;
   background-position: center;
@@ -145,9 +146,21 @@ html {
 }
 
 .active1 {
-  background-color: #4D4D4D !important;
-
+  background-image: url(/public/images/orangehome.svg) !important;
 }
+
+.active2 {
+  background-image: url(/public/images/orangemusic.svg) !important;
+}
+
+.active3 {
+  background-image: url(/public/images/orangeuser.svg) !important;
+}
+
+.active4 {
+  background-image: url(/public/images/orangestar.svg) !important;
+}
+
 
 .chat-btn {
   width: 45px;
@@ -156,7 +169,6 @@ html {
   border-radius: 50%;
   cursor: pointer;
   border: none;
-  background-image: url(/public/images/sms.svg);
   background-repeat: no-repeat;
   background-size: 60%;
   background-position: center;
@@ -170,7 +182,6 @@ html {
   border-radius: 50%;
   cursor: pointer;
   border: none;
-  background-image: url(/public/images/cards_star.svg);
   background-repeat: no-repeat;
   background-size: 60%;
   background-position: center;
@@ -184,7 +195,6 @@ html {
   border-radius: 50%;
   cursor: pointer;
   border: none;
-  background-image: url(/public/images/music_note.svg);
   background-repeat: no-repeat;
   background-size: 48%;
   background-position: center;
@@ -198,7 +208,6 @@ html {
   border-radius: 50%;
   cursor: pointer;
   border: none;
-  background-image: url(/public/images/person.svg);
   background-repeat: no-repeat;
   background-size: 60%;
   background-position: center;
@@ -1452,7 +1461,7 @@ html {
   cursor: pointer;
   background-color: #4E5059;
   border-radius: 10px;
-  font-family: 'Inter',sans-serif;
+  font-family: 'Inter', sans-serif;
   font-weight: 300;
   font-style: Light;
   font-size: 16px;

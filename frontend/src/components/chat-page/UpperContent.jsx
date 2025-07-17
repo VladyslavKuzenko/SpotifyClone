@@ -60,97 +60,100 @@ const UpperContent = ({ chat }) => {
 //                         <div className={styles["user-status"]}>Online</div>
 //                     </div>
 //                 </div>
-            </div>
-
-            <div className={styles["split2"]}>
-                <div className={styles["user-listening"]}>
-                    Listening to: Timeless – The Weeknd
                 </div>
 
-                <div className={styles["user-btn"]} onClick={toggleModal}>
-                    {isModalOpen ? "∧" : "∨"}
-                </div>
-            </div>
-
-            {isModalOpen && (
-                <div ref={modalRef} className={styles["user-modal"]}>
-                    <div className={styles["btn-container"]}>
-                        <button
-                            className={`${styles["btn-images"]} ${activeTab === "images" ? styles.active : ""
-                                }`}
-                            onClick={() => setActiveTab("images")}
-                        >
-                            Images
-                        </button>
-                        <button
-                            className={`${styles["btn-music"]} ${activeTab === "music" ? styles.active : ""
-                                }`}
-                            onClick={() => setActiveTab("music")}
-                        >
-                            Music
-                        </button>
+                <div className={styles["split2"]}>
+                    <div className={styles["user-listening"]}>
+                        Listening to: Timeless – The Weeknd
                     </div>
 
-                    <div className={styles["content-area"]}>
-                        {activeTab === "images" && (
-                            <div className={styles["images-array"]}>
-
-                                <div className={styles["images-item"]}>
-                                    <div className={styles["images-photo"]}></div>
-                                    <div className={styles["images-name"]}>Song Name</div>
-                                    <div className={styles["images-artist"]}>Artist </div>
-                                </div>
-                                <div className={styles["images-item"]}>
-                                    <div className={styles["images-photo"]}></div>
-                                    <div className={styles["images-name"]}>Song Name</div>
-                                    <div className={styles["images-artist"]}>Artist </div>
-                                </div>
-                                <div className={styles["images-item"]}>
-                                    <div className={styles["images-photo"]}></div>
-                                    <div className={styles["images-name"]}>Song Name</div>
-                                    <div className={styles["images-artist"]}>Artist </div>
-                                </div>
-                                <div className={styles["images-item"]}>
-                                    <div className={styles["images-photo"]}></div>
-                                    <div className={styles["images-name"]}>Song Name</div>
-                                    <div className={styles["images-artist"]}>Artist </div>
-                                </div>
-
-                                <div className={styles["images-item"]}>
-                                    <div className={styles["images-photo"]}></div>
-                                    <div className={styles["images-name"]}>Song Name</div>
-                                    <div className={styles["images-artist"]}>Artist </div>
-                                </div>
-
-                                <div className={styles["images-item"]}>
-                                    <div className={styles["images-photo"]}></div>
-                                    <div className={styles["images-name"]}>Song Name</div>
-                                    <div className={styles["images-artist"]}>Artist </div>
-                                </div>
-
-                                <div className={styles["images-item"]}>
-                                    <div className={styles["images-photo"]}></div>
-                                    <div className={styles["images-name"]}>Song Name</div>
-                                    <div className={styles["images-artist"]}>Artist </div>
-                                </div>
-
-                                <div className={styles["images-item"]}>
-                                    <div className={styles["images-photo"]}></div>
-                                    <div className={styles["images-name"]}>Song Name</div>
-                                    <div className={styles["images-artist"]}>Artist </div>
-                                </div>
-
-                            </div>
-                        )}
-
-                        {activeTab === "music" && (
-                            <div className={styles["music-array"]}>Тут має бути твій контент для music</div>
-                        )}
+                    <div className={styles["user-btn"]} onClick={toggleModal}>
+                        {isModalOpen ? "∧" : "∨"}
                     </div>
                 </div>
-            )}
+
+                {isModalOpen && (
+                    <div ref={modalRef} className={styles["user-modal"]}>
+                        <div className={styles["btn-container"]}>
+                            <button
+                                className={`${styles["btn-images"]} ${activeTab === "images" ? styles.active : ""
+                                    }`}
+                                onClick={() => setActiveTab("images")}
+                            >
+                                Images
+                            </button>
+                            <button
+                                className={`${styles["btn-music"]} ${activeTab === "music" ? styles.active : ""
+                                    }`}
+                                onClick={() => setActiveTab("music")}
+                            >
+                                Music
+                            </button>
+                        </div>
+
+                        <div className={styles["content-area"]}>
+                            {activeTab === "images" && (
+                                <div className={styles["images-array"]}>
+
+                                    <div className={styles["images-item"]}>
+                                        <div className={styles["images-photo"]}></div>
+                                        <div className={styles["images-name"]}>Song Name</div>
+                                        <div className={styles["images-artist"]}>Artist </div>
+                                    </div>
+                                    <div className={styles["images-item"]}>
+                                        <div className={styles["images-photo"]}></div>
+                                        <div className={styles["images-name"]}>Song Name</div>
+                                        <div className={styles["images-artist"]}>Artist </div>
+                                    </div>
+                                    <div className={styles["images-item"]}>
+                                        <div className={styles["images-photo"]}></div>
+                                        <div className={styles["images-name"]}>Song Name</div>
+                                        <div className={styles["images-artist"]}>Artist </div>
+                                    </div>
+                                    <div className={styles["images-item"]}>
+                                        <div className={styles["images-photo"]}></div>
+                                        <div className={styles["images-name"]}>Song Name</div>
+                                        <div className={styles["images-artist"]}>Artist </div>
+                                    </div>
+
+                                    <div className={styles["images-item"]}>
+                                        <div className={styles["images-photo"]}></div>
+                                        <div className={styles["images-name"]}>Song Name</div>
+                                        <div className={styles["images-artist"]}>Artist </div>
+                                    </div>
+
+                                    <div className={styles["images-item"]}>
+                                        <div className={styles["images-photo"]}></div>
+                                        <div className={styles["images-name"]}>Song Name</div>
+                                        <div className={styles["images-artist"]}>Artist </div>
+                                    </div>
+
+                                    <div className={styles["images-item"]}>
+                                        <div className={styles["images-photo"]}></div>
+                                        <div className={styles["images-name"]}>Song Name</div>
+                                        <div className={styles["images-artist"]}>Artist </div>
+                                    </div>
+
+                                    <div className={styles["images-item"]}>
+                                        <div className={styles["images-photo"]}></div>
+                                        <div className={styles["images-name"]}>Song Name</div>
+                                        <div className={styles["images-artist"]}>Artist </div>
+                                    </div>
+
+                                </div>
+                            )}
+
+                            {activeTab === "music" && (
+                                <div className={styles["music-array"]}>Тут має бути твій контент для music</div>
+                            )}
+                        </div>
+                    </div>
+                )}
+            </div>
         </div>
+
     );
 };
+
 
 export default UpperContent;

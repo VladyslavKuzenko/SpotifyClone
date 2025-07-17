@@ -108,7 +108,7 @@ export default function ProfileSetup() {
   function isVibeSelected(vibe) {
     return selectedVibes.find(v => v.id === vibe.id)
   }
-  
+
   async function submitProfileSetup() {
     navigate("/", { replace: true });
 
@@ -234,18 +234,20 @@ export default function ProfileSetup() {
             ))}
           </div>
 
-        <div className={styles.text11}>Pick Your Vibe:</div>
-        <div className={styles.bottom}>
-          {vibes.map((vibe) => (
-            <div className={`${styles.block} ${isVibeSelected(vibe) ? styles['block-selected'] : ''}`} onClick={() => { selectVibe(vibe) }}>{vibe.title}</div>
-          ))}
-        </div>
+          <div className={styles.text11}>Pick Your Vibe:</div>
+          <div className={styles.bottom}>
+            {vibes.map((vibe) => (
+              <div className={`${styles.block} ${isVibeSelected(vibe) ? styles['block-selected'] : ''}`} onClick={() => { selectVibe(vibe) }}>{vibe.title}</div>
+            ))}
+          </div>
 
-        <div className={styles.f}>
-          <button className={styles["cnt-btn"]} onClick={async ()=>{await submitProfileSetup();}}>Continue</button>
+          <div className={styles.f}>
+            <button className={styles["cnt-btn"]} onClick={async () => { await submitProfileSetup(); }}>Continue</button>
 
+          </div>
         </div>
       </div>
     </div>
+
   );
 }
