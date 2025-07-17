@@ -14,10 +14,13 @@ import AddMusicModal from "./AddMusicModal";
 import FollowersModal from "./FollowersModal";
 import UserLikedMediaLibrary from "./UserLikedMediaLibrary";
 import ArtistOwnMediaLibrary from "./ArtistOwnMediaLibrary";
+import EditAboutModal from "./EditAboutModal";
 const MyProfile = ({ profileInfo }) => {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [showModal1, setShowModal1] = useState(false);
+  const [showModal2, setShowModal2] = useState(false);
+
   const { user, isLoading } = useAuth0();
   const { apiFetch } = useAPI();
   const { setCurrentSong, setCurrentSongList } = useAudio();
@@ -123,7 +126,7 @@ const MyProfile = ({ profileInfo }) => {
                   }
                   onClick={() => setActiveTab1("profile")}
                 >
-                  Profile
+                  Favorites
                 </button>
                 <button
                   className={
@@ -133,7 +136,7 @@ const MyProfile = ({ profileInfo }) => {
                   }
                   onClick={() => setActiveTab1("artistTools")}
                 >
-                  Artist tools
+                  My Releases
                 </button>
               </div>
             </div>
@@ -148,37 +151,61 @@ const MyProfile = ({ profileInfo }) => {
         ) : (
           //перевірка не артист
           <>
-          <UserLikedMediaLibrary/>
-            
+            <UserLikedMediaLibrary />
+
           </>
         )}
-        <div className={styles["bottom-place"]}>
-              <div className={styles["posts-place"]}>
-                <div className={styles["posts-text"]}>Posts</div>
-                <PostItem selectedTab="user" userId={user?.sub}/>
-                {/* <div className={styles["posts-array"]}></div> */}
-              </div>
-              <div className={styles["groups-place"]}>
-                <div className={styles["groups-text"]}>Groups</div>
-                <div className={styles["groups-container"]}>
-                  {[...Array(12)].map((_, i) => (
-                    <div key={i} className={styles["grp-hiphop-heads"]}>
-                      <div className={styles["grp-avatar"]}></div>
-                      <div className={styles["grp-info"]}>
-                        <div className={styles["grp-name"]}>Hip-Hop Heads</div>
-                        <div className={styles["grp-followers"]}>
-                          35477 followers
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+        <div className={styles["about-artist-platform"]}>
+          <div className={styles["aap-left"]}>
+            <div className={styles["aap-text"]}>About artist</div>
+            <div className={styles["aap-photo"]}></div>
+          </div>
+          <div className={styles["aap-right"]}>
+            <div className={styles["aap-information"]}>Max has quickly risen to prominence as a leading artist of the modern music scene. Her debut album, "Whispers in the Wind," showcases 12 original tracks that blend pop and indie influences, all crafted in her cozy studio in Nashville. In 2020, her first single "Chasing Stars" topped the charts in 15 countries, making her a household name. Following that success, her sophomore album, "Echoes of Tomorrow," released in 2022, debuted at No. 1 globally and received rave reviews from critics and fans alike. Max's unique sound and heartfelt lyrics continue to resonate with audiences around the world.</div>
+            <div className={styles["aap-socials"]}>
+              <button className={styles["facebook"]}></button>
+              <button className={styles["instagram"]}></button>
+              <button className={styles["twitter"]}></button>
             </div>
-      </div>
 
+            <button className={styles["aap-edit"]} onClick={() => setShowModal2(true)}>Edit</button>
+
+
+          </div>
+
+        </div>
+
+        <div className={styles["bottom-place"]}>
+
+
+
+          <div className={styles["posts-place"]}>
+            <div className={styles["posts-text"]}>Posts</div>
+            <PostItem selectedTab="user" userId={user?.sub} />
+            {/* <div className={styles["posts-array"]}></div> */}
+          </div>
+          <div className={styles["groups-place"]}>
+            <div className={styles["groups-text"]}>Groups</div>
+            <div className={styles["groups-container"]}>
+              {[...Array(12)].map((_, i) => (
+                <div key={i} className={styles["grp-hiphop-heads"]}>
+                  <div className={styles["grp-avatar"]}></div>
+                  <div className={styles["grp-info"]}>
+                    <div className={styles["grp-name"]}>Hip-Hop Heads</div>
+                    <div className={styles["grp-followers"]}>
+                      35477 followers
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
       {showModal && <AddMusicModal onClose={() => setShowModal(false)} />}
       {showModal1 && <AddAlbumModal onClose={() => setShowModal1(false)} />}
+      {showModal2 && <EditAboutModal onClose={() => setShowModal2(false)} />}
+
     </div>
   );
 };
