@@ -318,7 +318,7 @@ const NewPost = ({ onClose, initialTab = "newpost" }) => {
                 onClick={submitePost}
                 disabled={isUploading}
               >
-                Post1
+                Post
               </button>
             </div>
           )}
