@@ -33,7 +33,6 @@ public class StoryService {
     }
 
     public Story save(Story story) {
-
         System.out.println(story.getMediaType());
         return storyRepository.save(story);
     }

@@ -1,4 +1,3 @@
-
 .container {
     width: 100%;
     display: flex;
@@ -7,9 +6,10 @@
 
 .profile-side {
     width: 85%;
-    height: 100vh;
+    height: auto;
     margin-right: 100px;
     margin-left: 245px;
+    padding-bottom: 50px;
 
 }
 
@@ -21,6 +21,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    border-radius: 0 0 5px 5px;
 }
 
 .hat-setting-platform {
@@ -37,11 +38,76 @@
 .status {
     width: 34px;
     height: 34px;
-    background-color: #595959;
     border-radius: 50%;
     position: relative;
     left: 72%;
     top: 80%;
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 70%;
+    background-image: url(/public/images/settings.svg);
+
+    background-color: rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Меню біля статусу */
+.status-menu {
+    position: absolute;
+    bottom: -90px;
+    left: 155px;
+    background: #656565;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    width: 206px;
+    height: auto;
+
+
+}
+
+.menu-item {
+    cursor: pointer;
+    text-align: start;
+    color: white;
+    font-family: Manrope;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    width: 100%;
+    height: 45px;
+    align-content: center;
+    text-indent: 25px;
+
+}
+
+.menu-item1 {
+    cursor: pointer;
+    text-align: start;
+    color: white;
+    font-family: Manrope;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    width: 100%;
+    height: 45px;
+    align-content: center;
+    text-indent: 25px;
+    border-bottom: 1px solid white;
+
+}
+
+.menu-item:hover,
+.menu-item1:hover {
+    background-color: rgba(0, 0, 0, 0.05);
 }
 
 .profile-photo {
@@ -124,6 +190,9 @@
     height: 35px;
     background-color: #D3D3D3;
     border: none;
+    margin-top: 20px;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 .edit-btn {
@@ -143,6 +212,7 @@
     width: 100%;
     text-align: start;
     margin-top: 20px;
+    margin-bottom: 7px;
 
     font-family: Manrope;
     font-weight: 400;
@@ -339,10 +409,7 @@
     font-size: 12px;
     line-height: 140%;
     letter-spacing: 0%;
-
     cursor: pointer;
-
-    border: 1px solid #FF4400;
     border-radius: 5px;
 
 }
@@ -379,14 +446,15 @@
     height: 58px;
     margin-top: 30px;
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
+
 }
 
 .save-btn {
     width: 328px;
     height: 58px;
     background-color: #FF4400;
-    font-family: 'Manrope',sans-serif;
+    font-family: 'Manrope', sans-serif;
     font-weight: 800;
     font-style: ExtraBold;
     font-size: 18px;
@@ -397,6 +465,26 @@
     align-content: center;
     cursor: pointer;
     border-radius: 5px;
+    border:none;
+}
+
+.logout-btn {
+    width: 328px;
+    height: 58px;
+    background-color: #2E2E2E;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 800;
+    font-style: ExtraBold;
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    color: white;
+    text-align: center;
+    align-content: center;
+    cursor: pointer;
+    border-radius: 5px;
+        border:none;
+
 }
 
 .your-name-text {
@@ -408,4 +496,14 @@
     letter-spacing: 0%;
     color: white;
     padding-bottom: 3px;
+}
+
+.edit-location {
+    width: 347px;
+    height: 53px;
+    background: #EEEEEE;
+    text-indent: 7px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
 }

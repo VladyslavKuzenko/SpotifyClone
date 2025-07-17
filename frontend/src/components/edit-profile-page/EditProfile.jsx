@@ -1,33 +1,68 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styles from "./EditProfile.module.css";
 import LeftSide from "../main-components/LeftSide";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function EditProfile() {
-      const navigate = useNavigate(); 
-  
+  const navigate = useNavigate();
+  const [menuVisible, setMenuVisible] = useState(false);
+  const statusRef = useRef(null);
+  const menuRef = useRef(null);
+
+  // Закрити меню при кліку поза ним
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(event.target) &&
+        !statusRef.current.contains(event.target)
+      ) {
+        setMenuVisible(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
     <div className={styles.container}>
-       <LeftSide /> 
 
       <div className={styles["empty-div1"]}></div>
 
       <div className={styles["profile-side"]}>
         <div className={styles["channel-hat"]}>
-          <button className={styles["return-profile"]} onClick={() => navigate("/my-profile")}>Return to profile</button>
-          <div className={styles["profile-photo"]}>
-            <div className={styles.status}></div>
+          <button
+            className={styles["return-profile"]}
+            onClick={() => navigate("/my-profile")}
+          >
+            Return to profile
+          </button>
+
+          <div className={styles["profile-photo"]} style={{ position: "relative" }}>
+            <div
+              className={styles.status}
+              ref={statusRef}
+              onClick={() => setMenuVisible((prev) => !prev)}
+            ></div>
+
+            {menuVisible && (
+              <div className={styles["status-menu"]} ref={menuRef}>
+                <div className={styles["menu-item1"]}>Change avatar</div>
+                <div className={styles["menu-item"]}>Change banner</div>
+              </div>
+            )}
           </div>
+
           <div className={styles["you-name"]}>You</div>
         </div>
 
         <div className={styles["profile-bio"]}>
           Nisi ut aliquip ex ea commodo consequatt in
         </div>
+
         <div className={styles["wrap"]}>
           <button className={styles["edit-btnup"]}>Edit</button>
         </div>
-
 
         <div className={styles["edit-container"]}>
           <div className={styles["edit-main"]}>
@@ -47,7 +82,7 @@ export default function EditProfile() {
 
             <div className={styles["two-in-one-text"]}>
               <div className={styles["standart-profile-text"]}>
-                Standart profile
+                Profile View
               </div>
               <div className={styles["standart-profile-text"]}>
                 Proffesional profile
@@ -58,10 +93,9 @@ export default function EditProfile() {
               <input
                 type="text"
                 className={styles["edit-username"]}
-                placeholder="Username"
+                placeholder="Listener"
               />
               <div className={styles["prof-profile"]}>Artist</div>
-              {/* Випадаюче меню видалене повністю */}
             </div>
 
             <div className={styles["your-name-text"]}>Personal information</div>
@@ -77,6 +111,12 @@ export default function EditProfile() {
                 placeholder="Email"
               />
             </div>
+            <div className={styles["your-name-text"]}>Location</div>
+            <input
+              type="text"
+              className={styles["edit-location"]}
+              placeholder="Location"
+            />
 
             <div className={styles["your-name-text"]}>Password</div>
             <div className={styles["two-in-one"]}>
@@ -95,17 +135,19 @@ export default function EditProfile() {
               <input
                 type="text"
                 className={styles["edit-insta"]}
-                placeholder="https://www.instagram.com/docm"
+                placeholder="Instagram"
               />
               <input
                 type="text"
                 className={styles["edit-tg"]}
-                placeholder="telegram"
+                placeholder="Telegram"
               />
             </div>
 
             <div className={styles["save-btn-plat"]}>
-              <div className={styles["save-btn"]}>Continue</div>
+              <button className={styles["logout-btn"]}>Logout</button>
+
+              <button className={styles["save-btn"]}>Continue</button>
             </div>
           </div>
         </div>

@@ -26,9 +26,9 @@ const NewPost = ({ onClose }) => {
     };
   }, []);
 
- const submiteStories = async () => {
+  const submiteStories = async () => {
     // console.log("File for story:", fileStory);
-    console.log("START !!!!!!!!!!!!!!!!!!!!!!!")
+    console.log("START !!!!!!!!!!!!!!!!!!!!!!!");
     const resultStory = {
       user: { id: user.sub },
       mediaType: fileStory.type.startsWith("image/") ? "IMAGE" : "VIDEO",
@@ -37,7 +37,7 @@ const NewPost = ({ onClose }) => {
       viewsCount: 0,
     };
 
-console.log("/story");
+    console.log("/story");
     const response = await apiFetch("/story", {
       method: "POST",
       headers: {
@@ -48,7 +48,7 @@ console.log("/story");
     console.log("POST SUCCESS");
     const story = await response.json();
 
-console.log("/story/upload");
+    console.log("/story/upload");
     const storyImgUrl = await handleUploadFile(
       story,
       fileStory,
@@ -69,7 +69,7 @@ console.log("/story/upload");
 
     if (!responseUpdate.ok) {
       alert("Помилка при оновленні історії: " + responseUpdate.statusText);
-    } 
+    }
   };
 
   const submitePost = async () => {
@@ -84,7 +84,6 @@ console.log("/story/upload");
       repostsCount: 0,
       contents: [],
     };
-
 
     const response = await apiFetch("/posts", {
       method: "POST",
@@ -121,7 +120,6 @@ console.log("/story/upload");
 
     if (!responseUpdate.ok) {
       alert("Помилка при оновленні посту: " + responseUpdate.statusText);
-
     }
   };
 
@@ -180,7 +178,7 @@ console.log("/story/upload");
                 <div className={styles["location-mention"]}>
                   <button className={styles["location"]}>Location</button>
                   <button className={styles["mention"]}>Mention</button>
-                   <button
+                  <button
                     className={styles["at-gallery"]}
                     onClick={() => filePostInputRef.current.click()}
                   >
@@ -211,7 +209,6 @@ console.log("/story/upload");
                     accept="image/*,video/*"
                     multiple
                   />
-                 
 
                   {filesPost.length > 0
                     ? filesPost.map((file) => (
@@ -291,8 +288,6 @@ console.log("/story/upload");
               <button className={styles["post-close-button"]} onClick={onClose}>
                 ×
               </button>
-
-              
 
               <div className={styles["comments"]}>
                 <div className={styles["comments-text"]}>Comments</div>
