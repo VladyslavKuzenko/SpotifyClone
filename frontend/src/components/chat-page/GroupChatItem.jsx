@@ -1,7 +1,6 @@
-import React from "react";
 import styles from "./ChatPage.module.css";
 
-const GroupItem = ({ groupName }) => {
+const GroupChatItem = ({ groupName }) => {
   return (
     <div className={styles["group-icon"]}>
       <div className={styles["group-circle"]}></div>
@@ -10,4 +9,4 @@ const GroupItem = ({ groupName }) => {
   );
 };
 
-export default GroupItem;
+export default GroupChatItem;

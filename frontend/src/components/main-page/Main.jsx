@@ -11,6 +11,7 @@ import SearchModal from "./SearchModal";
 import NewPost from "./NewPost";
 import { useAPI } from "../../hooks/useApi";
 import PostItem from "./PostItem";
+
 const Main = () => {
   const { isAuthenticated, isLoading } = useAuth0();
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
@@ -19,7 +20,8 @@ const Main = () => {
   const [selectedTab, setSelectedTab] = useState("all");
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [notificationTab, setNotificationTab] = useState("all");
-  const { apiFetch } = useAPI();
+  const { apiFetch, isProfileConfirmed, profileConfirmationLoading } = useAPI();
+
   const notificationRef = useRef(null);
 
   useEffect(() => {
@@ -50,8 +52,21 @@ const Main = () => {
   //   fetchData();
   // }, [isLoading]);
 
-  if (isLoading) return <div>Loading...</div>;
-  if (!isAuthenticated) return <Navigate to="/login" replace />;
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (profileConfirmationLoading) {
+    return <div>Loading profile...</div>;
+  }
+
+  if (!isProfileConfirmed) {
+    return <Navigate to="/profileSetup" replace />;
+  }
 
   // const renderContent = () => {
   //   return (
@@ -143,9 +158,8 @@ const Main = () => {
                   {["all", "likes", "comments", "follows"].map((tab) => (
                     <div
                       key={tab}
-                      className={`${styles.notificationTab} ${
-                        notificationTab === tab ? styles.active : ""
-                      }`}
+                      className={`${styles.notificationTab} ${notificationTab === tab ? styles.active : ""
+                        }`}
                       onClick={() => setNotificationTab(tab)}
                     >
                       {tab.charAt(0).toUpperCase() + tab.slice(1)}
@@ -167,25 +181,22 @@ const Main = () => {
 
           <div className={styles["swipe-box"]}>
             <div
-              className={`${styles["all-div"]} ${
-                selectedTab === "all" ? styles.active : ""
-              }`}
+              className={`${styles["all-div"]} ${selectedTab === "all" ? styles.active : ""
+                }`}
               onClick={() => setSelectedTab("all")}
             >
               All
             </div>
             <div
-              className={`${styles["artists-div"]} ${
-                selectedTab === "artists" ? styles.active : ""
-              }`}
+              className={`${styles["artists-div"]} ${selectedTab === "artists" ? styles.active : ""
+                }`}
               onClick={() => setSelectedTab("artists")}
             >
               Artists
             </div>
             <div
-              className={`${styles["friends-div"]} ${
-                selectedTab === "friends" ? styles.active : ""
-              }`}
+              className={`${styles["friends-div"]} ${selectedTab === "friends" ? styles.active : ""
+                }`}
               onClick={() => setSelectedTab("friends")}
             >
               Friends

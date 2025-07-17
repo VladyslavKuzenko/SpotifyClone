@@ -17,6 +17,7 @@ import LeftSide from "./components/main-components/LeftSide";
 
 function App() {
   return (
+
     <>
 
       <LeftSide />

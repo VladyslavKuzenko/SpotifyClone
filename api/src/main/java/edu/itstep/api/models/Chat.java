@@ -1,8 +1,10 @@
 package edu.itstep.api.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Set;
 
@@ -12,15 +14,21 @@ public class Chat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false)
+    @Column()
     private String title;
-    @Column(name = "picture_url", nullable = false)
+    @Column(name = "is_private", nullable = false)
+    @JsonProperty("isPrivate")
+    private Boolean isPrivate;
+    @Column(name = "picture_url")
     private String pictureUrl;
     @Column(name = "update_time")
-    private Date updateTime;
+    private LocalDateTime updateTime;
     @OneToMany(mappedBy = "chat")
     @JsonIgnore
     private Set<Message> messages;
+    @ManyToMany(mappedBy = "chats")
+    @JsonIgnore
+    private Set<User> users;
 
     public Chat() {
     }
@@ -49,11 +57,11 @@ public class Chat {
         this.pictureUrl = pictureUrl;
     }
 
-    public Date getUpdateTime() {
+    public LocalDateTime getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(LocalDateTime updateTime) {
         this.updateTime = updateTime;
     }
 
@@ -63,5 +71,21 @@ public class Chat {
 
     public void setMessages(Set<Message> messages) {
         this.messages = messages;
+    }
+
+    public Boolean getIsPrivate() {
+        return isPrivate;
+    }
+
+    public void setIsPrivate(Boolean isPrivate) {
+        this.isPrivate = isPrivate;
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 }

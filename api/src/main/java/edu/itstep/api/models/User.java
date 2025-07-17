@@ -70,6 +70,7 @@ public class User {
             name = "users_chats",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "chat_id"))
+    @JsonIgnore
     private Set<Chat> chats;
     @OneToMany(mappedBy = "user")
     @JsonIgnore
