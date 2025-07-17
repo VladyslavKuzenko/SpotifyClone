@@ -108,8 +108,9 @@ export default function ProfileSetup() {
   function isVibeSelected(vibe) {
     return selectedVibes.find(v => v.id === vibe.id)
   }
-
+  
   async function submitProfileSetup() {
+    navigate("/", { replace: true });
 
     await getAccessTokenWithPopup({
       authorizationParams: {
@@ -117,7 +118,8 @@ export default function ProfileSetup() {
       },
     });
 
-    if (!isUsernameUnique(username)) {
+    if (!await isUsernameUnique(username)) {
+
       return;
     }
 
@@ -148,7 +150,6 @@ export default function ProfileSetup() {
     } catch (err) {
       console.error(err);
     }
-    return <Navigate to="/" replace />;
   }
 
   return (
@@ -233,9 +234,16 @@ export default function ProfileSetup() {
             ))}
           </div>
 
-          <div className={styles.f}>
-            <button className={styles["cnt-btn"]} onClick={submitProfileSetup}>Continue</button>
-          </div>
+        <div className={styles.text11}>Pick Your Vibe:</div>
+        <div className={styles.bottom}>
+          {vibes.map((vibe) => (
+            <div className={`${styles.block} ${isVibeSelected(vibe) ? styles['block-selected'] : ''}`} onClick={() => { selectVibe(vibe) }}>{vibe.title}</div>
+          ))}
+        </div>
+
+        <div className={styles.f}>
+          <button className={styles["cnt-btn"]} onClick={async ()=>{await submitProfileSetup();}}>Continue</button>
+
         </div>
       </div>
     </div>

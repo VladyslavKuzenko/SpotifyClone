@@ -22,6 +22,8 @@ public class Track {
     private String title;
     @Column(name = "source_url")
     private String sourceUrl;
+    @Column(name = "image_url")
+    private String imageUrl;
     @Column(name = "listening_count")
     private Long listeningCount;
     @Column(name = "created_at")
@@ -76,6 +78,14 @@ public class Track {
 
     public void setSourceUrl(String sourceUrl) {
         this.sourceUrl = sourceUrl;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public Long getListeningCount() {

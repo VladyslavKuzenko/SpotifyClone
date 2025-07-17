@@ -107,6 +107,7 @@ export const APIProvider = ({ children }) => {
         profileConfirmationLoading,
         apiFetch,
         refreshProfileConfirmation,
+        refreshProfileConfirmation,
         isLoading,
         apiAxiosPost,
       }}

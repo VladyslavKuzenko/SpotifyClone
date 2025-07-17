@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -24,6 +25,8 @@ import java.util.Set;
 public class TrackController {
     private final TrackRepository trackRepository;
     private final PlaylistRepository playlistRepository;
+    @Autowired
+    private PostService postService;
 
 
     public TrackController(TrackRepository trackRepository, PlaylistRepository playlistRepository) {
@@ -84,11 +87,14 @@ public class TrackController {
     }
 
     @PostMapping
-    public ResponseEntity createTrack(@RequestBody Track track) throws URISyntaxException {
+    public Track createTrack(@RequestBody Track track) throws URISyntaxException {
         Track savedTrack = trackRepository.save(track);
-        return ResponseEntity.created(new URI("/tracks/" + savedTrack.getId())).body(savedTrack);
+        return savedTrack;
     }
-
+    @PostMapping("/upload/{trackId}")
+    public String handleFileUpload(@RequestParam("file") MultipartFile file, @PathVariable Long trackId){
+        return postService.postFileToVM(file,"track"+trackId);
+    }
     @DeleteMapping("/{id}")
     public ResponseEntity deleteTrack(@PathVariable Long id) {
         trackRepository.deleteById(id);

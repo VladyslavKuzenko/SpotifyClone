@@ -20,6 +20,7 @@ function App() {
   const hiddenLeftSideRoutes = ["/chat"];
   const shouldHideLeftSide = hiddenLeftSideRoutes.includes(location.pathname);
   return (
+
     <>
 
       {!shouldHideLeftSide && <LeftSide />}
