@@ -6,8 +6,8 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useAPI } from "../../hooks/useApi";
 import { handleUploadFile } from "../../js/functions/functions";
 
-const NewPost = ({ onClose }) => {
-  const [activeTab, setActiveTab] = useState("newpost");
+const NewPost = ({ onClose, initialTab = "newpost" }) => {
+  const [activeTab, setActiveTab] = useState(initialTab);
   const [selectedPrivacy, setSelectedPrivacy] = useState(null);
   const [selectedComments, setSelectedComments] = useState(null);
   const [fileStory, setFileStory] = useState(null);

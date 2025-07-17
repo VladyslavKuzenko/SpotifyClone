@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import styles from "./main.module.css";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useAPI } from "../../hooks/useApi";
+import NewPost from "./NewPost";
 
 const StoriesItem = () => {
   const scrollRef = useRef(null);
@@ -10,6 +11,7 @@ const StoriesItem = () => {
   const [currentStory, setCurrentStory] = useState(null);
   const [stories, setStories] = useState([]);
   const [currentIndex2, setCurrentIndex2] = useState(null); // Додано
+  const [isPostModalOpen, setIsPostModalOpen] = useState(false);
 
   const { apiFetch } = useAPI();
   const { user, isLoading } = useAuth0();
@@ -112,7 +114,7 @@ const StoriesItem = () => {
 
       <div className={styles["container-stories"]} ref={scrollRef}>
         <div className={styles["storiesbtn-place"]}>
-          <button className={styles["stories-btn"]} style={{ background: getRandomGradient() }}>
+          <button onClick={() => setIsPostModalOpen(true)} className={styles["stories-btn"]} style={{ background: getRandomGradient() }}>
             <div className={styles["storiesbtn-plus"]}></div>
 
           </button> {/*Влад, поставиш сюди аватарку користувача*/}
@@ -203,6 +205,8 @@ const StoriesItem = () => {
           </div>
         </div>
       )}
+{isPostModalOpen && <NewPost onClose={() => setIsPostModalOpen(false)} initialTab="stories" />}
+
     </div>
   );
 };
