@@ -209,7 +209,7 @@ export default function Rating() {
 
             {/* Example Content */}
             <div className={styles["info-song"]}>
-              <div className={styles["info-place"]}>1</div>
+              <div className={styles["info-place"]}></div>
               <div className={styles["info-content"]}>
                 <div className={styles["info-artist"]}>{tracks[0]?.artist.user.username} </div>
                 <div className={styles["info-song-name"]}>{tracks[0]?.title} </div>
