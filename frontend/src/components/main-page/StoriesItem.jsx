@@ -8,9 +8,10 @@ const StoriesItem = () => {
   const scrollRef = useRef(null);
   const [canScroll, setCanScroll] = useState({ left: false, right: false });
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentStory, setCurrentStory] = useState(null);
+  const [currentStoryGroup, setCurrentStoryGroup] = useState([]); // група сторіс одного користувача
+  const [currentStoryIndex, setCurrentStoryIndex] = useState(0); // індекс у групі
   const [stories, setStories] = useState([]);
-  const [currentIndex2, setCurrentIndex2] = useState(null); // Додано
+  const [currentUserIndex, setCurrentUserIndex] = useState(0); // індекс користувача в списку унікальних
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
 
   const { apiFetch } = useAPI();
@@ -40,10 +41,12 @@ const StoriesItem = () => {
   };
 
   const openModal = () => setIsModalOpen(true);
+
   const closeModal = () => {
     setIsModalOpen(false);
-    setCurrentStory(null);
-    setCurrentIndex2(null); // Очистка індексу при закритті
+    setCurrentStoryGroup([]);
+    setCurrentStoryIndex(0);
+    setCurrentUserIndex(0);
   };
 
   const handleOverlayClick = (e) => {
@@ -63,22 +66,6 @@ const StoriesItem = () => {
     const lightOrange = "#FFA500";
     const deepOrange = "#FF4500";
     return `linear-gradient(${angle}deg, ${lightOrange}, ${deepOrange})`;
-  };
-
-  const goToNextStory2 = () => {
-    if (currentIndex2 < stories.length - 1) {
-      const newIndex = currentIndex2 + 1;
-      setCurrentIndex2(newIndex);
-      setCurrentStory(stories[newIndex]);
-    }
-  };
-
-  const goToPrevStory2 = () => {
-    if (currentIndex2 > 0) {
-      const newIndex = currentIndex2 - 1;
-      setCurrentIndex2(newIndex);
-      setCurrentStory(stories[newIndex]);
-    }
   };
 
   useEffect(() => {
@@ -104,6 +91,57 @@ const StoriesItem = () => {
     };
   }, []);
 
+  // Групування сторісів по користувачу
+  const groupedStories = stories.reduce((acc, story) => {
+    const userId = story.user?.id;
+    if (!userId) return acc;
+    if (!acc[userId]) acc[userId] = [];
+    acc[userId].push(story);
+    return acc;
+  }, {});
+
+  // Масив перших сторіс кожного користувача для відображення в стрічці
+  const uniqueUsers = Object.values(groupedStories).map((storyGroup) => storyGroup[0]);
+
+  // Функції перемикання сторіс всередині користувача
+  const goToNextStory = () => {
+    if (currentStoryIndex < currentStoryGroup.length - 1) {
+      setCurrentStoryIndex(currentStoryIndex + 1);
+    } else {
+      // Якщо це остання сторіс користувача — перемкнути на наступного юзера
+      goToNextUser();
+    }
+  };
+
+  const goToPrevStory = () => {
+    if (currentStoryIndex > 0) {
+      setCurrentStoryIndex(currentStoryIndex - 1);
+    } else {
+      // Якщо це перша сторіс, переключити на попереднього юзера
+      goToPrevUser(true); // true означає що відкриємо останню сторіс цього користувача
+    }
+  };
+
+  // Перемикання між користувачами
+  const goToNextUser = () => {
+    if (currentUserIndex < uniqueUsers.length - 1) {
+      const newUserIndex = currentUserIndex + 1;
+      setCurrentUserIndex(newUserIndex);
+      setCurrentStoryGroup(groupedStories[uniqueUsers[newUserIndex].user.id]);
+      setCurrentStoryIndex(0);
+    }
+  };
+
+  const goToPrevUser = (openLastStory = false) => {
+    if (currentUserIndex > 0) {
+      const newUserIndex = currentUserIndex - 1;
+      setCurrentUserIndex(newUserIndex);
+      const prevGroup = groupedStories[uniqueUsers[newUserIndex].user.id];
+      setCurrentStoryGroup(prevGroup);
+      setCurrentStoryIndex(openLastStory ? prevGroup.length - 1 : 0);
+    }
+  };
+
   return (
     <div className={styles.wrapper}>
       {canScroll.left && (
@@ -114,35 +152,36 @@ const StoriesItem = () => {
 
       <div className={styles["container-stories"]} ref={scrollRef}>
         <div className={styles["storiesbtn-place"]}>
-          <button onClick={() => setIsPostModalOpen(true)} className={styles["stories-btn"]} style={{ background: getRandomGradient() }}>
+          <button
+            onClick={() => setIsPostModalOpen(true)}
+            className={styles["stories-btn"]}
+            style={{ background: getRandomGradient() }}
+          >
             <div className={styles["storiesbtn-plus"]}></div>
-
-          </button> {/*Влад, поставиш сюди аватарку користувача*/}
-
+          </button>
         </div>
-        {stories.map((i, index) => (
+
+        {uniqueUsers.map((story, index) => (
           <div
-            key={i.id || i.mediaUrl}
+            key={story.id || story.mediaUrl}
             className={styles["stories-plat"]}
             onClick={() => {
               openModal();
-              setCurrentStory(i);
-              setCurrentIndex2(index); // встановлюємо індекс
+              setCurrentUserIndex(index);
+              setCurrentStoryGroup(groupedStories[story.user.id]);
+              setCurrentStoryIndex(0);
             }}
           >
-            <div
-              className={styles.stories}
-              style={{ background: getRandomGradient() }}
-            >
+            <div className={styles.stories} style={{ background: getRandomGradient() }}>
               <div className={styles["stories-inner"]}>
                 <img
                   className={styles["preview-image"]}
-                  src={i.mediaUrl}
+                  src={story.mediaUrl}
                   alt="Story"
                 />
               </div>
             </div>
-            <div className={styles.nickname}>{i.user?.username}</div>
+            <div className={styles.nickname}>{story.user?.username}</div>
           </div>
         ))}
       </div>
@@ -153,51 +192,44 @@ const StoriesItem = () => {
         </div>
       )}
 
-      {isModalOpen && currentStory && (
+      {isModalOpen && currentStoryGroup.length > 0 && (
         <div
           className={styles["sts-modal-overlay"]}
           onClick={handleOverlayClick}
         >
           <div className={styles["sts-modal-window"]}>
-            <div className={styles["storie-upper"]}>
+            <div className={styles["storie-upper"]}></div>
 
-              {/*<button
-                className={styles["sts-modal-close"]}
-                onClick={closeModal}
-              ></button>*/}
-
-            </div>
-
-            {currentIndex2 > 0 && (
+            {/* Кнопка назад по сторіс всередині користувача або переходу до попереднього юзера */}
+            {(currentStoryIndex > 0 || currentUserIndex > 0) && (
               <button
                 className={styles["psb-modal-prev-button"]}
-                onClick={goToPrevStory2}
-              >
-              </button>
+                onClick={goToPrevStory}
+              ></button>
             )}
+
             <div className={styles["sts-modal-content"]}>
-
-
               <img
                 className={styles["preview-image"]}
-                src={currentStory.mediaUrl}
+                src={currentStoryGroup[currentStoryIndex].mediaUrl}
                 alt="Story"
               />
-
-
             </div>
-            {currentIndex2 < stories.length - 1 && (
+
+            {/* Кнопка вперед по сторіс або переходу до наступного юзера */}
+            {(currentStoryIndex < currentStoryGroup.length - 1 ||
+              currentUserIndex < uniqueUsers.length - 1) && (
               <button
                 className={styles["psb-modal-next-button"]}
-                onClick={goToNextStory2}
-              >
-              </button>
+                onClick={goToNextStory}
+              ></button>
             )}
+
             <div className={styles["storie-bottom"]}>
               <div className={styles["avatar-author"]}>
                 <div className={styles["storie-avatar"]}></div>
                 <div className={styles["storie-author"]}>
-                  {currentStory.user.username}
+                  {currentStoryGroup[currentStoryIndex].user.username}
                 </div>
                 <div className={styles["storie-like"]}></div>
               </div>
@@ -205,8 +237,13 @@ const StoriesItem = () => {
           </div>
         </div>
       )}
-{isPostModalOpen && <NewPost onClose={() => setIsPostModalOpen(false)} initialTab="stories" />}
 
+      {isPostModalOpen && (
+        <NewPost
+          onClose={() => setIsPostModalOpen(false)}
+          initialTab="stories"
+        />
+      )}
     </div>
   );
 };
