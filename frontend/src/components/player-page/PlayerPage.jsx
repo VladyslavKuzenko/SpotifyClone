@@ -13,8 +13,6 @@ const PlayerPage = () => {
   const { isAuthenticated, isLoading } = useAuth0();
   const { getAccessTokenSilently, getAccessTokenWithPopup } = useAuth0();
   const [isPlaylistsChanges, setIsPlaylistsChanges] = useState(false);
-  const { currentSong, setCurrentSong } = useAPI();
-  const { currentSongList, setCurrentSongList } = useAPI();
   const [currentArtist, setCurrentArtist] = useState({});
   const [artists, setArtists] = useState();
 
@@ -60,7 +58,7 @@ const PlayerPage = () => {
   return (
     <>
       <div className={styles.container}>
-        <LeftSide />
+         <LeftSide /> 
         <div className={styles["middle-right"]}>
           <div className={styles["empty-div11"]}></div>
 
@@ -82,10 +80,7 @@ const PlayerPage = () => {
           </div>
         </div>
 
-        <MusicPlayer
-         /*  songControl={{ currentSong, nextSong, prevSong }} */
-          footerPlayer
-        />
+        <MusicPlayer footerPlayer/>
       </div>
     </>
   );

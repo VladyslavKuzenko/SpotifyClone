@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, use } from "react";
 import styles from "./main.module.css";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Navigate } from "react-router-dom";
@@ -10,15 +10,18 @@ import ContainerVibe from "./ContainerVibe";
 import SearchModal from "./SearchModal";
 import NewPost from "./NewPost";
 import { useAPI } from "../../hooks/useApi";
+import PostItem from "./PostItem";
 
 const Main = () => {
   const { isAuthenticated, isLoading } = useAuth0();
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
+  const [searchParams, setSearchParams] = useState("");
   const [selectedTab, setSelectedTab] = useState("all");
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [notificationTab, setNotificationTab] = useState("all");
-  const { isProfileConfirmed, profileConfirmationLoading } = useAPI();
+  const { apiFetch, isProfileConfirmed, profileConfirmationLoading } = useAPI();
+
   const notificationRef = useRef(null);
 
   useEffect(() => {
@@ -41,6 +44,13 @@ const Main = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isNotificationOpen]);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     /* const response = await apiFetch(""); */
+  //   };
+
+  //   fetchData();
+  // }, [isLoading]);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -57,18 +67,32 @@ const Main = () => {
   if (!isProfileConfirmed) {
     return <Navigate to="/profileSetup" replace />;
   }
-  const renderContent = () => {
-    switch (selectedTab) {
-      case "all":
-        return <div>Це контент для All</div>;
-      case "artists":
-        return <div>Це контент для Artists</div>;
-      case "friends":
-        return <div>Це контент для Friends</div>;
-      default:
-        return null;
-    }
-  };
+
+  // const renderContent = () => {
+  //   return (
+  //     <div className={styles["all-post-content"]}>
+  //       <PostItem selectedTab={selectedTab} />
+  //     </div>
+  //   );
+
+  //   /*     console.log("renderContent called")
+  //   switch (selectedTab) {
+  //     case "all":
+
+
+  //     case "artists":
+  //       return <div>Це контент для Artists</div>;
+
+
+  //     case "friends":
+  //       return <div className={styles["all-post-content"]}><PostItem friends/></div>;
+
+
+
+  //     default:
+  //       return null;
+  //   } */
+  // };
 
   const renderNotificationContent = () => {
     switch (notificationTab) {
@@ -88,18 +112,21 @@ const Main = () => {
   return (
     <>
       <div className={styles.container}>
-        <LeftSide />
+        <LeftSide /> 
 
-        <div className={styles["home-text"]}>
-          <div className={styles["text-home"]}>Home</div>
-        </div>
+        <div className={styles["home-text"]}></div>
 
         <div className={styles.middle}>
-          <div className={styles["empty-div2"]}></div>
+          <div className={styles["empty-div2"]}>Home</div>
 
           <div className={styles.platform1} style={{ position: "relative" }}>
             <input
-              type="search"
+              type="text"
+              onChange={(e) => {
+                setSearchParams(e.target.value);
+              }}
+              value={searchParams}
+              // type="search"
               placeholder="Search"
               className={styles.search}
               onFocus={() => setIsSearchModalOpen(true)}
@@ -120,13 +147,11 @@ const Main = () => {
             <SearchModal
               isSearchModalOpen={isSearchModalOpen}
               setIsSearchModalOpen={setIsSearchModalOpen}
+              searchParams={searchParams}
             />
 
             {isNotificationOpen && (
-              <div
-                className={styles.notificationMenu}
-                ref={notificationRef}
-              >
+              <div className={styles.notificationMenu} ref={notificationRef}>
                 <div className={styles.notificationHeader}>Notification</div>
 
                 <div className={styles.notificationTabs}>
@@ -149,9 +174,7 @@ const Main = () => {
             )}
           </div>
 
-          <div className={styles["empty-div3"]}></div>
 
-          <ContainerVibe />
           <div className={styles["empty-div4"]}></div>
           <StoriesItem />
           <div className={styles["empty-div5"]}></div>
@@ -180,7 +203,12 @@ const Main = () => {
             </div>
           </div>
 
-          <div className={styles["users-content"]}>{renderContent()}</div>
+          {/* <div className={styles["users-content"]}>{renderContent()}</div> */}
+          <div className={styles["users-content"]}>
+            <div className={styles["all-post-content"]}>
+              <PostItem selectedTab={selectedTab} />
+            </div>
+          </div>
         </div>
 
         <div className={styles["empty-div1"]}></div>
@@ -192,9 +220,7 @@ const Main = () => {
         </div>
       </div>
 
-      {isPostModalOpen && (
-        <NewPost onClose={() => setIsPostModalOpen(false)} />
-      )}
+      {isPostModalOpen && <NewPost onClose={() => setIsPostModalOpen(false)} />}
     </>
   );
 };

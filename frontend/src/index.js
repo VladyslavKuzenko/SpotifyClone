@@ -4,6 +4,8 @@ import App from "./App.jsx";
 import { BrowserRouter } from "react-router-dom";
 import { CLIENT_ID, DOMAIN } from "./js/properties/properties.js";
 import { APIProvider } from "./providers/APIProvider.jsx";
+import LeftSide from "./components/main-components/LeftSide.jsx";
+import { AudioProvider } from "./providers/AudioProvider.jsx";
 
 const root = createRoot(document.getElementById("root"));
 
@@ -17,7 +19,10 @@ root.render(
   >
     <BrowserRouter>
       <APIProvider>
-        <App />
+        <AudioProvider>
+          {/* <LeftSide/> */}
+          <App />
+        </AudioProvider>
       </APIProvider>
     </BrowserRouter>
   </Auth0Provider>

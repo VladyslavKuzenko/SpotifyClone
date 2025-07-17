@@ -7,6 +7,7 @@ import {
 import { useAuth0 } from "@auth0/auth0-react";
 import { API_URL } from "../../js/properties/properties";
 import { useAPI } from "../../hooks/useApi";
+import { useAudio } from "../../hooks/useAudio";
 
 const SongItem = ({
   /*  onSongSelect, */
@@ -21,7 +22,7 @@ const SongItem = ({
   const [isAtpModalOpen, setIsAtpModalOpen] = useState(false);
   const atpRef = useRef(null);
   const { user, getAccessTokenSilently, isAuthenticated } = useAuth0();
-  const { setCurrentSong } = useAPI();
+  const { setCurrentSong } = useAudio();
 
   useEffect(() => {
     const audio = new Audio();
@@ -95,7 +96,7 @@ const SongItem = ({
 
       if (response.ok) {
         setIsLiked(!isLiked);
-        isPlaylistsChangesControl.setIsPlaylistsChanges(true);
+        isPlaylistsChangesControl?.setIsPlaylistsChanges(true);
       } else {
         console.error("Failed to like/unlike the song");
       }

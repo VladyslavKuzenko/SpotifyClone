@@ -1,14 +1,14 @@
 import React from "react";
 import LeftSide from '../main-components/LeftSide'
-import MusicPlayer from '../sharedComponents/MusicPlayer'
-import SongItem from '../player-page/SongItem'
+import { useNavigate } from "react-router-dom";
 
 import styles from "./likes.module.css";
 
 export default function Likes() {
+      const navigate = useNavigate();
     return (
         <div>
-            <LeftSide />
+             <LeftSide /> 
             <div className={styles["likes-container"]}>
                 <div className={styles["empty1"]}></div>
 
@@ -19,7 +19,7 @@ export default function Likes() {
                         <div className={styles["upper"]}>
 
                             <div className={styles["back-search"]}>
-                                <button className={styles["backbtn"]}>Back</button>
+                                <button className={styles["backbtn"]} onClick={() => navigate("/player")}></button>
                                 <input type="text" className={styles["search-likes"]} placeholder="Search" />
                             </div>
 
@@ -47,7 +47,6 @@ export default function Likes() {
 
                         <div className={styles["bottom"]}>
                             <div className={styles["bottom-wrapper"]}>
-                                <div className={styles["rec-text"]}>Recommended</div>
                                 {[...Array(10)].map((_, i) => (
                                     <div key={i} className={styles["liked-song"]}></div>
                                 ))}
@@ -61,9 +60,7 @@ export default function Likes() {
 
             </div>
 
-            <div className={styles["footer-container"]}>
-
-            </div>
+            
 
 
         </div>

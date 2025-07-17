@@ -3,6 +3,11 @@ import styles from "./ChatPage.module.css";
 import ChatList from './ChatList';
 import MessageItem from './MessageItem';
 import MessageInputField from './MessageInputField';
+import MyMessageItem from './MyMessageItem';
+import UserMessageItem from './UserMessageItem';
+import Footer from './Footer';
+import { useNavigate } from "react-router-dom";
+
 import UpperContent from "./UpperContent";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useAPI } from "../../hooks/useApi";
@@ -60,8 +65,15 @@ const ChatPage = () => {
         return <div>Loading...</div>;
     }
 
+      const navigate = useNavigate();
+    
     return (
+
         <div className={styles.container}>
+                <div className={styles["chat-back"]}> 
+                    <button className={styles["chat-back-btn"]}  onClick={() => navigate("/")}></button>
+                </div>
+
             <div className={styles["right-side"]}>
                 <ChatList onChatSelected={setChatId} />
                 <div className={styles["chat-messages"]}>
@@ -78,6 +90,8 @@ const ChatPage = () => {
                         )}
                     </div>
                     <MessageInputField chatId={currentChat?.id} onSend={() => fetchMessages(chatId)} />
+
+                    <Footer />
                 </div>
             </div>
         </div>

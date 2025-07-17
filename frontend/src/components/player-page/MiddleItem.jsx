@@ -9,6 +9,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { Navigate } from "react-router-dom";
 import FollowingButton from "../sharedComponents/FollowingButton";
 import { useAPI } from "../../hooks/useApi";
+import { useAudio } from "../../hooks/useAudio";
 
 export default function MiddleItem({
  /*  
@@ -23,7 +24,7 @@ export default function MiddleItem({
   const [currentArtist, setCurrentArtist] = useState(null);
   const { user, isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0();
   const [openMenuSongId, setOpenMenuSongId] = useState(null);
-  const { setCurrentSong, setCurrentSongList } = useAPI();
+  const { setCurrentSong, setCurrentSongList } = useAudio();
   // Вкладка для артиста: 'songs' або 'albums'
   const [activeArtistTab, setActiveArtistTab] = useState("songs");
 
@@ -119,7 +120,6 @@ export default function MiddleItem({
 
   return (
     <div className={styles["mr-midd"]}>
-      {/* Верхня частина UI */}
       <div className={styles["artist-songs"]}>
         <div className={styles["as-plat1"]}>
           <div className={styles["as-search-plat"]}>
@@ -131,7 +131,6 @@ export default function MiddleItem({
                 if (activeTab === "artist" && activeArtistTab === "songs") {
                   searchSongs(songsFullList, e.target.value, setSongs);
                 }
-                // Можна додати пошук для Recommended, якщо треба
               }}
               value={search}
               placeholder="Search"
@@ -157,7 +156,6 @@ export default function MiddleItem({
           </div>
         </div>
 
-        {/* Вміст вкладок */}
         {activeTab === "artist" && (
           <>
             <div className={styles["as-plat2"]}>
@@ -168,13 +166,11 @@ export default function MiddleItem({
                     className={styles["left-btn-plat"]}
                     onClick={prevArtist}
                   >
-                    {"<"}
                   </button>
                   <button
                     className={styles["right-btn-plat"]}
                     onClick={nextArtist}
                   >
-                    {">"}
                   </button>
                 </div>
                 <div className={styles["al-artist"]}>
@@ -207,11 +203,11 @@ export default function MiddleItem({
               </div>
             </div>
 
-            {/* Вкладки Songs / Albums */}
+            
             <div className={styles["recommended-text"]}>
               <div
                 className={`${styles["rec-songs"]} ${
-                  activeArtistTab === "songs" ? styles.activeTab : ""
+                  activeArtistTab === "songs" ? styles.activeTab1 : ""
                 }`}
                 onClick={() => setActiveArtistTab("songs")}
               >
@@ -222,7 +218,7 @@ export default function MiddleItem({
               </div>
               <div
                 className={`${styles["rec-album"]} ${
-                  activeArtistTab === "albums" ? styles.activeTab : ""
+                  activeArtistTab === "albums" ? styles.activeTab1 : ""
                 }`}
                 onClick={() => setActiveArtistTab("albums")}
               >
@@ -241,6 +237,7 @@ export default function MiddleItem({
                         moreInfo
                         onSetCurrentSongList={() => setCurrentSongList(songs)}
                         isPlaylistsChangesControl={isPlaylistsChangesControl}
+                       
                         openMenu={openMenuSongId === song.id}
                         toggleMenu={() =>
                           setOpenMenuSongId(
@@ -249,6 +246,7 @@ export default function MiddleItem({
                         }
                         closeMenu={() => setOpenMenuSongId(null)}
                       />
+                      
                     ))
                   ) : (
                     <div>No songs found</div>

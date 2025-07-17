@@ -1,17 +1,20 @@
 import React from "react";
 import styles from "./EditProfile.module.css";
 import LeftSide from "../main-components/LeftSide";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export default function EditProfile() {
+      const navigate = useNavigate(); 
+  
   return (
     <div className={styles.container}>
-      <LeftSide />
+       <LeftSide /> 
 
       <div className={styles["empty-div1"]}></div>
 
       <div className={styles["profile-side"]}>
         <div className={styles["channel-hat"]}>
-          <button className={styles["return-profile"]}>Return to profile</button>
+          <button className={styles["return-profile"]} onClick={() => navigate("/my-profile")}>Return to profile</button>
           <div className={styles["profile-photo"]}>
             <div className={styles.status}></div>
           </div>
@@ -21,6 +24,10 @@ export default function EditProfile() {
         <div className={styles["profile-bio"]}>
           Nisi ut aliquip ex ea commodo consequatt in
         </div>
+        <div className={styles["wrap"]}>
+          <button className={styles["edit-btnup"]}>Edit</button>
+        </div>
+
 
         <div className={styles["edit-container"]}>
           <div className={styles["edit-main"]}>
@@ -42,7 +49,7 @@ export default function EditProfile() {
               <div className={styles["standart-profile-text"]}>
                 Standart profile
               </div>
-              <div className={styles["proffesional-profile-text"]}>
+              <div className={styles["standart-profile-text"]}>
                 Proffesional profile
               </div>
             </div>
@@ -67,7 +74,7 @@ export default function EditProfile() {
               <input
                 type="text"
                 className={styles["edit-email"]}
-                placeholder="email"
+                placeholder="Email"
               />
             </div>
 
@@ -98,7 +105,7 @@ export default function EditProfile() {
             </div>
 
             <div className={styles["save-btn-plat"]}>
-              <div className={styles["save-btn"]}>Save</div>
+              <div className={styles["save-btn"]}>Continue</div>
             </div>
           </div>
         </div>

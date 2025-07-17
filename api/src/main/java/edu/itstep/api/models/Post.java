@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import edu.itstep.api.models.contentModels.ContentType;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -15,13 +17,15 @@ public class Post {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-    @Column(nullable = false)
-    private String title;
+//    @Column(nullable = false)
+//    private String title;
     private String description;
-    @Column(name = "media_type", nullable = false)
-    private ContentType mediaType;
-    @Column(name = "media_json", nullable = false)
-    private String mediaJson;
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Content> contents = new ArrayList<>();
+//    @Column(name = "media_type", nullable = false)
+//    private ContentType mediaType;
+//    @Column(name = "media_url", nullable = false)
+//    private String mediaUrl;
     @Column(name = "likes_count")
     private int likesCount;
     @Column(name = "views_count")
@@ -37,6 +41,10 @@ public class Post {
             inverseJoinColumns = @JoinColumn(name = "hashtag_id"))
     @JsonIgnore
     private Set<HashTag> hashtags;
+    @ManyToMany(mappedBy = "likedPosts")
+    @JsonIgnore
+    private Set<User> likedBy;
+
 
     public Post() {
     }
@@ -57,13 +65,13 @@ public class Post {
         this.user = user;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
+//    public String getTitle() {
+//        return title;
+//    }
+//
+//    public void setTitle(String title) {
+//        this.title = title;
+//    }
 
     public String getDescription() {
         return description;
@@ -73,20 +81,28 @@ public class Post {
         this.description = description;
     }
 
-    public ContentType getMediaType() {
-        return mediaType;
+//    public ContentType getMediaType() {
+//        return mediaType;
+//    }
+//
+//    public void setMediaType(ContentType mediaType) {
+//        this.mediaType = mediaType;
+//    }
+//
+//    public String getMediaUrl() {
+//        return mediaUrl;
+//    }
+//
+//    public void setMediaUrl(String mediaUrl) {
+//        this.mediaUrl = mediaUrl;
+//    }
+
+    public List<Content> getContents() {
+        return contents;
     }
 
-    public void setMediaType(ContentType mediaType) {
-        this.mediaType = mediaType;
-    }
-
-    public String getMediaJson() {
-        return mediaJson;
-    }
-
-    public void setMediaJson(String mediaJson) {
-        this.mediaJson = mediaJson;
+    public void setContents(List<Content> contents) {
+        this.contents = contents;
     }
 
     public int getLikesCount() {
@@ -128,5 +144,14 @@ public class Post {
     public void setHashtags(Set<HashTag> hashtags) {
         this.hashtags = hashtags;
     }
+
+    public Set<User> getLikedBy() {
+        return likedBy;
+    }
+
+    public void setLikedBy(Set<User> likedBy) {
+        this.likedBy = likedBy;
+    }
+
 }
 
