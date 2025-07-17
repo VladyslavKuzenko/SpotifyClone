@@ -111,6 +111,13 @@ const StoriesItem = () => {
       )}
 
       <div className={styles["container-stories"]} ref={scrollRef}>
+        <div className={styles["storiesbtn-place"]}>
+          <button className={styles["stories-btn"]} style={{ background: getRandomGradient() }}>
+            <div className={styles["storiesbtn-plus"]}></div>
+
+          </button> {/*Влад, поставиш сюди аватарку користувача*/}
+
+        </div>
         {stories.map((i, index) => (
           <div
             key={i.id || i.mediaUrl}
@@ -158,7 +165,7 @@ const StoriesItem = () => {
               ></button>*/}
 
             </div>
-            
+
             {currentIndex2 > 0 && (
               <button
                 className={styles["psb-modal-prev-button"]}
