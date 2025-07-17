@@ -194,7 +194,7 @@ export default function ProfileSetup() {
             </div>
 
             <div className={styles.b2}>
-              <div className={styles.text11}>Your Role</div>
+              <div className={styles.text11}>Profile View</div>
               <div className={styles.dropdown} ref={dropdownRef}>
                 <div
                   className={styles["dropdown-toggle"]}
@@ -249,37 +249,7 @@ export default function ProfileSetup() {
             </div>
           </div>
 
-          <div className={styles.text11}>Pick Your Vibe:</div>
-          <div className={styles.bottom}>
-            {vibes.map((vibe) => (
-              <div
-                className={`${styles.block} ${
-                  isVibeSelected(vibe) ? styles["block-selected"] : ""
-                }`}
-                onClick={() => {
-                  selectVibe(vibe);
-                }}
-              >
-                {vibe.title}
-              </div>
-            ))}
-          </div>
-
-          <div className={styles.text11}>Pick Your Vibe:</div>
-          <div className={styles.bottom}>
-            {vibes.map((vibe) => (
-              <div
-                className={`${styles.block} ${
-                  isVibeSelected(vibe) ? styles["block-selected"] : ""
-                }`}
-                onClick={() => {
-                  selectVibe(vibe);
-                }}
-              >
-                {vibe.title}
-              </div>
-            ))}
-          </div>
+         
 
           <div className={styles.f}>
             <button
