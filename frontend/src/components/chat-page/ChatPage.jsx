@@ -53,7 +53,7 @@ const ChatPage = () => {
 
         const interval = setInterval(() => {
             fetchMessages(chatId);
-        }, 5000);
+        }, 1000);
 
         return () => clearInterval(interval);
     }, [chatId]);
