@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styles from './user-profile.module.css';
 import LeftSide from '../main-components/LeftSide';
-import SongItem from './SongItem';
-import AlbumItem from './AlbumItem';
 
 const UserProfile = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -73,17 +71,13 @@ const UserProfile = () => {
           <div className={styles['saved-album-container']}>
             <div className={styles['saved-album-text']}>Saved Albums</div>
             <div className={styles['album-array']}>
-              {Array(12).fill(0).map((_, idx) => (
-                <AlbumItem key={idx} />
-              ))}
+             
             </div>
           </div>
           <div className={styles['saved-songs-container']}>
             <div className={styles['saved-songs-text']}>Saved Songs</div>
             <div className={styles['song-array']}>
-              {Array(10).fill(0).map((_, idx) => (
-                <SongItem key={idx} />
-              ))}
+              
             </div>
           </div>
         </div>
