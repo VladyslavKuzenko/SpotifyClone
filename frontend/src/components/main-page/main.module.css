@@ -91,6 +91,7 @@ html {
   width: 80px;
   text-align: start;
   margin-left: 20px;
+
 }
 
 
@@ -130,23 +131,14 @@ html {
   gap: 20px;
 }
 
-.home-btn {
-  width: 45px;
-  height: 45px;
-  background-color: transparent;
-  border-radius: 50%;
-  cursor: pointer;
-  border: none;
-  background-repeat: no-repeat;
-  background-size: 60%;
-  background-position: center;
-  background-position-y: 5px;
 
-
+.activeLabel {
+  color: #FE7C14;
 }
 
 .active1 {
   background-image: url(/public/images/orangehome.svg) !important;
+
 }
 
 .active2 {
@@ -161,58 +153,6 @@ html {
   background-image: url(/public/images/orangestar.svg) !important;
 }
 
-
-.chat-btn {
-  width: 45px;
-  height: 45px;
-  background-color: transparent;
-  border-radius: 50%;
-  cursor: pointer;
-  border: none;
-  background-repeat: no-repeat;
-  background-size: 60%;
-  background-position: center;
-
-}
-
-.star-btn {
-  width: 45px;
-  height: 45px;
-  background-color: transparent;
-  border-radius: 50%;
-  cursor: pointer;
-  border: none;
-  background-repeat: no-repeat;
-  background-size: 60%;
-  background-position: center;
-
-}
-
-.playlist-btn {
-  width: 45px;
-  height: 45px;
-  background-color: transparent;
-  border-radius: 50%;
-  cursor: pointer;
-  border: none;
-  background-repeat: no-repeat;
-  background-size: 48%;
-  background-position: center;
-
-}
-
-.people-btn {
-  width: 45px;
-  height: 45px;
-  background-color: transparent;
-  border-radius: 50%;
-  cursor: pointer;
-  border: none;
-  background-repeat: no-repeat;
-  background-size: 60%;
-  background-position: center;
-
-}
 
 .song-place-div {
   width: 100%;
@@ -720,9 +660,7 @@ html {
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  padding-top: 25px;
-
+  padding-top: 10px;
 }
 
 
@@ -731,34 +669,31 @@ html {
   width: 100%;
   height: 80px;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   flex-direction: row;
-  margin-top: 7px;
-
-
+  margin-bottom: 10px;
 }
 
 .place-for-ava {
   width: 80px;
   height: 100%;
   margin-left: 22px;
+  align-content: center;
 }
 
 .name-nickname {
   width: 170px;
-  height: 75%;
   display: flex;
   flex-direction: column;
-
-
+  align-content: center;
 }
 
 .follow-btn {
-  width: 115px;
-  height: 75%;
+  width: 117px;
+  height: 39px;
   margin-left: 10px;
-  color: black;
-  background-color: #F8F8F8;
+  color: rgb(255, 255, 255);
+  background-color: #414CC0;
   text-align: center;
   align-content: center;
   font-family: 'Manrope', sans-serif;
@@ -785,6 +720,7 @@ html {
   letter-spacing: 0%;
   color: white;
   cursor: pointer;
+  padding-bottom: 5px;
 
 }
 
