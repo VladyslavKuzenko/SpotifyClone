@@ -23,7 +23,7 @@ function App() {
 
     <>
 
-      {!shouldHideLeftSide && <LeftSide />}
+      {!shouldHideLeftSide && <LeftSide /> }
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/player" element={<PlayerPage />} />

@@ -235,14 +235,23 @@ body * {
 .saved-album-container {
     width: 54%;
     height: 100%;
-
 }
-
+.saved-album-container1 {
+    width: 35.2%;
+    height: 100%;
+}
 
 .saved-songs-container {
     flex: 1;
     height: 100%;
     margin-left: 10px;
+}
+
+.saved-songs-container1 {
+    flex: 1;
+    height: 100%;
+    margin-left: 10px;
+
 }
 
 .saved-album-text {
@@ -545,6 +554,7 @@ body * {
     border-radius: 50%;
     background-color: #D9D9D9;
     margin-right: 12px;
+    flex-shrink: 0;
 }
 
 .grp-info {
@@ -932,4 +942,44 @@ body * {
     background-repeat: no-repeat;
     background-position: center;
     z-index: 2;
+}
+
+.tabs-palce {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    gap: 40px;
+}
+
+.tab {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    color: white;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 20px;
+    line-height: 120%;
+    letter-spacing: 0%;
+    text-align: center;
+    padding: 7px;
+}
+
+.tab-active {
+    border: none;
+    border-bottom: 1px solid #FF3740;
+    background-color: transparent;
+    cursor: pointer;
+    color: white;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 20px;
+    line-height: 120%;
+    letter-spacing: 0%;
+    text-align: center;
+        padding: 7px;
+
 }

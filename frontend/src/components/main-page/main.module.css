@@ -1361,13 +1361,15 @@ html {
 
 .attributes {
   margin-left: 40px;
-  height: 110px;
+  height: 112px;
   width: 540px;
   display: flex;
   justify-content: flex-start;
   margin-top: 7px;
   overflow: auto;
   scrollbar-color: #4E5059 transparent;
+  scrollbar-width: thin;
+  overflow-y: hidden;
 }
 
 
@@ -1491,9 +1493,8 @@ html {
   line-height: 100%;
   letter-spacing: 0%;
   border-radius: 10px;
-  margin-left: 40%;
-  border:1px solid black
-
+  margin-left: 35%;
+  border: 1px solid black
 }
 
 .post-stories {
@@ -1504,20 +1505,21 @@ html {
 }
 
 .post-stories-btn {
-  border: none;
   width: 232px;
-  height: 58px;
-  background-color: #FF4400;
-  border-radius: 10px;
-  cursor: pointer;
-
+  height: 57px;
+  border: none;
   font-family: 'Manrope', sans-serif;
   font-weight: 600;
   font-style: SemiBold;
   font-size: 18px;
-  color: white;
   line-height: 100%;
   letter-spacing: 0%;
+  margin-top: 162px;
+
+  color: #FFFFFF;
+  cursor: pointer;
+  background-color: #FF4400;
+  border-radius: 10px;
 
 }
 
