@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-
 public class PostService {
 
     @Autowired
@@ -55,7 +54,7 @@ public class PostService {
         String remoteDir="";
         String resultRequestUtl="http://"+remoteHost;
         String contentType = file.getContentType();
-        if (contentType == null) return "невідомий";
+        if (contentType == null) return "невідомий тип контенту";
 
         if (contentType.startsWith("image/")) {
             remoteDir= "/var/www/html/uploads/img/";
