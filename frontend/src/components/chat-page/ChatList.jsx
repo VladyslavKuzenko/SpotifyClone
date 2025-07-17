@@ -21,7 +21,9 @@ const ChatList = ({ onChatSelected }) => {
         const titleData = await titleResponse.json();
 
         const messageResponse = await apiFetch(`/chats/${chat.id}/lastMessage`);
-        const messageData = await messageResponse.json();
+        const messageText = await messageResponse.text();
+        const messageData = messageText.trim() ? JSON.parse(messageText) : "";
+
         return { ...chat, title: titleData.title, lastMessage: messageData };
       }
       return chat;
