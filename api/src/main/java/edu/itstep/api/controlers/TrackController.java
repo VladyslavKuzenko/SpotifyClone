@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
@@ -32,7 +33,7 @@ public class TrackController {
     private TrackService trackService;
 
 
-    public TrackController(TrackRepository trackRepository, PlaylistRepository playlistRepository,TrackService trackService) {
+    public TrackController(TrackRepository trackRepository, PlaylistRepository playlistRepository, TrackService trackService) {
         this.trackRepository = trackRepository;
         this.playlistRepository = playlistRepository;
         this.trackService = trackService;
@@ -53,9 +54,18 @@ public class TrackController {
         return trackRepository.findAllByArtist_Id(id);
     }
 
-    @GetMapping("/tracks/{id}")
-    public Set<Track> getAllTracksByPlaylist(@PathVariable Long id) {
-        return playlistRepository.findById(id).orElseThrow(RuntimeException::new).getTracks();
+    @GetMapping("/tracks-by-postTime/{id}")
+    public List<Track> getAllTracksByPlaylist(@PathVariable Long id) {
+        Set<Track> tracks = playlistRepository.findById(id)
+                .orElseThrow(RuntimeException::new)
+                .getTracks();
+
+        List<Track> sortedTrack = tracks.stream()
+                .sorted(Comparator.comparing(Track::getCreatedAt).reversed().thenComparing(Track::getId)) // сортування
+                .toList();
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!sortedTrack");
+        System.out.println(sortedTrack);
+        return sortedTrack;
     }
 
     @GetMapping("/top")
@@ -95,15 +105,18 @@ public class TrackController {
         Track savedTrack = trackRepository.save(track);
         return savedTrack;
     }
+
     @PostMapping("/upload/{trackId}")
-    public String handleFileUpload(@RequestParam("file") MultipartFile file, @PathVariable Long trackId){
-        return postService.postFileToVM(file,"track"+trackId);
+    public String handleFileUpload(@RequestParam("file") MultipartFile file, @PathVariable Long trackId) {
+        return postService.postFileToVM(file, "track" + trackId);
     }
+
     @PutMapping("/{id}")
     public ResponseEntity<Track> updateTrack(@PathVariable Long id, @RequestBody Track updatedTrack) {
         Track track = trackService.updateTrack(id, updatedTrack);
         return ResponseEntity.ok(track);
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity deleteTrack(@PathVariable Long id) {
         trackRepository.deleteById(id);

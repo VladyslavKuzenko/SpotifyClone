@@ -51,7 +51,7 @@ const MyProfile = ({ profileInfo }) => {
   };
 
   const fetchCurrentPlaylistTracks = async (currentPlaylist) => {
-    const response = await apiFetch(`/tracks/tracks/${currentPlaylist.id}`);
+    const response = await apiFetch(`/tracks/tracks-by-postTime/${currentPlaylist.id}`);
     const body = await response.json();
     setSongs(body);
   };

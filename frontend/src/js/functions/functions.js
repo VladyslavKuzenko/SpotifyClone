@@ -67,7 +67,7 @@ export async function isUserPlaylistContainsSong(
   const body = await responsePlaylist.json();
   const playlist = body.find((i) => i.title === "Like");
   const responsePlaylistTracks = await fetch(
-    `http://localhost:8080/tracks/tracks/${playlist.id}`,
+    `http://localhost:8080/tracks/tracks-by-postTime/${playlist.id}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
