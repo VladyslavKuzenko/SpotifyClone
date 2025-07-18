@@ -20,9 +20,7 @@ const MyProfile = ({ profileInfo }) => {
   const [showModal1, setShowModal1] = useState(false);
   const { user, isLoading } = useAuth0();
   const { apiFetch } = useAPI();
-  const { setCurrentSong, setCurrentSongList } = useAudio();
   const [userFullInfo, setUserFullInfo] = useState("");
-  const [songs, setSongs] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("followers");
   const [activeTab1, setActiveTab1] = useState("profile");
@@ -44,26 +42,11 @@ const MyProfile = ({ profileInfo }) => {
     console.log("User full info: ", data);
   };
 
-  const fetchPlaylists = async () => {
-    const response = await apiFetch(`/playlists/playlists/${user.sub}`);
-    const body = await response.json();
-    // setPlaylists(body);
-    fetchCurrentPlaylistTracks(body.find((i) => i.title === "Like"));
-  };
-
-  const fetchCurrentPlaylistTracks = async (currentPlaylist) => {
-    const response = await apiFetch(
-      `/tracks/tracks-by-postTime/${currentPlaylist.id}`
-    );
-    const body = await response.json();
-    setSongs(body);
-  };
 
   useEffect(() => {
     if (isLoading) return;
 
     fetchUser();
-    fetchPlaylists();
   }, [isLoading]);
 
   if (isLoading) {

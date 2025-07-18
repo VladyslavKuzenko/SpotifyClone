@@ -10,11 +10,13 @@ export function convertTime(timeInSeconds) {
 }
 
 export function searchSongs(songs, searchParameter, setSongs) {
-  console.log("Track inside search",songs)
+  console.log("Track inside search", songs);
   const newSongs = songs.filter((song) => {
     if (
       song.title.toLowerCase().includes(searchParameter.toLowerCase()) ||
-      song.artist.user.username.toLowerCase().includes(searchParameter.toLowerCase())
+      song.artist.user.username
+        .toLowerCase()
+        .includes(searchParameter.toLowerCase())
     )
       return song;
   });
@@ -26,15 +28,15 @@ export function searchUsers(users, searchParameter, setUsers) {
   // console.log("users list inside function");
   // console.log(users);
   // if (searchParameter.length > 0) {
-    const newUsersList = users.filter((user) => {
-      if (
-        user.firstName.toLowerCase().includes(searchParameter.toLowerCase()) ||
-        user.lastName.toLowerCase().includes(searchParameter.toLowerCase()) ||
-        user.username.toLowerCase().includes(searchParameter.toLowerCase())
-      )
-        return user;
-    });
-    setUsers(newUsersList);
+  const newUsersList = users.filter((user) => {
+    if (
+      user.firstName.toLowerCase().includes(searchParameter.toLowerCase()) ||
+      user.lastName.toLowerCase().includes(searchParameter.toLowerCase()) ||
+      user.username.toLowerCase().includes(searchParameter.toLowerCase())
+    )
+      return user;
+  });
+  setUsers(newUsersList);
   // } else setUsers(users);
 }
 
@@ -129,7 +131,7 @@ export async function handleUploadFile(content, file, apiAxiosPost, path) {
   formData.append("file", file);
 
   try {
-    console.log("apiAxiosPost")
+    console.log("apiAxiosPost");
     const res = await apiAxiosPost(`${path}${content.id}`, formData);
     const data = res.data;
 
@@ -140,3 +142,128 @@ export async function handleUploadFile(content, file, apiAxiosPost, path) {
     alert("Помилка: " + err.message);
   }
 }
+
+const fetchArtistData = async (userId, apiFetch) => {
+  const response = await apiFetch(`/artists/byUser/${userId}`);
+  const data = await response.json();
+  return data;
+};
+
+export const submiteMusic = async (
+  songTitle,
+  song,
+  songImage,
+  selectedGenre,
+  userId,
+  apiFetch,
+  apiAxiosPost,
+  musicImgUrl,
+  albumId
+) => {
+  const artist = await fetchArtistData(userId, apiFetch);
+  const album = albumId ? { id: albumId } : {};
+  console.log("Album id: ", albumId);
+  const resultMusic = {
+    artist: { id: artist.id },
+    album: album,
+    title: songTitle,
+    listeningCount: 0,
+    createdAt: new Date(),
+  };
+  console.log("Result Music", resultMusic);
+  const response = await apiFetch("/tracks", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(resultMusic),
+  });
+  console.log("POST SUCCESS");
+  const music = await response.json();
+
+  musicImgUrl = musicImgUrl
+    ? musicImgUrl
+    : (musicImgUrl = await handleUploadFile(
+        music,
+        songImage,
+        apiAxiosPost,
+        "/tracks/upload/"
+      ));
+  const musicUrl = await handleUploadFile(
+    music,
+    song,
+    apiAxiosPost,
+    "/tracks/upload/"
+  );
+
+  music.sourceUrl = musicUrl;
+  music.imageUrl = musicImgUrl;
+
+  const responseUpdate = await apiFetch(`/tracks/${music.id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(music),
+  });
+  return music.id;
+};
+
+export const submitAlbum = async (
+  albumTitle,
+  songTitles,
+  songList,
+  songImage,
+  selectedGenre,
+  userId,
+  apiFetch,
+  apiAxiosPost
+) => {
+  const artist = await fetchArtistData(userId, apiFetch);
+
+  const resultAlbum = {
+    artist: { id: artist.id },
+    title: albumTitle,
+  };
+  const response = await apiFetch("/albums", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(resultAlbum),
+  });
+  const album = await response.json();
+
+  const musicImgUrl = await handleUploadFile(
+    album,
+    songImage,
+    apiAxiosPost,
+    "/tracks/upload/"
+  );
+
+  var musicList = [];
+  songList.map((item, index) => {
+    const songId = submiteMusic(
+      songTitles[index],
+      item,
+      songImage,
+      selectedGenre,
+      userId,
+      apiFetch,
+      apiAxiosPost,
+      musicImgUrl,
+      album.id
+    );
+    musicList += { id: songId };
+  });
+
+  album.tracks = musicList;
+  album.imageUrl = musicImgUrl;
+  const responseUpdate = await apiFetch(`/albums/${album.id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(album),
+  });
+};

@@ -3,7 +3,7 @@ import styles from "./MyProfile.module.css";
 import mainPageStyles from "../main-page/main.module.css";
 import { useAPI } from "../../hooks/useApi";
 import { useAuth0 } from "@auth0/auth0-react";
-import { handleUploadFile } from "../../js/functions/functions";
+import { handleUploadFile, submiteMusic } from "../../js/functions/functions";
 
 const AddMusicModal = ({ onClose }) => {
   const [showGenreMenu, setShowGenreMenu] = useState(false);
@@ -14,7 +14,7 @@ const AddMusicModal = ({ onClose }) => {
   const genreRef = useRef(null);
   const imageInputRef = useRef(null);
   const songInputRef = useRef(null);
-  const { apiFetch,apiAxiosPost } = useAPI();
+  const { apiFetch, apiAxiosPost } = useAPI();
   const { user, isLoading } = useAuth0();
 
   const genres = ["Hip hop", "Pop", "Rock", "Jazz", "Electronic", "Reggae"];
@@ -24,61 +24,9 @@ const AddMusicModal = ({ onClose }) => {
     setShowGenreMenu(false);
   };
 
-  const fetchArtistData = async () => {
-    const response = await apiFetch(`/artists/byUser/${user?.sub}`);
-    const data = await response.json();
-    return data;
-  };
-  const submiteMusic = async () => {
-    const artist = await fetchArtistData();
-
-    const resultMusic = {
-      artist: { id: artist.id },
-      title: songTitle,
-      listeningCount: 0,
-      createdAt: new Date(),
-    };
-
-
-    const response = await apiFetch("/tracks", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(resultMusic),
-    });
-    console.log("POST SUCCESS");
-    const music = await response.json();
-
-    const musicImgUrl = await handleUploadFile(
-      music,
-      songImage,
-      apiAxiosPost,
-      "/tracks/upload/"
-    );
-    const musicUrl=await handleUploadFile(
-      music,
-      song,
-      apiAxiosPost,
-      "/tracks/upload/"
-    );
-
-    music.sourceUrl=musicUrl;
-    music.imageUrl=musicImgUrl;
-
-    const responseUpdate = await apiFetch(`/tracks/${music.id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(music),
-    });
-
-  };
-
-  useEffect(()=>{
-    console.log("SONG: ",song)
-  },[song])
+  useEffect(() => {
+    console.log("SONG: ", song);
+  }, [song]);
   useEffect(() => {
     document.body.style.overflow = "hidden";
 
@@ -193,7 +141,22 @@ const AddMusicModal = ({ onClose }) => {
             <button className={styles["cancel"]} onClick={onClose}>
               Cancel
             </button>
-            <button className={styles["create"]} onClick={submiteMusic}>Create</button>
+            <button
+              className={styles["create"]}
+              onClick={() =>
+                submiteMusic(
+                  songTitle,
+                  song,
+                  songImage,
+                  selectedGenre,
+                  user.sub,
+                  apiFetch,
+                  apiAxiosPost
+                )
+              }
+            >
+              Create
+            </button>
           </div>
         </div>
       </div>

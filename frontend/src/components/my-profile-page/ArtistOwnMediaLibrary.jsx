@@ -1,78 +1,93 @@
 import React, { useEffect, useState } from "react";
-import styles from './MyProfile.module.css'
+import styles from "./MyProfile.module.css";
 import AlbumItem from "./AlbumItem";
 import SongItem from "../player-page/SongItem";
 import PostItem from "../main-page/PostItem";
+import { useAuth0 } from "@auth0/auth0-react";
+import { useAPI } from "../../hooks/useApi";
 import { useAudio } from "../../hooks/useAudio";
 import AddAlbumModal from "./AddAlbumModal";
 import AddMusicModal from "./AddMusicModal";
 
 const ArtistOwnMediaLibrary = () => {
-    const { setCurrentSong, setCurrentSongList } = useAudio();
-    const [songs, setSongs] = useState([]);
-    const [showModal, setShowModal] = useState(false);
-    const [showModal1, setShowModal1] = useState(false);
-    return (
-        <div>
-            <div className={styles['functional-container1']}>
+  const { setCurrentSong, setCurrentSongList } = useAudio();
+  const [songs, setSongs] = useState([]);
+  const [albums, setAlbums] = useState([]);
+  const { user, isLoading } = useAuth0();
+  const { apiFetch } = useAPI();
+  const [showModal, setShowModal] = useState(false);
+  const [showModal1, setShowModal1] = useState(false);
 
+  //   const fetchPlaylists = async () => {
+  //     const response = await apiFetch(`/playlists/playlists/${user.sub}`);
+  //     const body = await response.json();
+  //     // setPlaylists(body);
+  //     fetchCurrentPlaylistTracks(body.find((i) => i.title === "Like"));
+  //   };
 
-                <div className={styles["saved-songs-container1"]}>
-                    <div className={styles['svyazka']}>
-                        <div className={styles["saved-songs-text"]}>Your Songs</div>
-                        <button className={styles['add-btn']} onClick={() => setShowModal(true)}>Add +</button>
-                    </div>
-                    <div className={styles["song-array"]}>
-                        {songs.map((song, index) => (
-                            <SongItem
-                                key={song.id}
-                                song={song}
-                                moreInfo
-                                onSetCurrentSongList={() => setCurrentSongList(songs)}
-                            />
-                        ))}
-                    </div>
-                </div>
+  const fetchArtistTracks = async () => {
+    const response = await apiFetch(`/tracks/tracks-by-artists/${user.sub}`);
+    const body = await response.json();
+    setSongs(body);
+  };
+  const fetchArtistAlbums = async () => {
+    const response = await apiFetch(`/albums/albums-by-artists/${user.sub}`);
+    const body = await response.json();
+    setAlbums(body);
+  };
 
-                <div className={styles['saved-album-container1']}>
-                    <div className={styles['svyazka']}>
-                        <div className={styles['saved-album-text']}>Your Albums</div>
-                        <button className={styles['add-btn']} onClick={() => setShowModal1(true)}>Add +</button>
-                    </div>
-                    <div className={styles['album-array']}>
-                        {Array(12).fill(0).map((_, idx) => (
-                            <AlbumItem key={idx} />
-                        ))}
-                    </div>
-                </div>
+  useEffect(() => {
+    if (isLoading) return;
+    fetchArtistAlbums();
+    fetchArtistTracks();
+  }, [isLoading]);
 
-                {/* <div className={styles["bottom-place"]}>
-                    <div className={styles["posts-place"]}>
-                        <div className={styles["posts-text"]}>Posts</div>
-                        <PostItem selectedTab="user" />
-                        <div className={styles["posts-array"]}></div>
-                    </div>
-                    <div className={styles["groups-place"]}>
-                        <div className={styles["groups-text"]}>Groups</div>
-                        <div className={styles["groups-container"]}>
-                            {[...Array(12)].map((_, i) => (
-                                <div key={i} className={styles["grp-hiphop-heads"]}>
-                                    <div className={styles["grp-avatar"]}></div>
-                                    <div className={styles["grp-info"]}>
-                                        <div className={styles["grp-name"]}>Hip-Hop Heads</div>
-                                        <div className={styles["grp-followers"]}>35477 followers</div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div> */}
-            </div>
-            {showModal && <AddMusicModal onClose={() => setShowModal(false)} />}
-{showModal1 && <AddAlbumModal onClose={() => setShowModal1(false)} />}
+  return (
+    <div>
+      <div className={styles["functional-container1"]}>
+        <div className={styles["saved-songs-container1"]}>
+          <div className={styles["svyazka"]}>
+            <div className={styles["saved-songs-text"]}>Your Songs</div>
+            <button
+              className={styles["add-btn"]}
+              onClick={() => setShowModal(true)}
+            >
+              Add +
+            </button>
+          </div>
+          <div className={styles["song-array"]}>
+            {songs.map((song, index) => (
+              <SongItem
+                key={song.id}
+                song={song}
+                moreInfo
+                onSetCurrentSongList={() => setCurrentSongList(songs)}
+              />
+            ))}
+          </div>
         </div>
-        
-    );
+
+        <div className={styles["saved-album-container1"]}>
+          <div className={styles["svyazka"]}>
+            <div className={styles["saved-album-text"]}>Your Albums</div>
+            <button
+              className={styles["add-btn"]}
+              onClick={() => setShowModal1(true)}
+            >
+              Add +
+            </button>
+          </div>
+          <div className={styles["album-array"]}>
+            {albums.map((item, idx) => (
+              <AlbumItem album={item} key={idx} />
+            ))}
+          </div>
+        </div>
+      </div>
+      {showModal && <AddMusicModal onClose={() => setShowModal(false)} />}
+      {showModal1 && <AddAlbumModal onClose={() => setShowModal1(false)} />}
+    </div>
+  );
 };
 
 export default ArtistOwnMediaLibrary;

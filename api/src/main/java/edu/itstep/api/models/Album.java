@@ -16,6 +16,8 @@ public class Album {
     private Artist artist;
     @Column(nullable = false)
     private String title;
+    @Column(name = "image_url")
+    private String imageUrl;
     @OneToMany(mappedBy = "album")
     @JsonIgnore
     private Set<Track> tracks;
@@ -45,6 +47,14 @@ public class Album {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public Set<Track> getTracks() {
