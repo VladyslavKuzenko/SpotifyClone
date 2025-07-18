@@ -154,8 +154,20 @@ export default function ProfileSetup() {
     } catch (err) {
       console.error(err);
     }
-    
-    navigate('/', { replace: true });
+
+    const resultPlaylist = {
+      user: { id: user.sub },
+      title: "Like",
+    };
+    const response = await apiFetch("/playlists", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(resultPlaylist),
+    });
+
+    navigate("/", { replace: true });
   }
 
   return (
@@ -239,8 +251,9 @@ export default function ProfileSetup() {
             <div className={styles.up}>
               {genres.map((genre) => (
                 <div
-                  className={`${styles.block} ${isGenreSelected(genre) ? styles["block-selected"] : ""
-                    }`}
+                  className={`${styles.block} ${
+                    isGenreSelected(genre) ? styles["block-selected"] : ""
+                  }`}
                   onClick={() => {
                     selectGenre(genre);
                   }}

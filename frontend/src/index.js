@@ -22,7 +22,6 @@ root.render(
     <BrowserRouter>
       <APIProvider>
         <AudioProvider>
-          {/* <LeftSide/> */}
           <App />
         </AudioProvider>
       </APIProvider>

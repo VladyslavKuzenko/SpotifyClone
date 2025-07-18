@@ -6,7 +6,6 @@ import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
 import edu.itstep.api.models.Content;
 import edu.itstep.api.models.Post;
-import edu.itstep.api.models.Story;
 import edu.itstep.api.models.User;
 import edu.itstep.api.repositories.PostRepository;
 import edu.itstep.api.repositories.UserRepository;

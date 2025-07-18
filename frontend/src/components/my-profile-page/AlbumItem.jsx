@@ -2,10 +2,10 @@ import React from 'react';
 import styles from './MyProfile.module.css'; // Заміни на актуальний шлях
 import mainPageStyles from "../main-page/main.module.css";
 
-const AlbumItem = ({album, idx }) => {
+const AlbumItem = ({album, idx ,onClickFunck}) => {
   console.log("AlbumItem: ",album)
    return (
-    <div className={styles['album-wrapper']} key={idx}>
+    <div className={styles['album-wrapper']} key={idx} onClick={()=>onClickFunck?.()}>
       <div className={styles['album-item']}>
         {/* <button className={styles['delete-item']}></button> */} {/* з цією кнопкою не працює картинка  */}
         {/* Можна тут поставити картинку або контент айтема */}
