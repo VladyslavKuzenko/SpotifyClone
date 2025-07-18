@@ -49,9 +49,13 @@ public class TrackController {
     public List<Track> getAllArtistTrack(@PathVariable String id) {
         return trackRepository.findAllByArtist_Id(id);
     }
-    @GetMapping("/tracks-without-like/{id}")
-    public List<Track> getAllTracksWithoutPlaylist(@PathVariable String id) {
-        return trackRepository.findAllByArtist_Id(id);
+    @GetMapping("/tracks-without-like/{userId}")
+    public List<Track> getAllTracksWithoutPlaylist(@PathVariable String userId) {
+        List<Track> tracks =trackRepository.findTracksNotInLikePlaylist(userId);
+        List<Track> sortedTrack = tracks.stream()
+                .sorted(Comparator.comparing(Track::getCreatedAt).reversed().thenComparing(Track::getId)) // сортування
+                .toList();
+        return sortedTrack;
     }
 
     @GetMapping("/tracks-by-postTime/{id}")

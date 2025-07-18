@@ -144,7 +144,10 @@ export async function handleUploadFile(content, file, apiAxiosPost, path) {
 }
 
 const fetchArtistData = async (userId, apiFetch) => {
+  console.log("USER ID: ",userId);
   const response = await apiFetch(`/artists/byUser/${userId}`);
+  console.log("RESPONSE: ",response);
+
   const data = await response.json();
   return data;
 };
