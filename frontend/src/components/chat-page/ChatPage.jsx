@@ -15,7 +15,6 @@ const ChatPage = () => {
     const [currentChat, setCurrentChat] = useState(null);
     const [messages, setMessages] = useState([]);
     const [chatId, setChatId] = useState(null);
-      const navigate = useNavigate();
 
     const fetchChat = async (id) => {
         const response = await apiFetch(`/chats/${id}`);
@@ -39,7 +38,7 @@ const ChatPage = () => {
         }
 
         console.log(messages);
-        
+
     };
 
     useEffect(() => {
@@ -54,22 +53,23 @@ const ChatPage = () => {
 
         const interval = setInterval(() => {
             fetchMessages(chatId);
-        }, 5000);
+        }, 1000);
 
         return () => clearInterval(interval);
     }, [chatId]);
+
+    const navigate = useNavigate();
 
     if (isLoading) {
         return <div>Loading...</div>;
     }
 
-    
     return (
 
         <div className={styles.container}>
-                <div className={styles["chat-back"]}> 
-                    <button className={styles["chat-back-btn"]}  onClick={() => navigate("/")}></button>
-                </div>
+            <div className={styles["chat-back"]}>
+                <button className={styles["chat-back-btn"]} onClick={() => navigate("/")}></button>
+            </div>
 
             <div className={styles["right-side"]}>
                 <ChatList onChatSelected={setChatId} />

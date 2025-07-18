@@ -24,7 +24,7 @@ html {
   display: flex;
   flex-direction: column;
   align-items: center;
-  z-index: 1000;
+  z-index: 11000;
   transition: width 0.3s ease;
   scrollbar-width: none;
   overflow-x: hidden;
@@ -1596,22 +1596,25 @@ html {
 }
 
 .storie-upper {
-  width: 600px;
+  width: 700px;
   background-color: #232428;
   height: 6%;
   align-content: end;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(30px);
   border-bottom: none;
 
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   padding-bottom: 0px;
-  background-color: #232428;
+  background-color: transparent;
+
   border-top: 1px solid white;
   border-left: 1px solid white;
   border-right: 1px solid white;
-
-}
+box-shadow: 
+  0 -4px 10px rgba(255, 255, 255, 0.15),  /* top */
+  -4px 0 10px rgba(255, 255, 255, 0.15),  /* left */
+  4px 0 10px rgba(255, 255, 255, 0.15);   /* right */}
 
 .sts-modal-content {
   height: 87%;
@@ -1620,31 +1623,34 @@ html {
   background-color: #232428;
   width: 600px;
   overflow: hidden;
-  background-color: #232428;
+  background-color: transparent;
   border-left: 1px solid white;
   border-right: 1px solid white;
-  border-bottom: 1px solid white;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(30px);
   border-top: none;
+  padding-right: 50px;
+  padding-left: 50px;
+  padding-top: 10px;
+box-shadow: -4px 0 10px rgba(255, 255, 255, 0.15), 4px 0 10px rgba(255, 255, 255, 0.15);
 
   padding-bottom: 10px;
-  box-shadow: 0 80px 80px 0 rgba(255, 255, 255, 0.3);
 }
 
 .storie-bottom {
-  width: 600px;
+  width: 700px;
   height: 10%;
   background-color: #232428;
+  background-color: transparent;
+box-shadow: -4px 0 10px rgba(255, 255, 255, 0.15), 4px 0 10px rgba(255, 255, 255, 0.15), 0 4px 10px rgba(255, 255, 255, 0.15);
+
   display: flex;
   align-items: center;
-  border: 1px solid white;
-  border-radius: 10px;
-  backdrop-filter: blur(5px);
-  margin-top: 2%;
-  box-shadow: 0 0 40px 0 rgba(255, 255, 255, 0.3);
-
+  backdrop-filter: blur(30px);
+  border-left: 1px solid white;
+  border-right: 1px solid white;
+  border-bottom: 1px solid white;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
 
 }
 
@@ -1654,6 +1660,8 @@ html {
   background-color: #060708;
   border-radius: 50%;
   margin-left: 45px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.15);
+
 }
 
 .storie-author {
@@ -1666,6 +1674,26 @@ html {
   color: white;
   margin-left: 20px;
 
+}
+
+.storie-data {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 300;
+  font-style: Light;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: 0%;
+
+  color: white;
+  margin-left: 20px;
+
+}
+
+.author-data {
+  height: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .avatar-author {
@@ -1999,7 +2027,7 @@ html {
 }
 
 .psb-modal-prev-button {
-  left: -60px;
+  left: 0;
   background-image: url('/public/images/Vector\ 32.png');
   background-position: center;
   background-repeat: no-repeat;
@@ -2007,7 +2035,7 @@ html {
 }
 
 .psb-modal-next-button {
-  right: -60px;
+  right: 0;
   background-image: url('/public/images/Vector\ 31.png');
   background-position: center;
   background-repeat: no-repeat;

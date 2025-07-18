@@ -45,7 +45,6 @@ html {
     background-color: #7A7A7A;
     overflow: hidden;
     position: relative;
-    background-image: url(/public/images/image.png);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;

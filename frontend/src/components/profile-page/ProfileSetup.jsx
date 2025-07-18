@@ -2,14 +2,13 @@ import { useState, useRef, useEffect } from "react";
 import styles from "./profileSetup.module.css";
 import { useAPI } from "../../hooks/useApi";
 import { useAuth0 } from "@auth0/auth0-react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, replace, useNavigate } from "react-router-dom";
 import { API_URL } from "../../js/properties/properties";
 
 export default function ProfileSetup() {
   const { isAuthenticated, isLoading, user, getAccessTokenWithPopup } =
     useAuth0();
-  const { apiFetch,apiFetchWithoutAutorization } = useAPI();
-  const navigate = useNavigate();
+  const { apiFetch, apiFetchWithoutAutorization } = useAPI();
   const [goalDropdownOpen, setGoalDropdownOpen] = useState(false);
   const [selectedGoal, setSelectedGoal] = useState({
     id: -1,
@@ -72,6 +71,8 @@ export default function ProfileSetup() {
       document.removeEventListener("click", handleClickOutside);
     };
   }, []);
+
+  const navigate = useNavigate();
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -153,6 +154,8 @@ export default function ProfileSetup() {
     } catch (err) {
       console.error(err);
     }
+    
+    navigate('/', { replace: true });
   }
 
   return (
@@ -194,7 +197,7 @@ export default function ProfileSetup() {
             </div>
 
             <div className={styles.b2}>
-              <div className={styles.text11}>Your Role</div>
+              <div className={styles.text11}>Profile View</div>
               <div className={styles.dropdown} ref={dropdownRef}>
                 <div
                   className={styles["dropdown-toggle"]}
@@ -236,9 +239,8 @@ export default function ProfileSetup() {
             <div className={styles.up}>
               {genres.map((genre) => (
                 <div
-                  className={`${styles.block} ${
-                    isGenreSelected(genre) ? styles["block-selected"] : ""
-                  }`}
+                  className={`${styles.block} ${isGenreSelected(genre) ? styles["block-selected"] : ""
+                    }`}
                   onClick={() => {
                     selectGenre(genre);
                   }}
@@ -248,39 +250,6 @@ export default function ProfileSetup() {
               ))}
             </div>
           </div>
-
-          <div className={styles.text11}>Pick Your Vibe:</div>
-          <div className={styles.bottom}>
-            {vibes.map((vibe) => (
-              <div
-                className={`${styles.block} ${
-                  isVibeSelected(vibe) ? styles["block-selected"] : ""
-                }`}
-                onClick={() => {
-                  selectVibe(vibe);
-                }}
-              >
-                {vibe.title}
-              </div>
-            ))}
-          </div>
-
-          <div className={styles.text11}>Pick Your Vibe:</div>
-          <div className={styles.bottom}>
-            {vibes.map((vibe) => (
-              <div
-                className={`${styles.block} ${
-                  isVibeSelected(vibe) ? styles["block-selected"] : ""
-                }`}
-                onClick={() => {
-                  selectVibe(vibe);
-                }}
-              >
-                {vibe.title}
-              </div>
-            ))}
-          </div>
-
           <div className={styles.f}>
             <button
               className={styles["cnt-btn"]}
