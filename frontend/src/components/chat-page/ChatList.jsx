@@ -66,6 +66,8 @@ const ChatList = ({ onChatSelected }) => {
           className={styles["chat-search"]}
           placeholder="Search"
         />
+
+        <button className={styles["create-group"]}></button>
       </div>
 
       <div className={styles["groups-block"]}>

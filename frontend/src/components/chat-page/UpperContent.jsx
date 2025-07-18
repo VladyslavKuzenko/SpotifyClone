@@ -48,29 +48,14 @@ const UpperContent = ({ chat }) => {
             </div>
             <div className={styles["user-listening"]}>
                 Listening to: Timeless – The Weeknd
-//             <div className={styles["split1"]}>
-//                 <div className={styles["user-ava-plat"]}>
-//                     <div className={styles["user-ava"]}></div>
-//                 </div>
-
-//                 <div className={styles["user-ns-plat"]}>
-
-//                     <div className={styles["user-ns"]}>
-//                         <div className={styles["user-name"]}>User Nickname</div>
-//                         <div className={styles["user-status"]}>Online</div>
-//                     </div>
-//                 </div>
+                <div className={styles["split1"]}>
                 </div>
-
-                <div className={styles["split2"]}>
-                    <div className={styles["user-listening"]}>
-                        Listening to: Timeless – The Weeknd
-                    </div>
-
-                    <div className={styles["user-btn"]} onClick={toggleModal}>
+                </div>
+<div className={styles["user-btn"]} onClick={toggleModal}>
                         {isModalOpen ? "∧" : "∨"}
                     </div>
-                </div>
+              
+                    
 
                 {isModalOpen && (
                     <div ref={modalRef} className={styles["user-modal"]}>
@@ -150,7 +135,6 @@ const UpperContent = ({ chat }) => {
                     </div>
                 )}
             </div>
-        </div>
 
     );
 };
