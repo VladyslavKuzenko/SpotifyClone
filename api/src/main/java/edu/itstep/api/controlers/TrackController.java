@@ -1,9 +1,6 @@
 package edu.itstep.api.controlers;
 
-import edu.itstep.api.models.Artist;
-import edu.itstep.api.models.Story;
 import edu.itstep.api.models.Track;
-import edu.itstep.api.repositories.ArtistRepository;
 import edu.itstep.api.repositories.PlaylistRepository;
 import edu.itstep.api.repositories.TrackRepository;
 import edu.itstep.api.services.PostService;
@@ -15,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.LocalDateTime;
 import java.util.Comparator;
@@ -51,6 +47,10 @@ public class TrackController {
 
     @GetMapping("/tracks-by-artists/{id}")
     public List<Track> getAllArtistTrack(@PathVariable String id) {
+        return trackRepository.findAllByArtist_Id(id);
+    }
+    @GetMapping("/tracks-without-like/{id}")
+    public List<Track> getAllTracksWithoutPlaylist(@PathVariable String id) {
         return trackRepository.findAllByArtist_Id(id);
     }
 
