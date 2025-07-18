@@ -45,15 +45,18 @@ export default function MiddleItem({
   };
 
   const fetchAlbum = async () => {
+    if(!currentArtist) return
+
     const response = await apiFetch(
-      `/albums/albums-by-artists/${currentArtist}`
+      `/albums/albums-by-artists/${currentArtist.id}`
     );
     const data = await response.json();
     setAlbums(data);
     setCurrentAlbum(data[0]);
   };
   const fetchAlbumTracks = async () => {
-    const response = await apiFetch(`/albums/albums-tracks/${currentAlbum.id}`);
+    if(!currentAlbum) return
+    const response = await apiFetch(`/albums/albums-tracks/${currentAlbum?.id}`);
     const data = await response.json();
     setSongs(data);
     setSongsFullList(data);
@@ -242,7 +245,7 @@ export default function MiddleItem({
               <div className={styles["albums-container"]}>
                 <div className={styles["albums-array"]}>
                   {albums.map((item, index) => (
-                    <AlbumItem album={item} key={index}/>
+                    <AlbumItem album={item} key={index} onClickFunck={()=>{setCurrentAlbum(item)}}/>
                   ))}
                 </div>
 

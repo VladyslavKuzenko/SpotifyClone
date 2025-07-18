@@ -16,8 +16,15 @@ const NewSongs = () => {
   } = useAudio();
   async function fetchSong() {
     const response = await apiFetch("/tracks/lastTrack");
-    const data = await response.json();
+    const text = await response.text();
+
+  if (text) {
+    const data = JSON.parse(text);
     setSong(data);
+  
+  } else {
+  }
+
     // console.log("New song fetched:", data);
   }
   useState(() => {
