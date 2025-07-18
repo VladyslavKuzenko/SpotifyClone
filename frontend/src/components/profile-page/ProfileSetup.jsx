@@ -4,6 +4,7 @@ import { useAPI } from "../../hooks/useApi";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Navigate, replace, useNavigate } from "react-router-dom";
 import { API_URL } from "../../js/properties/properties";
+import { getUser_metadata_firstName, getUser_metadata_lastName } from "../../js/functions/functions";
 
 export default function ProfileSetup() {
   const { isAuthenticated, isLoading, user, getAccessTokenWithPopup } =
@@ -129,8 +130,8 @@ export default function ProfileSetup() {
 
     const resultUser = {
       id: user.sub,
-      firstName: "firstname",
-      lastName: "lastname",
+      firstName: getUser_metadata_firstName(user.sub),
+      lastName: getUser_metadata_lastName(user.sub),
       username,
       goal: { id: selectedGoal.id },
       genres: selectedGenres.map((g) => ({ id: g.id })),
