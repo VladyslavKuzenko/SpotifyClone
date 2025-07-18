@@ -25,8 +25,7 @@ export default function MiddleItem({
   const [currentAlbum, setCurrentAlbum] = useState();
   const [artists, setArtists] = useState([]);
   const [currentArtist, setCurrentArtist] = useState(null);
-  const { user, isAuthenticated, isLoading, getAccessTokenSilently } =
-    useAuth0();
+  const { user, isAuthenticated, isLoading } = useAuth0();
   const [openMenuSongId, setOpenMenuSongId] = useState(null);
   const { setCurrentSong, setCurrentSongList } = useAudio();
   // Вкладка для артиста: 'songs' або 'albums'
@@ -44,9 +43,7 @@ export default function MiddleItem({
     setSongsFullList(body);
   };
   const handleRecomendedSongs = async () => {
-    const response = await apiFetch(
-      `/tracks/tracks-by-artists/${currentArtist?.user.id}`
-    );
+    const response = await apiFetch(`/tracks/tracks-without-like/${user?.sub}`);
     const body = await response.json();
     setSongs(body);
     setSongsFullList(body);
