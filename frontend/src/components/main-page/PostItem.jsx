@@ -95,24 +95,21 @@ export default function PostItem({ post }) {
                   </div>
                 </div>
 
-                <div className={styles["post-wrap"]}>
-                  <button
-                    className={styles["post-coment-btn"]}
-                    onClick={openDiscussion}
-                  ></button>
-                  <div className={styles["coment-count"]}>
-                    {post.commentsCount}
+                <div className={styles["post-coment"]}>
+
+                  <div className={styles["post-wrap"]}>
+                    <button className={styles["post-coment-btn"]} onClick={openDiscussion}></button>
+                    <div className={styles["coment-count"]}>{post.commentsCount}</div>
                   </div>
                 </div>
-                
+
                 <div className={styles["post-repost"]}>
                   <div className={styles["post-wrap"]}>
                     <button className={styles["post-repost-btn"]}></button>
-                    <div className={styles["repost-count"]}>
-                      {post.repostsCount}
-                    </div>
+                    <div className={styles["repost-count"]}>{post.repostsCount}</div>
                   </div>
                 </div>
+
               </div>
             </div>
 

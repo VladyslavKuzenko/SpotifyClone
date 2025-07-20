@@ -2,13 +2,11 @@ package edu.itstep.api.controlers;
 import edu.itstep.api.models.*;
 import edu.itstep.api.models.dto.UserCreationDTO;
 import edu.itstep.api.repositories.GenreRepository;
-import edu.itstep.api.repositories.GoalRepository;
 import edu.itstep.api.repositories.UserRepository;
 import edu.itstep.api.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import edu.itstep.api.repositories.VibeRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.net.URI;
@@ -31,15 +29,11 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    private final GoalRepository goalRepository;
     private final GenreRepository genreRepository;
-    private final VibeRepository vibeRepository;
 
-    public UserController(UserRepository userRepository, GoalRepository goalRepository, GenreRepository genreRepository, VibeRepository vibeRepository) {
+    public UserController(UserRepository userRepository, GenreRepository genreRepository) {
         this.userRepository = userRepository;
-        this.goalRepository = goalRepository;
         this.genreRepository = genreRepository;
-        this.vibeRepository = vibeRepository;
     }
 
     @GetMapping
@@ -88,25 +82,12 @@ public class UserController {
         user.setChats(new HashSet<>());
         user.setTracksListenings(new HashSet<>());
 
-        if (dto.goal != null && dto.goal.id != null) {
-            Goal goal = goalRepository.findById(dto.goal.id).orElse(null);
-            user.setGoal(goal);
-        }
-
         if (dto.genres != null) {
             Set<Genre> genreSet = dto.genres.stream()
                     .map(g -> genreRepository.findById(g.id).orElse(null))
                     .filter(Objects::nonNull)
                     .collect(Collectors.toSet());
             user.setGenres(genreSet);
-        }
-
-        if (dto.vibes != null) {
-            Set<Vibe> vibeSet = dto.vibes.stream()
-                    .map(v -> vibeRepository.findById(v.id).orElse(null))
-                    .filter(Objects::nonNull)
-                    .collect(Collectors.toSet());
-            user.setVibes(vibeSet);
         }
 
         User savedUser = userRepository.save(user);
