@@ -14,8 +14,8 @@ const NewPost = ({ onClose, initialTab = "newpost" }) => {
   const [filesPost, setFilesPost] = useState([]);
   const [description, setDescription] = useState("");
   const [isUploading, setIsUploading] = useState(false);
-  const { user, isLoading } = useAuth0();
-  const { apiAxiosPost, apiFetch } = useAPI();
+  const { isLoading } = useAuth0();
+  const { apiAxiosPost, apiFetch,user } = useAPI();
   const fileStoryInputRef = useRef(null);
   const filePostInputRef = useRef(null);
 

@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./main.module.css";
 import { useAPI } from "../../hooks/useApi";
 import { useAuth0 } from "@auth0/auth0-react";
-import { isLiked } from "../../js/functions/functions";
-import ChatMessage from "./ChatMessage";
 import PostItem from "./PostItem";
 export default function Posts({ selectedTab, userId }) {
   const [posts, setPosts] = useState([]);
-  const { apiFetch } = useAPI();
-  const { user, isLoading } = useAuth0();
+  const { apiFetch, user } = useAPI();
+  const { isLoading } = useAuth0();
 
   // const [currentImageIndexes, setCurrentImageIndexes] = useState({});
   const [visibleCount, setVisibleCount] = useState(15);
@@ -55,7 +53,7 @@ export default function Posts({ selectedTab, userId }) {
   return (
     <>
       <div className={styles["posts-container"]}>
-        {reversedVisiblePosts.map((post,index) => (
+        {reversedVisiblePosts.map((post, index) => (
           <PostItem key={index} post={post} />
         ))}
         {visibleCount < posts.length && (

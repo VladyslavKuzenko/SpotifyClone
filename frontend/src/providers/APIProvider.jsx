@@ -12,11 +12,9 @@ export const APIProvider = ({ children }) => {
   const {
     user,
     getAccessTokenSilently,
-    getAccessTokenWithPopup,
     isAuthenticated,
     isLoading,
   } = useAuth0();
-  
   const apiAxiosPost = async (path, data, options = {}) => {
     let headers = options.headers || {};
 
@@ -107,7 +105,6 @@ export const APIProvider = ({ children }) => {
       refreshProfileConfirmation();
     }
   }, [isAuthenticated, user?.sub]);
-
   return (
     <APIContext.Provider
       value={{

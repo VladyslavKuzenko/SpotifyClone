@@ -21,8 +21,8 @@ const MyProfile = ({ profileInfo }) => {
   const [showModal1, setShowModal1] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
 
-  const { user, isLoading } = useAuth0();
-  const { apiFetch } = useAPI();
+  const { isLoading } = useAuth0();
+  const { apiFetch,user } = useAPI();
   const [userFullInfo, setUserFullInfo] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("followers");

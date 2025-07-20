@@ -21,8 +21,10 @@ const SongItem = ({
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAtpModalOpen, setIsAtpModalOpen] = useState(false);
   const atpRef = useRef(null);
-  const { user, getAccessTokenSilently, isAuthenticated } = useAuth0();
+  const {isLoading} =
+    useAuth0();
   const { setCurrentSong } = useAudio();
+  const { apiFetch,user } = useAPI();
 
   useEffect(() => {
     const audio = new Audio();
@@ -34,17 +36,16 @@ const SongItem = ({
 
   useEffect(() => {
     const checkLiked = async () => {
-      if (isAuthenticated && user) {
-        const liked = await isUserPlaylistContainsSong(
-          song,
-          user,
-          getAccessTokenSilently
-        );
-        setIsLiked(liked);
-      }
+      if (isLoading) return;
+      // if (isAuthenticated && user) {
+      console.log("checkLiked user: ", user);
+      console.log("checkLiked song: ", song);
+      const liked = await isUserPlaylistContainsSong(song, user, apiFetch);
+      setIsLiked(liked);
     };
+    // };
     checkLiked();
-  }, [song, user, isAuthenticated, getAccessTokenSilently]);
+  }, [isLoading]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -65,43 +66,24 @@ const SongItem = ({
   }, []);
 
   const handleLikeClick = async () => {
-    if (isAuthenticated && user) {
-      const token = await getAccessTokenSilently({
-        authorizationParams: {
-          audience: API_URL,
-        },
-      });
-
-      const responsePlaylist = await fetch(
-        `http://localhost:8080/playlists/playlists/${user.sub}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
+    const responsePlaylist =await apiFetch(`/playlists/playlists/${user.sub}`)
+    // if (isAuthenticated && user) 
       const body = await responsePlaylist.json();
       const playlist = body.find((i) => i.title === "Like");
-
-      const response = await fetch(
-        `http://localhost:8080/playlists/${playlist.id}/tracks/${song.id}`,
-        {
-          method: isLiked ? "DELETE" : "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
+      const response =await apiFetch(`/playlists/${playlist.id}/tracks/${song.id}`,{
+         method: isLiked ? "DELETE" : "POST",
+      })
       if (response.ok) {
         setIsLiked(!isLiked);
         isPlaylistsChangesControl?.setIsPlaylistsChanges(true);
       } else {
         console.error("Failed to like/unlike the song");
       }
-    }
+    
   };
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>
