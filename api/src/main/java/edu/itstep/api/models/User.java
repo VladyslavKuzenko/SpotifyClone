@@ -40,6 +40,8 @@ public class User {
     private boolean allowMessages;
     @Column(name = "ui_theme")
     private String uiTheme;
+    @Column(name = "is_artist")
+    private Boolean isArtist;
     @ManyToMany
     @JoinTable(
             name = "users_followings",
@@ -143,6 +145,14 @@ public class User {
         this.followersCount = followersCount;
     }
 
+    public Track getDayTrack() {
+        return dayTrack;
+    }
+
+    public void setDayTrack(Track dayTrack) {
+        this.dayTrack = dayTrack;
+    }
+
     public boolean isShowListeningHistory() {
         return showListeningHistory;
     }
@@ -167,6 +177,14 @@ public class User {
         this.uiTheme = uiTheme;
     }
 
+    public Boolean getIsArtist() {
+        return isArtist;
+    }
+
+    public void setIsArtist(Boolean artist) {
+        isArtist = artist;
+    }
+
     public Set<User> getFollowings() {
         return followings;
     }
@@ -181,14 +199,6 @@ public class User {
 
     public void setFollowers(Set<User> followers) {
         this.followers = followers;
-    }
-
-    public Track getDayTrack() {
-        return dayTrack;
-    }
-
-    public void setDayTrack(Track dayTrack) {
-        this.dayTrack = dayTrack;
     }
 
     public Set<Chat> getChats() {

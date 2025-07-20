@@ -9,6 +9,8 @@ import edu.itstep.api.models.Post;
 import edu.itstep.api.models.User;
 import edu.itstep.api.repositories.PostRepository;
 import edu.itstep.api.repositories.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -18,10 +20,11 @@ import java.io.File;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class PostService {
-
+    private static final Logger logger = LoggerFactory.getLogger(PostService.class);
     @Autowired
     private PostRepository postRepository;
     @Autowired
@@ -47,23 +50,23 @@ public class PostService {
         return postRepository.save(post); // це оновлення
     }
 
-    public String postFileToVM(MultipartFile file,String postId){
+    public String postFileToVM(MultipartFile file, String postId) {
         String remoteHost = "ec2-18-170-58-194.eu-west-2.compute.amazonaws.com";
         String username = "ubuntu";
-        String remoteDir="";
-        String resultRequestUtl="http://"+remoteHost;
+        String remoteDir = "";
+        String resultRequestUtl = "http://" + remoteHost;
         String contentType = file.getContentType();
         if (contentType == null) return "невідомий тип контенту";
 
         if (contentType.startsWith("image/")) {
-            remoteDir= "/var/www/html/uploads/img/";
-            resultRequestUtl+="/uploads/img/";
+            remoteDir = "/var/www/html/uploads/img/";
+            resultRequestUtl += "/uploads/img/";
         } else if (contentType.startsWith("audio/")) {
-            remoteDir= "/var/www/html/uploads/songs/";
-            resultRequestUtl+="/uploads/songs/";
+            remoteDir = "/var/www/html/uploads/songs/";
+            resultRequestUtl += "/uploads/songs/";
         } else if (contentType.startsWith("video/")) {
-            remoteDir= "/var/www/html/uploads/video/";
-            resultRequestUtl+="/uploads/video/";
+            remoteDir = "/var/www/html/uploads/video/";
+            resultRequestUtl += "/uploads/video/";
         }
 
         try {
@@ -86,8 +89,8 @@ public class PostService {
             ChannelSftp sftp = (ChannelSftp) channel;
 
             // Завантаження файлу
-            resultRequestUtl+=postId+"_"+file.getOriginalFilename();
-            sftp.put(tempFile.getAbsolutePath(), remoteDir + postId+"_"+file.getOriginalFilename());
+            resultRequestUtl += postId + "_" + file.getOriginalFilename();
+            sftp.put(tempFile.getAbsolutePath(), remoteDir + postId + "_" + file.getOriginalFilename());
 
             // Закриття
             sftp.exit();
@@ -103,10 +106,11 @@ public class PostService {
         }
     }
 
-    public List<Post> getPostByFollowing(String userId){
+    public List<Post> getPostByFollowing(String userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
+        logger.info("following");
         Set<User> followings = user.getFollowings();
 
         if (followings.isEmpty()) {
@@ -114,5 +118,19 @@ public class PostService {
         }
 
         return postRepository.findByUserIn(followings);
+    }
+
+    public List<Post> getPostByFollowingArtists(String userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        logger.info("followingArtist");
+        Set<User> followingArtist = user.getFollowings().stream().filter(User::getIsArtist).collect(Collectors.toSet());
+        System.out.println(followingArtist);
+        if (followingArtist.isEmpty()) {
+            return Collections.emptyList(); // або обробити якось інакше
+        }
+
+        return postRepository.findByUserIn(followingArtist);
     }
 }
