@@ -279,7 +279,7 @@ const StoriesItem = () => {
                   <div className={styles["storie-author"]}>
                     {currentStoryGroup[currentStoryIndex].user.username}
                   </div>
-                  <div className={styles["storie-data"]}>5 minute ago</div>
+                  <div className={styles["storie-data"]}>{currentStoryGroup[currentStoryIndex].createdAt}</div>
                 </div>
 
                 <div className={styles["storie-like"]}></div>

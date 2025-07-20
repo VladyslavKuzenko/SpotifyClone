@@ -35,6 +35,7 @@ const NewPost = ({ onClose, initialTab = "newpost" }) => {
       mediaUrl: " ",
       likesCount: 0,
       viewsCount: 0,
+      createdAt: new Date()
     };
 
     console.log("/story");
@@ -82,6 +83,7 @@ const NewPost = ({ onClose, initialTab = "newpost" }) => {
       viewsCount: 0,
       commentsCount: 0,
       repostsCount: 0,
+      createdAt: new Date(),
       contents: [],
     };
 
