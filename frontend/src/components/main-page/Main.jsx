@@ -10,7 +10,7 @@ import ContainerVibe from "./ContainerVibe";
 import SearchModal from "./SearchModal";
 import NewPost from "./NewPost";
 import { useAPI } from "../../hooks/useApi";
-import PostItem from "./PostItem";
+import Posts from "./Posts";
 
 const Main = () => {
   const { isAuthenticated, isLoading } = useAuth0();
@@ -67,32 +67,6 @@ const Main = () => {
   if (!isProfileConfirmed) {
     return <Navigate to="/profileSetup" replace />;
   }
-
-  // const renderContent = () => {
-  //   return (
-  //     <div className={styles["all-post-content"]}>
-  //       <PostItem selectedTab={selectedTab} />
-  //     </div>
-  //   );
-
-  //   /*     console.log("renderContent called")
-  //   switch (selectedTab) {
-  //     case "all":
-
-
-  //     case "artists":
-  //       return <div>Це контент для Artists</div>;
-
-
-  //     case "friends":
-  //       return <div className={styles["all-post-content"]}><PostItem friends/></div>;
-
-
-
-  //     default:
-  //       return null;
-  //   } */
-  // };
 
   const renderNotificationContent = () => {
     switch (notificationTab) {
@@ -204,7 +178,7 @@ const Main = () => {
           {/* <div className={styles["users-content"]}>{renderContent()}</div> */}
           <div className={styles["users-content"]}>
             <div className={styles["all-post-content"]}>
-              <PostItem selectedTab={selectedTab} />
+              <Posts selectedTab={selectedTab} />
             </div>
           </div>
         </div>
