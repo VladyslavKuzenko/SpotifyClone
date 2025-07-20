@@ -14,7 +14,7 @@ const StoriesItem = () => {
   const [currentUserIndex, setCurrentUserIndex] = useState(0);
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
 
-  const {  apiFetch,user } = useAPI();
+  const { apiFetch, user } = useAPI();
   const { isLoading } = useAuth0();
 
   const updateScrollState = () => {
@@ -191,14 +191,32 @@ const StoriesItem = () => {
       )}
 
       <div className={styles["container-stories"]} ref={scrollRef}>
+
         <div className={styles["storiesbtn-place"]}>
-          <button
+          <div
             onClick={() => setIsPostModalOpen(true)}
             className={styles["stories-btn"]}
-            style={{ background: getRandomGradient() }}
+            style={{
+              background: getRandomGradient(),
+            }}
           >
+            <img
+              src="/images/image.png"
+              alt="Story"
+              className={styles["preview-image-btn"]}
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                borderRadius: "50%",
+                boxSizing: "border-box",
+                display: "block",
+                padding: 3
+              }}
+            />
             <div className={styles["storiesbtn-plus"]}></div>
-          </button>
+          </div>
+
         </div>
 
         {uniqueUsers.map((story, index) => (
@@ -265,11 +283,11 @@ const StoriesItem = () => {
 
             {(currentStoryIndex < currentStoryGroup.length - 1 ||
               currentUserIndex < uniqueUsers.length - 1) && (
-              <button
-                className={styles["psb-modal-next-button"]}
-                onClick={goToNextStory}
-              ></button>
-            )}
+                <button
+                  className={styles["psb-modal-next-button"]}
+                  onClick={goToNextStory}
+                ></button>
+              )}
 
             <div className={styles["storie-bottom"]}>
               <div className={styles["avatar-author"]}>
