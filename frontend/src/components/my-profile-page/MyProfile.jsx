@@ -8,7 +8,7 @@ import { useAPI } from "../../hooks/useApi";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useAudio } from "../../hooks/useAudio";
 import SongItem from "../player-page/SongItem";
-import PostItem from "../main-page/PostItem";
+import Posts from "../main-page/Posts";
 import AddAlbumModal from "./AddAlbumModal";
 import AddMusicModal from "./AddMusicModal";
 import FollowersModal from "./FollowersModal";
@@ -164,7 +164,7 @@ const MyProfile = ({ profileInfo }) => {
 
           <div className={styles["posts-place"]}>
             <div className={styles["posts-text"]}>Posts</div>
-            <PostItem selectedTab="user" userId={user?.sub} />
+            <Posts selectedTab="user" userId={user?.sub} />
             {/* <div className={styles["posts-array"]}></div> */}
           </div>
           <div className={styles["groups-place"]}>

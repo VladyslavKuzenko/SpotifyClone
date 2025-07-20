@@ -54,7 +54,7 @@ export const APIProvider = ({ children }) => {
 
     if (isAuthenticated) {
       try {
-        console.log("token start",API_URL);
+        // console.log("token start",API_URL);
 
         const token = await getAccessTokenSilently({
           authorizationParams: {
@@ -62,7 +62,7 @@ export const APIProvider = ({ children }) => {
           },
         });
 
-        console.log("Token: " + token);
+        // console.log("Token: " + token);
 
         headers = {
           ...headers,
@@ -119,6 +119,7 @@ export const APIProvider = ({ children }) => {
         apiFetchWithoutAutorization,
         isLoading,
         apiAxiosPost,
+        user
       }}
     >
       <>{children}</>

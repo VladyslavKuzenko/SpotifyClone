@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import styles from "./MyProfile.module.css";
 import AlbumItem from "./AlbumItem";
 import SongItem from "../player-page/SongItem";
-import PostItem from "../main-page/PostItem";
 import { useAudio } from "../../hooks/useAudio";
 import { useAPI } from "../../hooks/useApi";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -70,27 +69,6 @@ const UserLikedMediaLibrary = () => {
             ))}
           </div>
         </div>
-        {/* <div className={styles["bottom-place"]}>
-                    <div className={styles["posts-place"]}>
-                        <div className={styles["posts-text"]}>Posts</div>
-                        <PostItem selectedTab="user" />
-                        <div className={styles["posts-array"]}></div>
-                    </div>
-                    <div className={styles["groups-place"]}>
-                        <div className={styles["groups-text"]}>Groups</div>
-                        <div className={styles["groups-container"]}>
-                            {[...Array(12)].map((_, i) => (
-                                <div key={i} className={styles["grp-hiphop-heads"]}>
-                                    <div className={styles["grp-avatar"]}></div>
-                                    <div className={styles["grp-info"]}>
-                                        <div className={styles["grp-name"]}>Hip-Hop Heads</div>
-                                        <div className={styles["grp-followers"]}>35477 followers</div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div> */}
       </div>
     </div>
   );

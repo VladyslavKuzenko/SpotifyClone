@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import styles from "./MyProfile.module.css";
 import AlbumItem from "./AlbumItem";
 import SongItem from "../player-page/SongItem";
-import PostItem from "../main-page/PostItem";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useAPI } from "../../hooks/useApi";
 import { useAudio } from "../../hooks/useAudio";
