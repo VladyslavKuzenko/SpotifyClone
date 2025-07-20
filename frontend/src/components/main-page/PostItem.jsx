@@ -95,7 +95,7 @@ export default function PostItem({ post }) {
                 >
                   <div className={styles["post-wrap"]}>
                     <img
-                      src={isPostLiked ? "/images/redheart (3).svg" : "/images/heart.svg"}
+                      src={isPostLiked ? "/images/redheart.svg" : "/images/heart.svg"}
                       alt="Like"
                       className={styles["post-like-btn"]}
                     />

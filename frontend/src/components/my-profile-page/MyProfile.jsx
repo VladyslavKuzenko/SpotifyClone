@@ -72,7 +72,7 @@ const MyProfile = ({ profileInfo }) => {
           </button>
           {/* <div className={styles["profile-photo"]}></div> */}
           <img src={userFullInfo.uiTheme} className={styles["profile-photo"]} />
-          <div className={styles["you-name"]}>{userFullInfo?.username}</div>
+          <div className={styles["you-name"]}>@{userFullInfo?.username}</div>
         </div>
 
         <div className={styles["profile-bio"]}>{userFullInfo?.shortBio}</div>
