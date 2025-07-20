@@ -48,15 +48,13 @@ export function getUser_metadata_lastName(user) {
   return user["https://diplomaapp.com/lastName"];
 }
 
-export async function isUserPlaylistContainsSong(
-  song,
-  user,
-  apiFetch
-) {
-  const responsePlaylist =await apiFetch(`/playlists/playlists/${user.sub}`)
+export async function isUserPlaylistContainsSong(song, user, apiFetch) {
+  const responsePlaylist = await apiFetch(`/playlists/playlists/${user.sub}`);
   const body = await responsePlaylist.json();
   const playlist = body.find((i) => i.title === "Like");
-  const responsePlaylistTracks = await apiFetch(`/tracks/tracks-by-postTime/${playlist.id}`);
+  const responsePlaylistTracks = await apiFetch(
+    `/tracks/tracks-by-postTime/${playlist.id}`
+  );
   const tracks = await responsePlaylistTracks.json();
   //var playlist = body;
   /* console.log(song) */
@@ -65,12 +63,8 @@ export async function isUserPlaylistContainsSong(
   return result;
 }
 
-export async function isSubscribed(
-  user,
-  userToCheckSubscription,
-  apiFetch
-) {
-  const response =await apiFetch(`/users/userFollowing/${user.sub}`)
+export async function isSubscribed(user, userToCheckSubscription, apiFetch) {
+  const response = await apiFetch(`/users/userFollowing/${user.sub}`);
   const body = await response.json();
   var isSubscribed = body.some((i) => i.id === userToCheckSubscription.id);
   return isSubscribed;
@@ -110,9 +104,9 @@ export async function handleUploadFile(content, file, apiAxiosPost, path) {
 }
 
 const fetchArtistData = async (userId, apiFetch) => {
-  console.log("USER ID: ",userId);
+  console.log("USER ID: ", userId);
   const response = await apiFetch(`/artists/byUser/${userId}`);
-  console.log("RESPONSE: ",response);
+  console.log("RESPONSE: ", response);
 
   const data = await response.json();
   return data;
@@ -137,7 +131,7 @@ export const submiteMusic = async (
     album: album,
     title: songTitle,
     listeningCount: 0,
-    createdAt: new Date(),
+    createdAt: new Date().toISOString(),
   };
   console.log("Result Music", resultMusic);
   const response = await apiFetch("/tracks", {

@@ -3,7 +3,7 @@ package edu.itstep.api.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -35,7 +35,7 @@ public class Post {
     @Column(name = "reposts_count")
     private int repostsCount;
     @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    private Instant createdAt;
     @ManyToMany
     @JoinTable(
             name = "posts_hashtags",
@@ -139,11 +139,11 @@ public class Post {
         this.repostsCount = repostsCount;
     }
 
-    public LocalDateTime getCreatedAt() {
+    public Instant getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public void setCreatedAt(Instant createdAt) {
         this.createdAt = createdAt;
     }
 

@@ -3,7 +3,7 @@ package edu.itstep.api.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.Set;
 
 @Entity
@@ -27,7 +27,7 @@ public class Track {
     @Column(name = "listening_count")
     private Long listeningCount;
     @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    private Instant createdAt;
     @ManyToMany
     @JoinTable(
             name = "tracks_playlists",
@@ -96,9 +96,9 @@ public class Track {
         this.listeningCount = listeningCount;
     }
 
-    public LocalDateTime getCreatedAt() {return createdAt;}
+    public Instant  getCreatedAt() {return createdAt;}
 
-    public void setCreatedAt(LocalDateTime createdAt) {this.createdAt = createdAt;}
+    public void setCreatedAt(Instant  createdAt) {this.createdAt = createdAt;}
 
     public Set<Playlist> getPlaylists() {
         return playlists;

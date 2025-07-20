@@ -3,7 +3,7 @@ package edu.itstep.api.models;
 import edu.itstep.api.models.contentModels.ContentType;
 import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Entity
 @Table(name = "stories")
@@ -23,7 +23,7 @@ public class Story {
     @Column(name = "views_count")
     private int viewsCount;
     @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    private Instant createdAt;
 
 
     public Story() {
@@ -77,11 +77,11 @@ public class Story {
         this.viewsCount = viewsCount;
     }
 
-    public LocalDateTime getCreatedAt() {
+    public Instant  getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public void setCreatedAt(Instant  createdAt) {
         this.createdAt = createdAt;
     }
 }
