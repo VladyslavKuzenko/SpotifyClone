@@ -8,15 +8,14 @@ export default function Posts({ selectedTab, userId }) {
   const { apiFetch, user } = useAPI();
   const { isLoading } = useAuth0();
 
-  // const [currentImageIndexes, setCurrentImageIndexes] = useState({});
   const [visibleCount, setVisibleCount] = useState(15);
 
   const fetchPosts = async () => {
     if (isLoading) return;
     var response;
-    // console.log("FETCH POST. SELECTED TAB: ",selectedTab)
-    // console.log("FETCH POST. user sub: ",user.sub)
-    if (selectedTab === "artists") response = await apiFetch("/posts");
+    console.log("fetch posts , selectedTab: ", selectedTab);
+    if (selectedTab === "artists")
+      response = await apiFetch(`/posts/byFollowingArtists/${user.sub}`);
     else if (selectedTab === "friends") {
       response = await apiFetch(`/posts/byFollowing/${user.sub}`);
     } else if (selectedTab === "user") {
@@ -28,12 +27,6 @@ export default function Posts({ selectedTab, userId }) {
     const data = await response.json();
 
     setPosts(data);
-
-    // const initialIndexes = {};
-    // data.forEach((post) => {
-    //   initialIndexes[post.id] = 0;
-    // });
-    // setCurrentImageIndexes(initialIndexes);
   };
 
   const handleShowMore = () => {

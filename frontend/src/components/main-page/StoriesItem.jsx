@@ -201,7 +201,7 @@ const StoriesItem = () => {
             }}
           >
             <img
-              src="/images/image.png"
+              src={currentStoryGroup[currentStoryIndex]?.user.uiTheme}
               alt="Story"
               className={styles["preview-image-btn"]}
               style={{

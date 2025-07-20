@@ -1,22 +1,15 @@
 package edu.itstep.api.controlers;
 
-import com.jcraft.jsch.Channel;
-import com.jcraft.jsch.ChannelSftp;
-import com.jcraft.jsch.JSch;
-import com.jcraft.jsch.Session;
 import edu.itstep.api.models.Post;
-import edu.itstep.api.models.Story;
 import edu.itstep.api.repositories.PostRepository;
 import edu.itstep.api.services.PostService;
-import lombok.extern.java.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.*;
-import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -26,10 +19,11 @@ import java.util.List;
 @RequestMapping("/posts")
 @CrossOrigin(origins = "http://localhost:3000")
 public class PostController {
+    private static final Logger logger = LoggerFactory.getLogger(PostController.class);
+
     @Autowired
     private PostService postService;
     private final PostRepository postRepository;
-//    private PostRepository postRepository;
 
     public PostController(PostRepository postRepository) {
         this.postRepository = postRepository;
@@ -48,6 +42,12 @@ public class PostController {
     @GetMapping("/byFollowing/{id}")
     public List<Post> getPostByFollowing(@PathVariable String id) {
         return postService.getPostByFollowing(id);
+    }
+
+    @GetMapping("/byFollowingArtists/{id}")
+    public List<Post> getPostByFollowingArtists(@PathVariable String id) {
+        logger.info("getPostByFollowingArtists called");
+        return postService.getPostByFollowingArtists(id);
     }
 
     @GetMapping("/userPosts/{id}")

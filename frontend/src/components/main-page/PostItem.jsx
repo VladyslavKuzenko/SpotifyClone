@@ -5,7 +5,6 @@ import { useAPI } from "../../hooks/useApi";
 import ChatMessage from "./ChatMessage";
 
 export default function PostItem({ post }) {
-  // const currentImageIndex = currentImageIndexes[post.id] || 0;
   const [isPostLiked, setIsPostLiked] = useState();
   const { user, apiFetch } = useAPI();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -19,7 +18,6 @@ export default function PostItem({ post }) {
   const closeDiscussion = () => setIsDiscussionOpen(false);
 
   const submiteUserLike = async () => {
-    //const isPostLiked = await isLiked(post, user, apiFetch);
     const response = await apiFetch(`/users/like/${post.id}/${user.sub}`, {
       method: isPostLiked ? "DELETE" : "POST",
     });
@@ -52,14 +50,6 @@ export default function PostItem({ post }) {
           : Math.max(currentIndex - 1, 0);
       return nextIndex;
     });
-    // setCurrentImageIndexes((prev) => {
-    //   const currentIndex = prev[postId] || 0;
-    //   const nextIndex =
-    //     direction === "next"
-    //       ? Math.min(currentIndex + 1, total - 1)
-    //       : Math.max(currentIndex - 1, 0);
-    //   return { ...prev, [postId]: nextIndex };
-    // });
   };
 
   useEffect(() => {
@@ -77,8 +67,6 @@ export default function PostItem({ post }) {
             <div className={styles["upper-content"]}>
               <div className={styles["post-ava-plat"]}>
                 <img className={styles["post-ava"]}src={post.user.uiTheme} alt="" />
-                
-                {/* <div className={styles["post-ava"]}></div> */}
               </div>
               <div className={styles["name-time"]}>
                 <div className={styles["post-author"]}>
