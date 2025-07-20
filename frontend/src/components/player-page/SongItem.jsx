@@ -38,8 +38,8 @@ const SongItem = ({
     const checkLiked = async () => {
       if (isLoading) return;
       // if (isAuthenticated && user) {
-      console.log("checkLiked user: ", user);
-      console.log("checkLiked song: ", song);
+      // console.log("checkLiked user: ", user);
+      // console.log("checkLiked song: ", song);
       const liked = await isUserPlaylistContainsSong(song, user, apiFetch);
       setIsLiked(liked);
     };

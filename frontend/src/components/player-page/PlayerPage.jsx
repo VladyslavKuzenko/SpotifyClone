@@ -8,12 +8,14 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { API_URL } from "../../js/properties/properties";
 import { Navigate } from "react-router-dom";
 import { useAPI } from "../../hooks/useApi";
+import Likes from "../likes-page/Likes";
 
 const PlayerPage = () => {
   const { isAuthenticated, isLoading } = useAuth0();
   const [isPlaylistsChanges, setIsPlaylistsChanges] = useState(false);
   const [currentArtist, setCurrentArtist] = useState({});
   const [artists, setArtists] = useState();
+  const [isLikesPage, setIsLikesPage] = useState(false);
   const { apiFetch } = useAPI();
 
   const handleArtists = async () => {
@@ -24,7 +26,7 @@ const PlayerPage = () => {
   };
 
   useEffect(() => {
-    if(isLoading)return;
+    if (isLoading) return;
     async function fetchData() {
       await handleArtists();
     }
@@ -41,30 +43,38 @@ const PlayerPage = () => {
 
   return (
     <>
-      <div className={styles.container}>
-        <div className={styles["middle-right"]}>
-          <div className={styles["empty-div11"]}></div>
+      {isLikesPage ? (
+        <Likes
+          exit={() => {
+            setIsLikesPage(!isLikesPage);
+          }}
+        />
+      ) : (
+        <div className={styles.container}>
+          <div className={styles["middle-right"]}>
+            <div className={styles["empty-div11"]}></div>
 
-          <div className={styles["mr-middle"]}>
-            <div className={styles["mr-left"]}>
-              <YourLibrary
+            <div className={styles["mr-middle"]}>
+              <div className={styles["mr-left"]}>
+                <YourLibrary
+                  isPlaylistsChangesControl={{
+                    isPlaylistsChanges,
+                    setIsPlaylistsChanges,
+                  }}
+                  isLikesPageControl={{ isLikesPage, setIsLikesPage }}
+                />
+              </div>
+              <MiddleItem
                 isPlaylistsChangesControl={{
                   isPlaylistsChanges,
                   setIsPlaylistsChanges,
                 }}
               />
             </div>
-            <MiddleItem
-              isPlaylistsChangesControl={{
-                isPlaylistsChanges,
-                setIsPlaylistsChanges,
-              }}
-            />
           </div>
         </div>
-
-        <MusicPlayer footerPlayer />
-      </div>
+      )}
+      <MusicPlayer footerPlayer />
     </>
   );
 };

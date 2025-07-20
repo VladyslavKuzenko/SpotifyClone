@@ -7,7 +7,7 @@ import { useAudio } from "../../hooks/useAudio";
 import SongItem from "../player-page/SongItem";
 import { useAPI } from "../../hooks/useApi";
 
-export default function Likes({ isPlaylistsChangesControl }) {
+export default function Likes({ exit }) {
   const navigate = useNavigate();
   // State
   // const [search, setSearch] = useState("");
@@ -35,6 +35,8 @@ export default function Likes({ isPlaylistsChangesControl }) {
   }, []);
 
   useEffect(() => {
+    console.log("Likes Use Effect. User: ",user)
+    console.log("Likes Use Effect. IsLoading: ",isLoading)
     if (!isLoading) {
       fetchPlaylists();
     }
@@ -73,7 +75,8 @@ export default function Likes({ isPlaylistsChangesControl }) {
               <div className={styles["back-search"]}>
                 <button
                   className={styles["backbtn"]}
-                  onClick={() => navigate("/player")}
+                  // onClick={() => navigate("/player")}
+                  onClick={() => exit()}
                 ></button>
                 <input
                   type="text"

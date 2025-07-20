@@ -9,6 +9,7 @@ import { useAPI } from "../../hooks/useApi";
 import Select from "react-select";
 import { useNavigate } from "react-router-dom";
 import { useAudio } from "../../hooks/useAudio";
+import Likes from "../likes-page/Likes";
 
 const options = [
   { value: "recent", label: "Recent" },
@@ -16,7 +17,7 @@ const options = [
   // { value: "artist", label: "By Artist" },
 ];
 
-const YourLibrary = ({ isPlaylistsChangesControl }) => {
+const YourLibrary = ({ isPlaylistsChangesControl,isLikesPageControl }) => {
   // State
   const [search, setSearch] = useState("");
   const [songs, setSongs] = useState([]);
@@ -32,7 +33,7 @@ const YourLibrary = ({ isPlaylistsChangesControl }) => {
   // Hooks
   const { setCurrentSongList } = useAudio();
   const { isLoading, isAuthenticated } = useAuth0();
-  const { user} =useAPI();
+  const { user } = useAPI();
   // Effects
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -125,7 +126,8 @@ const YourLibrary = ({ isPlaylistsChangesControl }) => {
             <div className={styles["go-likes"]}>
               <button
                 className={styles["golikes-btn"]}
-                onClick={() => navigate("/likes")}
+                // onClick={() => navigate("/likes")}
+                onClick={() => isLikesPageControl.setIsLikesPage(!isLikesPageControl.isLikesPage)}
               ></button>
             </div>
           </div>
@@ -221,21 +223,6 @@ const YourLibrary = ({ isPlaylistsChangesControl }) => {
                   </button>
                 </div>
               </div>
-              {/* 
-              <div className={styles["access"]}>
-                <div className={styles["access-text"]}>Playlist access</div>
-                <div className={styles["private-public"]}>
-                  <label className={styles["private-label"]}>
-                    <input type="checkbox" className={styles["private-box"]} />
-                    <span>Private</span>
-                  </label>
-                  <label className={styles["public-label"]}>
-                    <input type="checkbox" className={styles["public-box"]} />
-                    <span>Public</span>
-                  </label>
-                </div>
-              </div>
-              */}
             </div>
           </div>
         </div>
