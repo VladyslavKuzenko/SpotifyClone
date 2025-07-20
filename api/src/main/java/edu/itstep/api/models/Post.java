@@ -1,9 +1,9 @@
 package edu.itstep.api.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import edu.itstep.api.models.contentModels.ContentType;
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -17,12 +17,12 @@ public class Post {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-//    @Column(nullable = false)
+    //    @Column(nullable = false)
 //    private String title;
     private String description;
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Content> contents = new ArrayList<>();
-//    @Column(name = "media_type", nullable = false)
+    //    @Column(name = "media_type", nullable = false)
 //    private ContentType mediaType;
 //    @Column(name = "media_url", nullable = false)
 //    private String mediaUrl;
@@ -34,6 +34,8 @@ public class Post {
     private int commentsCount;
     @Column(name = "reposts_count")
     private int repostsCount;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
     @ManyToMany
     @JoinTable(
             name = "posts_hashtags",
@@ -135,6 +137,14 @@ public class Post {
 
     public void setRepostsCount(int repostsCount) {
         this.repostsCount = repostsCount;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
     public Set<HashTag> getHashtags() {

@@ -1,10 +1,9 @@
 package edu.itstep.api.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import edu.itstep.api.models.contentModels.ContentType;
 import jakarta.persistence.*;
 
-import java.util.Set;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "stories")
@@ -23,6 +22,8 @@ public class Story {
     private int likesCount;
     @Column(name = "views_count")
     private int viewsCount;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
 
     public Story() {
@@ -74,6 +75,14 @@ public class Story {
 
     public void setViewsCount(int viewsCount) {
         this.viewsCount = viewsCount;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 }
 

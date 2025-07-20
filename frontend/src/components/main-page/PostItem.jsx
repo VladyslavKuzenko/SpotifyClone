@@ -82,7 +82,7 @@ export default function PostItem({ post }) {
                 <div className={styles["post-author"]}>
                   {post.user.username}
                 </div>
-                <div className={styles["post-time"]}>10 days ago</div>
+                <div className={styles["post-time"]}>{post.createdAt}</div>
               </div>
               <div className={styles["like-coment-repost"]}>
                 <div

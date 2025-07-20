@@ -18,6 +18,8 @@ export default function MiddleItem({
   const [search, setSearch] = useState("");
   const [songs, setSongs] = useState([]);
   const [songsFullList, setSongsFullList] = useState([]);
+  const [albumSongs, setAlbumSongs] = useState([]);
+  const [albumSongsFullList, setAlbumSongsFullList] = useState([]);
   const [albums, setAlbums] = useState([]);
   const [currentAlbum, setCurrentAlbum] = useState();
   const [artists, setArtists] = useState([]);
@@ -62,8 +64,8 @@ export default function MiddleItem({
       `/albums/albums-tracks/${currentAlbum?.id}`
     );
     const data = await response.json();
-    setSongs(data);
-    setSongsFullList(data);
+    setAlbumSongs(data);
+    setAlbumSongsFullList(data);
   };
 
   const handleStart = async () => {
@@ -75,7 +77,6 @@ export default function MiddleItem({
 
   useEffect(() => {
     if (isLoading) return;
-
     const fetchData = async () => {
       await handleStart();
     };
@@ -105,6 +106,10 @@ export default function MiddleItem({
     }
   }, [activeTab]);
 
+  useEffect(() => {
+    console.log("Songs changes: ", songs);
+  }, [songs]);
+
   const nextArtist = () => {
     if (artists && artists.indexOf(currentArtist) + 1 < artists.length) {
       setCurrentArtist(artists[artists.indexOf(currentArtist) + 1]);
@@ -131,9 +136,10 @@ export default function MiddleItem({
               type="text"
               onChange={(e) => {
                 setSearch(e.target.value);
-                if (activeTab === "artist" && activeArtistTab === "songs") {
-                  searchSongs(songsFullList, e.target.value, setSongs);
-                }
+                // if (activeTab === "artist" && activeArtistTab === "songs") {
+                searchSongs(songsFullList, e.target.value, setSongs);
+                searchSongs(albumSongsFullList, e.target.value, setAlbumSongs);
+                // }
               }}
               value={search}
               placeholder="Search"
@@ -188,8 +194,13 @@ export default function MiddleItem({
                     className={styles["pf-play"]}
                     onClick={() => {
                       if (songs.length > 0) {
-                        setCurrentSong(songs[0]);
-                        setCurrentSongList(songs);
+                        if (activeArtistTab === "songs") {
+                          setCurrentSong(songs[0]);
+                          setCurrentSongList(songs);
+                        }else{
+                          setCurrentSong(albumSongs[0]);
+                          setCurrentSongList(albumSongs);
+                        }
                       }
                     }}
                   >
@@ -270,13 +281,13 @@ export default function MiddleItem({
                 <div className={styles["albums-array-songs"]}>
                   {/* {[...Array(14)].map((_, i) => ( */}
                   <>
-                    {songs.length > 0 ? (
-                      songs.map((song) => (
+                    {albumSongs.length > 0 ? (
+                      albumSongs.map((song) => (
                         <SongItem
                           key={song.id}
                           song={song}
                           moreInfo
-                          onSetCurrentSongList={() => setCurrentSongList(songs)}
+                          onSetCurrentSongList={() => setCurrentSongList(albumSongs)}
                           isPlaylistsChangesControl={isPlaylistsChangesControl}
                           openMenu={openMenuSongId === song.id}
                           toggleMenu={() =>
