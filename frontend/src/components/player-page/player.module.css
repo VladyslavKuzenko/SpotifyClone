@@ -773,7 +773,7 @@
 }
 
 .plat3-array {
-  width: 95%;
+  width: 100%;
   height: 100%;
 }
 
@@ -1447,7 +1447,7 @@
 
 .albums-array {
   width: 100%;
-  height: 270px;
+  height: 315px;
 
   display: flex;
   flex-direction: row;
@@ -1455,7 +1455,6 @@
 
   overflow-x: auto;
   scrollbar-width: none;
-
 
 
 }
@@ -1494,7 +1493,7 @@
 }
 
 .albums-array-songs {
-  width: 95%;
+  width: 100%;
   height: 100%;
   padding-top: 30px;
   padding-bottom: 120px;
