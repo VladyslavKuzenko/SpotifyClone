@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import styles from "./profileSetup.module.css";
 import { useAPI } from "../../hooks/useApi";
 import { useAuth0 } from "@auth0/auth0-react";
-import { Navigate, replace, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { API_URL } from "../../js/properties/properties";
 import {
   getUser_metadata_firstName,
@@ -12,20 +12,16 @@ import {
 export default function ProfileSetup() {
   const { isAuthenticated, isLoading, getAccessTokenWithPopup } = useAuth0();
   const { apiFetch, apiFetchWithoutAutorization, user } = useAPI();
-  const [goalDropdownOpen, setGoalDropdownOpen] = useState(false);
-  const [selectedGoal, setSelectedGoal] = useState({
-    id: -1,
-    title: "Select goal",
-  });
   const [selectedGenres, setSelectedGenres] = useState([]);
-  const [selectedVibes, setSelectedVibes] = useState([]);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [selectedProfileOption, setSelectedProfileOption] = useState();
+  const [isUserArtist, setIsUserArtist] = useState(false);
   const [username, setUsername] = useState(undefined);
   const [shortBio, setShortBio] = useState(undefined);
   const dropdownRef = useRef(null);
   const [countries, setCountries] = useState([]);
-  const [goals, setGoals] = useState([]);
   const [genres, setGenres] = useState([]);
-  const [vibes, setVibes] = useState([]);
+  const profileOptions = ["Artist", "Listener"];
 
   const fetchCountries = async () => {
     const response = await apiFetchWithoutAutorization("/countries");
@@ -33,22 +29,10 @@ export default function ProfileSetup() {
     setCountries(data);
   };
 
-  const fetchGoals = async () => {
-    const response = await apiFetchWithoutAutorization("/goals");
-    const data = await response.json();
-    setGoals(data);
-  };
-
   const fetchGenres = async () => {
     const response = await apiFetchWithoutAutorization("/genres");
     const data = await response.json();
     setGenres(data);
-  };
-
-  const fetchVibes = async () => {
-    const response = await apiFetchWithoutAutorization("/vibes");
-    const data = await response.json();
-    setVibes(data);
   };
 
   const isUsernameUnique = async (username) => {
@@ -60,15 +44,13 @@ export default function ProfileSetup() {
   useEffect(() => {
     function handleClickOutside(event) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setGoalDropdownOpen(false);
+        setDropdownOpen(false);
       }
     }
     document.addEventListener("click", handleClickOutside);
 
-    // fetchCountries();
-    // fetchGoals();
-    // fetchGenres();
-    // fetchVibes();
+    fetchCountries();
+    fetchGenres();
 
     return () => {
       document.removeEventListener("click", handleClickOutside);
@@ -84,9 +66,10 @@ export default function ProfileSetup() {
     return <Navigate to="/login" replace />;
   }
 
-  function selectGoalOption(option) {
-    setSelectedGoal(option);
-    setGoalDropdownOpen(false);
+  function selectProfileOption(option) {
+    setSelectedProfileOption(option);
+    setDropdownOpen(false);
+    setIsUserArtist(option === profileOptions[0] ? true : false);
   }
 
   function selectGenre(genre) {
@@ -99,22 +82,8 @@ export default function ProfileSetup() {
     }
   }
 
-  function selectVibe(vibe) {
-    if (isVibeSelected(vibe)) {
-      setSelectedVibes((prevState) =>
-        prevState.filter((v) => v.id !== vibe.id)
-      );
-    } else {
-      setSelectedVibes((prevState) => [...prevState, vibe]);
-    }
-  }
-
   function isGenreSelected(genre) {
     return selectedGenres.find((g) => g.id === genre.id);
-  }
-
-  function isVibeSelected(vibe) {
-    return selectedVibes.find((v) => v.id === vibe.id);
   }
 
   async function submitProfileSetup() {
@@ -135,10 +104,9 @@ export default function ProfileSetup() {
       firstName: getUser_metadata_firstName(user.sub),
       lastName: getUser_metadata_lastName(user.sub),
       username,
-      goal: { id: selectedGoal.id },
       genres: selectedGenres.map((g) => ({ id: g.id })),
-      vibes: selectedVibes.map((v) => ({ id: v.id })),
       shortBio,
+      isArtist: isUserArtist,
     };
 
     try {
@@ -217,21 +185,16 @@ export default function ProfileSetup() {
                 <div
                   className={styles["dropdown-toggle"]}
                   onClick={() => {
-                    setGoalDropdownOpen(!goalDropdownOpen);
+                    setDropdownOpen(!dropdownOpen);
                   }}
                 >
-                  <span className={styles.label}>{selectedGoal.title}</span>
-                  <span className={styles.arrow}>
-                    {goalDropdownOpen ? "˄" : "˅"}
-                  </span>
+                  <span className={styles.label}>{isUserArtist ? "Artist" : "Listener"}</span>
                 </div>
-                {goalDropdownOpen && (
+                {dropdownOpen && (
                   <div className={styles["dropdown-options"]}>
-                    {goals.map((goal) => (
-                      <div key={goal.id} onClick={() => selectGoalOption(goal)}>
-                        {goal.title}
-                      </div>
-                    ))}
+                    {<div onClick={() => selectProfileOption(isUserArtist ? profileOptions[1] : profileOptions[0])}>
+                      {isUserArtist ? profileOptions[1] : profileOptions[0]}
+                    </div>}
                   </div>
                 )}
               </div>
@@ -254,9 +217,8 @@ export default function ProfileSetup() {
             <div className={styles.up}>
               {genres.map((genre) => (
                 <div
-                  className={`${styles.block} ${
-                    isGenreSelected(genre) ? styles["block-selected"] : ""
-                  }`}
+                  className={`${styles.block} ${isGenreSelected(genre) ? styles["block-selected"] : ""
+                    }`}
                   onClick={() => {
                     selectGenre(genre);
                   }}

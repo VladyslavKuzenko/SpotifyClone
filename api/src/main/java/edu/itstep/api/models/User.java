@@ -1,12 +1,7 @@
 package edu.itstep.api.models;
 
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.*;
-
 import java.util.Set;
 
 @Entity
@@ -23,9 +18,6 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "country_id")
     private Country country;
-    @ManyToOne
-    @JoinColumn(name = "goal_id")
-    private Goal goal;
     @ManyToMany
     @JoinTable(
             name = "users_genres",
@@ -33,13 +25,6 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "genre_id"))
     @JsonIgnore
     private Set<Genre> genres;
-    @ManyToMany
-    @JoinTable(
-            name = "users_vibes",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "vibe_id"))
-    @JsonIgnore
-    private Set<Vibe> vibes;
     @Column(name = "short_bio")
     private String shortBio;
     @Column(name = "followings_count")
@@ -126,28 +111,12 @@ public class User {
         this.country = country;
     }
 
-    public Goal getGoal() {
-        return goal;
-    }
-
-    public void setGoal(Goal goal) {
-        this.goal = goal;
-    }
-
     public Set<Genre> getGenres() {
         return genres;
     }
 
     public void setGenres(Set<Genre> genres) {
         this.genres = genres;
-    }
-
-    public Set<Vibe> getVibes() {
-        return vibes;
-    }
-
-    public void setVibes(Set<Vibe> vibes) {
-        this.vibes = vibes;
     }
 
     public String getShortBio() {

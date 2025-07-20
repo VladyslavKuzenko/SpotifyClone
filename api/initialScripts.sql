@@ -32,6 +32,7 @@ from chats;
 select *
 from messages;
 
+
 INSERT INTO countries (id, name)
 VALUES (1, 'Spain'),
        (2, 'Poland'),
@@ -111,9 +112,15 @@ INSERT INTO users_followings (follower_user_id, followed_user_id)
 VALUES ("abc123", "abc321"),
        ("abc321", "abc123");
 
-INSERT INTO genres (id, title)
-VALUES (10, 'Rock'),
-       (11, 'Jazz');
+INSERT INTO genres (title)
+VALUES ('Pop'),
+       ('Rock'),
+       ('Classical'),
+       ('R&B'),
+       ('Hip-Hop'),
+       ('Jazz'),
+       ('Electronic'),
+       ('Indie');
 
 INSERT INTO users_genres (user_id, genre_id)
 VALUES ("abc123", 10),
