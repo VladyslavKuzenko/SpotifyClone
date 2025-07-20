@@ -488,26 +488,29 @@
 .info {
   display: flex;
   flex-direction: column;
-  height: 100%;
-  width: 45%;
-  text-indent: 30px;
   justify-content: center;
-
+  height: 100%;
+  width: 45%;           /* ця ширина буде фіксована */
+  text-indent: 30px;
+  overflow: hidden;     /* на всяк випадок */
 }
 
+
 .title {
-  font-weight: 600;
-  font-size: 14px;
-  color: #000;
   font-family: 'Manrope', sans-serif;
   font-weight: 400;
-  font-style: Regular;
   font-size: 16px;
   line-height: 100%;
-  letter-spacing: 0%;
   padding-bottom: 5px;
   text-align: start;
   color: white;
+
+  white-space: nowrap;        
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  width: 100%;          /* ← обов’язково */
+  display: block;       /* або inline-block */
 }
 
 .artist {
@@ -1021,7 +1024,6 @@
   line-height: 100%;
   letter-spacing: 0%;
   padding-bottom: 5px;
-
 }
 
 .am-song-artist {

@@ -130,6 +130,7 @@ export default function AudioControl({ footerPlayer, isHovered }) {
                     onClick={playAudio}
                   // Додано показ при наведенні
                   >
+                    
                   </button>
                 </div>
 
