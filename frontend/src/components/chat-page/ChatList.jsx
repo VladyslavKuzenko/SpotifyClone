@@ -3,11 +3,9 @@ import styles from "./ChatPage.module.css";
 import PrivateChatItem from './PrivateChatItem';
 import GroupChatItem from './GroupChatItem';
 import { useAPI } from "../../hooks/useApi";
-import { useAuth0 } from "@auth0/auth0-react";
 
 const ChatList = ({ onChatSelected }) => {
-  const { apiFetch } = useAPI();
-  const { user } = useAuth0();
+  const { apiFetch,user } = useAPI();
   const [chats, setChats] = useState([]);
   const firstLoad = useRef(true);
 

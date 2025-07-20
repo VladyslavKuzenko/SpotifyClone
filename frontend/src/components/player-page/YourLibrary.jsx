@@ -25,14 +25,14 @@ const YourLibrary = ({ isPlaylistsChangesControl }) => {
   const [playlists, setPlaylists] = useState([]);
   const [titlePlaylist, setTitlePlaylist] = useState("");
   const [sortType, setSortType] = useState("recent");
+  const { apiFetch } = useAPI();
   const dropdownRef = useRef();
   const navigate = useNavigate();
 
   // Hooks
   const { setCurrentSongList } = useAudio();
-  const { getAccessTokenSilently, user } = useAuth0();
   const { isLoading, isAuthenticated } = useAuth0();
-
+  const { user} =useAPI();
   // Effects
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -62,61 +62,36 @@ const YourLibrary = ({ isPlaylistsChangesControl }) => {
 
   // Handlers
   const handleCreatePlaylist = async () => {
-    if (isAuthenticated) {
-      const token = await getAccessTokenSilently({
-        authorizationParams: { audience: API_URL },
-      });
-      const response = await fetch(`http://localhost:8080/playlists`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ title: titlePlaylist, user: { id: user.sub } }),
-      });
-
-      if (response.ok) {
-        setIsModalOpen(false);
-        setTitlePlaylist("");
-        isPlaylistsChangesControl.setIsPlaylistsChanges(true);
-      } else {
-        console.error("Failed to create playlist");
-      }
+    const response = await apiFetch("/playlists", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ title: titlePlaylist, user: { id: user.sub } }),
+    });
+    if (response.ok) {
+      setIsModalOpen(false);
+      setTitlePlaylist("");
+      isPlaylistsChangesControl.setIsPlaylistsChanges(true);
+    } else {
+      console.error("Failed to create playlist");
     }
   };
 
   const fetchPlaylists = async () => {
-    if (isAuthenticated) {
-      const token = await getAccessTokenSilently({
-        authorizationParams: { audience: API_URL },
-      });
-      const response = await fetch(
-        `http://localhost:8080/playlists/playlists/${user.sub}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      const body = await response.json();
-      setPlaylists(body);
-      handleGetCurrentPlaylistTracks(body.find((i) => i.title === "Like"));
-    }
+    const response = await apiFetch(`/playlists/playlists/${user.sub}`);
+    const body = await response.json();
+    setPlaylists(body);
+    handleGetCurrentPlaylistTracks(body.find((i) => i.title === "Like"));
   };
 
   const handleGetCurrentPlaylistTracks = async (currentPlaylist) => {
-    if (isAuthenticated && currentPlaylist) {
-      const token = await getAccessTokenSilently({
-        authorizationParams: { audience: API_URL },
-      });
-      const response = await fetch(
-        `http://localhost:8080/tracks/tracks-by-postTime/${currentPlaylist.id}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      const body = await response.json();
-      setSongs(body);
-      setSongsFullList(body);
-    }
+    const response = await apiFetch(
+      `/tracks/tracks-by-postTime/${currentPlaylist.id}`
+    );
+    const body = await response.json();
+    setSongs(body);
+    setSongsFullList(body);
   };
 
   const handleSortSongs = (type) => {

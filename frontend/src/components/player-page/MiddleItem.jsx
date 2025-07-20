@@ -1,10 +1,7 @@
-import { use, useEffect, useState } from "react";
-import { isSubscribed, searchSongs } from "../../js/functions/functions";
+import { useEffect, useState } from "react";
+import { searchSongs } from "../../js/functions/functions";
 import styles from "./player.module.css";
-
 import SongItem from "./SongItem";
-
-import { API_URL } from "../../js/properties/properties";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Navigate } from "react-router-dom";
 import FollowingButton from "../sharedComponents/FollowingButton";
@@ -17,7 +14,7 @@ export default function MiddleItem({
   onSetCurrentSongList, */
   isPlaylistsChangesControl,
 }) {
-  const { apiFetch } = useAPI();
+  const { apiFetch, user } = useAPI();
   const [search, setSearch] = useState("");
   const [songs, setSongs] = useState([]);
   const [songsFullList, setSongsFullList] = useState([]);
@@ -25,7 +22,7 @@ export default function MiddleItem({
   const [currentAlbum, setCurrentAlbum] = useState();
   const [artists, setArtists] = useState([]);
   const [currentArtist, setCurrentArtist] = useState(null);
-  const { user, isAuthenticated, isLoading } = useAuth0();
+  const { isAuthenticated, isLoading } = useAuth0();
   const [openMenuSongId, setOpenMenuSongId] = useState(null);
   const { setCurrentSong, setCurrentSongList } = useAudio();
   // Вкладка для артиста: 'songs' або 'albums'

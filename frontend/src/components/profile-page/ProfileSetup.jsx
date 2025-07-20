@@ -4,12 +4,14 @@ import { useAPI } from "../../hooks/useApi";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Navigate, replace, useNavigate } from "react-router-dom";
 import { API_URL } from "../../js/properties/properties";
-import { getUser_metadata_firstName, getUser_metadata_lastName } from "../../js/functions/functions";
+import {
+  getUser_metadata_firstName,
+  getUser_metadata_lastName,
+} from "../../js/functions/functions";
 
 export default function ProfileSetup() {
-  const { isAuthenticated, isLoading, user, getAccessTokenWithPopup } =
-    useAuth0();
-  const { apiFetch, apiFetchWithoutAutorization } = useAPI();
+  const { isAuthenticated, isLoading, getAccessTokenWithPopup } = useAuth0();
+  const { apiFetch, apiFetchWithoutAutorization, user } = useAPI();
   const [goalDropdownOpen, setGoalDropdownOpen] = useState(false);
   const [selectedGoal, setSelectedGoal] = useState({
     id: -1,

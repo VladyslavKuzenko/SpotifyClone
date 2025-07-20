@@ -48,12 +48,12 @@ const Modal = ({ onClose, song }) => {
 };
 
 const MusicPlayer = ({ footerPlayer, isHovered }) => {
-  const { apiFetch}=useAPI()
-  const { currentSong, setCurrentSong, setCurrentSongList } =
+  // const { apiFetch}=useAPI()
+  const { currentSong} =
     useAudio();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { user, isLoading } = useAuth0();
+  // const { user, isLoading } = useAuth0();
 
   const handleOpenModal = () => {
     setIsModalOpen(true);

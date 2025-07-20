@@ -16,8 +16,7 @@ const AddAlbumModal = ({ onClose }) => {
   //   const [songs, setSongs] = useState([{ id: Date.now() }]);
   const imageInputRef = useRef(null);
   const songInputRef = useRef(null);
-  const { apiFetch, apiAxiosPost } = useAPI();
-  const { user, isLoading } = useAuth0();
+  const { apiFetch, apiAxiosPost,user } = useAPI();
 
   const genres = ["Hip hop", "Pop", "Rock", "Jazz", "Electronic", "Reggae"];
 

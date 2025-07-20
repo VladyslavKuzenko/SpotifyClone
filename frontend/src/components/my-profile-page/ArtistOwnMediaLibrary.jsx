@@ -12,8 +12,8 @@ const ArtistOwnMediaLibrary = () => {
   const { setCurrentSong, setCurrentSongList } = useAudio();
   const [songs, setSongs] = useState([]);
   const [albums, setAlbums] = useState([]);
-  const { user, isLoading } = useAuth0();
-  const { apiFetch } = useAPI();
+  const { isLoading } = useAuth0();
+  const { apiFetch, user } = useAPI();
   const [showModal, setShowModal] = useState(false);
   const [showModal1, setShowModal1] = useState(false);
 

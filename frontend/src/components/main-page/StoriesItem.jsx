@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import styles from "./main.module.css";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useAPI } from "../../hooks/useApi";
@@ -14,8 +14,8 @@ const StoriesItem = () => {
   const [currentUserIndex, setCurrentUserIndex] = useState(0);
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
 
-  const { apiFetch } = useAPI();
-  const { user, isLoading } = useAuth0();
+  const {  apiFetch,user } = useAPI();
+  const { isLoading } = useAuth0();
 
   const updateScrollState = () => {
     const el = scrollRef.current;
@@ -242,7 +242,10 @@ const StoriesItem = () => {
         >
           <div className={styles["sts-modal-window"]}>
             <div className={styles["storie-upper"]}>
-              {renderStoryIndicators(currentStoryGroup.length, currentStoryIndex)}
+              {renderStoryIndicators(
+                currentStoryGroup.length,
+                currentStoryIndex
+              )}
             </div>
 
             {(currentStoryIndex > 0 || currentUserIndex > 0) && (
@@ -262,18 +265,14 @@ const StoriesItem = () => {
 
             {(currentStoryIndex < currentStoryGroup.length - 1 ||
               currentUserIndex < uniqueUsers.length - 1) && (
-                <button
-                  className={styles["psb-modal-next-button"]}
-                  onClick={goToNextStory}
-                ></button>
-              )}
+              <button
+                className={styles["psb-modal-next-button"]}
+                onClick={goToNextStory}
+              ></button>
+            )}
 
             <div className={styles["storie-bottom"]}>
-
-
               <div className={styles["avatar-author"]}>
-
-
                 <div className={styles["storie-avatar"]}></div>
 
                 <div className={styles["author-data"]}>
@@ -284,19 +283,17 @@ const StoriesItem = () => {
                 </div>
 
                 <div className={styles["storie-like"]}></div>
-
-
               </div>
-
-
-
             </div>
           </div>
         </div>
       )}
 
       {isPostModalOpen && (
-        <NewPost onClose={() => setIsPostModalOpen(false)} initialTab="stories" />
+        <NewPost
+          onClose={() => setIsPostModalOpen(false)}
+          initialTab="stories"
+        />
       )}
     </div>
   );

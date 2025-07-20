@@ -11,41 +11,25 @@ import { useAPI } from "../../hooks/useApi";
 
 const PlayerPage = () => {
   const { isAuthenticated, isLoading } = useAuth0();
-  const { getAccessTokenSilently, getAccessTokenWithPopup } = useAuth0();
   const [isPlaylistsChanges, setIsPlaylistsChanges] = useState(false);
   const [currentArtist, setCurrentArtist] = useState({});
   const [artists, setArtists] = useState();
+  const { apiFetch } = useAPI();
 
   const handleArtists = async () => {
-    if (isAuthenticated) {
-      console.log("handleArtist is working");
-
-      const token = await getAccessTokenSilently({
-        authorizationParams: {
-          audience: API_URL,
-        },
-      });
-      const response = await fetch("http://localhost:8080/artists/top/0/20", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      const body = await response.json();
-      setArtists(body);
-      setCurrentArtist(body[0]);
-    } else {
-      console.log("handleArtist is NOT working");
-    }
+    const response = await apiFetch("/artists/top/0/20");
+    const body = await response.json();
+    setArtists(body);
+    setCurrentArtist(body[0]);
   };
 
   useEffect(() => {
+    if(isLoading)return;
     async function fetchData() {
       await handleArtists();
     }
     fetchData();
   }, [isLoading]);
-
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -79,7 +63,7 @@ const PlayerPage = () => {
           </div>
         </div>
 
-        <MusicPlayer footerPlayer/>
+        <MusicPlayer footerPlayer />
       </div>
     </>
   );

@@ -1,12 +1,10 @@
-import React, { useState, useEffect, useRef, use } from "react";
+import { useState, useEffect, useRef } from "react";
 import styles from "./main.module.css";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Navigate } from "react-router-dom";
-import LeftSide from "../main-components/LeftSide";
 import StoriesItem from "./StoriesItem";
 import WhoToFollow from "./WhoToFollow";
 import NewSongs from "./NewSongs";
-import ContainerVibe from "./ContainerVibe";
 import SearchModal from "./SearchModal";
 import NewPost from "./NewPost";
 import { useAPI } from "../../hooks/useApi";
@@ -20,7 +18,7 @@ const Main = () => {
   const [selectedTab, setSelectedTab] = useState("all");
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [notificationTab, setNotificationTab] = useState("all");
-  const { apiFetch, isProfileConfirmed, profileConfirmationLoading } = useAPI();
+  const {isProfileConfirmed, profileConfirmationLoading } = useAPI();
 
   const notificationRef = useRef(null);
 
@@ -44,13 +42,6 @@ const Main = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isNotificationOpen]);
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     /* const response = await apiFetch(""); */
-  //   };
-
-  //   fetchData();
-  // }, [isLoading]);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -175,7 +166,6 @@ const Main = () => {
             </div>
           </div>
 
-          {/* <div className={styles["users-content"]}>{renderContent()}</div> */}
           <div className={styles["users-content"]}>
             <div className={styles["all-post-content"]}>
               <Posts selectedTab={selectedTab} />

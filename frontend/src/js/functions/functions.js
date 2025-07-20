@@ -51,33 +51,13 @@ export function getUser_metadata_lastName(user) {
 export async function isUserPlaylistContainsSong(
   song,
   user,
-  getAccessTokenSilently
+  apiFetch
 ) {
-  const token = await getAccessTokenSilently({
-    authorizationParams: {
-      audience: API_URL,
-    },
-  });
-  const responsePlaylist = await fetch(
-    `http://localhost:8080/playlists/playlists/${user.sub}`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
+  const responsePlaylist =await apiFetch(`/playlists/playlists/${user.sub}`)
   const body = await responsePlaylist.json();
   const playlist = body.find((i) => i.title === "Like");
-  const responsePlaylistTracks = await fetch(
-    `http://localhost:8080/tracks/tracks-by-postTime/${playlist.id}`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
+  const responsePlaylistTracks = await apiFetch(`/tracks/tracks-by-postTime/${playlist.id}`);
   const tracks = await responsePlaylistTracks.json();
-
   //var playlist = body;
   /* console.log(song) */
   const result = tracks.some((track) => track.id === song.id);
@@ -88,24 +68,10 @@ export async function isUserPlaylistContainsSong(
 export async function isSubscribed(
   user,
   userToCheckSubscription,
-  getAccessTokenSilently
+  apiFetch
 ) {
-  const token = await getAccessTokenSilently({
-    authorizationParams: {
-      audience: API_URL,
-    },
-  });
-  const response = await fetch(
-    `http://localhost:8080/users/userFollowing/${user.sub}`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
+  const response =await apiFetch(`/users/userFollowing/${user.sub}`)
   const body = await response.json();
-  // console.log("isSubscribed: ");
-  // console.log(body);
   var isSubscribed = body.some((i) => i.id === userToCheckSubscription.id);
   return isSubscribed;
 }

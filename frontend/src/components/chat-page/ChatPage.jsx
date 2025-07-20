@@ -10,8 +10,8 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useAPI } from "../../hooks/useApi";
 
 const ChatPage = () => {
-    const { user, isLoading } = useAuth0();
-    const { apiFetch } = useAPI();
+    const { isLoading } = useAuth0();
+    const { apiFetch,user } = useAPI();
     const [currentChat, setCurrentChat] = useState(null);
     const [messages, setMessages] = useState([]);
     const [chatId, setChatId] = useState(null);
