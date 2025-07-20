@@ -109,6 +109,7 @@ const SongItem = ({
               {song.listeningCount}
             </div>
             <div className={styles["as-plus-plat"]}>
+
               <div
                 className={
                   styles["as-plus"] + " " + (isLiked ? styles["liked"] : "")
@@ -117,9 +118,16 @@ const SongItem = ({
                   e.stopPropagation();
                   handleLikeClick();
                 }}
+                style={{
+                  backgroundImage: `url(${isLiked ? '/images/redheart.svg' : '/images/heart.svg'})`,
+                  backgroundSize: '19px 19px',
+                  backgroundRepeat: 'no-repeat',
+                  backgroundPosition: 'center',
+                  cursor: 'pointer'
+                }}
               >
-                +
               </div>
+
             </div>
             <div className={styles.duration}>{convertTime(duration)}</div>
             <div className={styles["as-more-menu"]}>

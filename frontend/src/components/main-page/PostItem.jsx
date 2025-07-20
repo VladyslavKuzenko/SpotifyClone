@@ -91,23 +91,30 @@ export default function PostItem({ post }) {
                       ? styles["post-like-btn-active"]
                       : styles["post-like"]
                   }
-                  onClick={() => submiteUserLike()}
+                  onClick={submiteUserLike}
                 >
                   <div className={styles["post-wrap"]}>
-                    <button className={styles["post-like-btn"]}></button>
+                    <img
+                      src={isPostLiked ? "/images/redheart.svg" : "/images/heart.svg"}
+                      alt="Like"
+                      className={styles["post-like-btn"]}
+                    />
                     <div className={styles["likes-count"]}>
                       {post.likesCount}
                     </div>
                   </div>
                 </div>
-                <div className={styles["post-coment"]}>
-                  <div className={styles["post-wrap"]}>
-                    <button className={styles["post-coment-btn"]}></button>
-                    <div className={styles["coment-count"]}>
-                      {post.commentsCount}
-                    </div>
+
+                <div className={styles["post-wrap"]}>
+                  <button
+                    className={styles["post-coment-btn"]}
+                    onClick={openDiscussion}
+                  ></button>
+                  <div className={styles["coment-count"]}>
+                    {post.commentsCount}
                   </div>
                 </div>
+                
                 <div className={styles["post-repost"]}>
                   <div className={styles["post-wrap"]}>
                     <button className={styles["post-repost-btn"]}></button>
@@ -150,11 +157,10 @@ export default function PostItem({ post }) {
                     {images.map((_, index) => (
                       <span
                         key={index}
-                        className={`${styles["prl-dot"]} ${
-                          index === currentImageIndex
-                            ? styles["prl-active"]
-                            : ""
-                        }`}
+                        className={`${styles["prl-dot"]} ${index === currentImageIndex
+                          ? styles["prl-active"]
+                          : ""
+                          }`}
                       ></span>
                     ))}
                   </div>
@@ -213,14 +219,20 @@ export default function PostItem({ post }) {
       )}
 
       {isDiscussionOpen && (
-        <div className={styles["discussion-modal"]}>
+        <div
+          className={styles["discussion-modal"]}
+          onClick={closeDiscussion}
+        >
           <div
             className={styles["discussion-content"]}
             onClick={(e) => e.stopPropagation()}
           >
             <div className={styles["discussion-header"]}>
               <h3>Discussion</h3>
-              <button onClick={closeDiscussion} className={styles["close-btn"]}>
+              <button
+                onClick={closeDiscussion}
+                className={styles["close-btn"]}
+              >
                 ✕
               </button>
             </div>

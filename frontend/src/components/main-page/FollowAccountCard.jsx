@@ -10,7 +10,7 @@ export default function FollowAccountCard({ userToFollow }) {
         <div className={styles["name-follow"]}>
           {userToFollow.firstName} {userToFollow.lastName}
         </div>
-        <div className={styles["nickname-follow"]}>{userToFollow.username}</div>
+        <div className={styles["nickname-follow"]}>@{userToFollow.username}</div>
       </div>
       <FollowingButton userToFollow={userToFollow} styles={styles["follow-btn"]}/>
     </div>
