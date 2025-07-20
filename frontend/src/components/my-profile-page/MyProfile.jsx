@@ -71,7 +71,7 @@ const MyProfile = ({ profileInfo }) => {
             Edit profile
           </button>
           {/* <div className={styles["profile-photo"]}></div> */}
-          <img src={userFullInfo.uiTheme} className={styles["profile-photo"]} />
+          <img src={userFullInfo.avatarImgUrl} className={styles["profile-photo"]} />
           <div className={styles["you-name"]}>@{userFullInfo?.username}</div>
         </div>
 

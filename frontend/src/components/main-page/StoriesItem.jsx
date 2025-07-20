@@ -201,7 +201,7 @@ const StoriesItem = () => {
             }}
           >
             <img
-              src={currentStoryGroup[currentStoryIndex]?.user.uiTheme}
+              src={currentStoryGroup[currentStoryIndex]?.user.avatarImgUrl}
               alt="Story"
               className={styles["preview-image-btn"]}
               style={{
@@ -237,7 +237,7 @@ const StoriesItem = () => {
               <div className={styles["stories-inner"]}>
                 <img
                   className={styles["preview-image"]}
-                  src={story.user.uiTheme}
+                  src={story.user.avatarImgUrl}
                   alt="Story"
                 />
               </div>

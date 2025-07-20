@@ -42,6 +42,8 @@ public class User {
     private String uiTheme;
     @Column(name = "is_artist")
     private Boolean isArtist;
+    @Column(name = "avatar_img_url")
+    private String avatarImgUrl;
     @ManyToMany
     @JoinTable(
             name = "users_followings",
@@ -183,6 +185,14 @@ public class User {
 
     public void setIsArtist(Boolean artist) {
         isArtist = artist;
+    }
+
+    public String getAvatarImgUrl() {
+        return avatarImgUrl;
+    }
+
+    public void setAvatarImgUrl(String avatarImgUrl) {
+        this.avatarImgUrl = avatarImgUrl;
     }
 
     public Set<User> getFollowings() {

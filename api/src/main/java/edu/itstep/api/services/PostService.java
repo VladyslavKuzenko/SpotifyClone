@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -123,10 +124,12 @@ public class PostService {
     public List<Post> getPostByFollowingArtists(String userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
-
         logger.info("followingArtist");
-        Set<User> followingArtist = user.getFollowings().stream().filter(User::getIsArtist).collect(Collectors.toSet());
-        System.out.println(followingArtist);
+        Set<User> followingArtist = user.getFollowings()
+                .stream()
+                .filter(User::getIsArtist)
+                .collect(Collectors.toSet());
+
         if (followingArtist.isEmpty()) {
             return Collections.emptyList(); // або обробити якось інакше
         }
