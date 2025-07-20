@@ -138,7 +138,7 @@ const SongItem = ({
                 }}
                 style={{
                   backgroundImage: `url(${isLiked ? '/images/redheart.svg' : '/images/heart.svg'})`,
-                  backgroundSize: '60%',
+                  backgroundSize: '19px 19px',
                   backgroundRepeat: 'no-repeat',
                   backgroundPosition: 'center',
                   cursor: 'pointer'
