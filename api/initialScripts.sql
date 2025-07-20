@@ -33,10 +33,10 @@ select *
 from messages;
 
 
-INSERT INTO countries (id, name)
-VALUES (1, 'Spain'),
-       (2, 'Poland'),
-       (3, 'Ukraine');
+INSERT INTO countries (name)
+VALUES ('Spain'),
+       ('Poland'),
+       ('Ukraine');
 
 INSERT INTO goals (id, title)
 VALUES (1, 'Become cool producer'),

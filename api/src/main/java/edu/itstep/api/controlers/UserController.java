@@ -71,6 +71,7 @@ public class UserController {
         user.setLastName(dto.lastName);
         user.setUsername(dto.username);
         user.setShortBio(dto.shortBio);
+        user.setIsArtist(dto.isArtist);
 
         user.setFollowingsCount(0);
         user.setFollowersCount(0);

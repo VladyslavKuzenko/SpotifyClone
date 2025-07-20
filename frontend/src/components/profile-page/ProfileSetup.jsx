@@ -14,7 +14,6 @@ export default function ProfileSetup() {
   const { apiFetch, apiFetchWithoutAutorization, user } = useAPI();
   const [selectedGenres, setSelectedGenres] = useState([]);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [selectedProfileOption, setSelectedProfileOption] = useState();
   const [isUserArtist, setIsUserArtist] = useState(false);
   const [username, setUsername] = useState(undefined);
   const [shortBio, setShortBio] = useState(undefined);
@@ -67,7 +66,6 @@ export default function ProfileSetup() {
   }
 
   function selectProfileOption(option) {
-    setSelectedProfileOption(option);
     setDropdownOpen(false);
     setIsUserArtist(option === profileOptions[0] ? true : false);
   }
@@ -87,14 +85,11 @@ export default function ProfileSetup() {
   }
 
   async function submitProfileSetup() {
-    navigate("/", { replace: true });
-    console.log("getAccessTokenWithPopup");
-    const tok = await getAccessTokenWithPopup({
+    await getAccessTokenWithPopup({
       authorizationParams: {
         audience: API_URL,
       },
     });
-    console.log("result: ", tok);
     if (!(await isUsernameUnique(username))) {
       return;
     }
@@ -130,7 +125,7 @@ export default function ProfileSetup() {
       user: { id: user.sub },
       title: "Like",
     };
-    const response = await apiFetch("/playlists", {
+    apiFetch("/playlists", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -214,7 +209,7 @@ export default function ProfileSetup() {
 
           <div className={styles.text11}>Select your favorite genres:</div>
           <div className={styles["cont-block"]}>
-            <div className={styles.up}>
+            <div className={styles.genres}>
               {genres.map((genre) => (
                 <div
                   className={`${styles.block} ${isGenreSelected(genre) ? styles["block-selected"] : ""
