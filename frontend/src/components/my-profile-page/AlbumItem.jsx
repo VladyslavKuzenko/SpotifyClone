@@ -9,7 +9,7 @@ const AlbumItem = ({album, idx ,onClickFunck}) => {
       <div className={styles['album-item']}>
         {/* <button className={styles['delete-item']}></button> */} {/* з цією кнопкою не працює картинка  */}
         {/* Можна тут поставити картинку або контент айтема */}
-        {album?.imageUrl&&<img className={mainPageStyles["preview-image"]} src={album.imageUrl}/>}
+        {album?.imageUrl&&<img className={mainPageStyles["preview-image-album"]} src={album.imageUrl}/>}
       </div>
       <div className={styles['it-container']}>
         <div className={styles['ait-name']}>{album?.title}</div>

@@ -22,6 +22,8 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
 }
 
 .hat-setting-platform {
@@ -293,7 +295,6 @@
 
 .album-wrapper {
     flex: 1 1 calc((100% - 30px) / 3);
-    /* 3 айтема на рядок з урахуванням gap */
     max-width: 270px;
     min-width: 200px;
     display: flex;
@@ -301,6 +302,8 @@
     align-items: flex-start;
     box-sizing: border-box;
     margin-bottom: 15px;
+    height: 300px;
+
 }
 
 .album-item {
@@ -313,7 +316,6 @@
     cursor: pointer;
     transition: transform 0.3s ease;
 }
-
 
 
 .it-container {

@@ -288,7 +288,7 @@ export default function MiddleItem({
                         />
                       ))
                     ) : (
-                      <div>No songs found</div>
+                      <div>{/*No songs found*/}</div>
                     )}
                   </>
                   {/* ))} */}
