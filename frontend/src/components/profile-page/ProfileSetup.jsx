@@ -96,8 +96,8 @@ export default function ProfileSetup() {
 
     const resultUser = {
       id: user.sub,
-      firstName: getUser_metadata_firstName(user.sub) ?? "Bob",
-      lastName: getUser_metadata_lastName(user.sub) ?? "Unknowed",
+      firstName: getUser_metadata_firstName(user) ,
+      lastName: getUser_metadata_lastName(user) ,
       username,
       genres: selectedGenres.map((g) => ({ id: g.id })),
       shortBio,
