@@ -1813,7 +1813,6 @@ box-shadow: -4px 0 10px rgba(255, 255, 255, 0.15), 4px 0 10px rgba(255, 255, 255
   line-height: 100%;
   letter-spacing: 0%;
   color: white;
-  width: 60px;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -1832,7 +1831,6 @@ box-shadow: -4px 0 10px rgba(255, 255, 255, 0.15), 4px 0 10px rgba(255, 255, 255
   line-height: 100%;
   letter-spacing: 0%;
   color: white;
-  width: 60px;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -1840,10 +1838,8 @@ box-shadow: -4px 0 10px rgba(255, 255, 255, 0.15), 4px 0 10px rgba(255, 255, 255
 }
 
 .post-like-btn {
-  background-image: url('/public/images/like-image.png');
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 16px 16px;
   display: inline-block;
   height: 24px;
   width: 24px;
@@ -1854,10 +1850,10 @@ box-shadow: -4px 0 10px rgba(255, 255, 255, 0.15), 4px 0 10px rgba(255, 255, 255
 }
 
 .post-coment-btn {
-  background-image: url('/public/images/coment-image.png');
+  background-image: url('/public/images/comment.svg');
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 16px 16px;
+  background-size: 90%;
   display: inline-block;
   height: 24px;
   width: 24px;
@@ -1868,10 +1864,10 @@ box-shadow: -4px 0 10px rgba(255, 255, 255, 0.15), 4px 0 10px rgba(255, 255, 255
 }
 
 .post-repost-btn {
-  background-image: url('/public/images/repost-image.png');
+  background-image: url('/public/images/repost.svg');
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 16px 16px;
+  background-size: 100%;
   display: inline-block;
   height: 24px;
   width: 24px;

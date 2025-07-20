@@ -91,10 +91,14 @@ export default function PostItem({ post }) {
                       ? styles["post-like-btn-active"]
                       : styles["post-like"]
                   }
-                  onClick={() => submiteUserLike()}
+                  onClick={submiteUserLike}
                 >
                   <div className={styles["post-wrap"]}>
-                    <button className={styles["post-like-btn"]}></button>
+                    <img
+                      src={isPostLiked ? "/images/redheart (3).svg" : "/images/heart.svg"}
+                      alt="Like"
+                      className={styles["post-like-btn"]}
+                    />
                     <div className={styles["likes-count"]}>
                       {post.likesCount}
                     </div>
@@ -150,11 +154,10 @@ export default function PostItem({ post }) {
                     {images.map((_, index) => (
                       <span
                         key={index}
-                        className={`${styles["prl-dot"]} ${
-                          index === currentImageIndex
+                        className={`${styles["prl-dot"]} ${index === currentImageIndex
                             ? styles["prl-active"]
                             : ""
-                        }`}
+                          }`}
                       ></span>
                     ))}
                   </div>
