@@ -35,7 +35,7 @@ const NewSongs = () => {
 
       <div className={styles["ns-text1"]}>New</div>
       <div className={styles["ns-middle"]}>
-      <img className={styles["preview-image1"]} src={song?.imageUrl}/>
+      <img className={styles["preview-image"]} src={song?.imageUrl} style={{borderStartEndRadius:'5px', borderStartStartRadius:'5px'}}/>
 
       </div>
       <div className={styles["ns-bottom"]}>

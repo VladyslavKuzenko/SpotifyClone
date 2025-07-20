@@ -76,8 +76,8 @@ export default function PostItem({ post }) {
           <div className={styles["post-content"]}>
             <div className={styles["upper-content"]}>
               <div className={styles["post-ava-plat"]}>
-                <img className={styles["post-ava"]}src={post.user.uiTheme} alt="" />
-                
+                <img className={styles["post-ava"]} src={post.user.uiTheme} alt="" />
+
                 {/* <div className={styles["post-ava"]}></div> */}
               </div>
               <div className={styles["name-time"]}>
@@ -107,24 +107,21 @@ export default function PostItem({ post }) {
                   </div>
                 </div>
 
-                <div className={styles["post-wrap"]}>
-                  <button
-                    className={styles["post-coment-btn"]}
-                    onClick={openDiscussion}
-                  ></button>
-                  <div className={styles["coment-count"]}>
-                    {post.commentsCount}
+                <div className={styles["post-coment"]}>
+
+                  <div className={styles["post-wrap"]}>
+                    <button className={styles["post-coment-btn"]} onClick={openDiscussion}></button>
+                    <div className={styles["coment-count"]}>{post.commentsCount}</div>
                   </div>
                 </div>
-                
+
                 <div className={styles["post-repost"]}>
                   <div className={styles["post-wrap"]}>
                     <button className={styles["post-repost-btn"]}></button>
-                    <div className={styles["repost-count"]}>
-                      {post.repostsCount}
-                    </div>
+                    <div className={styles["repost-count"]}>{post.repostsCount}</div>
                   </div>
                 </div>
+
               </div>
             </div>
 
