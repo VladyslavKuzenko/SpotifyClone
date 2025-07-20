@@ -219,7 +219,7 @@ const StoriesItem = () => {
               <div className={styles["stories-inner"]}>
                 <img
                   className={styles["preview-image"]}
-                  src={story.mediaUrl}
+                  src={story.user.uiTheme}
                   alt="Story"
                 />
               </div>

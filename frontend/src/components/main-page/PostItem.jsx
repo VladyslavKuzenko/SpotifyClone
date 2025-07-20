@@ -76,7 +76,9 @@ export default function PostItem({ post }) {
           <div className={styles["post-content"]}>
             <div className={styles["upper-content"]}>
               <div className={styles["post-ava-plat"]}>
-                <div className={styles["post-ava"]}></div>
+                <img className={styles["post-ava"]}src={post.user.uiTheme} alt="" />
+                
+                {/* <div className={styles["post-ava"]}></div> */}
               </div>
               <div className={styles["name-time"]}>
                 <div className={styles["post-author"]}>

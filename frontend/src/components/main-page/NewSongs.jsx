@@ -32,9 +32,14 @@ const NewSongs = () => {
   });
   return (
     <div className={styles["new-song-div"]}>
+
       <div className={styles["ns-text1"]}>New</div>
-      <div className={styles["ns-middle"]}></div>
+      <div className={styles["ns-middle"]}>
+      <img className={styles["preview-image1"]} src={song?.imageUrl}/>
+
+      </div>
       <div className={styles["ns-bottom"]}>
+        
         <div className={styles["ns-song-author"]}>
           <div className={styles["ns-song"]}>{song?.title}</div>
           <div className={styles["ns-author"]}>
