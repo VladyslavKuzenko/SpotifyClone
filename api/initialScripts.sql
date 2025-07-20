@@ -21,11 +21,12 @@ SELECT TABLE_SCHEMA,
 FROM information_schema.columns
 ORDER BY TABLE_SCHEMA, TABLE_NAME, ORDINAL_POSITION;
 
-# delete from users_genres where user_id = "auth0|685d8d89dfd50588889a181d";
-# delete from users_vibes where user_id = "auth0|685d8d89dfd50588889a181d";
-# delete from users where id = "auth0|685d8d89dfd50588889a181d";
+delete from users_genres where user_id = "auth0|687d672250e5ce653980abaf";
+delete from users_followings where follower_user_id = "auth0|687d672250e5ce653980abaf";
+delete from playlists where user_id = "auth0|687d672250e5ce653980abaf";
+delete from users where id = "auth0|687d672250e5ce653980abaf";
 
-select id, username
+select *
 from users;
 select *
 from chats;
