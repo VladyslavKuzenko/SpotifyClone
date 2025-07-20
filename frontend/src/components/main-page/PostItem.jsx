@@ -104,14 +104,17 @@ export default function PostItem({ post }) {
                     </div>
                   </div>
                 </div>
-                <div className={styles["post-coment"]}>
-                  <div className={styles["post-wrap"]}>
-                    <button className={styles["post-coment-btn"]}></button>
-                    <div className={styles["coment-count"]}>
-                      {post.commentsCount}
-                    </div>
+
+                <div className={styles["post-wrap"]}>
+                  <button
+                    className={styles["post-coment-btn"]}
+                    onClick={openDiscussion}
+                  ></button>
+                  <div className={styles["coment-count"]}>
+                    {post.commentsCount}
                   </div>
                 </div>
+                
                 <div className={styles["post-repost"]}>
                   <div className={styles["post-wrap"]}>
                     <button className={styles["post-repost-btn"]}></button>
@@ -155,8 +158,8 @@ export default function PostItem({ post }) {
                       <span
                         key={index}
                         className={`${styles["prl-dot"]} ${index === currentImageIndex
-                            ? styles["prl-active"]
-                            : ""
+                          ? styles["prl-active"]
+                          : ""
                           }`}
                       ></span>
                     ))}
@@ -216,14 +219,20 @@ export default function PostItem({ post }) {
       )}
 
       {isDiscussionOpen && (
-        <div className={styles["discussion-modal"]}>
+        <div
+          className={styles["discussion-modal"]}
+          onClick={closeDiscussion}
+        >
           <div
             className={styles["discussion-content"]}
             onClick={(e) => e.stopPropagation()}
           >
             <div className={styles["discussion-header"]}>
               <h3>Discussion</h3>
-              <button onClick={closeDiscussion} className={styles["close-btn"]}>
+              <button
+                onClick={closeDiscussion}
+                className={styles["close-btn"]}
+              >
                 ✕
               </button>
             </div>
