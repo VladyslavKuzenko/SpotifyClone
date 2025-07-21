@@ -211,7 +211,8 @@ const StoriesItem = () => {
                 borderRadius: "50%",
                 boxSizing: "border-box",
                 display: "block",
-                padding: 3
+                padding: 3,
+                backgroundPosition: 'center',
               }}
             />
             <div className={styles["storiesbtn-plus"]}></div>
