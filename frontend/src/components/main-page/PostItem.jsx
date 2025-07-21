@@ -193,7 +193,7 @@ export default function PostItem({ post }) {
                     <img
                       src={
                         isPostLiked
-                          ? "/images/redheart.svg"
+                          ? "/images/heartred.svg"
                           : "/images/heart.svg"
                       }
                       alt="Like"
@@ -342,10 +342,34 @@ export default function PostItem({ post }) {
             onClick={(e) => e.stopPropagation()}
           >
             <div className={styles["discussion-header"]}>
-              <h3>Discussion</h3>
-              <button onClick={closeDiscussion} className={styles["close-btn"]}>
+              <div className={styles["post-comment"]}>
+                <textarea
+                  className={styles["send-comment"]}
+                  placeholder="Write a comment..."
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
+                  rows={1}
+                  onInput={(e) => {
+                    const target = e.target;
+                    target.style.height = "auto";
+                    target.style.height = Math.min(target.scrollHeight, 100) + "px";
+                  }}
+                  onBlur={(e) => {
+                    const target = e.target;
+                    if (target.value.trim() === "") {
+                      target.style.height = "31px";
+                    }
+                  }}
+                />
+                <div className={styles["post-comment-btn"]}>
+                  <button className={styles["publish-btn"]} onClick={submiteComment}>
+                    Publish
+                  </button>
+                </div>
+              </div>
+              {/*<button onClick={closeDiscussion} className={styles["close-btn"]}>
                 ✕
-              </button>
+              </button>*/}
             </div>
             <div className={styles["discussion-body"]}>
               {comments.map((comnt) => (
