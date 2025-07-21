@@ -29,7 +29,7 @@ delete from users where id = "auth0|687d672250e5ce653980abaf";
 select *
 from users;
 select *
-from chats;
+from users_chats;
 select *
 from messages;
 
@@ -258,7 +258,7 @@ VALUES (1, 'https://www.wheeler.com/', 'Song One', 1, 1),
        (2, NULL, 'Song Two', 2, 2);
 
 INSERT INTO chats (id, picture_url, is_private, title, update_time)
-VALUES (2, '', true, '', null);
+VALUES (2, '', false, 'Planet destroyers online', null);
 
 INSERT INTO posts (id, comments_count, description, likes_count, media_json, media_type, reposts_count, title,
                    views_count, user_id)
@@ -294,12 +294,12 @@ VALUES (1, 501),
        (2, 502);
 
 INSERT INTO users_chats (user_id, chat_id)
-VALUES ("auth0|685da34feafd0587561b2ac9", 1),
-       ("auth0|685d8d89dfd50588889a181d", 1);
+VALUES ("auth0|68376fb27d4340d1988fac91", 1),
+       ("auth0|687d672250e5ce653980abaf", 1);
 
 INSERT INTO users_chats (user_id, chat_id)
-VALUES ("auth0|6878fa50df17beee840c2bf6", 2),
-       ("auth0|685da34feafd0587561b2ac9", 2);
+VALUES ("auth0|68376fb27d4340d1988fac91", 2),
+       ("auth0|687d672250e5ce653980abaf", 2);
 
 INSERT INTO users_chats (user_id, chat_id)
 VALUES ("auth0|68786d00fa9569c786c01278", 3),
