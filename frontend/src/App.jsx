@@ -25,7 +25,7 @@ function App() {
 
       {!shouldHideLeftSide && <LeftSide /> }
       <Routes>
-        <Route path="/" element={<Main />} />
+        <Route path="/main" element={<Main />} />
         <Route path="/player" element={<PlayerPage />} />
         <Route path="/login" element={<LoginButton />} />
         <Route path="/logout" element={<LogoutButton />} />

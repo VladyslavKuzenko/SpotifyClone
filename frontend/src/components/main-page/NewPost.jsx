@@ -9,7 +9,7 @@ import { handleUploadFile } from "../../js/functions/functions";
 const NewPost = ({ onClose, initialTab = "newpost" }) => {
   const [activeTab, setActiveTab] = useState(initialTab);
   const [selectedPrivacy, setSelectedPrivacy] = useState(null);
-  const [selectedComments, setSelectedComments] = useState(null);
+  const [selectedComments, setSelectedComments] = useState("open-comments");
   const [fileStory, setFileStory] = useState(null);
   const [filesPost, setFilesPost] = useState([]);
   const [description, setDescription] = useState("");
@@ -75,7 +75,7 @@ const NewPost = ({ onClose, initialTab = "newpost" }) => {
 
   const submitePost = async () => {
     setIsUploading(true);
-
+    
     const resultPost = {
       user: { id: user.sub },
       description: description,
@@ -84,6 +84,7 @@ const NewPost = ({ onClose, initialTab = "newpost" }) => {
       commentsCount: 0,
       repostsCount: 0,
       createdAt: new Date().toISOString(),
+      isCommentsOpen:selectedComments ==="open-comments",
       contents: [],
     };
 

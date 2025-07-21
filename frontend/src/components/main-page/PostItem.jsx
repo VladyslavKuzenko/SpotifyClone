@@ -13,6 +13,8 @@ export default function PostItem({ post }) {
   const [pomhIsModalOpen, setPomhIsModalOpen] = useState(false);
   const [pomhModalImageUrl, setPomhModalImageUrl] = useState("");
   const [isDiscussionOpen, setIsDiscussionOpen] = useState(false);
+  const [comment, setComment] = useState("");
+  const [comments, setComments] = useState([]);
 
   const openDiscussion = () => setIsDiscussionOpen(true);
   const closeDiscussion = () => setIsDiscussionOpen(false);
@@ -26,6 +28,30 @@ export default function PostItem({ post }) {
       setIsPostLiked(newValueIsPostLiked);
       if (newValueIsPostLiked) post.likesCount += 1;
       else post.likesCount -= 1;
+      console.log("Everything is ok");
+    } else {
+      console.error("Failed to like/unlike the post");
+    }
+  };
+
+  const submiteComment = async () => {
+    const resultComment = {
+      user: { id: user.sub },
+      post: { id: post.id },
+      text: comment
+    };
+
+    const response = await apiFetch("/comments", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(resultComment),
+    });
+
+    if (response.ok) {
+      const data=await response.json()
+      setComments(...comments,data);
       console.log("Everything is ok");
     } else {
       console.error("Failed to like/unlike the post");
@@ -66,7 +92,11 @@ export default function PostItem({ post }) {
           <div className={styles["post-content"]}>
             <div className={styles["upper-content"]}>
               <div className={styles["post-ava-plat"]}>
-                <img className={styles["post-ava"]}src={post.user.avatarImgUrl} alt="" />
+                <img
+                  className={styles["post-ava"]}
+                  src={post.user.avatarImgUrl}
+                  alt=""
+                />
               </div>
               <div className={styles["name-time"]}>
                 <div className={styles["post-author"]}>
@@ -85,7 +115,11 @@ export default function PostItem({ post }) {
                 >
                   <div className={styles["post-wrap"]}>
                     <img
-                      src={isPostLiked ? "/images/redheart.svg" : "/images/heart.svg"}
+                      src={
+                        isPostLiked
+                          ? "/images/redheart.svg"
+                          : "/images/heart.svg"
+                      }
                       alt="Like"
                       className={styles["post-like-btn"]}
                     />
@@ -95,21 +129,28 @@ export default function PostItem({ post }) {
                   </div>
                 </div>
 
-                <div className={styles["post-coment"]}>
-
-                  <div className={styles["post-wrap"]}>
-                    <button className={styles["post-coment-btn"]} onClick={openDiscussion}></button>
-                    <div className={styles["coment-count"]}>{post.commentsCount}</div>
+                {post.isCommentsOpen && (
+                  <div className={styles["post-coment"]}>
+                    <div className={styles["post-wrap"]}>
+                      <button
+                        className={styles["post-coment-btn"]}
+                        onClick={openDiscussion}
+                      ></button>
+                      <div className={styles["coment-count"]}>
+                        {post.commentsCount}
+                      </div>
+                    </div>
                   </div>
-                </div>
+                )}
 
                 <div className={styles["post-repost"]}>
                   <div className={styles["post-wrap"]}>
                     <button className={styles["post-repost-btn"]}></button>
-                    <div className={styles["repost-count"]}>{post.repostsCount}</div>
+                    <div className={styles["repost-count"]}>
+                      {post.repostsCount}
+                    </div>
                   </div>
                 </div>
-
               </div>
             </div>
 
@@ -144,10 +185,11 @@ export default function PostItem({ post }) {
                     {images.map((_, index) => (
                       <span
                         key={index}
-                        className={`${styles["prl-dot"]} ${index === currentImageIndex
-                          ? styles["prl-active"]
-                          : ""
-                          }`}
+                        className={`${styles["prl-dot"]} ${
+                          index === currentImageIndex
+                            ? styles["prl-active"]
+                            : ""
+                        }`}
                       ></span>
                     ))}
                   </div>
@@ -168,6 +210,8 @@ export default function PostItem({ post }) {
           <textarea
             className={styles["send-comment"]}
             placeholder="Write a comment..."
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
             rows={1}
             onInput={(e) => {
               const target = e.target;
@@ -182,7 +226,7 @@ export default function PostItem({ post }) {
             }}
           />
           <div className={styles["post-comment-btn"]}>
-            <button className={styles["publish-btn"]}>Publish</button>
+            <button className={styles["publish-btn"]} onClick={submiteComment}>Publish</button>
           </div>
         </div>
 
@@ -206,20 +250,14 @@ export default function PostItem({ post }) {
       )}
 
       {isDiscussionOpen && (
-        <div
-          className={styles["discussion-modal"]}
-          onClick={closeDiscussion}
-        >
+        <div className={styles["discussion-modal"]} onClick={closeDiscussion}>
           <div
             className={styles["discussion-content"]}
             onClick={(e) => e.stopPropagation()}
           >
             <div className={styles["discussion-header"]}>
               <h3>Discussion</h3>
-              <button
-                onClick={closeDiscussion}
-                className={styles["close-btn"]}
-              >
+              <button onClick={closeDiscussion} className={styles["close-btn"]}>
                 ✕
               </button>
             </div>
