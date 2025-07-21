@@ -7,11 +7,12 @@ import { API_URL } from "../../js/properties/properties";
 import {
   getUser_metadata_firstName,
   getUser_metadata_lastName,
+  handleUploadFile,
 } from "../../js/functions/functions";
 
 export default function ProfileSetup() {
   const { isAuthenticated, isLoading, getAccessTokenWithPopup } = useAuth0();
-  const { apiFetch, apiFetchWithoutAutorization, user } = useAPI();
+  const { apiAxiosPost, apiFetch, apiFetchWithoutAutorization, user } = useAPI();
   const [selectedGenres, setSelectedGenres] = useState([]);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [isUserArtist, setIsUserArtist] = useState(false);
@@ -21,6 +22,8 @@ export default function ProfileSetup() {
   const [countries, setCountries] = useState([]);
   const [genres, setGenres] = useState([]);
   const profileOptions = ["Artist", "Listener"];
+  const [profilePictureFile, setProfilePictureFile] = useState(null);
+  const profilePictureInputRef = useRef(null);
 
   const fetchCountries = async () => {
     const response = await apiFetchWithoutAutorization("/countries");
@@ -90,8 +93,21 @@ export default function ProfileSetup() {
         audience: API_URL,
       },
     });
-    if (!(await isUsernameUnique(username))) {
-      return;
+
+    if (!(await isUsernameUnique(username))) return;
+
+    let profilePictureUrl = null;
+
+    if (profilePictureFile) {
+      const content = { id: user.sub };
+      const uploadResult = await handleUploadFile(
+        content,
+        profilePictureFile,
+        apiAxiosPost,
+        "/users/avatar/upload/"
+      );
+
+      profilePictureUrl = uploadResult;
     }
 
     const resultUser = {
@@ -102,10 +118,10 @@ export default function ProfileSetup() {
       genres: selectedGenres.map((g) => ({ id: g.id })),
       shortBio,
       isArtist: isUserArtist,
+      avatarImgUrl: profilePictureUrl,
     };
 
     try {
-      console.log("ApiFetch start");
       const res = await apiFetch("/users", {
         method: "POST",
         headers: {
@@ -114,9 +130,7 @@ export default function ProfileSetup() {
         body: JSON.stringify(resultUser),
       });
 
-      if (!res.ok) {
-        throw new Error("Failed to save user");
-      }
+      if (!res.ok) throw new Error("Failed to save user");
     } catch (err) {
       console.error(err);
     }
@@ -125,7 +139,8 @@ export default function ProfileSetup() {
       user: { id: user.sub },
       title: "Like",
     };
-    apiFetch("/playlists", {
+
+    await apiFetch("/playlists", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -136,13 +151,39 @@ export default function ProfileSetup() {
     navigate("/", { replace: true });
   }
 
+
   return (
     <div className={styles["background"]}>
       <div className={styles["main-container"]}>
         <div className={styles.text1}>Profile Setup</div>
-        <div className={styles.picture}></div>
+        <div className={styles.picture}>
+          {profilePictureFile ? (
+            <img
+              src={URL.createObjectURL(profilePictureFile)}
+              alt="Profile Preview"
+              style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "50%" }}
+            />
+          ) : (null)}
+        </div>
         <div className={styles.container}>
-          <button className={styles["change-picture"]}>Change picture</button>
+          <input
+            type="file"
+            accept="image/*"
+            ref={profilePictureInputRef}
+            style={{ display: "none" }}
+            onChange={(e) => {
+              const file = e.target.files[0];
+              if (file) {
+                setProfilePictureFile(file);
+              }
+            }}
+          />
+          <button
+            className={styles["change-picture"]}
+            onClick={() => profilePictureInputRef.current.click()}
+          >
+            Change picture
+          </button>
           <button className={styles["delete-picture"]}>Delete picture</button>
         </div>
         <div className={styles.username}>Username</div>
@@ -212,6 +253,7 @@ export default function ProfileSetup() {
             <div className={styles.genres}>
               {genres.map((genre) => (
                 <div
+                  key={genre.id}
                   className={`${styles.block} ${isGenreSelected(genre) ? styles["block-selected"] : ""
                     }`}
                   onClick={() => {

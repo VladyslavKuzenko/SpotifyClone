@@ -10,5 +10,6 @@ public class UserCreationDTO {
     public String shortBio;
     public List<IdWrapper> genres;
     public Boolean isArtist;
+    public String avatarImgUrl;
 }
 

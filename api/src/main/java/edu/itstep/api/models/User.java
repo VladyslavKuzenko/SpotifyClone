@@ -38,8 +38,6 @@ public class User {
     private boolean showListeningHistory;
     @Column(name = "allow_messages")
     private boolean allowMessages;
-    @Column(name = "ui_theme")
-    private String uiTheme;
     @Column(name = "is_artist")
     private Boolean isArtist;
     @Column(name = "avatar_img_url")
@@ -169,14 +167,6 @@ public class User {
 
     public void setAllowMessages(boolean allowMessages) {
         this.allowMessages = allowMessages;
-    }
-
-    public String getUiTheme() {
-        return uiTheme;
-    }
-
-    public void setUiTheme(String uiTheme) {
-        this.uiTheme = uiTheme;
     }
 
     public Boolean getIsArtist() {

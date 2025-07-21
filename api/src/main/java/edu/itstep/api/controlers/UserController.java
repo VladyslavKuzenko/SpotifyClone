@@ -4,13 +4,17 @@ import edu.itstep.api.models.*;
 import edu.itstep.api.models.dto.UserCreationDTO;
 import edu.itstep.api.repositories.GenreRepository;
 import edu.itstep.api.repositories.UserRepository;
+import edu.itstep.api.services.PostService;
 import edu.itstep.api.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -31,11 +35,14 @@ public class UserController {
     private final UserRepository userRepository;
     @Autowired
     private UserService userService;
+    @Autowired
+    private PostService postService;
 
     private final GenreRepository genreRepository;
 
-    public UserController(UserRepository userRepository, GenreRepository genreRepository) {
+    public UserController(UserRepository userRepository, PostService postService, GenreRepository genreRepository) {
         this.userRepository = userRepository;
+        this.postService = postService;
         this.genreRepository = genreRepository;
     }
 
@@ -79,12 +86,12 @@ public class UserController {
         user.setUsername(dto.username);
         user.setShortBio(dto.shortBio);
         user.setIsArtist(dto.isArtist);
+        user.setAvatarImgUrl(dto.avatarImgUrl);
 
         user.setFollowingsCount(0);
         user.setFollowersCount(0);
         user.setShowListeningHistory(true);
         user.setAllowMessages(true);
-        user.setUiTheme("light");
         user.setFollowings(new HashSet<>());
         user.setFollowers(new HashSet<>());
         user.setChats(new HashSet<>());
@@ -113,6 +120,11 @@ public class UserController {
     public ResponseEntity<User> addLike(@PathVariable Long post_id, @PathVariable String user_id) throws URISyntaxException {
         User user = userService.addLike(post_id, user_id);
         return ResponseEntity.ok(user);
+    }
+
+    @PostMapping("/avatar/upload/{userId}")
+    public String handleFileUpload(@RequestParam("file") MultipartFile file, @PathVariable String userId) {
+        return postService.postFileToVM(file, "avatar" + userId);
     }
 
     @DeleteMapping("/{id}")
