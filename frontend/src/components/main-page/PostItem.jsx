@@ -4,6 +4,70 @@ import { isLiked } from "../../js/functions/functions";
 import { useAPI } from "../../hooks/useApi";
 import CommentItem from "./CommentItem";
 
+// --- Функції для форматування дати ---
+
+function formatPostDate(postDateString) {
+  const postDate = new Date(postDateString);
+  const now = new Date();
+  const diffMs = now - postDate;
+
+  const diffSeconds = Math.floor(diffMs / 1000);
+  const diffMinutes = Math.floor(diffMs / (1000 * 60));
+  const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+  if (diffSeconds < 60) {
+    return `${diffSeconds} ${getSecondWord(diffSeconds)} тому`;
+  } else if (diffMinutes < 60) {
+    return `${diffMinutes} ${getMinuteWord(diffMinutes)} тому`;
+  } else if (diffHours < 24) {
+    return `${diffHours} ${getHourWord(diffHours)} тому`;
+  } else if (diffDays < 31) {
+    return `${diffDays} ${getDayWord(diffDays)} тому`;
+  } else {
+    return formatFullDate(postDate);
+  }
+}
+
+function getSecondWord(n) {
+  if (n % 10 === 1 && n % 100 !== 11) return "секунду";
+  if ([2,3,4].includes(n % 10) && ![12,13,14].includes(n % 100)) return "секунди";
+  return "секунд";
+}
+
+function getMinuteWord(n) {
+  if (n % 10 === 1 && n % 100 !== 11) return "хвилину";
+  if ([2,3,4].includes(n % 10) && ![12,13,14].includes(n % 100)) return "хвилини";
+  return "хвилин";
+}
+
+function getHourWord(n) {
+  if (n % 10 === 1 && n % 100 !== 11) return "годину";
+  if ([2,3,4].includes(n % 10) && ![12,13,14].includes(n % 100)) return "години";
+  return "годин";
+}
+
+function getDayWord(n) {
+  if (n % 10 === 1 && n % 100 !== 11) return "день";
+  if ([2,3,4].includes(n % 10) && ![12,13,14].includes(n % 100)) return "дні";
+  return "днів";
+}
+
+function formatFullDate(date) {
+  const months = [
+    "січня", "лютого", "березня", "квітня", "травня", "червня",
+    "липня", "серпня", "вересня", "жовтня", "листопада", "грудня"
+  ];
+  const day = date.getDate();
+  const month = months[date.getMonth()];
+  const year = date.getFullYear();
+
+  return `${day} ${month} ${year} року`;
+}
+
+
+// --- Компонент PostItem ---
+
 export default function PostItem({ post }) {
   const [isPostLiked, setIsPostLiked] = useState();
   const { user, apiFetch } = useAPI();
@@ -21,7 +85,7 @@ export default function PostItem({ post }) {
 
   const fetchComments = async () => {
     const response = await apiFetch(`/comments/byPostId/${post.id}`);
-    const data=await response.json()
+    const data=await response.json();
     setComments(data);
   };
 
@@ -60,9 +124,6 @@ export default function PostItem({ post }) {
       const responseComment=await apiFetch(`/comments/${data.id}`);
       const newComment=await responseComment.json();
       setComments([...comments, newComment]);
-      console.log("Comment from newComment: ",newComment);
-      console.log("Comment from Data: ",data);
-      console.log("Comments: ",comments);
       setComment("");
       console.log("Everything is ok");
     } else {
@@ -115,7 +176,9 @@ export default function PostItem({ post }) {
                 <div className={styles["post-author"]}>
                   {post.user.username}
                 </div>
-                <div className={styles["post-time"]}>{post.createdAt}</div>
+                <div className={styles["post-time"]}>
+                  {formatPostDate(post.createdAt)}
+                </div>
               </div>
               <div className={styles["like-coment-repost"]}>
                 <div
@@ -249,6 +312,7 @@ export default function PostItem({ post }) {
           View discussion (12)
         </div>
       </div>
+
       {pomhIsModalOpen && (
         <div className={styles["pomh-modal-overlay"]} onClick={closePomhModal}>
           <div
@@ -277,8 +341,9 @@ export default function PostItem({ post }) {
               </button>
             </div>
             <div className={styles["discussion-body"]}>
-              {comments.map((comnt)=><CommentItem comment={comnt}/>)}
-              
+              {comments.map((comnt) => (
+                <CommentItem key={comnt.id} comment={comnt} />
+              ))}
             </div>
           </div>
         </div>

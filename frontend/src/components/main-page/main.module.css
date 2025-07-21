@@ -1783,8 +1783,9 @@ html {
   width: 35%;
   height: 100%;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: flex-end;
   align-items: end;
+  gap: 50px;
 }
 
 .post-author {
@@ -1996,11 +1997,12 @@ html {
   display: flex;
   justify-content: center;
   margin-top: 8px;
+  align-items: center;
 }
 
 .prl-dot {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   background-color: #ccc;
   margin: 0 4px;
@@ -2008,6 +2010,8 @@ html {
 
 .prl-active {
   background-color: #FF4400;
+  width: 8px;
+  height: 8px;
 }
 
 
@@ -2428,6 +2432,7 @@ html {
   font-size: 20px;
   line-height: 100%;
   letter-spacing: 0%;
+  opacity: 0.7;
 
 }
 
@@ -2441,6 +2446,7 @@ html {
   line-height: 100%;
   letter-spacing: 0%;
   margin-bottom: 130px;
+  opacity: 0.7;
 
 }
 
