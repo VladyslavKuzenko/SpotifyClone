@@ -56,6 +56,7 @@
     height: 165px;
     background-color: #919191;
     border-radius: 50%;
+    
 }
 
 
@@ -239,6 +240,7 @@
 .saved-album-container1 {
     width: 38%;
     height: 100%;
+
     padding-left: 30px;
 }
 
@@ -252,6 +254,7 @@
     flex: 1;
     height: 100%;
     margin-left: 10px;
+
 
 }
 

@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import styles from "./main.module.css";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Navigate } from "react-router-dom";
-import StoriesItem from "./StoriesItem";
+import Stories from "./Stories";
 import WhoToFollow from "./WhoToFollow";
 import NewSongs from "./NewSongs";
 import SearchModal from "./SearchModal";
@@ -140,7 +140,7 @@ const Main = () => {
 
 
           <div className={styles["empty-div4"]}></div>
-          <StoriesItem />
+          <Stories />
           <div className={styles["empty-div5"]}></div>
 
           <div className={styles["swipe-box"]}>

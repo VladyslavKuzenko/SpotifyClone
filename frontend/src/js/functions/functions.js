@@ -70,7 +70,7 @@ export async function isSubscribed(user, userToCheckSubscription, apiFetch) {
   return isSubscribed;
 }
 
-export async function isLiked(post, user, apiFetch) {
+export async function isPostLikedFunc(post, user, apiFetch) {
   // console.log("isLiked called");
   // console.log("user",user);
   // console.log("post",post);
@@ -81,6 +81,12 @@ export async function isLiked(post, user, apiFetch) {
   var isLiked = body.some((i) => i.id === post.id);
   // console.log("isLiked: " + isLiked);
   return isLiked;
+}
+
+export async function isStoryLiked(story, user, apiFetch) {
+  const response = await apiFetch(`/users/isStoryLiked/${user.sub}/${story.id}`);
+  const body = await response.json();
+  return body;
 }
 
 export async function handleUploadFile(content, file, apiAxiosPost, path) {
@@ -230,3 +236,5 @@ export const submitAlbum = async (
     body: JSON.stringify(album),
   });
 };
+
+

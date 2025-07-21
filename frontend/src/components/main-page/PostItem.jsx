@@ -1,8 +1,72 @@
 import { useEffect, useState } from "react";
 import styles from "./main.module.css";
-import { isLiked } from "../../js/functions/functions";
 import { useAPI } from "../../hooks/useApi";
-import ChatMessage from "./ChatMessage";
+import CommentItem from "./CommentItem";
+import {isPostLikedFunc} from "../../js/functions/functions"
+
+// --- Функції для форматування дати ---
+
+function formatPostDate(postDateString) {
+  const postDate = new Date(postDateString);
+  const now = new Date();
+  const diffMs = now - postDate;
+
+  const diffSeconds = Math.floor(diffMs / 1000);
+  const diffMinutes = Math.floor(diffMs / (1000 * 60));
+  const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+  if (diffSeconds < 60) {
+    return `${diffSeconds} ${getSecondWord(diffSeconds)} тому`;
+  } else if (diffMinutes < 60) {
+    return `${diffMinutes} ${getMinuteWord(diffMinutes)} тому`;
+  } else if (diffHours < 24) {
+    return `${diffHours} ${getHourWord(diffHours)} тому`;
+  } else if (diffDays < 31) {
+    return `${diffDays} ${getDayWord(diffDays)} тому`;
+  } else {
+    return formatFullDate(postDate);
+  }
+}
+
+function getSecondWord(n) {
+  if (n % 10 === 1 && n % 100 !== 11) return "секунду";
+  if ([2,3,4].includes(n % 10) && ![12,13,14].includes(n % 100)) return "секунди";
+  return "секунд";
+}
+
+function getMinuteWord(n) {
+  if (n % 10 === 1 && n % 100 !== 11) return "хвилину";
+  if ([2,3,4].includes(n % 10) && ![12,13,14].includes(n % 100)) return "хвилини";
+  return "хвилин";
+}
+
+function getHourWord(n) {
+  if (n % 10 === 1 && n % 100 !== 11) return "годину";
+  if ([2,3,4].includes(n % 10) && ![12,13,14].includes(n % 100)) return "години";
+  return "годин";
+}
+
+function getDayWord(n) {
+  if (n % 10 === 1 && n % 100 !== 11) return "день";
+  if ([2,3,4].includes(n % 10) && ![12,13,14].includes(n % 100)) return "дні";
+  return "днів";
+}
+
+function formatFullDate(date) {
+  const months = [
+    "січня", "лютого", "березня", "квітня", "травня", "червня",
+    "липня", "серпня", "вересня", "жовтня", "листопада", "грудня"
+  ];
+  const day = date.getDate();
+  const month = months[date.getMonth()];
+  const year = date.getFullYear();
+
+  return `${day} ${month} ${year} року`;
+}
+
+
+// --- Компонент PostItem ---
 
 export default function PostItem({ post }) {
   const [isPostLiked, setIsPostLiked] = useState();
@@ -13,12 +77,20 @@ export default function PostItem({ post }) {
   const [pomhIsModalOpen, setPomhIsModalOpen] = useState(false);
   const [pomhModalImageUrl, setPomhModalImageUrl] = useState("");
   const [isDiscussionOpen, setIsDiscussionOpen] = useState(false);
+  const [comment, setComment] = useState("");
+  const [comments, setComments] = useState([]);
 
   const openDiscussion = () => setIsDiscussionOpen(true);
   const closeDiscussion = () => setIsDiscussionOpen(false);
 
+  const fetchComments = async () => {
+    const response = await apiFetch(`/comments/byPostId/${post.id}`);
+    const data=await response.json();
+    setComments(data);
+  };
+
   const submiteUserLike = async () => {
-    const response = await apiFetch(`/users/like/${post.id}/${user.sub}`, {
+    const response = await apiFetch(`/users/post-like/${post.id}/${user.sub}`, {
       method: isPostLiked ? "DELETE" : "POST",
     });
     if (response.ok) {
@@ -26,6 +98,33 @@ export default function PostItem({ post }) {
       setIsPostLiked(newValueIsPostLiked);
       if (newValueIsPostLiked) post.likesCount += 1;
       else post.likesCount -= 1;
+      console.log("Everything is ok");
+    } else {
+      console.error("Failed to like/unlike the post");
+    }
+  };
+
+  const submiteComment = async () => {
+    const resultComment = {
+      user: { id: user.sub },
+      post: { id: post.id },
+      text: comment,
+    };
+
+    const response = await apiFetch("/comments", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(resultComment),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      const responseComment=await apiFetch(`/comments/${data.id}`);
+      const newComment=await responseComment.json();
+      setComments([...comments, newComment]);
+      setComment("");
       console.log("Everything is ok");
     } else {
       console.error("Failed to like/unlike the post");
@@ -54,9 +153,10 @@ export default function PostItem({ post }) {
 
   useEffect(() => {
     const fetchIsPostLiked = async () => {
-      setIsPostLiked(await isLiked(post, user, apiFetch));
+      setIsPostLiked(await isPostLikedFunc(post, user, apiFetch));
     };
     fetchIsPostLiked();
+    fetchComments();
   }, []);
 
   return (
@@ -66,13 +166,19 @@ export default function PostItem({ post }) {
           <div className={styles["post-content"]}>
             <div className={styles["upper-content"]}>
               <div className={styles["post-ava-plat"]}>
-                <img className={styles["post-ava"]}src={post.user.avatarImgUrl} alt="" />
+                <img
+                  className={styles["post-ava"]}
+                  src={post.user.avatarImgUrl}
+                  alt=""
+                />
               </div>
               <div className={styles["name-time"]}>
                 <div className={styles["post-author"]}>
                   {post.user.username}
                 </div>
-                <div className={styles["post-time"]}>{post.createdAt}</div>
+                <div className={styles["post-time"]}>
+                  {formatPostDate(post.createdAt)}
+                </div>
               </div>
               <div className={styles["like-coment-repost"]}>
                 <div
@@ -85,7 +191,11 @@ export default function PostItem({ post }) {
                 >
                   <div className={styles["post-wrap"]}>
                     <img
-                      src={isPostLiked ? "/images/redheart.svg" : "/images/heart.svg"}
+                      src={
+                        isPostLiked
+                          ? "/images/redheart.svg"
+                          : "/images/heart.svg"
+                      }
                       alt="Like"
                       className={styles["post-like-btn"]}
                     />
@@ -95,21 +205,28 @@ export default function PostItem({ post }) {
                   </div>
                 </div>
 
-                <div className={styles["post-coment"]}>
-
-                  <div className={styles["post-wrap"]}>
-                    <button className={styles["post-coment-btn"]} onClick={openDiscussion}></button>
-                    <div className={styles["coment-count"]}>{post.commentsCount}</div>
+                {post.isCommentsOpen && (
+                  <div className={styles["post-coment"]}>
+                    <div className={styles["post-wrap"]}>
+                      <button
+                        className={styles["post-coment-btn"]}
+                        onClick={openDiscussion}
+                      ></button>
+                      <div className={styles["coment-count"]}>
+                        {comments.length}
+                      </div>
+                    </div>
                   </div>
-                </div>
+                )}
 
                 <div className={styles["post-repost"]}>
                   <div className={styles["post-wrap"]}>
                     <button className={styles["post-repost-btn"]}></button>
-                    <div className={styles["repost-count"]}>{post.repostsCount}</div>
+                    <div className={styles["repost-count"]}>
+                      {post.repostsCount}
+                    </div>
                   </div>
                 </div>
-
               </div>
             </div>
 
@@ -144,10 +261,11 @@ export default function PostItem({ post }) {
                     {images.map((_, index) => (
                       <span
                         key={index}
-                        className={`${styles["prl-dot"]} ${index === currentImageIndex
-                          ? styles["prl-active"]
-                          : ""
-                          }`}
+                        className={`${styles["prl-dot"]} ${
+                          index === currentImageIndex
+                            ? styles["prl-active"]
+                            : ""
+                        }`}
                       ></span>
                     ))}
                   </div>
@@ -168,6 +286,8 @@ export default function PostItem({ post }) {
           <textarea
             className={styles["send-comment"]}
             placeholder="Write a comment..."
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
             rows={1}
             onInput={(e) => {
               const target = e.target;
@@ -182,7 +302,9 @@ export default function PostItem({ post }) {
             }}
           />
           <div className={styles["post-comment-btn"]}>
-            <button className={styles["publish-btn"]}>Publish</button>
+            <button className={styles["publish-btn"]} onClick={submiteComment}>
+              Publish
+            </button>
           </div>
         </div>
 
@@ -190,6 +312,7 @@ export default function PostItem({ post }) {
           View discussion (12)
         </div>
       </div>
+
       {pomhIsModalOpen && (
         <div className={styles["pomh-modal-overlay"]} onClick={closePomhModal}>
           <div
@@ -206,25 +329,21 @@ export default function PostItem({ post }) {
       )}
 
       {isDiscussionOpen && (
-        <div
-          className={styles["discussion-modal"]}
-          onClick={closeDiscussion}
-        >
+        <div className={styles["discussion-modal"]} onClick={closeDiscussion}>
           <div
             className={styles["discussion-content"]}
             onClick={(e) => e.stopPropagation()}
           >
             <div className={styles["discussion-header"]}>
               <h3>Discussion</h3>
-              <button
-                onClick={closeDiscussion}
-                className={styles["close-btn"]}
-              >
+              <button onClick={closeDiscussion} className={styles["close-btn"]}>
                 ✕
               </button>
             </div>
             <div className={styles["discussion-body"]}>
-              <ChatMessage />
+              {comments.map((comnt) => (
+                <CommentItem key={comnt.id} comment={comnt} />
+              ))}
             </div>
           </div>
         </div>

@@ -4,7 +4,7 @@ export default function FollowAccountCard({ userToFollow }) {
   return (
     <div className={styles["account-platform"]}>
       <div className={styles["place-for-ava"]}>
-        <div className={styles["ava-follow"]}></div>
+        <img className={styles["ava-follow"]} src={userToFollow.avatarImgUrl} alt="" />
       </div>
       <div className={styles["name-nickname"]}>
         <div className={styles["name-follow"]}>

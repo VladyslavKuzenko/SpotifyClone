@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./main.module.css";
 
-export default function ChatMessage({ onClose }) {
+export default function CommentItem({ comment, onClose }) {
   return (
     // бекдроп
     <div
@@ -13,12 +13,14 @@ export default function ChatMessage({ onClose }) {
         className={styles.chatMessage1}
         onClick={(e) => e.stopPropagation()} // зупиняємо спливання
       >
-        <div className={styles.avatar1}></div>
+        {/* <div className={styles.avatar1}></div> */}
+        <img className={styles.avatar1} src={comment.user.avatarImgUrl}/>
         <div className={styles.messageContent1}>
           <div className={styles.messageLine1}>
-            <span className={styles.username1}>username</span>
+            <span className={styles.username1}>{comment.user.username}</span>
             <span className={styles.message1}>
-              This is a long message containing supercalifragilisticexpialidocious and other extraordinary words that might not fit in a single line and therefore should be properly hyphenated and wrapped across multiple lines to ensure perfect readability and structure.
+              {/* This is a long message containing supercalifragilisticexpialidocious and other extraordinary words that might not fit in a single line and therefore should be properly hyphenated and wrapped across multiple lines to ensure perfect readability and structure. */}
+              {comment.text}
             </span>
           </div>
         </div>

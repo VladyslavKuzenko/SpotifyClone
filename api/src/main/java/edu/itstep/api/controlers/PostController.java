@@ -67,10 +67,16 @@ public class PostController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Post> updatePost(@PathVariable Long id, @RequestBody Post updatedPost) {
-        Post post = postService.updatePost(id, updatedPost);
+    public ResponseEntity<Post> updatePostContents(@PathVariable Long id, @RequestBody Post updatedPost) {
+        Post post = postService.updatePostContents(id, updatedPost);
         return ResponseEntity.ok(post);
     }
+//    @PutMapping("/commentCount/{id}")
+//    public ResponseEntity<Post> updatePostContents(@PathVariable Long id, @RequestBody Post updatedPost) {
+//        Post post = postService.updatePostContents(id, updatedPost);
+//        return ResponseEntity.ok(post);
+//    }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity deletePost(@PathVariable Long id) {
