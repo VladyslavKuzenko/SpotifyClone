@@ -3,8 +3,9 @@ import styles from "./main.module.css";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useAPI } from "../../hooks/useApi";
 import NewPost from "./NewPost";
+import { isStoryLiked } from "../../js/functions/functions";
 
-const StoriesItem = () => {
+const Stories = () => {
   const scrollRef = useRef(null);
   const [canScroll, setCanScroll] = useState({ left: false, right: false });
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -27,6 +28,24 @@ const StoriesItem = () => {
       left: scrollLeft > 0,
       right: scrollLeft < maxScrollLeft - 1,
     });
+  };
+
+  const submiteUserLike = async (story) => {
+    const response = await apiFetch(
+      `/users/story-like/${story.id}/${user.sub}`,
+      {
+        method: story.isLiked ? "DELETE" : "POST",
+      }
+    );
+    if (response.ok) {
+      const newValueIsLiked = !story.isLiked;
+      story.isLiked = newValueIsLiked;
+      if (newValueIsLiked) story.likesCount += 1;
+      else story.likesCount -= 1;
+      console.log("Everything is ok");
+    } else {
+      console.error("Failed to like/unlike the story");
+    }
   };
 
   const handleScroll = (direction) => {
@@ -58,7 +77,22 @@ const StoriesItem = () => {
   const fetchStories = async () => {
     const response = await apiFetch(`/story/followings/${user.sub}`);
     const data = await response.json();
-    setStories(data);
+    const newData = await fetchIsPostLiked(data);
+    setStories(newData);
+  };
+
+  const fetchIsPostLiked = async (data) => {
+    const updatedData = await Promise.all(
+      data.map(async (item) => {
+        const isLiked = await isStoryLiked(item, user, apiFetch); // ← наприклад, запит до API
+        return {
+          ...item,
+          isLiked,
+        };
+      })
+    );
+
+    return updatedData;
   };
 
   const getRandomGradient = () => {
@@ -191,7 +225,6 @@ const StoriesItem = () => {
       )}
 
       <div className={styles["container-stories"]} ref={scrollRef}>
-
         <div className={styles["storiesbtn-place"]}>
           <div
             onClick={() => setIsPostModalOpen(true)}
@@ -211,12 +244,11 @@ const StoriesItem = () => {
                 borderRadius: "50%",
                 boxSizing: "border-box",
                 display: "block",
-                padding: 3
+                padding: 3,
               }}
             />
             <div className={styles["storiesbtn-plus"]}></div>
           </div>
-
         </div>
 
         {uniqueUsers.map((story, index) => (
@@ -283,11 +315,11 @@ const StoriesItem = () => {
 
             {(currentStoryIndex < currentStoryGroup.length - 1 ||
               currentUserIndex < uniqueUsers.length - 1) && (
-                <button
-                  className={styles["psb-modal-next-button"]}
-                  onClick={goToNextStory}
-                ></button>
-              )}
+              <button
+                className={styles["psb-modal-next-button"]}
+                onClick={goToNextStory}
+              ></button>
+            )}
 
             <div className={styles["storie-bottom"]}>
               <div className={styles["avatar-author"]}>
@@ -297,10 +329,24 @@ const StoriesItem = () => {
                   <div className={styles["storie-author"]}>
                     {currentStoryGroup[currentStoryIndex].user.username}
                   </div>
-                  <div className={styles["storie-data"]}>{currentStoryGroup[currentStoryIndex].createdAt}</div>
+                  <div className={styles["storie-data"]}>
+                    {currentStoryGroup[currentStoryIndex].createdAt}
+                  </div>
                 </div>
 
-                <div className={styles["storie-like"]}></div>
+                <button
+                  className={styles["storie-like"]}
+                  onClick={() =>
+                    submiteUserLike(currentStoryGroup[currentStoryIndex])
+                  }
+                ></button>
+                {/* <div className={styles["storie-like"]} onClick={()=>submiteUserLike(currentStoryGroup[currentStoryIndex])}>{currentStoryGroup[currentStoryIndex].isLiked}+{currentStoryGroup[currentStoryIndex].likesCount}</div> */}
+                {console.log(
+                  currentStoryGroup[currentStoryIndex].isLiked +
+                    " + " +
+                    currentStoryGroup[currentStoryIndex].likesCount
+                )}
+                {/* <div>{currentStoryGroup[currentStoryIndex].isLiked}+{currentStoryGroup[currentStoryIndex].likesCount}</div> */}
               </div>
             </div>
           </div>
@@ -317,4 +363,4 @@ const StoriesItem = () => {
   );
 };
 
-export default StoriesItem;
+export default Stories;

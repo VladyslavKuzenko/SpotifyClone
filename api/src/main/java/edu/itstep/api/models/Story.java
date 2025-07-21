@@ -1,9 +1,11 @@
 package edu.itstep.api.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import edu.itstep.api.models.contentModels.ContentType;
 import jakarta.persistence.*;
 
 import java.time.Instant;
+import java.util.Set;
 
 @Entity
 @Table(name = "stories")
@@ -24,6 +26,9 @@ public class Story {
     private int viewsCount;
     @Column(name = "created_at")
     private Instant createdAt;
+    @ManyToMany(mappedBy = "likedStory")
+    @JsonIgnore
+    private Set<User> likedBy;
 
 
     public Story() {
@@ -83,6 +88,14 @@ public class Story {
 
     public void setCreatedAt(Instant  createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public Set<User> getLikedBy() {
+        return likedBy;
+    }
+
+    public void setLikedBy(Set<User> likedBy) {
+        this.likedBy = likedBy;
     }
 }
 

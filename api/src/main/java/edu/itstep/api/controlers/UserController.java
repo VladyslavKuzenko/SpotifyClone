@@ -1,6 +1,8 @@
 package edu.itstep.api.controlers;
 
-import edu.itstep.api.models.*;
+import edu.itstep.api.models.Genre;
+import edu.itstep.api.models.Post;
+import edu.itstep.api.models.User;
 import edu.itstep.api.models.dto.UserCreationDTO;
 import edu.itstep.api.repositories.GenreRepository;
 import edu.itstep.api.repositories.UserRepository;
@@ -9,10 +11,7 @@ import edu.itstep.api.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,7 +21,6 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -64,6 +62,11 @@ public class UserController {
     @GetMapping("/userLikedPosts/{id}")
     public Set<Post> getUserLikedPosts(@PathVariable String id) {
         return userRepository.findById(id).orElseThrow(RuntimeException::new).getLikedPosts();
+    }
+
+    @GetMapping("/isStoryLiked/{user_id}/{story_id}")
+    public Boolean getIsStoryLikedByUser(@PathVariable String user_id,@PathVariable Long story_id) {
+        return userService.isStoryLiked(story_id, user_id);
     }
 
     @GetMapping("/userByFollowers/{count}")
@@ -116,9 +119,14 @@ public class UserController {
         return ResponseEntity.ok("Follow added");
     }
 
-    @PostMapping("/like/{post_id}/{user_id}")
-    public ResponseEntity<User> addLike(@PathVariable Long post_id, @PathVariable String user_id) throws URISyntaxException {
-        User user = userService.addLike(post_id, user_id);
+    @PostMapping("/post-like/{post_id}/{user_id}")
+    public ResponseEntity<User> addPostLike(@PathVariable Long post_id, @PathVariable String user_id) throws URISyntaxException {
+        User user = userService.addPostLike(post_id, user_id);
+        return ResponseEntity.ok(user);
+    }
+    @PostMapping("/story-like/{story_id}/{user_id}")
+    public ResponseEntity<User> addStoryLike(@PathVariable Long story_id, @PathVariable String user_id) throws URISyntaxException {
+        User user = userService.addStoryLike(story_id, user_id);
         return ResponseEntity.ok(user);
     }
 
@@ -139,11 +147,18 @@ public class UserController {
         return ResponseEntity.ok("Genre added");
     }
 
-    @DeleteMapping("/like/{post_id}/{user_id}")
-    public ResponseEntity<User> deleteLike(@PathVariable Long post_id, @PathVariable String user_id) throws URISyntaxException {
-        User user = userService.deleteLike(post_id, user_id);
+    @DeleteMapping("/post-like/{post_id}/{user_id}")
+    public ResponseEntity<User> deletePostLike(@PathVariable Long post_id, @PathVariable String user_id) throws URISyntaxException {
+        User user = userService.deletePostLike(post_id, user_id);
         return ResponseEntity.ok(user);
     }
+
+    @DeleteMapping("/story-like/{story_id}/{user_id}")
+    public ResponseEntity<User> deleteStoryLike(@PathVariable Long story_id, @PathVariable String user_id) throws URISyntaxException {
+        User user = userService.deleteStoryLike(story_id, user_id);
+        return ResponseEntity.ok(user);
+    }
+
 
 
     @GetMapping("/hasProfileConfirmation/{id}")

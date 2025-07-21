@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import styles from "./main.module.css";
-import { isLiked } from "../../js/functions/functions";
 import { useAPI } from "../../hooks/useApi";
 import CommentItem from "./CommentItem";
+import {isPostLikedFunc} from "../../js/functions/functions"
 
 export default function PostItem({ post }) {
   const [isPostLiked, setIsPostLiked] = useState();
@@ -26,7 +26,7 @@ export default function PostItem({ post }) {
   };
 
   const submiteUserLike = async () => {
-    const response = await apiFetch(`/users/like/${post.id}/${user.sub}`, {
+    const response = await apiFetch(`/users/post-like/${post.id}/${user.sub}`, {
       method: isPostLiked ? "DELETE" : "POST",
     });
     if (response.ok) {
@@ -92,7 +92,7 @@ export default function PostItem({ post }) {
 
   useEffect(() => {
     const fetchIsPostLiked = async () => {
-      setIsPostLiked(await isLiked(post, user, apiFetch));
+      setIsPostLiked(await isPostLikedFunc(post, user, apiFetch));
     };
     fetchIsPostLiked();
     fetchComments();
