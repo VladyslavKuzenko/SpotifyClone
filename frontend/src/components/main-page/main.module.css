@@ -1743,7 +1743,6 @@ html {
 }
 
 .post-item {
-  min-height: 390px;
   display: flex;
   justify-content: center;
 }
@@ -1933,6 +1932,7 @@ html {
   justify-content: center;
   align-items: center;
   width: 100%;
+
 }
 
 .prl-photo-wrapper {
@@ -1941,6 +1941,7 @@ html {
   display: flex;
   justify-content: center;
   align-items: center;
+
 }
 
 .prl-preview-image {
@@ -2334,13 +2335,14 @@ html {
   font-size: 20px;
   cursor: pointer;
 }
-
 .discussion-body {
   padding: 16px;
   overflow-y: auto;
   flex-grow: 1;
+
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column; /* тепер порядок звичайний */
+  justify-content: flex-start; /* необовʼязково, але для явності */
 }
 
 
@@ -2349,7 +2351,7 @@ html {
   align-items: flex-start;
   gap: 12px;
   padding-top: 20px;
-  padding-bottom: 20px;
+  padding-bottom: 30px;
 
 
   border-radius: 16px;
@@ -2383,6 +2385,7 @@ html {
   white-space: pre-wrap;
   word-break: break-word;
   hyphens: auto;
+  width: 100%;
 }
 
 .username1 {
@@ -2399,7 +2402,7 @@ html {
 }
 
 .message1 {
-  max-width: 350px;
+  width: 380px;
   word-break: break-word;
   overflow-wrap: break-word;
   hyphens: auto;
@@ -2411,7 +2414,7 @@ html {
   font-size: 14px;
   line-height: 100%;
   letter-spacing: 0%;
-  color:#696969;
+  color: #696969;
 
 }
 
@@ -2573,6 +2576,19 @@ html {
   font-style: Regular;
   font-size: 12px;
   color: white;
+  line-height: 100%;
+  letter-spacing: 0%;
+
+}
+
+.commentTime {
+  width: 100%;
+  text-align: end;
+  font-family: Manrope;
+  font-weight: 300;
+  font-style: Light;
+  font-size: 14px;
+  color: #797979;
   line-height: 100%;
   letter-spacing: 0%;
 

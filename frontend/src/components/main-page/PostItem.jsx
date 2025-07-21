@@ -73,7 +73,9 @@ export default function PostItem({ post }) {
   const { user, apiFetch } = useAPI();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const images = post.contents || [];
+
   const hasDescription = post.description && post.description.trim() !== "";
+
   const [pomhIsModalOpen, setPomhIsModalOpen] = useState(false);
   const [pomhModalImageUrl, setPomhModalImageUrl] = useState("");
   const [isDiscussionOpen, setIsDiscussionOpen] = useState(false);
@@ -372,10 +374,11 @@ export default function PostItem({ post }) {
               </button>*/}
             </div>
             <div className={styles["discussion-body"]}>
-              {comments.map((comnt) => (
+              {[...comments].reverse().map((comnt) => (
                 <CommentItem key={comnt.id} comment={comnt} />
               ))}
             </div>
+
           </div>
         </div>
       )}

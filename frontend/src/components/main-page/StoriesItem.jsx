@@ -5,6 +5,7 @@ import { useAPI } from "../../hooks/useApi";
 import NewPost from "./NewPost";
 
 const StoriesItem = () => {
+  
   const scrollRef = useRef(null);
   const [canScroll, setCanScroll] = useState({ left: false, right: false });
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -13,10 +14,10 @@ const StoriesItem = () => {
   const [stories, setStories] = useState([]);
   const [currentUserIndex, setCurrentUserIndex] = useState(0);
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
-
   const { apiFetch, user } = useAPI();
   const { isLoading } = useAuth0();
 
+  //______________________________________________________________________________
   const updateScrollState = () => {
     const el = scrollRef.current;
     if (!el) return;
@@ -28,6 +29,7 @@ const StoriesItem = () => {
       right: scrollLeft < maxScrollLeft - 1,
     });
   };
+  //______________________________________________________________________________
 
   const handleScroll = (direction) => {
     const el = scrollRef.current;
@@ -39,8 +41,10 @@ const StoriesItem = () => {
       behavior: "smooth",
     });
   };
+  //______________________________________________________________________________
 
   const openModal = () => setIsModalOpen(true);
+  //______________________________________________________________________________
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -48,18 +52,21 @@ const StoriesItem = () => {
     setCurrentStoryIndex(0);
     setCurrentUserIndex(0);
   };
+  //______________________________________________________________________________
 
   const handleOverlayClick = (e) => {
     if (e.target.classList.contains(styles["sts-modal-overlay"])) {
       closeModal();
     }
   };
+  //______________________________________________________________________________
 
   const fetchStories = async () => {
     const response = await apiFetch(`/story/followings/${user.sub}`);
     const data = await response.json();
     setStories(data);
   };
+  //______________________________________________________________________________
 
   const getRandomGradient = () => {
     const angle = Math.floor(Math.random() * 360);
@@ -67,18 +74,21 @@ const StoriesItem = () => {
     const deepOrange = "#FF4500";
     return `linear-gradient(${angle}deg, ${lightOrange}, ${deepOrange})`;
   };
+  //______________________________________________________________________________
 
   useEffect(() => {
     if (!isLoading) {
       fetchStories();
     }
   }, [isLoading]);
+  //______________________________________________________________________________
 
   useEffect(() => {
     if (stories.length) {
       requestAnimationFrame(updateScrollState);
     }
   }, [stories]);
+  //______________________________________________________________________________
 
   useEffect(() => {
     const el = scrollRef.current;
@@ -90,6 +100,7 @@ const StoriesItem = () => {
       window.removeEventListener("resize", updateScrollState);
     };
   }, []);
+  //______________________________________________________________________________
 
   const groupedStories = stories.reduce((acc, story) => {
     const userId = story.user?.id;
@@ -98,10 +109,12 @@ const StoriesItem = () => {
     acc[userId].push(story);
     return acc;
   }, {});
+  //______________________________________________________________________________
 
   const uniqueUsers = Object.values(groupedStories).map(
     (storyGroup) => storyGroup[0]
   );
+  //______________________________________________________________________________
 
   const goToNextStory = () => {
     if (currentStoryIndex < currentStoryGroup.length - 1) {
@@ -110,6 +123,7 @@ const StoriesItem = () => {
       goToNextUser();
     }
   };
+  //______________________________________________________________________________
 
   const goToPrevStory = () => {
     if (currentStoryIndex > 0) {
@@ -118,6 +132,7 @@ const StoriesItem = () => {
       goToPrevUser(true);
     }
   };
+  //______________________________________________________________________________
 
   const goToNextUser = () => {
     if (currentUserIndex < uniqueUsers.length - 1) {
@@ -127,6 +142,7 @@ const StoriesItem = () => {
       setCurrentStoryIndex(0);
     }
   };
+  //______________________________________________________________________________
 
   const goToPrevUser = (openLastStory = false) => {
     if (currentUserIndex > 0) {
@@ -137,6 +153,7 @@ const StoriesItem = () => {
       setCurrentStoryIndex(openLastStory ? prevGroup.length - 1 : 0);
     }
   };
+  //______________________________________________________________________________
 
   // Функція для рендеру полосок-індикаторів
   const renderStoryIndicators = (count, activeIndex) => {
@@ -181,6 +198,8 @@ const StoriesItem = () => {
       </div>
     );
   };
+  //______________________________________________________________________________
+
 
   return (
     <div className={styles.wrapper}>
@@ -290,6 +309,7 @@ const StoriesItem = () => {
                 ></button>
               )}
 
+
             <div className={styles["storie-bottom"]}>
               <div className={styles["avatar-author"]}>
                 <div className={styles["storie-avatar"]}></div>
@@ -304,6 +324,8 @@ const StoriesItem = () => {
                 <div className={styles["storie-like"]}></div>
               </div>
             </div>
+
+
           </div>
         </div>
       )}
