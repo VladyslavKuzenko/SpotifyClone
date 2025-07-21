@@ -490,9 +490,9 @@
   flex-direction: column;
   justify-content: center;
   height: 100%;
-  width: 45%;           /* ця ширина буде фіксована */
+  width: 45%;           
   text-indent: 30px;
-  overflow: hidden;     /* на всяк випадок */
+  overflow: hidden;     
 }
 
 

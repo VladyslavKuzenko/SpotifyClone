@@ -17,12 +17,12 @@ const LeftSide = () => {
 
       <div className={styles["pages-btns-div"]}>
         <button
-          className={`${styles["menu-btn"]} ${location.pathname === "/" ? styles.active1 : ""}`}
-          onClick={() => navigate("/")}
+          className={`${styles["menu-btn"]} ${location.pathname === "/main" ? styles.active1 : ""}`}
+          onClick={() => navigate("/main")}
         >
           <span className={`${styles.icon} ${styles.homeIcon}`}></span>
           <span
-            className={`${styles.label} ${location.pathname === "/" ? styles.activeLabel : ""}`}
+            className={`${styles.label} ${location.pathname === "/main" ? styles.activeLabel : ""}`}
           >
             Home
           </span>

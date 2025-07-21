@@ -3,6 +3,7 @@ import styles from "./main.module.css";
 import { useAPI } from "../../hooks/useApi";
 import { useAuth0 } from "@auth0/auth0-react";
 import PostItem from "./PostItem";
+
 export default function Posts({ selectedTab, userId }) {
   const [posts, setPosts] = useState([]);
   const { apiFetch, user } = useAPI();
@@ -12,11 +13,11 @@ export default function Posts({ selectedTab, userId }) {
 
   const fetchPosts = async () => {
     if (isLoading) return;
-    var response;
+    let response;
     console.log("fetch posts , selectedTab: ", selectedTab);
-    if (selectedTab === "artists")
+    if (selectedTab === "artists") {
       response = await apiFetch(`/posts/byFollowingArtists/${user.sub}`);
-    else if (selectedTab === "friends") {
+    } else if (selectedTab === "friends") {
       response = await apiFetch(`/posts/byFollowing/${user.sub}`);
     } else if (selectedTab === "user") {
       response = await apiFetch(`/posts/userPosts/${userId}`);
@@ -42,6 +43,13 @@ export default function Posts({ selectedTab, userId }) {
   const start = Math.max(posts.length - visibleCount, 0);
   const visiblePosts = posts.slice(start);
   const reversedVisiblePosts = [...visiblePosts].reverse();
+
+  if (posts.length === 0) {
+    return <div className={styles["empty-posts-message"]}>
+      <h3  className={styles["h3-empty"]}>Тут поки що немає постів. <br/><br/></h3>
+      <h2 className={styles["h2-empty"]}>Виставте свій перший пост або підпишіться на інших користувачів, щоб бачити цікаві оновлення!</h2>
+    </div>;
+  }
 
   return (
     <>

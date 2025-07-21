@@ -5,7 +5,7 @@ import { API_URL } from "../../js/properties/properties";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useAPI } from "../../hooks/useApi";
 import { handleUploadFile } from "../../js/functions/functions";
-
+import LocationMenu from "./LocationMenu";
 const NewPost = ({ onClose, initialTab = "newpost" }) => {
   const [activeTab, setActiveTab] = useState(initialTab);
   const [selectedPrivacy, setSelectedPrivacy] = useState(null);
@@ -15,7 +15,7 @@ const NewPost = ({ onClose, initialTab = "newpost" }) => {
   const [description, setDescription] = useState("");
   const [isUploading, setIsUploading] = useState(false);
   const { isLoading } = useAuth0();
-  const { apiAxiosPost, apiFetch,user } = useAPI();
+  const { apiAxiosPost, apiFetch, user } = useAPI();
   const fileStoryInputRef = useRef(null);
   const filePostInputRef = useRef(null);
 
@@ -75,7 +75,7 @@ const NewPost = ({ onClose, initialTab = "newpost" }) => {
 
   const submitePost = async () => {
     setIsUploading(true);
-    
+
     const resultPost = {
       user: { id: user.sub },
       description: description,
@@ -84,7 +84,7 @@ const NewPost = ({ onClose, initialTab = "newpost" }) => {
       commentsCount: 0,
       repostsCount: 0,
       createdAt: new Date().toISOString(),
-      isCommentsOpen:selectedComments ==="open-comments",
+      isCommentsOpen: selectedComments === "open-comments",
       contents: [],
     };
 
@@ -177,7 +177,7 @@ const NewPost = ({ onClose, initialTab = "newpost" }) => {
             {activeTab === "newpost" && (
               <>
                 <div className={styles["location-mention"]}>
-                  <button className={styles["location"]}>Add location</button>
+                  <LocationMenu />
                   <button
                     className={styles["at-gallery"]}
                     onClick={() => filePostInputRef.current.click()}
@@ -272,7 +272,7 @@ const NewPost = ({ onClose, initialTab = "newpost" }) => {
                     )}
                   </button>
                 </div>
-                
+
                 <div className={styles["post-stories"]}>
                   <button
                     className={styles["post-stories-btn"]}
