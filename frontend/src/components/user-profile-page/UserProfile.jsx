@@ -1,11 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react';
-import styles from './user-profile.module.css';
-import LeftSide from '../main-components/LeftSide';
+import React, { useState, useEffect, useRef } from "react";
+import styles from "./user-profile.module.css";
+import LeftSide from "../main-components/LeftSide";
+import { useParams } from "react-router-dom";
 
 const UserProfile = () => {
+  const { userId } = useParams();
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef(null);
-
   const toggleMenu = () => {
     setMenuOpen((prev) => !prev);
   };
@@ -18,89 +19,94 @@ const UserProfile = () => {
     };
 
     if (menuOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener("mousedown", handleClickOutside);
     } else {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [menuOpen]);
-
   return (
     <div className={styles.container}>
-      <div className={styles['empty-div1']}></div>
-      <div className={styles['profile-side']}>
-        <div className={styles['channel-hat']}>
-          <div className={styles['menu-wrapper']} ref={menuRef}>
-            <button className={styles['hat-setting-platform']} onClick={toggleMenu}>
-              <div className={styles['setting-circles']}></div>
-              <div className={styles['setting-circles']}></div>
-              <div className={styles['setting-circles']}></div>
+      <div className={styles["empty-div1"]}></div>
+      <div className={styles["profile-side"]}>
+        <div className={styles["channel-hat"]}>
+          <div className={styles["menu-wrapper"]} ref={menuRef}>
+            <button
+              className={styles["hat-setting-platform"]}
+              onClick={toggleMenu}
+            >
+              <div className={styles["setting-circles"]}></div>
+              <div className={styles["setting-circles"]}></div>
+              <div className={styles["setting-circles"]}></div>
             </button>
 
             {menuOpen && (
-              <div className={styles['dropdown-menu']}>
-                <button className={styles['dropdown-item']}>Edit Profile</button>
-                <button className={styles['dropdown-item']}>Share</button>
-                <button className={styles['dropdown-item']}>Settings</button>
-                <button className={styles['dropdown-item']}>Logout</button>
+              <div className={styles["dropdown-menu"]}>
+                <button className={styles["dropdown-item"]}>
+                  Edit Profile
+                </button>
+                <button className={styles["dropdown-item"]}>Share</button>
+                <button className={styles["dropdown-item"]}>Settings</button>
+                <button className={styles["dropdown-item"]}>Logout</button>
               </div>
             )}
           </div>
 
-          <div className={styles['profile-photo']}>
+          <div className={styles["profile-photo"]}>
             <div className={styles.status}></div>
           </div>
         </div>
 
-        <div className={styles['nbf-cont']}>
-          <div className={styles['name-bio']}>
-            <div className={styles['profile-name']}>Jane Doe</div>
-            <div className={styles['profile-bio']}>Nisi ut aliquip ex ea commodo consequatt in mmmmmmmmmmmmmmmmmmmmm</div>
+        <div className={styles["nbf-cont"]}>
+          <div className={styles["name-bio"]}>
+            <div className={styles["profile-name"]}>
+              Jane Doe with id {userId}
+            </div>
+            <div className={styles["profile-bio"]}>
+              Nisi ut aliquip ex ea commodo consequatt in mmmmmmmmmmmmmmmmmmmmm
+            </div>
           </div>
-          <div className={styles['followers-count']}>999k followers</div>
-          <div className={styles['follow-message-container']}>
-            <button className={styles['follow-btn']}>Follow</button>
-            <button className={styles['message-btn']}>Message</button>
+          <div className={styles["followers-count"]}>999k followers</div>
+          <div className={styles["follow-message-container"]}>
+            <button className={styles["follow-btn"]}>Follow</button>
+            <button className={styles["message-btn"]}>Message</button>
           </div>
         </div>
 
-        <div className={styles['functional-container1']}>
-          <div className={styles['saved-album-container']}>
-            <div className={styles['saved-album-text']}>Saved Albums</div>
-            <div className={styles['album-array']}>
-             
-            </div>
+        <div className={styles["functional-container1"]}>
+          <div className={styles["saved-album-container"]}>
+            <div className={styles["saved-album-text"]}>Saved Albums</div>
+            <div className={styles["album-array"]}></div>
           </div>
-          <div className={styles['saved-songs-container']}>
-            <div className={styles['saved-songs-text']}>Saved Songs</div>
-            <div className={styles['song-array']}>
-              
-            </div>
+          <div className={styles["saved-songs-container"]}>
+            <div className={styles["saved-songs-text"]}>Saved Songs</div>
+            <div className={styles["song-array"]}></div>
           </div>
         </div>
 
-        <div className={styles['bottom-place']}>
-          <div className={styles['posts-place']}>
-            <div className={styles['posts-text']}>Posts</div>
-            <div className={styles['posts-array']}></div>
+        <div className={styles["bottom-place"]}>
+          <div className={styles["posts-place"]}>
+            <div className={styles["posts-text"]}>Posts</div>
+            <div className={styles["posts-array"]}></div>
           </div>
-          <div className={styles['groups-place']}>
-            <div className={styles['groups-text']}>Groups</div>
-            <div className={styles['groups-container']}>
+          <div className={styles["groups-place"]}>
+            <div className={styles["groups-text"]}>Groups</div>
+            <div className={styles["groups-container"]}>
               {[...Array(12)].map((_, i) => (
                 <div key={i} className={styles["grp-hiphop-heads"]}>
                   <div className={styles["grp-avatar"]}></div>
                   <div className={styles["grp-info"]}>
                     <div className={styles["grp-name"]}>Hip-Hop Heads</div>
-                    <div className={styles["grp-followers"]}>35477 followers</div>
+                    <div className={styles["grp-followers"]}>
+                      35477 followers
+                    </div>
                   </div>
                 </div>
               ))}
             </div>
-
           </div>
         </div>
       </div>

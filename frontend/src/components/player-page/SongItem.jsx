@@ -8,6 +8,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { API_URL } from "../../js/properties/properties";
 import { useAPI } from "../../hooks/useApi";
 import { useAudio } from "../../hooks/useAudio";
+import { useNavigate } from "react-router-dom";
 
 const SongItem = ({
   /*  onSongSelect, */
@@ -16,15 +17,15 @@ const SongItem = ({
   onSetCurrentSongList,
   isPlaylistsChangesControl,
 }) => {
+  const navigate = useNavigate();
   const [duration, setDuration] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAtpModalOpen, setIsAtpModalOpen] = useState(false);
   const atpRef = useRef(null);
-  const {isLoading} =
-    useAuth0();
+  const { isLoading } = useAuth0();
   const { setCurrentSong } = useAudio();
-  const { apiFetch,user } = useAPI();
+  const { apiFetch, user } = useAPI();
 
   useEffect(() => {
     const audio = new Audio();
@@ -66,20 +67,22 @@ const SongItem = ({
   }, []);
 
   const handleLikeClick = async () => {
-    const responsePlaylist =await apiFetch(`/playlists/playlists/${user.sub}`)
-    // if (isAuthenticated && user) 
-      const body = await responsePlaylist.json();
-      const playlist = body.find((i) => i.title === "Like");
-      const response =await apiFetch(`/playlists/${playlist.id}/tracks/${song.id}`,{
-         method: isLiked ? "DELETE" : "POST",
-      })
-      if (response.ok) {
-        setIsLiked(!isLiked);
-        isPlaylistsChangesControl?.setIsPlaylistsChanges(true);
-      } else {
-        console.error("Failed to like/unlike the song");
+    const responsePlaylist = await apiFetch(`/playlists/playlists/${user.sub}`);
+    // if (isAuthenticated && user)
+    const body = await responsePlaylist.json();
+    const playlist = body.find((i) => i.title === "Like");
+    const response = await apiFetch(
+      `/playlists/${playlist.id}/tracks/${song.id}`,
+      {
+        method: isLiked ? "DELETE" : "POST",
       }
-    
+    );
+    if (response.ok) {
+      setIsLiked(!isLiked);
+      isPlaylistsChangesControl?.setIsPlaylistsChanges(true);
+    } else {
+      console.error("Failed to like/unlike the song");
+    }
   };
   if (isLoading) {
     return <div>Loading...</div>;
@@ -109,7 +112,6 @@ const SongItem = ({
               {song.listeningCount}
             </div>
             <div className={styles["as-plus-plat"]}>
-
               <div
                 className={
                   styles["as-plus"] + " " + (isLiked ? styles["liked"] : "")
@@ -119,15 +121,15 @@ const SongItem = ({
                   handleLikeClick();
                 }}
                 style={{
-                  backgroundImage: `url(${isLiked ? '/images/redheart.svg' : '/images/heart.svg'})`,
-                  backgroundSize: '19px 19px',
-                  backgroundRepeat: 'no-repeat',
-                  backgroundPosition: 'center',
-                  cursor: 'pointer'
+                  backgroundImage: `url(${
+                    isLiked ? "/images/redheart.svg" : "/images/heart.svg"
+                  })`,
+                  backgroundSize: "19px 19px",
+                  backgroundRepeat: "no-repeat",
+                  backgroundPosition: "center",
+                  cursor: "pointer",
                 }}
-              >
-              </div>
-
+              ></div>
             </div>
             <div className={styles.duration}>{convertTime(duration)}</div>
             <div className={styles["as-more-menu"]}>
@@ -171,7 +173,14 @@ const SongItem = ({
                     )}
                   </div>
 
-                  <div className={styles["dropdown-item"]}>Go to artist</div>
+                  <button
+                    className={styles["dropdown-item"]}
+                    onClick={() => {
+                      navigate(`/user-profile/${song.artist.user.id}`);
+                    }}
+                  >
+                    Go to artist
+                  </button>
                 </div>
               )}
             </div>

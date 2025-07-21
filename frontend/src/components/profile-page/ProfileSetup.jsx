@@ -148,7 +148,7 @@ export default function ProfileSetup() {
       body: JSON.stringify(resultPlaylist),
     });
     console.log("Ready");
-    navigate("/", { replace: true });
+    navigate("/main", { replace: true });
   }
 
 
