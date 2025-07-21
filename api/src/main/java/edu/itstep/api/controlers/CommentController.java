@@ -27,6 +27,10 @@ public class CommentController {
     public Comment getComment(@PathVariable Long id) {
         return commentRepository.findById(id).orElseThrow(RuntimeException::new);
     }
+    @GetMapping("/byPostId/{id}")
+    public List<Comment> getCommentByPostId(@PathVariable Long id) {
+        return commentRepository.findAllByPostId(id);
+    }
 
     @PostMapping
     public Comment createComment(@RequestBody Comment comment) throws URISyntaxException {

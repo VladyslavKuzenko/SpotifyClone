@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import styles from "./main.module.css";
 import { isLiked } from "../../js/functions/functions";
 import { useAPI } from "../../hooks/useApi";
-import ChatMessage from "./ChatMessage";
+import CommentItem from "./CommentItem";
 
 export default function PostItem({ post }) {
   const [isPostLiked, setIsPostLiked] = useState();
@@ -18,6 +18,12 @@ export default function PostItem({ post }) {
 
   const openDiscussion = () => setIsDiscussionOpen(true);
   const closeDiscussion = () => setIsDiscussionOpen(false);
+
+  const fetchComments = async () => {
+    const response = await apiFetch(`/comments/byPostId/${post.id}`);
+    const data=await response.json()
+    setComments(data);
+  };
 
   const submiteUserLike = async () => {
     const response = await apiFetch(`/users/like/${post.id}/${user.sub}`, {
@@ -38,7 +44,7 @@ export default function PostItem({ post }) {
     const resultComment = {
       user: { id: user.sub },
       post: { id: post.id },
-      text: comment
+      text: comment,
     };
 
     const response = await apiFetch("/comments", {
@@ -50,8 +56,14 @@ export default function PostItem({ post }) {
     });
 
     if (response.ok) {
-      const data=await response.json()
-      setComments(...comments,data);
+      const data = await response.json();
+      const responseComment=await apiFetch(`/comments/${data.id}`);
+      const newComment=await responseComment.json();
+      setComments([...comments, newComment]);
+      console.log("Comment from newComment: ",newComment);
+      console.log("Comment from Data: ",data);
+      console.log("Comments: ",comments);
+      setComment("");
       console.log("Everything is ok");
     } else {
       console.error("Failed to like/unlike the post");
@@ -83,6 +95,7 @@ export default function PostItem({ post }) {
       setIsPostLiked(await isLiked(post, user, apiFetch));
     };
     fetchIsPostLiked();
+    fetchComments();
   }, []);
 
   return (
@@ -137,7 +150,7 @@ export default function PostItem({ post }) {
                         onClick={openDiscussion}
                       ></button>
                       <div className={styles["coment-count"]}>
-                        {post.commentsCount}
+                        {comments.length}
                       </div>
                     </div>
                   </div>
@@ -226,7 +239,9 @@ export default function PostItem({ post }) {
             }}
           />
           <div className={styles["post-comment-btn"]}>
-            <button className={styles["publish-btn"]} onClick={submiteComment}>Publish</button>
+            <button className={styles["publish-btn"]} onClick={submiteComment}>
+              Publish
+            </button>
           </div>
         </div>
 
@@ -262,7 +277,8 @@ export default function PostItem({ post }) {
               </button>
             </div>
             <div className={styles["discussion-body"]}>
-              <ChatMessage />
+              {comments.map((comnt)=><CommentItem comment={comnt}/>)}
+              
             </div>
           </div>
         </div>

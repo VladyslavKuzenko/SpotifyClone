@@ -19,7 +19,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -34,7 +33,7 @@ public class PostService {
     @Value("${app.secret.key}")
     private String privateKeyPath;
 
-    public Post updatePost(Long id, Post updatedPost) {
+    public Post updatePostContents(Long id, Post updatedPost) {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Story not found"));
 
