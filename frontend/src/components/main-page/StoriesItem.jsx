@@ -3,9 +3,10 @@ import styles from "./main.module.css";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useAPI } from "../../hooks/useApi";
 import NewPost from "./NewPost";
-import { isStoryLiked, formatPostDate } from "../../js/functions/functions";
+import { formatPostDate } from "../../js/functions/functions";
 
-const Stories = () => {
+const StoriesItem = () => {
+
   const scrollRef = useRef(null);
   const [canScroll, setCanScroll] = useState({ left: false, right: false });
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -30,56 +31,6 @@ const Stories = () => {
     });
   };
   //______________________________________________________________________________
-
-  // const submiteUserLike = async (story) => {
-  //   const response = await apiFetch(
-  //     `/users/story-like/${story.id}/${user.sub}`,
-  //     {
-  //       method: story.isLiked ? "DELETE" : "POST",
-  //     }
-  //   );
-  //   if (response.ok) {
-  //     const newValueIsLiked = !story.isLiked;
-  //     story.isLiked = newValueIsLiked;
-  //     if (newValueIsLiked) story.likesCount += 1;
-  //     else story.likesCount -= 1;
-  //     console.log("Everything is ok");
-  //   } else {
-  //     console.error("Failed to like/unlike the story");
-  //   }
-  // };
-  const submiteUserLike = async (story) => {
-    const response = await apiFetch(
-      `/users/story-like/${story.id}/${user.sub}`,
-      {
-        method: story.isLiked ? "DELETE" : "POST",
-      }
-    );
-
-    if (response.ok) {
-      // створити копію поточного масиву історій
-      const updatedStories = [...currentStoryGroup];
-
-      // знайти потрібну історію по id
-      const index = updatedStories.findIndex((s) => s.id === story.id);
-      if (index !== -1) {
-        const updatedStory = {
-          ...updatedStories[index],
-          isLiked: !updatedStories[index].isLiked,
-          likesCount: updatedStories[index].isLiked
-            ? updatedStories[index].likesCount - 1
-            : updatedStories[index].likesCount + 1,
-        };
-
-        updatedStories[index] = updatedStory;
-        setCurrentStoryGroup(updatedStories);
-      }
-    } else {
-      console.error("Failed to like/unlike the story");
-    }
-  };
-
-
 
   const handleScroll = (direction) => {
     const el = scrollRef.current;
@@ -114,22 +65,7 @@ const Stories = () => {
   const fetchStories = async () => {
     const response = await apiFetch(`/story/followings/${user.sub}`);
     const data = await response.json();
-    const newData = await fetchIsPostLiked(data);
-    setStories(newData);
-  };
-
-  const fetchIsPostLiked = async (data) => {
-    const updatedData = await Promise.all(
-      data.map(async (item) => {
-        const isLiked = await isStoryLiked(item, user, apiFetch); // ← наприклад, запит до API
-        return {
-          ...item,
-          isLiked,
-        };
-      })
-    );
-
-    return updatedData;
+    setStories(data);
   };
   //______________________________________________________________________________
 
@@ -265,6 +201,7 @@ const Stories = () => {
   };
   //______________________________________________________________________________
 
+
   return (
     <div className={styles.wrapper}>
       {canScroll.left && (
@@ -274,6 +211,7 @@ const Stories = () => {
       )}
 
       <div className={styles["container-stories"]} ref={scrollRef}>
+
         <div className={styles["storiesbtn-place"]}>
           <div
             onClick={() => setIsPostModalOpen(true)}
@@ -294,11 +232,12 @@ const Stories = () => {
                 boxSizing: "border-box",
                 display: "block",
                 padding: 3,
-                backgroundPosition: "center",
+                backgroundPosition: 'center',
               }}
             />
             <div className={styles["storiesbtn-plus"]}></div>
           </div>
+
         </div>
 
         {uniqueUsers.map((story, index) => (
@@ -371,6 +310,7 @@ const Stories = () => {
                 ></button>
               )}
 
+
             <div className={styles["storie-bottom"]}>
               <div className={styles["avatar-author"]}>
                 <div className={styles["storie-avatar"]}></div>
@@ -379,34 +319,16 @@ const Stories = () => {
                   <div className={styles["storie-author"]}>
                     {currentStoryGroup[currentStoryIndex].user.username}
                   </div>
-
                   <div className={styles["storie-data"]}>
-                    {formatPostDate(
-                      currentStoryGroup[currentStoryIndex].createdAt
-                    )}
+                    {formatPostDate(currentStoryGroup[currentStoryIndex].createdAt)}
                   </div>
                 </div>
-                <div className={styles["storie-wrap"]}>
-                  <button
-                    className={styles["storie-like"]}
-                    onClick={() => submiteUserLike(currentStoryGroup[currentStoryIndex])}
-                  >
-                    <img
-                      src={`/images/${currentStoryGroup[currentStoryIndex]?.isLiked ? "heartred" : "heart"}.svg`}
-                      alt="like"
-                     
-                    />
-                  </button>
-                  <div className={styles["like-count"]}>
-                    {currentStoryGroup[currentStoryIndex]?.likesCount}
-                  </div>
-                </div>
-                {/* <div className={styles["storie-like"]} onClick={()=>submiteUserLike(currentStoryGroup[currentStoryIndex])}>{currentStoryGroup[currentStoryIndex].isLiked}+{currentStoryGroup[currentStoryIndex].likesCount}</div> */}
 
-
-                {/* <div>{currentStoryGroup[currentStoryIndex].isLiked}+{currentStoryGroup[currentStoryIndex].likesCount}</div> */}
+                <div className={styles["storie-like"]}></div>
               </div>
             </div>
+
+
           </div>
         </div>
       )}
@@ -421,4 +343,4 @@ const Stories = () => {
   );
 };
 
-export default Stories;
+export default StoriesItem;

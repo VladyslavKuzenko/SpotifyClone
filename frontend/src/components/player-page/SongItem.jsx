@@ -179,6 +179,12 @@ const SongItem = ({
                   >
                     Go to artist
                   </button>
+
+                   <button
+                    className={styles["dropdown-item"]}
+                  >
+                    Delete
+                  </button>
                 </div>
               )}
             </div>
