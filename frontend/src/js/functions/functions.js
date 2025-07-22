@@ -308,50 +308,50 @@ export function formatPostDate(postDateString) {
   const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
 
   if (diffSeconds < 60) {
-    return `${diffSeconds} ${getSecondWord(diffSeconds)} тому`;
+    return `${diffSeconds} ${getSecondWord(diffSeconds)} ago`;
   } else if (diffMinutes < 60) {
-    return `${diffMinutes} ${getMinuteWord(diffMinutes)} тому`;
+    return `${diffMinutes} ${getMinuteWord(diffMinutes)} ago`;
   } else if (diffHours < 24) {
-    return `${diffHours} ${getHourWord(diffHours)} тому`;
+    return `${diffHours} ${getHourWord(diffHours)} ago`;
   } else if (diffDays < 31) {
-    return `${diffDays} ${getDayWord(diffDays)} тому`;
+    return `${diffDays} ${getDayWord(diffDays)} ago`;
   } else {
     return formatFullDate(postDate);
   }
 }
 
 function getSecondWord(n) {
-  if (n % 10 === 1 && n % 100 !== 11) return "секунду";
-  if ([2, 3, 4].includes(n % 10) && ![12, 13, 14].includes(n % 100)) return "секунди";
-  return "секунд";
+  if (n % 10 === 1 && n % 100 !== 11) return "second";
+  if ([2, 3, 4].includes(n % 10) && ![12, 13, 14].includes(n % 100)) return "seconds";
+  return "seconds";
 }
 
 function getMinuteWord(n) {
-  if (n % 10 === 1 && n % 100 !== 11) return "хвилину";
-  if ([2, 3, 4].includes(n % 10) && ![12, 13, 14].includes(n % 100)) return "хвилини";
-  return "хвилин";
+  if (n % 10 === 1 && n % 100 !== 11) return "minute";
+  if ([2, 3, 4].includes(n % 10) && ![12, 13, 14].includes(n % 100)) return "minutes";
+  return "minutes";
 }
 
 function getHourWord(n) {
-  if (n % 10 === 1 && n % 100 !== 11) return "годину";
-  if ([2, 3, 4].includes(n % 10) && ![12, 13, 14].includes(n % 100)) return "години";
-  return "годин";
+  if (n % 10 === 1 && n % 100 !== 11) return "hour";
+  if ([2, 3, 4].includes(n % 10) && ![12, 13, 14].includes(n % 100)) return "hours";
+  return "hours";
 }
 
 function getDayWord(n) {
-  if (n % 10 === 1 && n % 100 !== 11) return "день";
-  if ([2, 3, 4].includes(n % 10) && ![12, 13, 14].includes(n % 100)) return "дні";
-  return "днів";
+  if (n % 10 === 1 && n % 100 !== 11) return "day";
+  if ([2, 3, 4].includes(n % 10) && ![12, 13, 14].includes(n % 100)) return "days";
+  return "days";
 }
 
 function formatFullDate(date) {
   const months = [
-    "січня", "лютого", "березня", "квітня", "травня", "червня",
-    "липня", "серпня", "вересня", "жовтня", "листопада", "грудня"
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
   ];
   const day = date.getDate();
   const month = months[date.getMonth()];
   const year = date.getFullYear();
 
-  return `${day} ${month} ${year} року`;
+  return `${day} ${month} ${year}`;
 }
