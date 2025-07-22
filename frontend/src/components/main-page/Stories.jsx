@@ -117,23 +117,26 @@ const Stories = () => {
     );
 
     if (response.ok) {
-      // створити копію поточного масиву історій
-      const updatedStories = [...currentStoryGroup];
+        const isLikedNew = !story.isLiked;
+    const likesCountNew = isLikedNew
+      ? story.likesCount + 1
+      : story.likesCount - 1;
 
-      // знайти потрібну історію по id
-      const index = updatedStories.findIndex((s) => s.id === story.id);
-      if (index !== -1) {
-        const updatedStory = {
-          ...updatedStories[index],
-          isLiked: !updatedStories[index].isLiked,
-          likesCount: updatedStories[index].isLiked
-            ? updatedStories[index].likesCount - 1
-            : updatedStories[index].likesCount + 1,
-        };
+    // Оновити stories
+    const updatedStories = stories.map((s) =>
+      s.id === story.id
+        ? { ...s, isLiked: isLikedNew, likesCount: likesCountNew }
+        : s
+    );
+    setStories(updatedStories);
 
-        updatedStories[index] = updatedStory;
-        setCurrentStoryGroup(updatedStories);
-      }
+    // Оновити currentStoryGroup
+    const updatedCurrentGroup = currentStoryGroup.map((s) =>
+      s.id === story.id
+        ? { ...s, isLiked: isLikedNew, likesCount: likesCountNew }
+        : s
+    );
+    setCurrentStoryGroup(updatedCurrentGroup);
     } else {
       console.error("Failed to like/unlike the story");
     }
