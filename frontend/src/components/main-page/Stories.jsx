@@ -62,52 +62,6 @@ const Stories = () => {
   };
   //______________________________________________________________________________
 
-  // const submiteUserLike = async (story) => {
-  //   const response = await apiFetch(
-  //     `/users/story-like/${story.id}/${user.sub}`,
-  //     {
-  //       method: story.isLiked ? "DELETE" : "POST",
-  //     }
-  //   );
-  //   if (response.ok) {
-  //     setCurrentStoryGroup((prev) =>
-  //       prev.map((s) =>
-  //         s.id === story.id
-  //           ? {
-  //               ...s,
-  //               isLiked: !s.isLiked,
-  //               likesCount: s.likesCount + (s.isLiked ? -1 : 1),
-  //             }
-  //           : s
-  //       )
-  //     );
-  //     // console.log("Everything is ok");
-  //   } else {
-  //     console.error("Failed to like/unlike the story");
-  //   }
-  // };
-
-
-  // const submiteUserLike = async (story) => {
-  //   const response = await apiFetch(
-  //     `/users/story-like/${story.id}/${user.sub}`,
-  //     {
-  //       method: story.isLiked ? "DELETE" : "POST",
-  //     }
-  //   );
-  //   if (response.ok) {
-  //     const newValueIsLiked = !story.isLiked;
-  //     story.isLiked = newValueIsLiked;
-  //     if (newValueIsLiked) story.likesCount += 1;
-  //     else story.likesCount -= 1;
-  //     console.log("Everything is ok");
-  //   } else {
-  //     console.error("Failed to like/unlike the story");
-  //   }
-  // };
-
-
-
   const submiteUserLike = async (story) => {
     const response = await apiFetch(
       `/users/story-like/${story.id}/${user.sub}`,

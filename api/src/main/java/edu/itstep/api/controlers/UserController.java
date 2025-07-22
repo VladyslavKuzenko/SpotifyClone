@@ -139,7 +139,6 @@ public class UserController {
     public String handleFileUpload(@RequestParam("file") MultipartFile file, @PathVariable String userId) {
         return postService.postFileToVM(file, "avatar" + userId);
     }
-
     @DeleteMapping("/{id}")
     public ResponseEntity deleteUser(@PathVariable String id) {
         userRepository.deleteById(id);

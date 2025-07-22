@@ -166,25 +166,16 @@ const MyProfile = ({ profileInfo }) => {
         <div className={styles["about-artist-platform"]}>
           <div className={styles["aap-left"]}>
             <div className={styles["aap-text"]}>About artist</div>
-            <div className={styles["aap-photo"]}></div>
+            <img className={styles["aap-photo"]} src={userFullInfo?.artist?.aboutImgUrl}/>
           </div>
           <div className={styles["aap-right"]}>
             <div className={styles["aap-information"]}>
-              Max has quickly risen to prominence as a leading artist of the
-              modern music scene. Her debut album, "Whispers in the Wind,"
-              showcases 12 original tracks that blend pop and indie influences,
-              all crafted in her cozy studio in Nashville. In 2020, her first
-              single "Chasing Stars" topped the charts in 15 countries, making
-              her a household name. Following that success, her sophomore album,
-              "Echoes of Tomorrow," released in 2022, debuted at No. 1 globally
-              and received rave reviews from critics and fans alike. Max's
-              unique sound and heartfelt lyrics continue to resonate with
-              audiences around the world.
+            {userFullInfo?.artist?.aboutArtist}
             </div>
             <div className={styles["aap-socials"]}>
-              <button className={styles["facebook"]}></button>
-              <button className={styles["instagram"]}></button>
-              <button className={styles["twitter"]}></button>
+              <a className={styles["facebook"]} href={userFullInfo?.artist?.facebookLink}></a>
+              <a className={styles["instagram"]}href={userFullInfo?.artist?.instagramLink}></a>
+              <a className={styles["twitter"]}href={userFullInfo?.artist?.twitterLink}></a>
             </div>
 
             <button
