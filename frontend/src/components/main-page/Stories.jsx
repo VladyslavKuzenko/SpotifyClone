@@ -16,7 +16,38 @@ const Stories = () => {
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
   const { apiFetch, user } = useAPI();
   const { isLoading } = useAuth0();
+  const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
 
+  const openDeleteConfirmModal = () => {
+    setIsDeleteConfirmOpen(true);
+  };
+
+  const closeDeleteConfirmModal = () => {
+    setIsDeleteConfirmOpen(false);
+  };
+
+  const handleDeleteConfirm = async () => {
+    const storyId = currentStoryGroup[currentStoryIndex]?.id;
+    if (!storyId) return;
+
+    const response = await apiFetch(`/story/${storyId}`, { method: "DELETE" });
+
+    if (response.ok) {
+      const updatedGroup = [...currentStoryGroup];
+      updatedGroup.splice(currentStoryIndex, 1);
+
+      if (updatedGroup.length === 0) {
+        closeModal();
+      } else {
+        setCurrentStoryGroup(updatedGroup);
+        setCurrentStoryIndex((prev) => Math.max(prev - 1, 0));
+      }
+
+      closeDeleteConfirmModal();
+    } else {
+      console.error("Failed to delete story");
+    }
+  };
   //______________________________________________________________________________
   const updateScrollState = () => {
     const el = scrollRef.current;
@@ -405,7 +436,7 @@ const Stories = () => {
                       {currentStoryGroup[currentStoryIndex]?.likesCount}
                     </div>
                   </div>
-                  <button className={styles["delete-stories"]}></button>
+                  <button className={styles["delete-stories"]} onClick={openDeleteConfirmModal}></button>
                 </div>
 
                 {/* <div className={styles["storie-like"]} onClick={()=>submiteUserLike(currentStoryGroup[currentStoryIndex])}>{currentStoryGroup[currentStoryIndex].isLiked}+{currentStoryGroup[currentStoryIndex].likesCount}</div> */}
@@ -417,7 +448,17 @@ const Stories = () => {
           </div>
         </div>
       )}
-
+      {isDeleteConfirmOpen && (
+        <div className={styles["confirm-overlay"]}>
+          <div className={styles["confirm-modal"]}>
+            <h2 className={styles["confirm-text"]}>Are you sure you want to delete this story?</h2>
+            <div className={styles["confirm-buttons"]}>
+              <button className={styles["cancel-btn"]} onClick={closeDeleteConfirmModal}>Cancel</button>
+              <button className={styles["delete-btn"]} onClick={handleDeleteConfirm} >Yes, sure</button>
+            </div>
+          </div>
+        </div>
+      )}
       {isPostModalOpen && (
         <NewPost
           onClose={() => setIsPostModalOpen(false)}
