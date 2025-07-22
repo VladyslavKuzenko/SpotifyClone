@@ -13,6 +13,8 @@ export default function AudioControl({ footerPlayer, isHovered }) {
     audioRef,
     isRandomList,
     setIsRandomList,
+    isLoop,
+    setIsLoop,
   } = useAudio();
   const { isSongPlayed, setIsSongPlayed } = useAudio();
   const { currentTime, setCurrentTime } = useAudio();
@@ -22,6 +24,11 @@ export default function AudioControl({ footerPlayer, isHovered }) {
 
   const randomList = () => {
     setIsRandomList(!isRandomList);
+  };
+
+  const loopTrack = () => {
+    setIsLoop(!isLoop);
+    console.log("is loop: ",!isLoop)
   };
 
   const reduceVolume = () => {
@@ -85,7 +92,8 @@ export default function AudioControl({ footerPlayer, isHovered }) {
                 onClick={nextSong}
               ></button>
               <button
-                className={`${stylesPlayer["bmr-btn"]} ${styles["btn5"]}`} /* onClick={''} */
+                className={`${stylesPlayer["bmr-btn"]} ${styles["btn5"]}`}
+                onClick={loopTrack}
               ></button>
             </div>
 

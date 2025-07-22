@@ -8,6 +8,7 @@ export const AudioProvider = ({ children }) => {
   const [currentSongList, setCurrentSongList] = useState("");
   const [originalSongList, setOriginalSongList] = useState("");
   const [isRandomList, setIsRandomList] = useState(false);
+  const [isLoop, setIsLoop] = useState(false);
   const audioRef = useRef(null);
   const [isSongPlayed, setIsSongPlayed] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
@@ -26,7 +27,7 @@ export const AudioProvider = ({ children }) => {
       setCurrentSongList(originalSongList);
       console.log("current list", originalSongList);
     }
-    console.log(isRandomList)
+    console.log(isRandomList);
   }, [isRandomList]);
 
   // useEffect(() => {
@@ -113,6 +114,8 @@ export const AudioProvider = ({ children }) => {
         // isSongPlayed,
         isRandomList,
         setIsRandomList,
+        isLoop,
+        setIsLoop,
       }}
     >
       <audio
@@ -131,8 +134,14 @@ export const AudioProvider = ({ children }) => {
         onEnded={() => {
           /*     setIsSongPlayed(false); */
           addListening(currentSong);
-          nextSong();
+          if (isLoop) {
+            audioRef.current.currentTime = 0;
+            audioRef.current.play();
+          } else {
+            nextSong();
+          }
         }}
+        // loop={isLoop}
       ></audio>
       {children}
     </AudioContext.Provider>
