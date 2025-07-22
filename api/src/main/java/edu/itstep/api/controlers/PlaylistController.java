@@ -49,6 +49,10 @@ public class PlaylistController {
     public Playlist getPlaylist(@PathVariable String id,@PathVariable String title) {
         return PlaylistRepository.findByTitleAndUser_Id(title,id);
     }
+    @GetMapping("/is-in-playlist/{playlist_id}/{song_id}")
+    public Boolean getIsPlaylistContainSong(@PathVariable Long playlist_id,@PathVariable Long song_id) {
+        return playlistService.isPlaylistContainSong(playlist_id,song_id);
+    }
 
     @PostMapping
     public ResponseEntity createPlaylist(@RequestBody Playlist Playlist) throws URISyntaxException {
