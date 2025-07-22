@@ -72,7 +72,7 @@ const ChatList = ({ onChatSelected }) => {
         <div className={styles.text1}>Groups:</div>
         <div className={styles.groups}>
           {chats.map((chat) =>
-            !chat.isPrivate ? <GroupChatItem key={chat.id} {...chat} /> : null
+            !chat.isPrivate ? <GroupChatItem key={chat.id} onChatSelected={onChatSelected} {...chat} /> : null
           )}
         </div>
       </div>

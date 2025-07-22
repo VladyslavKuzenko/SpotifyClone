@@ -6,7 +6,7 @@ const PrivateChatItem = ({ title, id, onChatSelected, lastMessage }) => {
   };
 
   let previewText = "";
-
+ 
   try {
     const contentObj = JSON.parse(lastMessage?.contentJson || "{}");
 
