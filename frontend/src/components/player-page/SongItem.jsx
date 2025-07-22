@@ -176,13 +176,13 @@ const SongItem = ({
                       </div>
                     )}
 
-                    {isAtpModalOpen1 && (
+                    {/* {isAtpModalOpen1 && (
                       <div className={styles["atp-modal"]}>
                         <div className={styles["atp-item"]}>delete playlist 1</div>
                         <div className={styles["atp-item"]}>delete playlist 2</div>
                         <div className={styles["atp-item"]}>delete playlist 3</div>
                       </div>
-                    )}
+                    )} */}
                   </div>
 
                   <button
@@ -194,10 +194,7 @@ const SongItem = ({
                     Go to artist
                   </button>
 
-                  <button onClick={(e) => {
-                    e.stopPropagation();
-                    setIsAtpModalOpen1((prev) => !prev);
-                  }}
+                  <button 
                     className={styles["dropdown-item"]}
                   >
                     Delete
