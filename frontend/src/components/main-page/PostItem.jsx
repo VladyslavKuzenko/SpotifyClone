@@ -300,7 +300,7 @@ export default function PostItem({ post }) {
 
         <div className={styles["post-location"]}>
           <div className={styles["location-icon"]}> </div>
-          <div className={styles["location-place"]}>Turkey, Istanbul</div>
+          <div className={styles["location-place"]}>{post.location}</div>
         </div>
 
         {/*} <div className={styles["post-comment"]}>

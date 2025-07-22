@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import styles from "./main.module.css";
 
-const LocationMenu = () => {
+const LocationMenu = ({locationControl}) => {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef(null);
 
@@ -11,9 +11,8 @@ const LocationMenu = () => {
     "Odessa",
     "Dnipro",
     "Kharkiv",
-    "Zhytomir",
-        "Zhytomir",
-
+    "Zhytomyr",
+    "Zhytomyr",
   ];
 
   const toggleMenu = () => {
@@ -22,6 +21,7 @@ const LocationMenu = () => {
 
   const handleSelectLocation = (loc) => {
     console.log("Selected location:", loc);
+    locationControl.setLocation(loc)
     setIsOpen(false); // Закриваємо меню при виборі
   };
 

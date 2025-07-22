@@ -32,6 +32,8 @@ public class Post {
     private Instant createdAt;
     @Column(name = "is_comments_open")
     private Boolean isCommentsOpen;
+    @Column(name = "location")
+    private String location;
     @ManyToMany
     @JoinTable(
             name = "posts_hashtags",
@@ -126,6 +128,14 @@ public class Post {
 
     public void setCommentsOpen(Boolean commentsOpen) {
         isCommentsOpen = commentsOpen;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public Set<HashTag> getHashtags() {

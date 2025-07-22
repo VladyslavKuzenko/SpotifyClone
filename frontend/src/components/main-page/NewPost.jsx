@@ -14,6 +14,7 @@ const NewPost = ({ onClose, initialTab = "newpost" }) => {
   const [filesPost, setFilesPost] = useState([]);
   const [description, setDescription] = useState("");
   const [isUploading, setIsUploading] = useState(false);
+  const [location, setLocation] = useState('');
   const { isLoading } = useAuth0();
   const { apiAxiosPost, apiFetch, user } = useAPI();
   const fileStoryInputRef = useRef(null);
@@ -35,7 +36,7 @@ const NewPost = ({ onClose, initialTab = "newpost" }) => {
       mediaUrl: " ",
       likesCount: 0,
       viewsCount: 0,
-      createdAt: new Date().toISOString()
+      createdAt: new Date().toISOString(),
     };
 
     console.log("/story");
@@ -85,6 +86,7 @@ const NewPost = ({ onClose, initialTab = "newpost" }) => {
       repostsCount: 0,
       createdAt: new Date().toISOString(),
       isCommentsOpen: selectedComments === "open-comments",
+      location: location,
       contents: [],
     };
 
@@ -159,15 +161,17 @@ const NewPost = ({ onClose, initialTab = "newpost" }) => {
           <div className={styles["post-left"]}>
             <div className={styles["newpost-stories"]}>
               <button
-                className={`${styles["newpost-text"]} ${activeTab === "newpost" ? styles["active-tab"] : ""
-                  }`}
+                className={`${styles["newpost-text"]} ${
+                  activeTab === "newpost" ? styles["active-tab"] : ""
+                }`}
                 onClick={() => setActiveTab("newpost")}
               >
                 New post
               </button>
               <button
-                className={`${styles["stories-text"]} ${activeTab === "stories" ? styles["active-tab"] : ""
-                  }`}
+                className={`${styles["stories-text"]} ${
+                  activeTab === "stories" ? styles["active-tab"] : ""
+                }`}
                 onClick={() => setActiveTab("stories")}
               >
                 Stories
@@ -177,7 +181,7 @@ const NewPost = ({ onClose, initialTab = "newpost" }) => {
             {activeTab === "newpost" && (
               <>
                 <div className={styles["location-mention"]}>
-                  <LocationMenu />
+                  <LocationMenu locationControl={{ location, setLocation }} />
                   <button
                     className={styles["at-gallery"]}
                     onClick={() => filePostInputRef.current.click()}
@@ -212,32 +216,30 @@ const NewPost = ({ onClose, initialTab = "newpost" }) => {
 
                   {filesPost.length > 0
                     ? filesPost.map((file) => (
-                      <div key={file.name} style={{ position: "relative" }}>
-                        {file.type.startsWith("image/") ? (
-                          <img
-                            className={styles["preview-image1"]}
-                            src={URL.createObjectURL(file)}
-                            alt="preview"
-                          />
-                        ) : (
-                          <video
-                            className={styles["preview-image1"]}
-                            src={URL.createObjectURL(file)}
-                            controls
-                          />
-                        )}
-                        <button
-                          onClick={() => handleRemoveFile(file)}
-                          className={styles["pomh-close"]}
-                        >
-                          ×
-                        </button>
-                      </div>
-                    ))
+                        <div key={file.name} style={{ position: "relative" }}>
+                          {file.type.startsWith("image/") ? (
+                            <img
+                              className={styles["preview-image1"]}
+                              src={URL.createObjectURL(file)}
+                              alt="preview"
+                            />
+                          ) : (
+                            <video
+                              className={styles["preview-image1"]}
+                              src={URL.createObjectURL(file)}
+                              controls
+                            />
+                          )}
+                          <button
+                            onClick={() => handleRemoveFile(file)}
+                            className={styles["pomh-close"]}
+                          >
+                            ×
+                          </button>
+                        </div>
+                      ))
                     : ""}
                 </div>
-
-
               </>
             )}
 
