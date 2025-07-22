@@ -51,7 +51,11 @@ const MyProfile = ({ profileInfo }) => {
       `/users/userFollowing/${user.sub}`
     );
     const followings = await responseUserFollowings.json();
-    const newData = { ...data, followers, followings };
+
+    const responseArtist = await apiFetch(`/artists/${user.sub}`);
+    const artist = await responseArtist.json();
+
+    const newData = { ...data, artist, followers, followings };
     setUserFullInfo(newData);
     setFollowings(followings);
     setFollowers(followers);
@@ -112,8 +116,8 @@ const MyProfile = ({ profileInfo }) => {
           <FollowersModal
             activeTab={activeTab}
             onClose={closeModal}
-            followersControl={{followers,setFollowers}}
-            followingsControl={{followings,setFollowings}}
+            followersControl={{ followers, setFollowers }}
+            followingsControl={{ followings, setFollowings }}
             userFullInfo={userFullInfo}
           />
         )}
@@ -218,7 +222,12 @@ const MyProfile = ({ profileInfo }) => {
       </div>
       {showModal && <AddMusicModal onClose={() => setShowModal(false)} />}
       {showModal1 && <AddAlbumModal onClose={() => setShowModal1(false)} />}
-      {showModal2 && <EditAboutModal onClose={() => setShowModal2(false)} />}
+      {showModal2 && (
+        <EditAboutModal
+          artist={userFullInfo.artist}
+          onClose={() => setShowModal2(false)}
+        />
+      )}
     </div>
   );
 };

@@ -17,6 +17,17 @@ public class Artist {
     private String profileQuote;
     @Column(name="listening_count")
     private Long listeningCount;
+    @Column(name="about_artist")
+    private String aboutArtist;
+    @Column(name="facebook_link")
+    private String facebookLink;
+    @Column(name="instagram_link")
+    private String instagramLink;
+    @Column(name="twitter_link")
+    private String twitterLink;
+    @Column(name="about_img")
+    private String aboutImgUrl;
+
 
     public Artist() {
     }
@@ -57,4 +68,43 @@ public class Artist {
 
     public void setListeningCount(Long listeningCount) {this.listeningCount = listeningCount;}
 
+    public String getAboutArtist() {
+        return aboutArtist;
+    }
+
+    public void setAboutArtist(String aboutArtist) {
+        this.aboutArtist = aboutArtist;
+    }
+
+    public String getFacebookLink() {
+        return facebookLink;
+    }
+
+    public void setFacebookLink(String facebookLink) {
+        this.facebookLink = facebookLink;
+    }
+
+    public String getInstagramLink() {
+        return instagramLink;
+    }
+
+    public void setInstagramLink(String instagramLink) {
+        this.instagramLink = instagramLink;
+    }
+
+    public String getTwitterLink() {
+        return twitterLink;
+    }
+
+    public void setTwitterLink(String twitterLink) {
+        this.twitterLink = twitterLink;
+    }
+
+    public String getAboutImgUrl() {
+        return aboutImgUrl;
+    }
+
+    public void setAboutImgUrl(String aboutImgUrl) {
+        this.aboutImgUrl = aboutImgUrl;
+    }
 }

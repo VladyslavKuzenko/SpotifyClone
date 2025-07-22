@@ -16,4 +16,14 @@ public class ArtistService {
         artist.setListeningCount(artist.getListeningCount()+1);
         artistRepository.save(artist);
     }
+    public Artist updateAbout(Artist updatedArtist){
+        Artist artist = artistRepository.findById(updatedArtist.getId())
+                .orElseThrow(() -> new RuntimeException("Artist not found"));
+        artist.setAboutArtist(updatedArtist.getAboutArtist());
+        artist.setFacebookLink(updatedArtist.getFacebookLink());
+        artist.setTwitterLink(updatedArtist.getTwitterLink());
+        artist.setInstagramLink(updatedArtist.getInstagramLink());
+        artist.setAboutImgUrl(updatedArtist.getAboutImgUrl());
+        return artistRepository.save(artist);
+    }
 }

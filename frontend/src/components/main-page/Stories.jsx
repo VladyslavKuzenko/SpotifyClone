@@ -39,16 +39,22 @@ const Stories = () => {
       }
     );
     if (response.ok) {
-      const newValueIsLiked = !story.isLiked;
-      story.isLiked = newValueIsLiked;
-      if (newValueIsLiked) story.likesCount += 1;
-      else story.likesCount -= 1;
-      console.log("Everything is ok");
+      setCurrentStoryGroup((prev) =>
+        prev.map((s) =>
+          s.id === story.id
+            ? {
+                ...s,
+                isLiked: !s.isLiked,
+                likesCount: s.likesCount + (s.isLiked ? -1 : 1),
+              }
+            : s
+        )
+      );
+      // console.log("Everything is ok");
     } else {
       console.error("Failed to like/unlike the story");
     }
   };
-
 
   // const submiteUserLike = async (story) => {
   //   const response = await apiFetch(
@@ -80,8 +86,6 @@ const Stories = () => {
   //     console.error("Failed to like/unlike the story");
   //   }
   // };
-
-
 
   const handleScroll = (direction) => {
     const el = scrollRef.current;
@@ -367,11 +371,11 @@ const Stories = () => {
 
             {(currentStoryIndex < currentStoryGroup.length - 1 ||
               currentUserIndex < uniqueUsers.length - 1) && (
-                <button
-                  className={styles["psb-modal-next-button"]}
-                  onClick={goToNextStory}
-                ></button>
-              )}
+              <button
+                className={styles["psb-modal-next-button"]}
+                onClick={goToNextStory}
+              ></button>
+            )}
 
             <div className={styles["storie-bottom"]}>
               <div className={styles["avatar-author"]}>
@@ -389,16 +393,20 @@ const Stories = () => {
                   </div>
                 </div>
                 <div className={styles["like-delete"]}>
-
                   <div className={styles["storie-wrap"]}>
                     <button
                       className={styles["storie-like"]}
-                      onClick={() => submiteUserLike(currentStoryGroup[currentStoryIndex])}
+                      onClick={() =>
+                        submiteUserLike(currentStoryGroup[currentStoryIndex])
+                      }
                     >
                       <img
-                        src={`/images/${currentStoryGroup[currentStoryIndex]?.isLiked ? "heartred" : "heart"}.svg`}
+                        src={`/images/${
+                          currentStoryGroup[currentStoryIndex]?.isLiked
+                            ? "heartred"
+                            : "heart"
+                        }.svg`}
                         alt="like"
-
                       />
                     </button>
                     <div className={styles["like-count"]}>
@@ -409,7 +417,6 @@ const Stories = () => {
                 </div>
 
                 {/* <div className={styles["storie-like"]} onClick={()=>submiteUserLike(currentStoryGroup[currentStoryIndex])}>{currentStoryGroup[currentStoryIndex].isLiked}+{currentStoryGroup[currentStoryIndex].likesCount}</div> */}
-
 
                 {/* <div>{currentStoryGroup[currentStoryIndex].isLiked}+{currentStoryGroup[currentStoryIndex].likesCount}</div> */}
               </div>

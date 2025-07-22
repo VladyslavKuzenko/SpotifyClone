@@ -152,5 +152,4 @@ public class UserService {
         return user.getLikedStory().contains(story);
     }
 
-
 }
