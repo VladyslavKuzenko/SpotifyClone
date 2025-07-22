@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import styles from "./main.module.css";
 import { useAPI } from "../../hooks/useApi";
 import CommentItem from "./CommentItem";
-import {isPostLikedFunc} from "../../js/functions/functions"
+import { isPostLikedFunc } from "../../js/functions/functions";
 
 // --- Функції для форматування дати ---
 
@@ -31,32 +31,46 @@ function formatPostDate(postDateString) {
 
 function getSecondWord(n) {
   if (n % 10 === 1 && n % 100 !== 11) return "секунду";
-  if ([2, 3, 4].includes(n % 10) && ![12, 13, 14].includes(n % 100)) return "секунди";
+  if ([2, 3, 4].includes(n % 10) && ![12, 13, 14].includes(n % 100))
+    return "секунди";
   return "секунд";
 }
 
 function getMinuteWord(n) {
   if (n % 10 === 1 && n % 100 !== 11) return "хвилину";
-  if ([2, 3, 4].includes(n % 10) && ![12, 13, 14].includes(n % 100)) return "хвилини";
+  if ([2, 3, 4].includes(n % 10) && ![12, 13, 14].includes(n % 100))
+    return "хвилини";
   return "хвилин";
 }
 
 function getHourWord(n) {
   if (n % 10 === 1 && n % 100 !== 11) return "годину";
-  if ([2, 3, 4].includes(n % 10) && ![12, 13, 14].includes(n % 100)) return "години";
+  if ([2, 3, 4].includes(n % 10) && ![12, 13, 14].includes(n % 100))
+    return "години";
   return "годин";
 }
 
 function getDayWord(n) {
   if (n % 10 === 1 && n % 100 !== 11) return "день";
-  if ([2, 3, 4].includes(n % 10) && ![12, 13, 14].includes(n % 100)) return "дні";
+  if ([2, 3, 4].includes(n % 10) && ![12, 13, 14].includes(n % 100))
+    return "дні";
   return "днів";
 }
 
 function formatFullDate(date) {
   const months = [
-    "січня", "лютого", "березня", "квітня", "травня", "червня",
-    "липня", "серпня", "вересня", "жовтня", "листопада", "грудня"
+    "січня",
+    "лютого",
+    "березня",
+    "квітня",
+    "травня",
+    "червня",
+    "липня",
+    "серпня",
+    "вересня",
+    "жовтня",
+    "листопада",
+    "грудня",
   ];
   const day = date.getDate();
   const month = months[date.getMonth()];
@@ -64,7 +78,6 @@ function formatFullDate(date) {
 
   return `${day} ${month} ${year} року`;
 }
-
 
 // --- Компонент PostItem ---
 
@@ -111,6 +124,7 @@ export default function PostItem({ post }) {
       user: { id: user.sub },
       post: { id: post.id },
       text: comment,
+      createdAt: new Date().toISOString(),
     };
 
     const response = await apiFetch("/comments", {
@@ -263,10 +277,11 @@ export default function PostItem({ post }) {
                     {images.map((_, index) => (
                       <span
                         key={index}
-                        className={`${styles["prl-dot"]} ${index === currentImageIndex
-                          ? styles["prl-active"]
-                          : ""
-                          }`}
+                        className={`${styles["prl-dot"]} ${
+                          index === currentImageIndex
+                            ? styles["prl-active"]
+                            : ""
+                        }`}
                       ></span>
                     ))}
                   </div>
@@ -286,10 +301,7 @@ export default function PostItem({ post }) {
         <div className={styles["post-location"]}>
           <div className={styles["location-icon"]}> </div>
           <div className={styles["location-place"]}>Turkey, Istanbul</div>
-
         </div>
-
-
 
         {/*} <div className={styles["post-comment"]}>
           <textarea
@@ -354,7 +366,8 @@ export default function PostItem({ post }) {
                   onInput={(e) => {
                     const target = e.target;
                     target.style.height = "auto";
-                    target.style.height = Math.min(target.scrollHeight, 100) + "px";
+                    target.style.height =
+                      Math.min(target.scrollHeight, 100) + "px";
                   }}
                   onBlur={(e) => {
                     const target = e.target;
@@ -364,7 +377,10 @@ export default function PostItem({ post }) {
                   }}
                 />
                 <div className={styles["post-comment-btn"]}>
-                  <button className={styles["publish-btn"]} onClick={submiteComment}>
+                  <button
+                    className={styles["publish-btn"]}
+                    onClick={submiteComment}
+                  >
                     Publish
                   </button>
                 </div>
@@ -378,7 +394,6 @@ export default function PostItem({ post }) {
                 <CommentItem key={comnt.id} comment={comnt} />
               ))}
             </div>
-
           </div>
         </div>
       )}

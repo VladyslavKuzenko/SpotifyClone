@@ -27,15 +27,12 @@
 //   );
 // }
 
-
-
 import React from "react";
 import styles from "./main.module.css";
 
 export default function CommentItem({ comment }) {
   return (
     <div className={styles.chatMessage1}>
-
       <img className={styles.avatar1} src={comment.user.avatarImgUrl} alt="" />
 
       <div className={styles.msgTime}>
@@ -45,10 +42,8 @@ export default function CommentItem({ comment }) {
             <span className={styles.message1}>{comment.text}</span>
           </div>
         </div>
-                <div className={styles.commentTime}> 5 минут назад</div>
-
+        <div className={styles.commentTime}>{comment.createdAt}</div>
       </div>
-
     </div>
   );
 }

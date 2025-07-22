@@ -2,7 +2,7 @@ package edu.itstep.api.models;
 
 import jakarta.persistence.*;
 
-import java.util.Set;
+import java.time.Instant;
 
 @Entity
 @Table(name = "comments")
@@ -18,6 +18,8 @@ public class Comment {
     private Post post;
     @Column(nullable = false)
     private String text;
+    @Column(name = "created_at")
+    private Instant createdAt;
 
     public Comment() {
     }
@@ -52,6 +54,14 @@ public class Comment {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
     }
 }
 
