@@ -17,7 +17,7 @@ const options = [
   // { value: "artist", label: "By Artist" },
 ];
 
-const YourLibrary = ({ isPlaylistsChangesControl,isLikesPageControl }) => {
+const YourLibrary = ({ isPlaylistsChangesControl, isLikesPageControl }) => {
   // State
   const [search, setSearch] = useState("");
   const [songs, setSongs] = useState([]);
@@ -31,7 +31,7 @@ const YourLibrary = ({ isPlaylistsChangesControl,isLikesPageControl }) => {
   const navigate = useNavigate();
 
   // Hooks
-  const { setCurrentSongList } = useAudio();
+  const { setCurrentSongList, setIsRandomList } = useAudio();
   const { isLoading, isAuthenticated } = useAuth0();
   const { user } = useAPI();
   // Effects
@@ -127,7 +127,11 @@ const YourLibrary = ({ isPlaylistsChangesControl,isLikesPageControl }) => {
               <button
                 className={styles["golikes-btn"]}
                 // onClick={() => navigate("/likes")}
-                onClick={() => isLikesPageControl.setIsLikesPage(!isLikesPageControl.isLikesPage)}
+                onClick={() =>
+                  isLikesPageControl.setIsLikesPage(
+                    !isLikesPageControl.isLikesPage
+                  )
+                }
               ></button>
             </div>
           </div>
@@ -180,7 +184,10 @@ const YourLibrary = ({ isPlaylistsChangesControl,isLikesPageControl }) => {
               <SongItem
                 key={i.id}
                 song={i}
-                onSetCurrentSongList={() => setCurrentSongList(songs)}
+                onSetCurrentSongList={() => {
+                  setIsRandomList(false);
+                  setCurrentSongList(songs);
+                }}
               />
             ))}
           </div>

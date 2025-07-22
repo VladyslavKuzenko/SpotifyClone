@@ -16,7 +16,7 @@ const SongItem = ({
   moreInfo,
   onSetCurrentSongList,
   isPlaylistsChangesControl,
-  currentPlaylist
+  currentPlaylist,
 }) => {
   const navigate = useNavigate();
   const [duration, setDuration] = useState(0);
@@ -82,7 +82,6 @@ const SongItem = ({
       if (atpRef.current && !atpRef.current.contains(event.target)) {
         setIsAtpModalOpen(false);
         setIsAtpModalOpen1(false);
-
       }
       // Закриваємо основне меню, якщо клік поза ним
       if (!event.target.closest(`.${styles["as-more-menu"]}`)) {
@@ -151,13 +150,12 @@ const SongItem = ({
       //   }
       // }
       if (responseOther.ok) {
-        playlists[playlists.indexOf(playlistOther)].isInPlaylist =
-          !playlistOther.isInPlaylist;
+        playlistOther.isInPlaylist = !playlistOther.isInPlaylist;
         console.log("Successfully add to playlist");
       } else console.error("Failed to add/delete the song from playlist");
     }
   };
-  
+
   const handleDeleteFromPlaylistClick = async (playlistItem) => {
     const playlistOther = playlists.find((i) => i.title === playlistItem.title);
     if (playlistOther.isInPlaylist) {
@@ -167,10 +165,9 @@ const SongItem = ({
           method: "DELETE",
         }
       );
-      
+
       if (responseOther.ok) {
-        playlists[playlists.indexOf(playlistOther)].isInPlaylist =
-          !playlistOther.isInPlaylist;
+        playlistOther.isInPlaylist = !playlistOther.isInPlaylist;
         console.log("Successfully removed from playlist");
       } else console.error("Failed to add/delete the song from playlist");
     }
@@ -190,7 +187,6 @@ const SongItem = ({
           setIsMenuOpen(false);
           setIsAtpModalOpen(false);
           setIsAtpModalOpen1(false);
-
         }}
       >
         {/* <div className={styles.cover}></div> */}
@@ -287,7 +283,16 @@ const SongItem = ({
                     Go to artist
                   </button>
 
-                  {currentPlaylist&&<button className={styles["dropdown-item"]} onClick={()=>handleDeleteFromPlaylistClick(currentPlaylist)}>Delete</button>}
+                  {currentPlaylist && (
+                    <button
+                      className={styles["dropdown-item"]}
+                      onClick={() =>
+                        handleDeleteFromPlaylistClick(currentPlaylist)
+                      }
+                    >
+                      Delete
+                    </button>
+                  )}
                 </div>
               )}
             </div>

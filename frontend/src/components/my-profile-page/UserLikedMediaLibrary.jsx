@@ -7,11 +7,11 @@ import { useAPI } from "../../hooks/useApi";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const UserLikedMediaLibrary = () => {
-  const { setCurrentSong, setCurrentSongList } = useAudio();
+  const { setCurrentSong, setCurrentSongList, setIsRandomList } = useAudio();
   const [songs, setSongs] = useState([]);
   const [albums, setAlbums] = useState([]);
   const { isLoading } = useAuth0();
-  const { apiFetch ,user} = useAPI();
+  const { apiFetch, user } = useAPI();
   // const [showModal, setShowModal] = useState(false);
   // const [showModal1, setShowModal1] = useState(false);
 
@@ -64,7 +64,10 @@ const UserLikedMediaLibrary = () => {
                 key={song.id}
                 song={song}
                 moreInfo
-                onSetCurrentSongList={() => setCurrentSongList(songs)}
+                onSetCurrentSongList={() => {
+                  setIsRandomList(false);
+                  setCurrentSongList(songs);
+                }}
               />
             ))}
           </div>

@@ -6,6 +6,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useAudio } from "../../hooks/useAudio";
 import SongItem from "../player-page/SongItem";
 import { useAPI } from "../../hooks/useApi";
+import { searchSongs } from "../../js/functions/functions";
 
 export default function Likes({ exit }) {
   const navigate = useNavigate();
@@ -17,11 +18,12 @@ export default function Likes({ exit }) {
   const [playlists, setPlaylists] = useState([]);
   const [currentPlaylist, setCurrentPlaylist] = useState();
   // const [titlePlaylist, setTitlePlaylist] = useState("");
+  const [search, setSearch] = useState("");
   const [sortType, setSortType] = useState("recent");
   const dropdownRef = useRef();
   // Hooks
   const { apiFetch, user } = useAPI();
-  const { setCurrentSong, setCurrentSongList } = useAudio();
+  const { setCurrentSong, setCurrentSongList, setIsRandomList } = useAudio();
   const { isLoading } = useAuth0();
 
   // Effects
@@ -87,6 +89,11 @@ export default function Likes({ exit }) {
                   type="text"
                   className={styles["search-likes"]}
                   placeholder="Search"
+                  value={search}
+                  onChange={(e) => {
+                    setSearch(e.target.value);
+                    searchSongs(songsFullList, e.target.value, setSongs);
+                  }}
                 />
               </div>
 
@@ -119,6 +126,7 @@ export default function Likes({ exit }) {
                   className={styles["play-btn"]}
                   onClick={() => {
                     if (songs.length > 0) {
+                      setIsRandomList(false);
                       setCurrentSong(songs[0]);
                       setCurrentSongList(songs);
                     }
@@ -135,7 +143,10 @@ export default function Likes({ exit }) {
                   <SongItem
                     key={i.id}
                     song={i}
-                    onSetCurrentSongList={() => setCurrentSongList(songs)}
+                    onSetCurrentSongList={() => {
+                      setIsRandomList(false);
+                      setCurrentSongList(songs);
+                    }}
                     moreInfo
                     currentPlaylist={currentPlaylist}
                   />

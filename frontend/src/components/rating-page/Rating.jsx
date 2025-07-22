@@ -16,7 +16,7 @@ export default function Rating() {
   const [tracks, setTracks] = useState([])
   const { apiFetch } = useAPI();
   const { isLoading } = useAuth0();
-  const { setCurrentSong, setCurrentSongList } = useAudio();
+  const { setCurrentSong, setCurrentSongList, setIsRandomList} = useAudio();
 
 
 
@@ -221,6 +221,7 @@ export default function Rating() {
               <div className={styles["scroll-container"]}>
                 {tracks.map((item, index) => (
                   <div key={index} className={styles["scroll-item"]} onClick={() => {
+                    setIsRandomList(false);
                     setCurrentSong(item);
                     setCurrentSongList(tracks);
                   }}>

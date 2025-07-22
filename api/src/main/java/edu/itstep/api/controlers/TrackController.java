@@ -3,6 +3,7 @@ package edu.itstep.api.controlers;
 import edu.itstep.api.models.Track;
 import edu.itstep.api.repositories.PlaylistRepository;
 import edu.itstep.api.repositories.TrackRepository;
+import edu.itstep.api.services.ArtistService;
 import edu.itstep.api.services.PostService;
 import edu.itstep.api.services.TrackService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,10 @@ public class TrackController {
     private final PlaylistRepository playlistRepository;
     @Autowired
     private PostService postService;
+    @Autowired
     private TrackService trackService;
-
+    @Autowired
+    private ArtistService artistService;
 
     public TrackController(TrackRepository trackRepository, PlaylistRepository playlistRepository, TrackService trackService) {
         this.trackRepository = trackRepository;
@@ -49,9 +52,10 @@ public class TrackController {
     public List<Track> getAllArtistTrack(@PathVariable String id) {
         return trackRepository.findAllByArtist_Id(id);
     }
+
     @GetMapping("/tracks-without-like/{userId}")
     public List<Track> getAllTracksWithoutPlaylist(@PathVariable String userId) {
-        List<Track> tracks =trackRepository.findTracksNotInLikePlaylist(userId);
+        List<Track> tracks = trackRepository.findTracksNotInLikePlaylist(userId);
         List<Track> sortedTrack = tracks.stream()
                 .sorted(Comparator.comparing(Track::getCreatedAt).reversed().thenComparing(Track::getId)) // сортування
                 .toList();
@@ -121,9 +125,10 @@ public class TrackController {
         return ResponseEntity.ok(track);
     }
 
-    @PutMapping("/add-listening/{song_id}")
-    public ResponseEntity<Track> updateTrack(@PathVariable Long song_id) {
+    @PutMapping("/add-listening/{song_id}/{artist_id}")
+    public ResponseEntity<Track> updateTrack(@PathVariable Long song_id, @PathVariable String artist_id) {
         Track track = trackService.addListeningToTrack(song_id);
+        artistService.addListeningToArtistTrack(artist_id);
         return ResponseEntity.ok(track);
     }
 
