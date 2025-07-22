@@ -129,8 +129,8 @@ const SearchModal = ({
               <div className={styles["people-array"]} ref={peopleRef}>
                 {usersFilteredList.map((item, index) => (
                   <div key={index} className={styles["people-icon"]}>
-                    <img src={item.avatarImgUrl} alt="" />
-                    <div className={styles["people-photo"]}></div>
+                    
+                    <div className={styles["people-photo"]}><img src={item.avatarImgUrl}  className={styles["preview-image"]} alt="" /></div>
                     <div className={styles["name-surname"]}>
                       {item.firstName} {item.lastName}
                     </div>

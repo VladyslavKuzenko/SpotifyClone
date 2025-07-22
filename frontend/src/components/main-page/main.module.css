@@ -1112,6 +1112,7 @@ html {
   border: none;
   border-radius: 50%;
   background-color: white;
+  overflow: hidden;
 
 }
 
@@ -2341,8 +2342,8 @@ html {
   flex-grow: 1;
 
   display: flex;
-  flex-direction: column; /* тепер порядок звичайний */
-  justify-content: flex-start; /* необовʼязково, але для явності */
+  flex-direction: column;
+  justify-content: flex-start; 
 }
 
 
@@ -2564,9 +2565,9 @@ html {
 .post-location {
   display: flex;
   align-items: center;
-  margin-left: 43px;
   position: relative;
-  top: 15px
+  top: 15px;
+  padding-left: 4.7%;
 }
 
 .location-place {
