@@ -70,7 +70,7 @@ const ChatPage = () => {
 
         <div className={styles.container}>
             <div className={styles["chat-back"]}>
-                <button className={styles["chat-back-btn"]} onClick={() => navigate("/")}></button>
+                <button className={styles["chat-back-btn"]} onClick={() => navigate("/main")}></button>
             </div>
 
             <div className={styles["right-side"]}>

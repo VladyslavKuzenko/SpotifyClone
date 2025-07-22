@@ -121,13 +121,11 @@ const SongItem = ({
                   handleLikeClick();
                 }}
                 style={{
-                  backgroundImage: `url(${
-                    isLiked ? "/images/redheart.svg" : "/images/heart.svg"
-                  })`,
-                  backgroundSize: "19px 19px",
-                  backgroundRepeat: "no-repeat",
-                  backgroundPosition: "center",
-                  cursor: "pointer",
+                  backgroundImage: `url(${isLiked ? '/images/heartred.svg' : '/images/heart.svg'})`,
+                  backgroundSize: '19px 19px',
+                  backgroundRepeat: 'no-repeat',
+                  backgroundPosition: 'center',
+                  cursor: 'pointer'
                 }}
               ></div>
             </div>

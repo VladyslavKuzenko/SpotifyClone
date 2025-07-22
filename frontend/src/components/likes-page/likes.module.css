@@ -20,6 +20,23 @@
     height: 50px;
 }
 
+.playlist-element {
+    max-width: 200px;
+    height: 45px;
+    min-width: 130px;
+    border-radius: 5px;
+    border: none;
+    background-color: white;
+    cursor: pointer;
+    font-family: Manrope;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: 0%;
+
+}
+
 .likes-content {
     width: 96%;
     overflow: visible;
@@ -175,13 +192,13 @@
     cursor: pointer;
     width: 229px;
     height: 45px;
-    font-family: 'Manrope',sans-serif;
+    font-family: 'Manrope', sans-serif;
     font-weight: 400;
     font-style: Regular;
     font-size: 18px;
     line-height: 100%;
     letter-spacing: 0%;
-    color:white;
+    color: white;
     border-radius: 5px;
 }
 
