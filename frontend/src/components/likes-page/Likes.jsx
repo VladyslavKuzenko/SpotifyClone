@@ -6,6 +6,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useAudio } from "../../hooks/useAudio";
 import SongItem from "../player-page/SongItem";
 import { useAPI } from "../../hooks/useApi";
+import { searchSongs } from "../../js/functions/functions";
 
 export default function Likes({ exit }) {
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ export default function Likes({ exit }) {
   const [playlists, setPlaylists] = useState([]);
   const [currentPlaylist, setCurrentPlaylist] = useState();
   // const [titlePlaylist, setTitlePlaylist] = useState("");
+  const [search, setSearch] = useState("");
   const [sortType, setSortType] = useState("recent");
   const dropdownRef = useRef();
   // Hooks
@@ -87,6 +89,11 @@ export default function Likes({ exit }) {
                   type="text"
                   className={styles["search-likes"]}
                   placeholder="Search"
+                  value={search}
+                  onChange={(e) => {
+                    setSearch(e.target.value);
+                    searchSongs(songsFullList, e.target.value, setSongs);
+                  }}
                 />
               </div>
 
