@@ -31,23 +31,6 @@ const Stories = () => {
   };
   //______________________________________________________________________________
 
-  // const submiteUserLike = async (story) => {
-  //   const response = await apiFetch(
-  //     `/users/story-like/${story.id}/${user.sub}`,
-  //     {
-  //       method: story.isLiked ? "DELETE" : "POST",
-  //     }
-  //   );
-  //   if (response.ok) {
-  //     const newValueIsLiked = !story.isLiked;
-  //     story.isLiked = newValueIsLiked;
-  //     if (newValueIsLiked) story.likesCount += 1;
-  //     else story.likesCount -= 1;
-  //     console.log("Everything is ok");
-  //   } else {
-  //     console.error("Failed to like/unlike the story");
-  //   }
-  // };
   const submiteUserLike = async (story) => {
     const response = await apiFetch(
       `/users/story-like/${story.id}/${user.sub}`,
@@ -55,29 +38,48 @@ const Stories = () => {
         method: story.isLiked ? "DELETE" : "POST",
       }
     );
-
     if (response.ok) {
-      // створити копію поточного масиву історій
-      const updatedStories = [...currentStoryGroup];
-
-      // знайти потрібну історію по id
-      const index = updatedStories.findIndex((s) => s.id === story.id);
-      if (index !== -1) {
-        const updatedStory = {
-          ...updatedStories[index],
-          isLiked: !updatedStories[index].isLiked,
-          likesCount: updatedStories[index].isLiked
-            ? updatedStories[index].likesCount - 1
-            : updatedStories[index].likesCount + 1,
-        };
-
-        updatedStories[index] = updatedStory;
-        setCurrentStoryGroup(updatedStories);
-      }
+      const newValueIsLiked = !story.isLiked;
+      story.isLiked = newValueIsLiked;
+      if (newValueIsLiked) story.likesCount += 1;
+      else story.likesCount -= 1;
+      console.log("Everything is ok");
     } else {
       console.error("Failed to like/unlike the story");
     }
   };
+
+
+  // const submiteUserLike = async (story) => {
+  //   const response = await apiFetch(
+  //     `/users/story-like/${story.id}/${user.sub}`,
+  //     {
+  //       method: story.isLiked ? "DELETE" : "POST",
+  //     }
+  //   );
+
+  //   if (response.ok) {
+  //     // створити копію поточного масиву історій
+  //     const updatedStories = [...currentStoryGroup];
+
+  //     // знайти потрібну історію по id
+  //     const index = updatedStories.findIndex((s) => s.id === story.id);
+  //     if (index !== -1) {
+  //       const updatedStory = {
+  //         ...updatedStories[index],
+  //         isLiked: !updatedStories[index].isLiked,
+  //         likesCount: updatedStories[index].isLiked
+  //           ? updatedStories[index].likesCount - 1
+  //           : updatedStories[index].likesCount + 1,
+  //       };
+
+  //       updatedStories[index] = updatedStory;
+  //       setCurrentStoryGroup(updatedStories);
+  //     }
+  //   } else {
+  //     console.error("Failed to like/unlike the story");
+  //   }
+  // };
 
 
 
