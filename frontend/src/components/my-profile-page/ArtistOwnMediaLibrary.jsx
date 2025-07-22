@@ -17,18 +17,12 @@ const ArtistOwnMediaLibrary = () => {
   const [showModal, setShowModal] = useState(false);
   const [showModal1, setShowModal1] = useState(false);
 
-  //   const fetchPlaylists = async () => {
-  //     const response = await apiFetch(`/playlists/playlists/${user.sub}`);
-  //     const body = await response.json();
-  //     // setPlaylists(body);
-  //     fetchCurrentPlaylistTracks(body.find((i) => i.title === "Like"));
-  //   };
-
   const fetchArtistTracks = async () => {
     const response = await apiFetch(`/tracks/tracks-by-artists/${user.sub}`);
     const body = await response.json();
     setSongs(body);
   };
+
   const fetchArtistAlbums = async () => {
     const response = await apiFetch(`/albums/albums-by-artists/${user.sub}`);
     const body = await response.json();
@@ -44,6 +38,7 @@ const ArtistOwnMediaLibrary = () => {
   return (
     <div>
       <div className={styles["functional-container1"]}>
+        {/* Songs */}
         <div className={styles["saved-songs-container1"]}>
           <div className={styles["svyazka"]}>
             <div className={styles["saved-songs-text"]}>Your Songs</div>
@@ -55,20 +50,29 @@ const ArtistOwnMediaLibrary = () => {
             </button>
           </div>
           <div className={styles["song-array"]}>
-            {songs.map((song, index) => (
-              <SongItem
-                key={song.id}
-                song={song}
-                moreInfo
-                onSetCurrentSongList={() => {
-                  setIsRandomList(false);
-                  setCurrentSongList(songs);
-                }}
-              />
-            ))}
+            {songs.length === 0 ? (
+              <div className={styles["empty-message"]}>
+                <h2>There are no songs here yet</h2>
+                <h3>+ Add your first song</h3>
+              </div>
+
+            ) : (
+              songs.map((song, index) => (
+                <SongItem
+                  key={song.id}
+                  song={song}
+                  moreInfo
+                  onSetCurrentSongList={() => {
+                    setIsRandomList(false);
+                    setCurrentSongList(songs);
+                  }}
+                />
+              ))
+            )}
           </div>
         </div>
 
+        {/* Albums */}
         <div className={styles["saved-album-container1"]}>
           <div className={styles["svyazka"]}>
             <div className={styles["saved-album-text"]}>Your Albums</div>
@@ -80,12 +84,21 @@ const ArtistOwnMediaLibrary = () => {
             </button>
           </div>
           <div className={styles["album-array"]}>
-            {albums.map((item, idx) => (
-              <AlbumItem album={item} key={idx} />
-            ))}
+            {albums.length === 0 ? (
+                <div className={styles["empty-message"]}>
+                <h2>There are no albums here yet</h2>
+                <h3>+ Add your first album</h3>
+              </div>
+            ) : (
+              albums.map((item, idx) => (
+                <AlbumItem album={item} key={idx} />
+              ))
+            )}
           </div>
         </div>
       </div>
+
+      {/* Modals */}
       {showModal && <AddMusicModal onClose={() => setShowModal(false)} />}
       {showModal1 && <AddAlbumModal onClose={() => setShowModal1(false)} />}
     </div>

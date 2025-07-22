@@ -16,7 +16,38 @@ const Stories = () => {
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
   const { apiFetch, user } = useAPI();
   const { isLoading } = useAuth0();
+  const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
 
+  const openDeleteConfirmModal = () => {
+    setIsDeleteConfirmOpen(true);
+  };
+
+  const closeDeleteConfirmModal = () => {
+    setIsDeleteConfirmOpen(false);
+  };
+
+  const handleDeleteConfirm = async () => {
+    const storyId = currentStoryGroup[currentStoryIndex]?.id;
+    if (!storyId) return;
+
+    const response = await apiFetch(`/story/${storyId}`, { method: "DELETE" });
+
+    if (response.ok) {
+      const updatedGroup = [...currentStoryGroup];
+      updatedGroup.splice(currentStoryIndex, 1);
+
+      if (updatedGroup.length === 0) {
+        closeModal();
+      } else {
+        setCurrentStoryGroup(updatedGroup);
+        setCurrentStoryIndex((prev) => Math.max(prev - 1, 0));
+      }
+
+      closeDeleteConfirmModal();
+    } else {
+      console.error("Failed to delete story");
+    }
+  };
   //______________________________________________________________________________
   const updateScrollState = () => {
     const el = scrollRef.current;
@@ -31,30 +62,31 @@ const Stories = () => {
   };
   //______________________________________________________________________________
 
-  const submiteUserLike = async (story) => {
-    const response = await apiFetch(
-      `/users/story-like/${story.id}/${user.sub}`,
-      {
-        method: story.isLiked ? "DELETE" : "POST",
-      }
-    );
-    if (response.ok) {
-      setCurrentStoryGroup((prev) =>
-        prev.map((s) =>
-          s.id === story.id
-            ? {
-                ...s,
-                isLiked: !s.isLiked,
-                likesCount: s.likesCount + (s.isLiked ? -1 : 1),
-              }
-            : s
-        )
-      );
-      // console.log("Everything is ok");
-    } else {
-      console.error("Failed to like/unlike the story");
-    }
-  };
+  // const submiteUserLike = async (story) => {
+  //   const response = await apiFetch(
+  //     `/users/story-like/${story.id}/${user.sub}`,
+  //     {
+  //       method: story.isLiked ? "DELETE" : "POST",
+  //     }
+  //   );
+  //   if (response.ok) {
+  //     setCurrentStoryGroup((prev) =>
+  //       prev.map((s) =>
+  //         s.id === story.id
+  //           ? {
+  //               ...s,
+  //               isLiked: !s.isLiked,
+  //               likesCount: s.likesCount + (s.isLiked ? -1 : 1),
+  //             }
+  //           : s
+  //       )
+  //     );
+  //     // console.log("Everything is ok");
+  //   } else {
+  //     console.error("Failed to like/unlike the story");
+  //   }
+  // };
+
 
   // const submiteUserLike = async (story) => {
   //   const response = await apiFetch(
@@ -63,29 +95,51 @@ const Stories = () => {
   //       method: story.isLiked ? "DELETE" : "POST",
   //     }
   //   );
-
   //   if (response.ok) {
-  //     // створити копію поточного масиву історій
-  //     const updatedStories = [...currentStoryGroup];
-
-  //     // знайти потрібну історію по id
-  //     const index = updatedStories.findIndex((s) => s.id === story.id);
-  //     if (index !== -1) {
-  //       const updatedStory = {
-  //         ...updatedStories[index],
-  //         isLiked: !updatedStories[index].isLiked,
-  //         likesCount: updatedStories[index].isLiked
-  //           ? updatedStories[index].likesCount - 1
-  //           : updatedStories[index].likesCount + 1,
-  //       };
-
-  //       updatedStories[index] = updatedStory;
-  //       setCurrentStoryGroup(updatedStories);
-  //     }
+  //     const newValueIsLiked = !story.isLiked;
+  //     story.isLiked = newValueIsLiked;
+  //     if (newValueIsLiked) story.likesCount += 1;
+  //     else story.likesCount -= 1;
+  //     console.log("Everything is ok");
   //   } else {
   //     console.error("Failed to like/unlike the story");
   //   }
   // };
+
+
+
+  const submiteUserLike = async (story) => {
+    const response = await apiFetch(
+      `/users/story-like/${story.id}/${user.sub}`,
+      {
+        method: story.isLiked ? "DELETE" : "POST",
+      }
+    );
+
+    if (response.ok) {
+      // створити копію поточного масиву історій
+      const updatedStories = [...currentStoryGroup];
+
+      // знайти потрібну історію по id
+      const index = updatedStories.findIndex((s) => s.id === story.id);
+      if (index !== -1) {
+        const updatedStory = {
+          ...updatedStories[index],
+          isLiked: !updatedStories[index].isLiked,
+          likesCount: updatedStories[index].isLiked
+            ? updatedStories[index].likesCount - 1
+            : updatedStories[index].likesCount + 1,
+        };
+
+        updatedStories[index] = updatedStory;
+        setCurrentStoryGroup(updatedStories);
+      }
+    } else {
+      console.error("Failed to like/unlike the story");
+    }
+  };
+
+
 
   const handleScroll = (direction) => {
     const el = scrollRef.current;
@@ -413,7 +467,7 @@ const Stories = () => {
                       {currentStoryGroup[currentStoryIndex]?.likesCount}
                     </div>
                   </div>
-                  <button className={styles["delete-stories"]}></button>
+                  <button className={styles["delete-stories"]} onClick={openDeleteConfirmModal}></button>
                 </div>
 
                 {/* <div className={styles["storie-like"]} onClick={()=>submiteUserLike(currentStoryGroup[currentStoryIndex])}>{currentStoryGroup[currentStoryIndex].isLiked}+{currentStoryGroup[currentStoryIndex].likesCount}</div> */}
@@ -424,7 +478,17 @@ const Stories = () => {
           </div>
         </div>
       )}
-
+      {isDeleteConfirmOpen && (
+        <div className={styles["confirm-overlay"]}>
+          <div className={styles["confirm-modal"]}>
+            <h2 className={styles["confirm-text"]}>Are you sure you want to delete this story?</h2>
+            <div className={styles["confirm-buttons"]}>
+              <button className={styles["cancel-btn"]} onClick={closeDeleteConfirmModal}>Cancel</button>
+              <button className={styles["delete-btn"]} onClick={handleDeleteConfirm} >Yes, sure</button>
+            </div>
+          </div>
+        </div>
+      )}
       {isPostModalOpen && (
         <NewPost
           onClose={() => setIsPostModalOpen(false)}

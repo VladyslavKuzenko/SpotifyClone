@@ -6,6 +6,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useAPI } from "../../hooks/useApi";
 import { handleUploadFile } from "../../js/functions/functions";
 import LocationMenu from "./LocationMenu";
+
 const NewPost = ({ onClose, initialTab = "newpost" }) => {
   const [activeTab, setActiveTab] = useState(initialTab);
   const [selectedPrivacy, setSelectedPrivacy] = useState(null);
@@ -14,11 +15,14 @@ const NewPost = ({ onClose, initialTab = "newpost" }) => {
   const [filesPost, setFilesPost] = useState([]);
   const [description, setDescription] = useState("");
   const [isUploading, setIsUploading] = useState(false);
-  const [location, setLocation] = useState('');
+  const [location, setLocation] = useState("");
   const { isLoading } = useAuth0();
   const { apiAxiosPost, apiFetch, user } = useAPI();
   const fileStoryInputRef = useRef(null);
   const filePostInputRef = useRef(null);
+
+  const isPostDisabled = description.trim() === "" && filesPost.length === 0;
+  const isStoryDisabled = !fileStory;
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -28,103 +32,110 @@ const NewPost = ({ onClose, initialTab = "newpost" }) => {
   }, []);
 
   const submiteStories = async () => {
-    // console.log("File for story:", fileStory);
-    console.log("START !!!!!!!!!!!!!!!!!!!!!!!");
-    const resultStory = {
-      user: { id: user.sub },
-      mediaType: fileStory.type.startsWith("image/") ? "IMAGE" : "VIDEO",
-      mediaUrl: " ",
-      likesCount: 0,
-      viewsCount: 0,
-      createdAt: new Date().toISOString(),
-    };
+    if (!fileStory) return;
+    setIsUploading(true);
 
-    console.log("/story");
-    const response = await apiFetch("/story", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(resultStory),
-    });
-    console.log("POST SUCCESS");
-    const story = await response.json();
+    try {
+      const resultStory = {
+        user: { id: user.sub },
+        mediaType: fileStory.type.startsWith("image/") ? "IMAGE" : "VIDEO",
+        mediaUrl: " ",
+        likesCount: 0,
+        viewsCount: 0,
+        createdAt: new Date().toISOString(),
+      };
 
-    console.log("/story/upload");
-    const storyImgUrl = await handleUploadFile(
-      story,
-      fileStory,
-      apiAxiosPost,
-      "/story/upload/"
-    );
+      const response = await apiFetch("/story", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(resultStory),
+      });
 
-    story.mediaUrl = storyImgUrl;
-    console.log("Story uploaded:", story.mediaUrl);
-    const responseUpdate = await apiFetch(`/story/${story.id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(story),
-    });
-    onClose();
+      const story = await response.json();
 
-    if (!responseUpdate.ok) {
-      alert("Помилка при оновленні історії: " + responseUpdate.statusText);
+      const storyImgUrl = await handleUploadFile(
+        story,
+        fileStory,
+        apiAxiosPost,
+        "/story/upload/"
+      );
+
+      story.mediaUrl = storyImgUrl;
+
+      const responseUpdate = await apiFetch(`/story/${story.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(story),
+      });
+
+      if (!responseUpdate.ok) {
+        alert("Помилка при оновленні історії: " + responseUpdate.statusText);
+      }
+
+      onClose();
+    } catch (error) {
+      console.error("Story upload error:", error);
+      alert("Помилка при завантаженні сторіс.");
+    } finally {
+      setIsUploading(false);
     }
   };
 
   const submitePost = async () => {
     setIsUploading(true);
 
-    const resultPost = {
-      user: { id: user.sub },
-      description: description,
-      likesCount: 0,
-      viewsCount: 0,
-      commentsCount: 0,
-      repostsCount: 0,
-      createdAt: new Date().toISOString(),
-      isCommentsOpen: selectedComments === "open-comments",
-      location: location,
-      contents: [],
-    };
+    try {
+      const resultPost = {
+        user: { id: user.sub },
+        description: description,
+        likesCount: 0,
+        viewsCount: 0,
+        commentsCount: 0,
+        repostsCount: 0,
+        createdAt: new Date().toISOString(),
+        isCommentsOpen: selectedComments === "open-comments",
+        location: location,
+        contents: [],
+      };
 
-    const response = await apiFetch("/posts", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(resultPost),
-    });
-
-    const post = await response.json();
-
-    for (const file of filesPost) {
-      const postImgUrl = await handleUploadFile(
-        post,
-        file,
-        apiAxiosPost,
-        "/posts/upload/"
-      );
-      post.contents.push({
-        mediaType: file.type.startsWith("image/") ? "IMAGE" : "VIDEO",
-        mediaUrl: postImgUrl,
-        post: { id: post.id },
+      const response = await apiFetch("/posts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(resultPost),
       });
-    }
-    console.log("Post uploaded:", post.contents);
-    const responseUpdate = await apiFetch(`/posts/${post.id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(post),
-    });
-    onClose();
 
-    if (!responseUpdate.ok) {
-      alert("Помилка при оновленні посту: " + responseUpdate.statusText);
+      const post = await response.json();
+
+      for (const file of filesPost) {
+        const postImgUrl = await handleUploadFile(
+          post,
+          file,
+          apiAxiosPost,
+          "/posts/upload/"
+        );
+        post.contents.push({
+          mediaType: file.type.startsWith("image/") ? "IMAGE" : "VIDEO",
+          mediaUrl: postImgUrl,
+          post: { id: post.id },
+        });
+      }
+
+      const responseUpdate = await apiFetch(`/posts/${post.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(post),
+      });
+
+      if (!responseUpdate.ok) {
+        alert("Помилка при оновленні посту: " + responseUpdate.statusText);
+      }
+
+      onClose();
+    } catch (error) {
+      console.error("Post upload error:", error);
+      alert("Помилка при завантаженні посту.");
+    } finally {
+      setIsUploading(false);
     }
   };
 
@@ -140,9 +151,7 @@ const NewPost = ({ onClose, initialTab = "newpost" }) => {
     setFilesPost(filesPost.filter((file) => file !== fileToRemove));
   };
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  if (isLoading) return <div>Loading...</div>;
 
   return (
     <div className={styles["post-modal-overlay"]}>
@@ -213,32 +222,30 @@ const NewPost = ({ onClose, initialTab = "newpost" }) => {
                     accept="image/*,video/*"
                     multiple
                   />
-
-                  {filesPost.length > 0
-                    ? filesPost.map((file) => (
-                        <div key={file.name} style={{ position: "relative" }}>
-                          {file.type.startsWith("image/") ? (
-                            <img
-                              className={styles["preview-image1"]}
-                              src={URL.createObjectURL(file)}
-                              alt="preview"
-                            />
-                          ) : (
-                            <video
-                              className={styles["preview-image1"]}
-                              src={URL.createObjectURL(file)}
-                              controls
-                            />
-                          )}
-                          <button
-                            onClick={() => handleRemoveFile(file)}
-                            className={styles["pomh-close"]}
-                          >
-                            ×
-                          </button>
-                        </div>
-                      ))
-                    : ""}
+                  {filesPost.length > 0 &&
+                    filesPost.map((file) => (
+                      <div key={file.name} style={{ position: "relative" }}>
+                        {file.type.startsWith("image/") ? (
+                          <img
+                            className={styles["preview-image1"]}
+                            src={URL.createObjectURL(file)}
+                            alt="preview"
+                          />
+                        ) : (
+                          <video
+                            className={styles["preview-image1"]}
+                            src={URL.createObjectURL(file)}
+                            controls
+                          />
+                        )}
+                        <button
+                          onClick={() => handleRemoveFile(file)}
+                          className={styles["pomh-close"]}
+                        >
+                          ×
+                        </button>
+                      </div>
+                    ))}
                 </div>
               </>
             )}
@@ -251,6 +258,7 @@ const NewPost = ({ onClose, initialTab = "newpost" }) => {
                 >
                   ×
                 </button>
+
                 <div className={styles["file-stories"]}>
                   <input
                     style={{ display: "none" }}
@@ -277,9 +285,11 @@ const NewPost = ({ onClose, initialTab = "newpost" }) => {
 
                 <div className={styles["post-stories"]}>
                   <button
-                    className={styles["post-stories-btn"]}
+                    className={`${styles["post-stories-btn"]} ${
+                      isStoryDisabled ? styles["disabled-button"] : ""
+                    }`}
                     onClick={submiteStories}
-                    disabled={isUploading}
+                    disabled={isUploading || isStoryDisabled}
                   >
                     Post
                   </button>
@@ -290,7 +300,10 @@ const NewPost = ({ onClose, initialTab = "newpost" }) => {
 
           {activeTab === "newpost" && (
             <div className={styles["post-right"]}>
-              <button className={styles["post-close-button"]} onClick={onClose}>
+              <button
+                className={styles["post-close-button"]}
+                onClick={onClose}
+              >
                 ×
               </button>
 
@@ -319,9 +332,11 @@ const NewPost = ({ onClose, initialTab = "newpost" }) => {
               </div>
 
               <button
-                className={styles["post-modal"]}
+                className={`${styles["post-modal"]} ${
+                  isPostDisabled ? styles["disabled-button"] : ""
+                }`}
                 onClick={submitePost}
-                disabled={isUploading}
+                disabled={isUploading || isPostDisabled}
               >
                 Post
               </button>

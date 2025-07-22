@@ -45,9 +45,10 @@ const LocationMenu = ({locationControl}) => {
 
   return (
     <div ref={menuRef} className={styles["aml-location-menu-wrapper"]}>
-      <button className={styles["aml-location-button"]} onClick={toggleMenu}>
-        Add location
-      </button>
+     <button className={styles["aml-location-button"]} onClick={toggleMenu}>
+  {locationControl.location || "Add location"}
+</button>
+
       {isOpen && (
         <ul className={styles["aml-location-list"]}>
           {locations.map((loc) => (

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import styles from "./main.module.css";
 import { useAPI } from "../../hooks/useApi";
 import CommentItem from "./CommentItem";
-import { formatPostDate,isPostLikedFunc } from "../../js/functions/functions";
+import { formatPostDate, isPostLikedFunc } from "../../js/functions/functions";
 export default function PostItem({ post }) {
   const [isPostLiked, setIsPostLiked] = useState();
   const { user, apiFetch } = useAPI();
@@ -199,11 +199,10 @@ export default function PostItem({ post }) {
                     {images.map((_, index) => (
                       <span
                         key={index}
-                        className={`${styles["prl-dot"]} ${
-                          index === currentImageIndex
+                        className={`${styles["prl-dot"]} ${index === currentImageIndex
                             ? styles["prl-active"]
                             : ""
-                        }`}
+                          }`}
                       ></span>
                     ))}
                   </div>
@@ -220,10 +219,12 @@ export default function PostItem({ post }) {
           </div>
         </div>
 
-        <div className={styles["post-location"]}>
-          <div className={styles["location-icon"]}> </div>
-          <div className={styles["location-place"]}>{post.location}</div>
-        </div>
+        {post.location && post.location.trim() !== "" && (
+          <div className={styles["post-location"]}>
+            <div className={styles["location-icon"]}></div>
+            <div className={styles["location-place"]}>{post.location}</div>
+          </div>
+        )}
 
         {/*} <div className={styles["post-comment"]}>
           <textarea

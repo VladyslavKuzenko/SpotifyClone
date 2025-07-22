@@ -46,8 +46,8 @@ export default function Posts({ selectedTab, userId }) {
 
   if (posts.length === 0) {
     return <div className={styles["empty-posts-message"]}>
-      <h3  className={styles["h3-empty"]}>Тут поки що немає постів. <br/><br/></h3>
-      <h2 className={styles["h2-empty"]}>Виставте свій перший пост або підпишіться на інших користувачів, щоб бачити цікаві оновлення!</h2>
+      <h3  className={styles["h3-empty"]}>There are no posts here yet <br/><br/></h3>
+      <h2 className={styles["h2-empty"]}>Post your first post or follow other users to see interesting updates!</h2>
     </div>;
   }
 
