@@ -20,6 +20,8 @@ public class Track {
     private Album album;
     @Column(nullable = false)
     private String title;
+    @Column(name = "genre")
+    private String genre;
     @Column(name = "source_url")
     private String sourceUrl;
     @Column(name = "image_url")
@@ -70,6 +72,14 @@ public class Track {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 
     public String getSourceUrl() {

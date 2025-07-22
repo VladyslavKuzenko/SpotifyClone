@@ -84,7 +84,9 @@ export async function isPostLikedFunc(post, user, apiFetch) {
 }
 
 export async function isStoryLiked(story, user, apiFetch) {
-  const response = await apiFetch(`/users/isStoryLiked/${user.sub}/${story.id}`);
+  const response = await apiFetch(
+    `/users/isStoryLiked/${user.sub}/${story.id}`
+  );
   const body = await response.json();
   return body;
 }
@@ -118,7 +120,61 @@ const fetchArtistData = async (userId, apiFetch) => {
   return data;
 };
 
-export const submiteMusic = async (
+export async function submiteMusic(
+  songTitle,
+  song,
+  songImage,
+  selectedGenre,
+  userId,
+  apiFetch,
+  apiAxiosPost
+) {
+  const artist = await fetchArtistData(userId,apiFetch);
+
+  const resultMusic = {
+    artist: { id: artist.id },
+    title: songTitle,
+    genre:selectedGenre,
+    listeningCount: 0,
+    createdAt: new Date(),
+  };
+
+  const response = await apiFetch("/tracks", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(resultMusic),
+  });
+  console.log("POST SUCCESS");
+  const music = await response.json();
+
+  const musicImgUrl = await handleUploadFile(
+    music,
+    songImage,
+    apiAxiosPost,
+    "/tracks/upload/"
+  );
+  const musicUrl = await handleUploadFile(
+    music,
+    song,
+    apiAxiosPost,
+    "/tracks/upload/"
+  );
+
+  music.sourceUrl = musicUrl;
+  music.imageUrl = musicImgUrl;
+
+  const responseUpdate = await apiFetch(`/tracks/${music.id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(music),
+  });
+}
+
+export const submiteAlbumSongs = async (
   songTitle,
   song,
   songImage,
@@ -136,6 +192,7 @@ export const submiteMusic = async (
     artist: { id: artist.id },
     album: album,
     title: songTitle,
+    genre:selectedGenre,
     listeningCount: 0,
     createdAt: new Date().toISOString(),
   };
@@ -193,6 +250,7 @@ export const submitAlbum = async (
   const resultAlbum = {
     artist: { id: artist.id },
     title: albumTitle,
+    genre:selectedGenre
   };
   const response = await apiFetch("/albums", {
     method: "POST",
@@ -212,7 +270,7 @@ export const submitAlbum = async (
 
   var musicList = [];
   songList.map((item, index) => {
-    const songId = submiteMusic(
+    const songId = submiteAlbumSongs(
       songTitles[index],
       item,
       songImage,
@@ -236,5 +294,3 @@ export const submitAlbum = async (
     body: JSON.stringify(album),
   });
 };
-
-
