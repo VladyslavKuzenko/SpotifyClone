@@ -3,6 +3,7 @@ import styles from "./main.module.css";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useAPI } from "../../hooks/useApi";
 import NewPost from "./NewPost";
+import { formatPostDate } from "../../js/functions/functions";
 
 const StoriesItem = () => {
   
@@ -318,7 +319,9 @@ const StoriesItem = () => {
                   <div className={styles["storie-author"]}>
                     {currentStoryGroup[currentStoryIndex].user.username}
                   </div>
-                  <div className={styles["storie-data"]}>{currentStoryGroup[currentStoryIndex].createdAt}</div>
+<div className={styles["storie-data"]}>
+  {formatPostDate(currentStoryGroup[currentStoryIndex].createdAt)}
+</div>
                 </div>
 
                 <div className={styles["storie-like"]}></div>
