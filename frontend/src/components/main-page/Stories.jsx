@@ -14,10 +14,10 @@ const Stories = () => {
   const [stories, setStories] = useState([]);
   const [currentUserIndex, setCurrentUserIndex] = useState(0);
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
-
   const { apiFetch, user } = useAPI();
   const { isLoading } = useAuth0();
 
+  //______________________________________________________________________________
   const updateScrollState = () => {
     const el = scrollRef.current;
     if (!el) return;
@@ -29,6 +29,7 @@ const Stories = () => {
       right: scrollLeft < maxScrollLeft - 1,
     });
   };
+  //______________________________________________________________________________
 
   const submiteUserLike = async (story) => {
     const response = await apiFetch(
@@ -58,8 +59,10 @@ const Stories = () => {
       behavior: "smooth",
     });
   };
+  //______________________________________________________________________________
 
   const openModal = () => setIsModalOpen(true);
+  //______________________________________________________________________________
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -67,12 +70,14 @@ const Stories = () => {
     setCurrentStoryIndex(0);
     setCurrentUserIndex(0);
   };
+  //______________________________________________________________________________
 
   const handleOverlayClick = (e) => {
     if (e.target.classList.contains(styles["sts-modal-overlay"])) {
       closeModal();
     }
   };
+  //______________________________________________________________________________
 
   const fetchStories = async () => {
     const response = await apiFetch(`/story/followings/${user.sub}`);
@@ -94,6 +99,7 @@ const Stories = () => {
 
     return updatedData;
   };
+  //______________________________________________________________________________
 
   const getRandomGradient = () => {
     const angle = Math.floor(Math.random() * 360);
@@ -101,18 +107,21 @@ const Stories = () => {
     const deepOrange = "#FF4500";
     return `linear-gradient(${angle}deg, ${lightOrange}, ${deepOrange})`;
   };
+  //______________________________________________________________________________
 
   useEffect(() => {
     if (!isLoading) {
       fetchStories();
     }
   }, [isLoading]);
+  //______________________________________________________________________________
 
   useEffect(() => {
     if (stories.length) {
       requestAnimationFrame(updateScrollState);
     }
   }, [stories]);
+  //______________________________________________________________________________
 
   useEffect(() => {
     const el = scrollRef.current;
@@ -124,6 +133,7 @@ const Stories = () => {
       window.removeEventListener("resize", updateScrollState);
     };
   }, []);
+  //______________________________________________________________________________
 
   const groupedStories = stories.reduce((acc, story) => {
     const userId = story.user?.id;
@@ -132,10 +142,12 @@ const Stories = () => {
     acc[userId].push(story);
     return acc;
   }, {});
+  //______________________________________________________________________________
 
   const uniqueUsers = Object.values(groupedStories).map(
     (storyGroup) => storyGroup[0]
   );
+  //______________________________________________________________________________
 
   const goToNextStory = () => {
     if (currentStoryIndex < currentStoryGroup.length - 1) {
@@ -144,6 +156,7 @@ const Stories = () => {
       goToNextUser();
     }
   };
+  //______________________________________________________________________________
 
   const goToPrevStory = () => {
     if (currentStoryIndex > 0) {
@@ -152,6 +165,7 @@ const Stories = () => {
       goToPrevUser(true);
     }
   };
+  //______________________________________________________________________________
 
   const goToNextUser = () => {
     if (currentUserIndex < uniqueUsers.length - 1) {
@@ -161,6 +175,7 @@ const Stories = () => {
       setCurrentStoryIndex(0);
     }
   };
+  //______________________________________________________________________________
 
   const goToPrevUser = (openLastStory = false) => {
     if (currentUserIndex > 0) {
@@ -171,6 +186,7 @@ const Stories = () => {
       setCurrentStoryIndex(openLastStory ? prevGroup.length - 1 : 0);
     }
   };
+  //______________________________________________________________________________
 
   // Функція для рендеру полосок-індикаторів
   const renderStoryIndicators = (count, activeIndex) => {
@@ -215,6 +231,8 @@ const Stories = () => {
       </div>
     );
   };
+  //______________________________________________________________________________
+
 
   return (
     <div className={styles.wrapper}>
@@ -322,6 +340,7 @@ const Stories = () => {
               ></button>
             )}
 
+
             <div className={styles["storie-bottom"]}>
               <div className={styles["avatar-author"]}>
                 <div className={styles["storie-avatar"]}></div>
@@ -350,6 +369,8 @@ const Stories = () => {
                 {/* <div>{currentStoryGroup[currentStoryIndex].isLiked}+{currentStoryGroup[currentStoryIndex].likesCount}</div> */}
               </div>
             </div>
+
+
           </div>
         </div>
       )}

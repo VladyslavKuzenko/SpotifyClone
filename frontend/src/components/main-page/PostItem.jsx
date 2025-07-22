@@ -31,25 +31,25 @@ function formatPostDate(postDateString) {
 
 function getSecondWord(n) {
   if (n % 10 === 1 && n % 100 !== 11) return "секунду";
-  if ([2,3,4].includes(n % 10) && ![12,13,14].includes(n % 100)) return "секунди";
+  if ([2, 3, 4].includes(n % 10) && ![12, 13, 14].includes(n % 100)) return "секунди";
   return "секунд";
 }
 
 function getMinuteWord(n) {
   if (n % 10 === 1 && n % 100 !== 11) return "хвилину";
-  if ([2,3,4].includes(n % 10) && ![12,13,14].includes(n % 100)) return "хвилини";
+  if ([2, 3, 4].includes(n % 10) && ![12, 13, 14].includes(n % 100)) return "хвилини";
   return "хвилин";
 }
 
 function getHourWord(n) {
   if (n % 10 === 1 && n % 100 !== 11) return "годину";
-  if ([2,3,4].includes(n % 10) && ![12,13,14].includes(n % 100)) return "години";
+  if ([2, 3, 4].includes(n % 10) && ![12, 13, 14].includes(n % 100)) return "години";
   return "годин";
 }
 
 function getDayWord(n) {
   if (n % 10 === 1 && n % 100 !== 11) return "день";
-  if ([2,3,4].includes(n % 10) && ![12,13,14].includes(n % 100)) return "дні";
+  if ([2, 3, 4].includes(n % 10) && ![12, 13, 14].includes(n % 100)) return "дні";
   return "днів";
 }
 
@@ -73,7 +73,9 @@ export default function PostItem({ post }) {
   const { user, apiFetch } = useAPI();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const images = post.contents || [];
+
   const hasDescription = post.description && post.description.trim() !== "";
+
   const [pomhIsModalOpen, setPomhIsModalOpen] = useState(false);
   const [pomhModalImageUrl, setPomhModalImageUrl] = useState("");
   const [isDiscussionOpen, setIsDiscussionOpen] = useState(false);
@@ -85,7 +87,7 @@ export default function PostItem({ post }) {
 
   const fetchComments = async () => {
     const response = await apiFetch(`/comments/byPostId/${post.id}`);
-    const data=await response.json();
+    const data = await response.json();
     setComments(data);
   };
 
@@ -121,8 +123,8 @@ export default function PostItem({ post }) {
 
     if (response.ok) {
       const data = await response.json();
-      const responseComment=await apiFetch(`/comments/${data.id}`);
-      const newComment=await responseComment.json();
+      const responseComment = await apiFetch(`/comments/${data.id}`);
+      const newComment = await responseComment.json();
       setComments([...comments, newComment]);
       setComment("");
       console.log("Everything is ok");
@@ -193,7 +195,7 @@ export default function PostItem({ post }) {
                     <img
                       src={
                         isPostLiked
-                          ? "/images/redheart.svg"
+                          ? "/images/heartred.svg"
                           : "/images/heart.svg"
                       }
                       alt="Like"
@@ -261,11 +263,10 @@ export default function PostItem({ post }) {
                     {images.map((_, index) => (
                       <span
                         key={index}
-                        className={`${styles["prl-dot"]} ${
-                          index === currentImageIndex
-                            ? styles["prl-active"]
-                            : ""
-                        }`}
+                        className={`${styles["prl-dot"]} ${index === currentImageIndex
+                          ? styles["prl-active"]
+                          : ""
+                          }`}
                       ></span>
                     ))}
                   </div>
@@ -282,7 +283,15 @@ export default function PostItem({ post }) {
           </div>
         </div>
 
-        <div className={styles["post-comment"]}>
+        <div className={styles["post-location"]}>
+          <div className={styles["location-icon"]}> </div>
+          <div className={styles["location-place"]}>Turkey, Istanbul</div>
+
+        </div>
+
+
+
+        {/*} <div className={styles["post-comment"]}>
           <textarea
             className={styles["send-comment"]}
             placeholder="Write a comment..."
@@ -306,11 +315,11 @@ export default function PostItem({ post }) {
               Publish
             </button>
           </div>
-        </div>
+        </div>*/}
 
-        <div className={styles["see-coments"]} onClick={openDiscussion}>
+        {/*<div className={styles["see-coments"]} onClick={openDiscussion}>
           View discussion (12)
-        </div>
+        </div>*/}
       </div>
 
       {pomhIsModalOpen && (
@@ -335,16 +344,41 @@ export default function PostItem({ post }) {
             onClick={(e) => e.stopPropagation()}
           >
             <div className={styles["discussion-header"]}>
-              <h3>Discussion</h3>
-              <button onClick={closeDiscussion} className={styles["close-btn"]}>
+              <div className={styles["post-comment"]}>
+                <textarea
+                  className={styles["send-comment"]}
+                  placeholder="Write a comment..."
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
+                  rows={1}
+                  onInput={(e) => {
+                    const target = e.target;
+                    target.style.height = "auto";
+                    target.style.height = Math.min(target.scrollHeight, 100) + "px";
+                  }}
+                  onBlur={(e) => {
+                    const target = e.target;
+                    if (target.value.trim() === "") {
+                      target.style.height = "31px";
+                    }
+                  }}
+                />
+                <div className={styles["post-comment-btn"]}>
+                  <button className={styles["publish-btn"]} onClick={submiteComment}>
+                    Publish
+                  </button>
+                </div>
+              </div>
+              {/*<button onClick={closeDiscussion} className={styles["close-btn"]}>
                 ✕
-              </button>
+              </button>*/}
             </div>
             <div className={styles["discussion-body"]}>
-              {comments.map((comnt) => (
+              {[...comments].reverse().map((comnt) => (
                 <CommentItem key={comnt.id} comment={comnt} />
               ))}
             </div>
+
           </div>
         </div>
       )}
