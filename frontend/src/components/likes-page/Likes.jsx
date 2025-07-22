@@ -21,7 +21,7 @@ export default function Likes({ exit }) {
   const dropdownRef = useRef();
   // Hooks
   const { apiFetch, user } = useAPI();
-  const { setCurrentSong, setCurrentSongList } = useAudio();
+  const { setCurrentSong, setCurrentSongList, setIsRandomList } = useAudio();
   const { isLoading } = useAuth0();
 
   // Effects
@@ -119,6 +119,7 @@ export default function Likes({ exit }) {
                   className={styles["play-btn"]}
                   onClick={() => {
                     if (songs.length > 0) {
+                      setIsRandomList(false);
                       setCurrentSong(songs[0]);
                       setCurrentSongList(songs);
                     }
@@ -135,7 +136,10 @@ export default function Likes({ exit }) {
                   <SongItem
                     key={i.id}
                     song={i}
-                    onSetCurrentSongList={() => setCurrentSongList(songs)}
+                    onSetCurrentSongList={() => {
+                      setIsRandomList(false);
+                      setCurrentSongList(songs);
+                    }}
                     moreInfo
                     currentPlaylist={currentPlaylist}
                   />

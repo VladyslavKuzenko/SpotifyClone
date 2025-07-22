@@ -6,25 +6,68 @@ export const AudioContext = createContext(undefined);
 export const AudioProvider = ({ children }) => {
   const [currentSong, setCurrentSong] = useState("");
   const [currentSongList, setCurrentSongList] = useState("");
+  const [originalSongList, setOriginalSongList] = useState("");
+  const [isRandomList, setIsRandomList] = useState(false);
   const audioRef = useRef(null);
   const [isSongPlayed, setIsSongPlayed] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(0);
-  const {apiFetch}=useAPI();
+  const { apiFetch } = useAPI();
   /*  const [autoStart, setAutoStart] = useState(false); */
 
-  const addListening=async(song)=>{
+  useEffect(() => {
+    if (isRandomList) {
+      setOriginalSongList(currentSongList);
+      const newList = shuffleArray(currentSongList);
+      setCurrentSongList(newList);
+      console.log("current list", newList);
+    } else {
+      setCurrentSongList(originalSongList);
+      console.log("current list", originalSongList);
+    }
+    console.log(isRandomList)
+  }, [isRandomList]);
+
+  // useEffect(() => {
+  //   if (!isRandomList) setOriginalSongList(currentSongList);
+  // }, [currentSongList]);
+
+  const addListening = async (song) => {
     const response = await apiFetch(`/tracks/add-listening/${song.id}`, {
       method: "PUT",
     });
 
     if (response.ok) {
-      currentSongList[currentSongList.indexOf(song)].listeningCount+=1;
+      currentSongList[currentSongList.indexOf(song)].listeningCount += 1;
       console.log("Everything is ok");
     } else {
       console.error("Failed to add listening the post");
     }
+  };
+
+  function shuffleArray(array) {
+    const newArray = [...array];
+    if (currentSong) {
+      [newArray[0], newArray[currentSongList.indexOf(currentSong)]] = [
+        newArray[currentSongList.indexOf(currentSong)],
+        newArray[0],
+      ];
+      for (let i = newArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * i) + 1;
+        [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+      }
+    }
+
+    const isSameArray = array.every((val, i) => val === newArray[i]);
+    if (isSameArray) return shuffleArray(array);
+    // else {
+    //   for (let i = newArray.length - 1; i > 0; i--) {
+    //     const j = Math.floor(Math.random() * (i + 1)) + 1;
+    //     [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+    //   }
+    // }
+    return newArray;
   }
 
   const nextSong = () => {
@@ -45,6 +88,7 @@ export const AudioProvider = ({ children }) => {
     audioRef.current?.pause();
     setIsSongPlayed(false);
   };
+
   return (
     <AudioContext.Provider
       value={{
@@ -65,6 +109,10 @@ export const AudioProvider = ({ children }) => {
         setIsSongPlayed,
         volume,
         setVolume,
+        // shuffleArray,
+        // isSongPlayed,
+        isRandomList,
+        setIsRandomList,
       }}
     >
       <audio

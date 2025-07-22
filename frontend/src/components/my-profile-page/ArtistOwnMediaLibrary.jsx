@@ -9,7 +9,7 @@ import AddAlbumModal from "./AddAlbumModal";
 import AddMusicModal from "./AddMusicModal";
 
 const ArtistOwnMediaLibrary = () => {
-  const { setCurrentSong, setCurrentSongList } = useAudio();
+  const { setCurrentSong, setCurrentSongList, setIsRandomList } = useAudio();
   const [songs, setSongs] = useState([]);
   const [albums, setAlbums] = useState([]);
   const { isLoading } = useAuth0();
@@ -60,7 +60,10 @@ const ArtistOwnMediaLibrary = () => {
                 key={song.id}
                 song={song}
                 moreInfo
-                onSetCurrentSongList={() => setCurrentSongList(songs)}
+                onSetCurrentSongList={() => {
+                  setIsRandomList(false);
+                  setCurrentSongList(songs);
+                }}
               />
             ))}
           </div>

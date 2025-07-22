@@ -6,12 +6,24 @@ import styles from "../player-page/player.module.css";
 import { useAudio } from "../../hooks/useAudio";
 
 export default function AudioControl({ footerPlayer, isHovered }) {
-  const { currentSong, nextSong, prevSong, audioRef } = useAudio();
+  const {
+    currentSong,
+    nextSong,
+    prevSong,
+    audioRef,
+    isRandomList,
+    setIsRandomList,
+  } = useAudio();
   const { isSongPlayed, setIsSongPlayed } = useAudio();
   const { currentTime, setCurrentTime } = useAudio();
   const { duration, setDuration } = useAudio();
   const { volume, setVolume } = useAudio();
   const { playAudio, pauseAudio } = useAudio();
+
+  const randomList = () => {
+    setIsRandomList(!isRandomList);
+  };
+
   const reduceVolume = () => {
     audioRef.current.volume - 0.1 >= 0
       ? (audioRef.current.volume -= 0.1)
@@ -47,20 +59,34 @@ export default function AudioControl({ footerPlayer, isHovered }) {
         <>
           <div className={stylesPlayer["mrb-center"]}>
             <div className={stylesPlayer["bmr-controls"]}>
+              <button
+                className={`${stylesPlayer["bmr-btn"]} ${styles["btn0"]}`}
+                onClick={randomList}
+              ></button>
 
-              <button className={`${stylesPlayer["bmr-btn"]} ${styles["btn0"]}`} /* onClick={''} */></button>
-
-              <button className={`${stylesPlayer["bmr-btn"]} ${styles["btn1"]}`} onClick={prevSong}></button>
+              <button
+                className={`${stylesPlayer["bmr-btn"]} ${styles["btn1"]}`}
+                onClick={prevSong}
+              ></button>
 
               {isSongPlayed ? (
-                <button className={`${stylesPlayer["bmr-btn"]} ${styles["btn2"]}`} onClick={pauseAudio}></button>
+                <button
+                  className={`${stylesPlayer["bmr-btn"]} ${styles["btn2"]}`}
+                  onClick={pauseAudio}
+                ></button>
               ) : (
-                <button className={`${stylesPlayer["bmr-btn"]} ${styles["btn3"]}`} onClick={playAudio}></button>
-
+                <button
+                  className={`${stylesPlayer["bmr-btn"]} ${styles["btn3"]}`}
+                  onClick={playAudio}
+                ></button>
               )}
-              <button className={`${stylesPlayer["bmr-btn"]} ${styles["btn4"]}`} onClick={nextSong}></button>
-              <button className={`${stylesPlayer["bmr-btn"]} ${styles["btn5"]}`} /* onClick={''} */></button>
-
+              <button
+                className={`${stylesPlayer["bmr-btn"]} ${styles["btn4"]}`}
+                onClick={nextSong}
+              ></button>
+              <button
+                className={`${stylesPlayer["bmr-btn"]} ${styles["btn5"]}`} /* onClick={''} */
+              ></button>
             </div>
 
             <div className={stylesPlayer["bmr-progress"]}>
@@ -80,7 +106,6 @@ export default function AudioControl({ footerPlayer, isHovered }) {
                 {convertTime(duration)}
               </div>
             </div>
-
           </div>
           <div className={stylesPlayer["mrb-right"]}>
             <button
@@ -105,43 +130,36 @@ export default function AudioControl({ footerPlayer, isHovered }) {
       ) : (
         <>
           <div className={stylesPlayer["mrb-centerls"]}>
-
             <div className={stylesPlayer["bmr-controls"]}>
               {/* Додано style для керування видимістю */}
               <button
                 className={`${stylesPlayer["bmr-btn"]} ${stylesPlayer["btn1ls"]}`}
                 onClick={prevSong}
                 style={isHovered ? visibleStyle : hiddenStyle} // Додано показ при наведенні
-              >
-              </button>
+              ></button>
 
               {isSongPlayed ? (
                 <div className={stylesPlayer["ls-wrap"]}>
-
                   <button
                     className={`${stylesPlayer["bmr-btn"]} ${stylesPlayer["btn2ls"]}`}
-                    onClick={pauseAudio}>
-                  </button>
+                    onClick={pauseAudio}
+                  ></button>
                 </div>
               ) : (
                 <div className={stylesPlayer["ls-wrap"]}>
                   <button
                     className={`${stylesPlayer["bmr-btn"]} ${stylesPlayer["btn3ls"]}`}
                     onClick={playAudio}
-                  // Додано показ при наведенні
-                  >
-                    
-                  </button>
+                    // Додано показ при наведенні
+                  ></button>
                 </div>
-
               )}
 
               <button
                 className={`${stylesPlayer["bmr-btn"]} ${stylesPlayer["btn4ls"]}`}
                 onClick={nextSong}
                 style={isHovered ? visibleStyle : hiddenStyle} // Додано показ при наведенні
-              >
-              </button>
+              ></button>
             </div>
 
             <div className={stylesPlayer["bmr-progress"]}>
@@ -157,7 +175,6 @@ export default function AudioControl({ footerPlayer, isHovered }) {
               />
             </div>
           </div>
-
         </>
       )}
     </>

@@ -26,7 +26,7 @@ export default function MiddleItem({
   const [currentArtist, setCurrentArtist] = useState(null);
   const { isAuthenticated, isLoading } = useAuth0();
   const [openMenuSongId, setOpenMenuSongId] = useState(null);
-  const { setCurrentSong, setCurrentSongList } = useAudio();
+  const { setCurrentSong, setCurrentSongList, setIsRandomList } = useAudio();
   // Вкладка для артиста: 'songs' або 'albums'
   const [activeArtistTab, setActiveArtistTab] = useState("songs");
 
@@ -195,9 +195,11 @@ export default function MiddleItem({
                     onClick={() => {
                       if (songs.length > 0) {
                         if (activeArtistTab === "songs") {
+                          setIsRandomList(false);
                           setCurrentSong(songs[0]);
                           setCurrentSongList(songs);
-                        }else{
+                        } else {
+                          setIsRandomList(false);
                           setCurrentSong(albumSongs[0]);
                           setCurrentSongList(albumSongs);
                         }
@@ -246,7 +248,10 @@ export default function MiddleItem({
                         key={song.id}
                         song={song}
                         moreInfo
-                        onSetCurrentSongList={() => setCurrentSongList(songs)}
+                        onSetCurrentSongList={() => {
+                          setIsRandomList(false);
+                          setCurrentSongList(songs);
+                        }}
                         isPlaylistsChangesControl={isPlaylistsChangesControl}
                         openMenu={openMenuSongId === song.id}
                         toggleMenu={() =>
@@ -287,7 +292,10 @@ export default function MiddleItem({
                           key={song.id}
                           song={song}
                           moreInfo
-                          onSetCurrentSongList={() => setCurrentSongList(albumSongs)}
+                          onSetCurrentSongList={() => {
+                            setIsRandomList(false);
+                            setCurrentSongList(albumSongs);
+                          }}
                           isPlaylistsChangesControl={isPlaylistsChangesControl}
                           openMenu={openMenuSongId === song.id}
                           toggleMenu={() =>
@@ -317,7 +325,7 @@ export default function MiddleItem({
                   key={song.id}
                   song={song}
                   moreInfo
-                  onSetCurrentSongList={() => setCurrentSongList(songs)}
+                  onSetCurrentSongList={() =>{setIsRandomList(false); setCurrentSongList(songs)}}
                   isPlaylistsChangesControl={isPlaylistsChangesControl}
                   openMenu={openMenuSongId === song.id}
                   toggleMenu={() =>

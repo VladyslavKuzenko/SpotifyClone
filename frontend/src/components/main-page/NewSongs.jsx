@@ -13,6 +13,7 @@ const NewSongs = () => {
     playAudio,
     setCurrentSong,
     setCurrentSongList,
+    setIsRandomList
   } = useAudio();
   async function fetchSong() {
     const response = await apiFetch("/tracks/lastTrack");
@@ -58,6 +59,7 @@ const NewSongs = () => {
             <button
               className={styles["ns-play-btn"]}
               onClick={() => {
+                setIsRandomList(false)
                 setCurrentSong(song);
                 setCurrentSongList([song]);
                 //playAudio();
