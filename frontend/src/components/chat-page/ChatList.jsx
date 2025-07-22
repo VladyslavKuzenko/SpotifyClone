@@ -4,8 +4,8 @@ import PrivateChatItem from './PrivateChatItem';
 import GroupChatItem from './GroupChatItem';
 import { useAPI } from "../../hooks/useApi";
 
-const ChatList = ({ onChatSelected }) => {
-  const { apiFetch,user } = useAPI();
+const ChatList = ({ onChatSelected, onCreateGroup }) => {
+  const { apiFetch, user } = useAPI();
   const [chats, setChats] = useState([]);
   const firstLoad = useRef(true);
 
@@ -65,7 +65,12 @@ const ChatList = ({ onChatSelected }) => {
           placeholder="Search"
         />
 
-        <button className={styles["create-group"]}></button>
+        <button
+          className={styles["create-group"]}
+          onClick={onCreateGroup}
+        >
+        </button>
+
       </div>
 
       <div className={styles["groups-block"]}>
