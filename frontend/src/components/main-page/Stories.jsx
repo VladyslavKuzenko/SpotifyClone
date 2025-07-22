@@ -386,21 +386,26 @@ const Stories = () => {
                     )}
                   </div>
                 </div>
-                <div className={styles["storie-wrap"]}>
-                  <button
-                    className={styles["storie-like"]}
-                    onClick={() => submiteUserLike(currentStoryGroup[currentStoryIndex])}
-                  >
-                    <img
-                      src={`/images/${currentStoryGroup[currentStoryIndex]?.isLiked ? "heartred" : "heart"}.svg`}
-                      alt="like"
-                     
-                    />
-                  </button>
-                  <div className={styles["like-count"]}>
-                    {currentStoryGroup[currentStoryIndex]?.likesCount}
+                <div className={styles["like-delete"]}>
+
+                  <div className={styles["storie-wrap"]}>
+                    <button
+                      className={styles["storie-like"]}
+                      onClick={() => submiteUserLike(currentStoryGroup[currentStoryIndex])}
+                    >
+                      <img
+                        src={`/images/${currentStoryGroup[currentStoryIndex]?.isLiked ? "heartred" : "heart"}.svg`}
+                        alt="like"
+
+                      />
+                    </button>
+                    <div className={styles["like-count"]}>
+                      {currentStoryGroup[currentStoryIndex]?.likesCount}
+                    </div>
                   </div>
+                  <button className={styles["delete-stories"]}></button>
                 </div>
+
                 {/* <div className={styles["storie-like"]} onClick={()=>submiteUserLike(currentStoryGroup[currentStoryIndex])}>{currentStoryGroup[currentStoryIndex].isLiked}+{currentStoryGroup[currentStoryIndex].likesCount}</div> */}
 
 
