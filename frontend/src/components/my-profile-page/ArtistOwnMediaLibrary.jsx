@@ -53,7 +53,7 @@ const ArtistOwnMediaLibrary = () => {
             {songs.length === 0 ? (
               <div className={styles["empty-message"]}>
                 <h2>There are no songs here yet</h2>
-                <h3>Add your first song</h3>
+                <h3>+ Add your first song</h3>
               </div>
 
             ) : (
@@ -87,7 +87,7 @@ const ArtistOwnMediaLibrary = () => {
             {albums.length === 0 ? (
                 <div className={styles["empty-message"]}>
                 <h2>There are no albums here yet</h2>
-                <h3>Add your first album</h3>
+                <h3>+ Add your first album</h3>
               </div>
             ) : (
               albums.map((item, idx) => (

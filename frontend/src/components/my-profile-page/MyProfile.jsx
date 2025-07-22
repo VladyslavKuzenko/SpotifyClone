@@ -164,8 +164,9 @@ const MyProfile = ({ profileInfo }) => {
 
           <div className={styles["posts-place"]}>
             <div className={styles["posts-text"]}>Posts</div>
+            <div className={styles["posts-array"]}>
             <Posts selectedTab="user" userId={user?.sub} />
-            {/* <div className={styles["posts-array"]}></div> */}
+              </div> 
           </div>
           <div className={styles["groups-place"]}>
             <div className={styles["groups-text"]}>Groups</div>

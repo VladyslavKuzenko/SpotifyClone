@@ -82,7 +82,7 @@ const UserLikedMediaLibrary = () => {
               <div className={styles["empty-message"]}>
                 <h2>
                   It's empty here</h2>
-                <h3>Add your favorite tracks to see them here.</h3>
+                <h3>+ Add your favorite tracks to see them here.</h3>
               </div>
             )}
           </div>
