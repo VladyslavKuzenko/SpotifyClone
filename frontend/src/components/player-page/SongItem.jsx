@@ -32,7 +32,21 @@ const SongItem = ({
   const fetchPlaylists = async () => {
     const response = await apiFetch(`/playlists/playlists/${user.sub}`);
     const body = await response.json();
-    setPlaylists(body);
+
+    const playlists = await Promise.all(
+      body.map(async (playlist) => {
+        const responseIsInPlaylist = await apiFetch(
+          `/playlists/is-in-playlist/${playlist.id}/${song.id}`
+        );
+        const isInPlaylist = await responseIsInPlaylist.json();
+        return {
+          ...playlist,
+          isInPlaylist,
+        };
+      })
+    );
+
+    setPlaylists(playlists);
   };
 
   /////////////////////////////
@@ -78,10 +92,10 @@ const SongItem = ({
   }, []);
 
   const handleLikeClick = async () => {
-    const responsePlaylist = await apiFetch(`/playlists/playlists/${user.sub}`);
+    // const responsePlaylist = await apiFetch(`/playlists/playlists/${user.sub}`);
     // if (isAuthenticated && user)
-    const body = await responsePlaylist.json();
-    const playlist = body.find((i) => i.title === "Like");
+    // const body = await responsePlaylist.json();
+    const playlist = playlists.find((i) => i.title === "Like");
     const response = await apiFetch(
       `/playlists/${playlist.id}/tracks/${song.id}`,
       {
@@ -97,20 +111,20 @@ const SongItem = ({
   };
 
   const handleAddToPlaylistClick = async (playlistItem) => {
-    const responsePlaylist = await apiFetch(`/playlists/playlists/${user.sub}`);
-    const body = await responsePlaylist.json();
+    // const responsePlaylist = await apiFetch(`/playlists/playlists/${user.sub}`);
+    // const body = await responsePlaylist.json();
 
-    const playlistOther = body.find((i) => i.title === playlistItem.title);
-    const responseIsInPlaylist = await apiFetch(
-      `/playlists/is-in-playlist/${playlistOther.id}/${song.id}`
-    );
-    const isInPlaylist = await responseIsInPlaylist.json();
+    const playlistOther = playlists.find((i) => i.title === playlistItem.title);
+    // const responseIsInPlaylist = await apiFetch(
+    //   `/playlists/is-in-playlist/${playlistOther.id}/${song.id}`
+    // );
+    // const isInPlaylist = await responseIsInPlaylist.json();
     console.log("playlist: ", playlistOther);
-    console.log("isInPlaylist: ", isInPlaylist);
+    console.log("isInPlaylist: ", playlistOther.isInPlaylist);
     const responseOther = await apiFetch(
       `/playlists/${playlistOther.id}/tracks/${song.id}`,
       {
-        method: isInPlaylist ? "DELETE" : "POST",
+        method: playlistOther.isInPlaylist ? "DELETE" : "POST",
       }
     );
 
@@ -131,7 +145,10 @@ const SongItem = ({
     //   }
     // }
 
-    if (responseOther.ok) console.log("Successfully add to playlist");
+    if (responseOther.ok){
+      playlists[playlists.indexOf(playlistOther)].isInPlaylist=!playlistOther.isInPlaylist;
+      console.log("Successfully add to playlist");
+    } 
     else console.error("Failed to add/delete the song from playlist");
   };
 
