@@ -22,11 +22,13 @@ const MyProfile = ({ profileInfo }) => {
   const [showModal2, setShowModal2] = useState(false);
 
   const { isLoading } = useAuth0();
-  const { apiFetch,user } = useAPI();
+  const { apiFetch, user } = useAPI();
   const [userFullInfo, setUserFullInfo] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("followers");
   const [activeTab1, setActiveTab1] = useState("profile");
+  const [followings, setFollowings] = useState([]);
+  const [followers, setFollowers] = useState([]);
 
   const openModal = (tab) => {
     setActiveTab(tab);
@@ -39,12 +41,23 @@ const MyProfile = ({ profileInfo }) => {
   const fetchUser = async () => {
     const respose = await apiFetch(`/users/${user.sub}`);
     const data = await respose.json();
-    setUserFullInfo(data);
 
+    const responseUserFollowers = await apiFetch(
+      `/users/userFollowers/${user.sub}`
+    );
+    const followers = await responseUserFollowers.json();
+
+    const responseUserFollowings = await apiFetch(
+      `/users/userFollowing/${user.sub}`
+    );
+    const followings = await responseUserFollowings.json();
+    const newData = { ...data, followers, followings };
+    setUserFullInfo(newData);
+    setFollowings(followings);
+    setFollowers(followers);
     console.log("User: ", user);
-    console.log("User full info: ", data);
+    console.log("User full info: ", newData);
   };
-
 
   useEffect(() => {
     if (isLoading) return;
@@ -71,7 +84,10 @@ const MyProfile = ({ profileInfo }) => {
             Edit profile
           </button>
           {/* <div className={styles["profile-photo"]}></div> */}
-          <img src={userFullInfo.avatarImgUrl} className={styles["profile-photo"]} />
+          <img
+            src={userFullInfo.avatarImgUrl}
+            className={styles["profile-photo"]}
+          />
           <div className={styles["you-name"]}>@{userFullInfo?.username}</div>
         </div>
 
@@ -88,12 +104,18 @@ const MyProfile = ({ profileInfo }) => {
             className={styles["ff-follows"]}
             onClick={() => openModal("follows")}
           >
-            {userFullInfo.followingsCount} follows
+            {userFullInfo.followingsCount} followings
           </div>
         </div>
 
         {isModalOpen && (
-          <FollowersModal activeTab={activeTab} onClose={closeModal} />
+          <FollowersModal
+            activeTab={activeTab}
+            onClose={closeModal}
+            followersControl={{followers,setFollowers}}
+            followingsControl={{followings,setFollowings}}
+            userFullInfo={userFullInfo}
+          />
         )}
 
         {isArtist ? ( //перевірка артист
@@ -135,7 +157,6 @@ const MyProfile = ({ profileInfo }) => {
           //перевірка не артист
           <>
             <UserLikedMediaLibrary />
-
           </>
         )}
         <div className={styles["about-artist-platform"]}>
@@ -144,24 +165,34 @@ const MyProfile = ({ profileInfo }) => {
             <div className={styles["aap-photo"]}></div>
           </div>
           <div className={styles["aap-right"]}>
-            <div className={styles["aap-information"]}>Max has quickly risen to prominence as a leading artist of the modern music scene. Her debut album, "Whispers in the Wind," showcases 12 original tracks that blend pop and indie influences, all crafted in her cozy studio in Nashville. In 2020, her first single "Chasing Stars" topped the charts in 15 countries, making her a household name. Following that success, her sophomore album, "Echoes of Tomorrow," released in 2022, debuted at No. 1 globally and received rave reviews from critics and fans alike. Max's unique sound and heartfelt lyrics continue to resonate with audiences around the world.</div>
+            <div className={styles["aap-information"]}>
+              Max has quickly risen to prominence as a leading artist of the
+              modern music scene. Her debut album, "Whispers in the Wind,"
+              showcases 12 original tracks that blend pop and indie influences,
+              all crafted in her cozy studio in Nashville. In 2020, her first
+              single "Chasing Stars" topped the charts in 15 countries, making
+              her a household name. Following that success, her sophomore album,
+              "Echoes of Tomorrow," released in 2022, debuted at No. 1 globally
+              and received rave reviews from critics and fans alike. Max's
+              unique sound and heartfelt lyrics continue to resonate with
+              audiences around the world.
+            </div>
             <div className={styles["aap-socials"]}>
               <button className={styles["facebook"]}></button>
               <button className={styles["instagram"]}></button>
               <button className={styles["twitter"]}></button>
             </div>
 
-            <button className={styles["aap-edit"]} onClick={() => setShowModal2(true)}>Edit</button>
-
-
+            <button
+              className={styles["aap-edit"]}
+              onClick={() => setShowModal2(true)}
+            >
+              Edit
+            </button>
           </div>
-
         </div>
 
         <div className={styles["bottom-place"]}>
-
-
-
           <div className={styles["posts-place"]}>
             <div className={styles["posts-text"]}>Posts</div>
             <Posts selectedTab="user" userId={user?.sub} />
@@ -188,7 +219,6 @@ const MyProfile = ({ profileInfo }) => {
       {showModal && <AddMusicModal onClose={() => setShowModal(false)} />}
       {showModal1 && <AddAlbumModal onClose={() => setShowModal1(false)} />}
       {showModal2 && <EditAboutModal onClose={() => setShowModal2(false)} />}
-
     </div>
   );
 };

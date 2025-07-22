@@ -4,7 +4,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { isSubscribed } from "../../js/functions/functions";
 import { useAPI } from "../../hooks/useApi";
 
-export default function FollowAccountCard({ userToFollow, styles }) {
+export default function FollowingButton({ userToFollow, styles }) {
   const { isAuthenticated } = useAuth0();
   const [isFollowed, setIsFollowed] = useState(false);
   const { apiFetch, user } = useAPI();

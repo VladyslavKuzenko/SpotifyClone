@@ -59,6 +59,11 @@ public class UserController {
         return userRepository.findById(id).orElseThrow(RuntimeException::new).getFollowings();
     }
 
+    @GetMapping("/userFollowers/{id}")
+    public Set<User> getUserFollowers(@PathVariable String id) {
+        return userRepository.findById(id).orElseThrow(RuntimeException::new).getFollowers();
+    }
+
     @GetMapping("/userLikedPosts/{id}")
     public Set<Post> getUserLikedPosts(@PathVariable String id) {
         return userRepository.findById(id).orElseThrow(RuntimeException::new).getLikedPosts();

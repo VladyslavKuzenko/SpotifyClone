@@ -295,7 +295,6 @@ export const submitAlbum = async (
   });
 };
 
-
 // --- Форматування дати ---
 export function formatPostDate(postDateString) {
   const postDate = new Date(postDateString);
