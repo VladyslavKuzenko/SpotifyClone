@@ -121,6 +121,13 @@ public class TrackController {
         return ResponseEntity.ok(track);
     }
 
+    @PutMapping("/add-listening/{song_id}")
+    public ResponseEntity<Track> updateTrack(@PathVariable Long song_id) {
+        Track track = trackService.addListeningToTrack(song_id);
+        return ResponseEntity.ok(track);
+    }
+
+
     @DeleteMapping("/{id}")
     public ResponseEntity deleteTrack(@PathVariable Long id) {
         trackRepository.deleteById(id);

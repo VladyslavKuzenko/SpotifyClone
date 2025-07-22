@@ -22,4 +22,11 @@ public class TrackService {
         return trackRepository.save(track); // це оновлення
     }
 
+    public Track addListeningToTrack(Long id){
+        Track track = trackRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Track not found"));
+
+        track.setListeningCount(track.getListeningCount()+1);
+        return trackRepository.save(track);
+    }
 }

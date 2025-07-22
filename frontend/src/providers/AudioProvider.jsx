@@ -1,4 +1,5 @@
 import { createContext, useEffect, useRef, useState } from "react";
+import { useAPI } from "../hooks/useApi";
 
 export const AudioContext = createContext(undefined);
 
@@ -10,7 +11,21 @@ export const AudioProvider = ({ children }) => {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(0);
+  const {apiFetch}=useAPI();
   /*  const [autoStart, setAutoStart] = useState(false); */
+
+  const addListening=async(song)=>{
+    const response = await apiFetch(`/tracks/add-listening/${song.id}`, {
+      method: "PUT",
+    });
+
+    if (response.ok) {
+      currentSongList[currentSongList.indexOf(song)].listeningCount+=1;
+      console.log("Everything is ok");
+    } else {
+      console.error("Failed to add listening the post");
+    }
+  }
 
   const nextSong = () => {
     if (currentSongList.indexOf(currentSong) + 1 < currentSongList.length)
@@ -67,7 +82,7 @@ export const AudioProvider = ({ children }) => {
         }}
         onEnded={() => {
           /*     setIsSongPlayed(false); */
-
+          addListening(currentSong);
           nextSong();
         }}
       ></audio>
