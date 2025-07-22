@@ -3,7 +3,7 @@ import styles from "./main.module.css";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useAPI } from "../../hooks/useApi";
 import NewPost from "./NewPost";
-import { isStoryLiked } from "../../js/functions/functions";
+import { isStoryLiked, formatPostDate } from "../../js/functions/functions";
 
 const Stories = () => {
   const scrollRef = useRef(null);
@@ -233,7 +233,6 @@ const Stories = () => {
   };
   //______________________________________________________________________________
 
-
   return (
     <div className={styles.wrapper}>
       {canScroll.left && (
@@ -263,7 +262,7 @@ const Stories = () => {
                 boxSizing: "border-box",
                 display: "block",
                 padding: 3,
-                backgroundPosition: 'center',
+                backgroundPosition: "center",
               }}
             />
             <div className={styles["storiesbtn-plus"]}></div>
@@ -340,7 +339,6 @@ const Stories = () => {
               ></button>
             )}
 
-
             <div className={styles["storie-bottom"]}>
               <div className={styles["avatar-author"]}>
                 <div className={styles["storie-avatar"]}></div>
@@ -349,8 +347,11 @@ const Stories = () => {
                   <div className={styles["storie-author"]}>
                     {currentStoryGroup[currentStoryIndex].user.username}
                   </div>
+
                   <div className={styles["storie-data"]}>
-                    {currentStoryGroup[currentStoryIndex].createdAt}
+                    {formatPostDate(
+                      currentStoryGroup[currentStoryIndex].createdAt
+                    )}
                   </div>
                 </div>
 
@@ -369,8 +370,6 @@ const Stories = () => {
                 {/* <div>{currentStoryGroup[currentStoryIndex].isLiked}+{currentStoryGroup[currentStoryIndex].likesCount}</div> */}
               </div>
             </div>
-
-
           </div>
         </div>
       )}
