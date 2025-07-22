@@ -23,6 +23,8 @@ const SongItem = ({
   const [isLiked, setIsLiked] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAtpModalOpen, setIsAtpModalOpen] = useState(false);
+  const [isAtpModalOpen1, setIsAtpModalOpen1] = useState(false);
+
   const atpRef = useRef(null);
   const { isLoading } = useAuth0();
   const { setCurrentSong } = useAudio();
@@ -79,6 +81,8 @@ const SongItem = ({
       // Закриваємо модалку Add to playlist, якщо клік поза нею
       if (atpRef.current && !atpRef.current.contains(event.target)) {
         setIsAtpModalOpen(false);
+        setIsAtpModalOpen1(false);
+
       }
       // Закриваємо основне меню, якщо клік поза ним
       if (!event.target.closest(`.${styles["as-more-menu"]}`)) {
@@ -185,6 +189,8 @@ const SongItem = ({
           onSetCurrentSongList();
           setIsMenuOpen(false);
           setIsAtpModalOpen(false);
+          setIsAtpModalOpen1(false);
+
         }}
       >
         {/* <div className={styles.cover}></div> */}
@@ -262,6 +268,14 @@ const SongItem = ({
                         ))}
                       </div>
                     )}
+
+                    {/* {isAtpModalOpen1 && (
+                      <div className={styles["atp-modal"]}>
+                        <div className={styles["atp-item"]}>delete playlist 1</div>
+                        <div className={styles["atp-item"]}>delete playlist 2</div>
+                        <div className={styles["atp-item"]}>delete playlist 3</div>
+                      </div>
+                    )} */}
                   </div>
 
                   <button

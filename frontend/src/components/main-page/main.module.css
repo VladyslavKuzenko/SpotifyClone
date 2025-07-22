@@ -1731,7 +1731,6 @@ html {
   cursor: pointer;
   border: none;
   background-color: transparent;
-  background-color: orange;
 }
 
 .storie-like img {
@@ -1739,7 +1738,9 @@ html {
   height: 29px;
   object-fit: contain;
   display: block;
-
+position: absolute;
+align-self: center;
+transform: translate(-20%, 0%);
   
 }
 
@@ -2607,7 +2608,6 @@ html {
 
 .like-count {
   color: white;
-  background-color: lime;
   font-family: Manrope;
   font-weight: 400;
   font-style: Regular;
@@ -2615,18 +2615,37 @@ html {
   line-height: 100%;
   letter-spacing: 0%;
   text-align: center;
+  width: 100%;
+
 }
 
 .storie-wrap {
-  background-color: red;
   height: 50px;
   width: 50px;
 
-  position: absolute;
-  left: 85%;
+
 
   display: flex;
   flex-direction: column;
-  justify-content: center; 
+  justify-content: space-between; 
   align-items: center;    
+}
+
+.like-delete {
+  position: absolute;
+  left: 80%;
+  display: flex;
+  gap: 40px;
+}
+
+.delete-stories {
+  border: none;
+  cursor: pointer;
+    width: 29px;
+  height: 29px;
+  background-color: transparent;
+  background-image: url(/public/images/trash.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
 }
