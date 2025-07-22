@@ -15,11 +15,12 @@ export default function Likes({ exit }) {
   const [songsFullList, setSongsFullList] = useState([]);
   // const [isModalOpen, setIsModalOpen] = useState(false);
   const [playlists, setPlaylists] = useState([]);
+  const [currentPlaylist, setCurrentPlaylist] = useState();
   // const [titlePlaylist, setTitlePlaylist] = useState("");
   const [sortType, setSortType] = useState("recent");
   const dropdownRef = useRef();
   // Hooks
-  const { apiFetch,user } = useAPI();
+  const { apiFetch, user } = useAPI();
   const { setCurrentSong, setCurrentSongList } = useAudio();
   const { isLoading } = useAuth0();
 
@@ -35,8 +36,8 @@ export default function Likes({ exit }) {
   }, []);
 
   useEffect(() => {
-    console.log("Likes Use Effect. User: ",user)
-    console.log("Likes Use Effect. IsLoading: ",isLoading)
+    console.log("Likes Use Effect. User: ", user);
+    console.log("Likes Use Effect. IsLoading: ", isLoading);
     if (!isLoading) {
       fetchPlaylists();
     }
@@ -55,14 +56,18 @@ export default function Likes({ exit }) {
     const response = await apiFetch(`/playlists/playlists/${user.sub}`);
     const body = await response.json();
     setPlaylists(body);
+    setCurrentPlaylist(body[0]);
     handleGetCurrentPlaylistTracks(body.find((i) => i.title === "Like"));
   };
 
   const handleGetCurrentPlaylistTracks = async (currentPlaylist) => {
-    const response = await apiFetch(`/tracks/tracks-by-postTime/${currentPlaylist.id}`);
+    const response = await apiFetch(
+      `/tracks/tracks-by-postTime/${currentPlaylist.id}`
+    );
     const body = await response.json();
     setSongs(body);
     setSongsFullList(body);
+    setCurrentPlaylist(currentPlaylist);
   };
   return (
     <div>
@@ -100,9 +105,16 @@ export default function Likes({ exit }) {
             </div>
 
             <div className={styles["middle"]}>
-              <div className={styles["likes-photo"]}> </div>
+              <img
+                className={styles["likes-photo"]}
+                src={songsFullList[0]?.imageUrl}
+                alt=""
+              />
+              {/* <div className={styles["likes-photo"]}> </div> */}
               <div className={styles["likes-play"]}>
-                <div className={styles["likes-text"]}>Likes</div>
+                <div className={styles["likes-text"]}>
+                  {currentPlaylist?.title}
+                </div>
                 <button
                   className={styles["play-btn"]}
                   onClick={() => {
@@ -124,6 +136,8 @@ export default function Likes({ exit }) {
                     key={i.id}
                     song={i}
                     onSetCurrentSongList={() => setCurrentSongList(songs)}
+                    moreInfo
+                    currentPlaylist={currentPlaylist}
                   />
                 ))}
               </div>

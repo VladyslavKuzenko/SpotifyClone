@@ -16,6 +16,7 @@ const SongItem = ({
   moreInfo,
   onSetCurrentSongList,
   isPlaylistsChangesControl,
+  currentPlaylist
 }) => {
   const navigate = useNavigate();
   const [duration, setDuration] = useState(0);
@@ -119,37 +120,56 @@ const SongItem = ({
     //   `/playlists/is-in-playlist/${playlistOther.id}/${song.id}`
     // );
     // const isInPlaylist = await responseIsInPlaylist.json();
-    console.log("playlist: ", playlistOther);
-    console.log("isInPlaylist: ", playlistOther.isInPlaylist);
-    const responseOther = await apiFetch(
-      `/playlists/${playlistOther.id}/tracks/${song.id}`,
-      {
-        method: playlistOther.isInPlaylist ? "DELETE" : "POST",
-      }
-    );
+    // console.log("playlist: ", playlistOther);
+    // console.log("isInPlaylist: ", playlistOther.isInPlaylist);
 
-    // if (!isInPlaylist && !isLiked) {
-    //   const playlistLike = body.find((i) => i.title === "Like");
-    //   const responseLike = await apiFetch(
-    //     `/playlists/${playlistLike.id}/tracks/${song.id}`,
-    //     {
-    //       method: "POST",
-    //     }
-    //   );
-    //   if (responseLike.ok) {
-    //     setIsLiked(!isLiked);
-    //     isPlaylistsChangesControl?.setIsPlaylistsChanges(true);
-    //     console.log("Successfully add to playlist Like");
-    //   } else {
-    //     console.error("Failed to like/unlike the song");
-    //   }
-    // }
-
-    if (responseOther.ok){
-      playlists[playlists.indexOf(playlistOther)].isInPlaylist=!playlistOther.isInPlaylist;
-      console.log("Successfully add to playlist");
-    } 
-    else console.error("Failed to add/delete the song from playlist");
+    if (!playlistOther.isInPlaylist) {
+      const responseOther = await apiFetch(
+        `/playlists/${playlistOther.id}/tracks/${song.id}`,
+        {
+          method: "POST",
+        }
+      );
+      // if (!isInPlaylist && !isLiked) {
+      //   const playlistLike = body.find((i) => i.title === "Like");
+      //   const responseLike = await apiFetch(
+      //     `/playlists/${playlistLike.id}/tracks/${song.id}`,
+      //     {
+      //       method: "POST",
+      //     }
+      //   );
+      //   if (responseLike.ok) {
+      //     setIsLiked(!isLiked);
+      //     isPlaylistsChangesControl?.setIsPlaylistsChanges(true);
+      //     console.log("Successfully add to playlist Like");
+      //   } else {
+      //     console.error("Failed to like/unlike the song");
+      //   }
+      // }
+      if (responseOther.ok) {
+        playlists[playlists.indexOf(playlistOther)].isInPlaylist =
+          !playlistOther.isInPlaylist;
+        console.log("Successfully add to playlist");
+      } else console.error("Failed to add/delete the song from playlist");
+    }
+  };
+  
+  const handleDeleteFromPlaylistClick = async (playlistItem) => {
+    const playlistOther = playlists.find((i) => i.title === playlistItem.title);
+    if (playlistOther.isInPlaylist) {
+      const responseOther = await apiFetch(
+        `/playlists/${playlistOther.id}/tracks/${song.id}`,
+        {
+          method: "DELETE",
+        }
+      );
+      
+      if (responseOther.ok) {
+        playlists[playlists.indexOf(playlistOther)].isInPlaylist =
+          !playlistOther.isInPlaylist;
+        console.log("Successfully removed from playlist");
+      } else console.error("Failed to add/delete the song from playlist");
+    }
   };
 
   if (isLoading) {
@@ -253,11 +273,7 @@ const SongItem = ({
                     Go to artist
                   </button>
 
-                   <button
-                    className={styles["dropdown-item"]}
-                  >
-                    Delete
-                  </button>
+                  {currentPlaylist&&<button className={styles["dropdown-item"]} onClick={()=>handleDeleteFromPlaylistClick(currentPlaylist)}>Delete</button>}
                 </div>
               )}
             </div>
