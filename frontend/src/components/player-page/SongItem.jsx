@@ -26,6 +26,16 @@ const SongItem = ({
   const { isLoading } = useAuth0();
   const { setCurrentSong } = useAudio();
   const { apiFetch, user } = useAPI();
+  const [playlists, setPlaylists] = useState([]);
+
+  ////////////////////////////////////////КОД ДУБЛЮЄТЬСЯ , ВИДАЛИТИ ПІСЛЯ РЕАЛІЗАЦІЇ UserInfoProvider, це має бути там
+  const fetchPlaylists = async () => {
+    const response = await apiFetch(`/playlists/playlists/${user.sub}`);
+    const body = await response.json();
+    setPlaylists(body);
+  };
+
+  /////////////////////////////
 
   useEffect(() => {
     const audio = new Audio();
@@ -36,8 +46,8 @@ const SongItem = ({
   }, [song]);
 
   useEffect(() => {
+    if (isLoading) return;
     const checkLiked = async () => {
-      if (isLoading) return;
       // if (isAuthenticated && user) {
       // console.log("checkLiked user: ", user);
       // console.log("checkLiked song: ", song);
@@ -46,6 +56,7 @@ const SongItem = ({
     };
     // };
     checkLiked();
+    fetchPlaylists();
   }, [isLoading]);
 
   useEffect(() => {
@@ -84,6 +95,46 @@ const SongItem = ({
       console.error("Failed to like/unlike the song");
     }
   };
+
+  const handleAddToPlaylistClick = async (playlistItem) => {
+    const responsePlaylist = await apiFetch(`/playlists/playlists/${user.sub}`);
+    const body = await responsePlaylist.json();
+
+    const playlistOther = body.find((i) => i.title === playlistItem.title);
+    const responseIsInPlaylist = await apiFetch(
+      `/playlists/is-in-playlist/${playlistOther.id}/${song.id}`
+    );
+    const isInPlaylist = await responseIsInPlaylist.json();
+    console.log("playlist: ", playlistOther);
+    console.log("isInPlaylist: ", isInPlaylist);
+    const responseOther = await apiFetch(
+      `/playlists/${playlistOther.id}/tracks/${song.id}`,
+      {
+        method: isInPlaylist ? "DELETE" : "POST",
+      }
+    );
+
+    // if (!isInPlaylist && !isLiked) {
+    //   const playlistLike = body.find((i) => i.title === "Like");
+    //   const responseLike = await apiFetch(
+    //     `/playlists/${playlistLike.id}/tracks/${song.id}`,
+    //     {
+    //       method: "POST",
+    //     }
+    //   );
+    //   if (responseLike.ok) {
+    //     setIsLiked(!isLiked);
+    //     isPlaylistsChangesControl?.setIsPlaylistsChanges(true);
+    //     console.log("Successfully add to playlist Like");
+    //   } else {
+    //     console.error("Failed to like/unlike the song");
+    //   }
+    // }
+
+    if (responseOther.ok) console.log("Successfully add to playlist");
+    else console.error("Failed to add/delete the song from playlist");
+  };
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -121,11 +172,13 @@ const SongItem = ({
                   handleLikeClick();
                 }}
                 style={{
-                  backgroundImage: `url(${isLiked ? '/images/heartred.svg' : '/images/heart.svg'})`,
-                  backgroundSize: '19px 19px',
-                  backgroundRepeat: 'no-repeat',
-                  backgroundPosition: 'center',
-                  cursor: 'pointer'
+                  backgroundImage: `url(${
+                    isLiked ? "/images/heartred.svg" : "/images/heart.svg"
+                  })`,
+                  backgroundSize: "19px 19px",
+                  backgroundRepeat: "no-repeat",
+                  backgroundPosition: "center",
+                  cursor: "pointer",
                 }}
               ></div>
             </div>
@@ -161,12 +214,15 @@ const SongItem = ({
 
                     {isAtpModalOpen && (
                       <div className={styles["atp-modal"]}>
-                        <div className={styles["atp-item"]}>My playlist 1</div>
-                        <div className={styles["atp-item"]}>My playlist 2</div>
-                        <div className={styles["atp-item"]}>My playlist 3</div>
-                        <div className={styles["atp-item"]}>My playlist 4</div>
-                        <div className={styles["atp-item"]}>My playlist 5</div>
-                        <div className={styles["atp-item"]}>My playlist 6</div>
+                        {playlists.map((item, index) => (
+                          <div
+                            key={index}
+                            className={styles["atp-item"]}
+                            onClick={() => handleAddToPlaylistClick(item)}
+                          >
+                            {item.title}
+                          </div>
+                        ))}
                       </div>
                     )}
                   </div>
