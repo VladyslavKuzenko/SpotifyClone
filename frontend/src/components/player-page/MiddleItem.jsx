@@ -26,7 +26,13 @@ export default function MiddleItem({
   const [currentArtist, setCurrentArtist] = useState(null);
   const { isAuthenticated, isLoading } = useAuth0();
   const [openMenuSongId, setOpenMenuSongId] = useState(null);
-  const { setCurrentSong, setCurrentSongList, setIsRandomList } = useAudio();
+  const {
+    setCurrentSong,
+    setCurrentSongList,
+    setIsRandomList,
+    isListeningCountIncremented,
+    setIsListeningCountIncremented,
+  } = useAudio();
   // Вкладка для артиста: 'songs' або 'albums'
   const [activeArtistTab, setActiveArtistTab] = useState("songs");
 
@@ -109,6 +115,14 @@ export default function MiddleItem({
   useEffect(() => {
     console.log("Songs changes: ", songs);
   }, [songs]);
+
+  useEffect(() => {
+    if (!currentArtist) return;
+    if (isListeningCountIncremented) {
+      currentArtist.listeningCount += 1;
+      setIsListeningCountIncremented(false);
+    }
+  }, [isListeningCountIncremented]);
 
   const nextArtist = () => {
     if (artists && artists.indexOf(currentArtist) + 1 < artists.length) {
@@ -325,7 +339,10 @@ export default function MiddleItem({
                   key={song.id}
                   song={song}
                   moreInfo
-                  onSetCurrentSongList={() =>{setIsRandomList(false); setCurrentSongList(songs)}}
+                  onSetCurrentSongList={() => {
+                    setIsRandomList(false);
+                    setCurrentSongList(songs);
+                  }}
                   isPlaylistsChangesControl={isPlaylistsChangesControl}
                   openMenu={openMenuSongId === song.id}
                   toggleMenu={() =>

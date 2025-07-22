@@ -9,6 +9,7 @@ export const AudioProvider = ({ children }) => {
   const [originalSongList, setOriginalSongList] = useState("");
   const [isRandomList, setIsRandomList] = useState(false);
   const [isLoop, setIsLoop] = useState(false);
+  const [isListeningCountIncremented,setIsListeningCountIncremented]=useState(false);
   const audioRef = useRef(null);
   const [isSongPlayed, setIsSongPlayed] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
@@ -28,6 +29,7 @@ export const AudioProvider = ({ children }) => {
       console.log("current list", originalSongList);
     }
     console.log(isRandomList);
+    
   }, [isRandomList]);
 
   // useEffect(() => {
@@ -35,12 +37,13 @@ export const AudioProvider = ({ children }) => {
   // }, [currentSongList]);
 
   const addListening = async (song) => {
-    const response = await apiFetch(`/tracks/add-listening/${song.id}`, {
+    const response = await apiFetch(`/tracks/add-listening/${song.id}/${song.artist.id}`, {
       method: "PUT",
     });
 
     if (response.ok) {
-      currentSongList[currentSongList.indexOf(song)].listeningCount += 1;
+      song.listeningCount += 1;
+      setIsListeningCountIncremented(true);
       console.log("Everything is ok");
     } else {
       console.error("Failed to add listening the post");
@@ -116,6 +119,8 @@ export const AudioProvider = ({ children }) => {
         setIsRandomList,
         isLoop,
         setIsLoop,
+        isListeningCountIncremented,
+        setIsListeningCountIncremented
       }}
     >
       <audio
