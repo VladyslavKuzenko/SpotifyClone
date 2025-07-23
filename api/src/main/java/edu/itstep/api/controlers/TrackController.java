@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.net.URISyntaxException;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
@@ -79,28 +81,35 @@ public class TrackController {
     @GetMapping("/top")
     public List<Track> getAllByOrderByListeningCountDescWithParams(@RequestParam Integer first, @RequestParam Integer count, @RequestParam(required = false, defaultValue = "all") String period) {
         Pageable pageable = PageRequest.of(first, count);
-        LocalDateTime from;
+        LocalDateTime localDateTime;
+        Instant from;
+
+
         switch (period.toLowerCase()) {
             case "day":
-                from = LocalDateTime.now().minusDays(1);
+                localDateTime = LocalDateTime.now().minusDays(1);
                 break;
             case "week":
-                from = LocalDateTime.now().minusWeeks(1);
+                localDateTime = LocalDateTime.now().minusWeeks(1);
                 break;
             case "month":
-                from = LocalDateTime.now().minusMonths(1);
+                localDateTime = LocalDateTime.now().minusMonths(1);
                 break;
             case "year":
-                from = LocalDateTime.now().minusYears(1);
+                localDateTime = LocalDateTime.now().minusYears(1);
                 break;
             default:
-                from = null;
+                localDateTime = null;
                 break;
         }
-        if (from == null)
+
+        if (localDateTime == null)
             return trackRepository.findAllByOrderByListeningCountDesc(pageable);
-        else
+        else{
+            from = localDateTime.atZone(ZoneId.of("UTC")).toInstant();;
             return trackRepository.findByCreatedAtAfterOrderByListeningCountDesc(from, pageable);
+
+        }
     }
 
     @GetMapping("/lastTrack")

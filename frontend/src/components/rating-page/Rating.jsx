@@ -54,6 +54,7 @@ export default function Rating() {
       default:
         break;
     }
+    console.log(`/tracks/top?first=0&count=10&period=${period}`)
     const response = await apiFetch(`/tracks/top?first=0&count=10&period=${period}`);
     const data = await response.json();
     setTracks(data);
