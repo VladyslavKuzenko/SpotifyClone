@@ -16,7 +16,7 @@ const AddAlbumModal = ({ onClose }) => {
   //   const [songs, setSongs] = useState([{ id: Date.now() }]);
   const imageInputRef = useRef(null);
   const songInputRef = useRef(null);
-  const { apiFetch, apiAxiosPost,user } = useAPI();
+  const { apiFetch, apiAxiosPost, user } = useAPI();
 
   const genres = ["Hip hop", "Pop", "Rock", "Jazz", "Electronic", "Reggae"];
 
@@ -61,7 +61,7 @@ const AddAlbumModal = ({ onClose }) => {
               <img
                 className={mainPageStyles["preview-image"]}
                 src={URL.createObjectURL(albumImage)}
-                // alt="preview"
+              // alt="preview"
               />
             )}
           </div>
@@ -120,26 +120,33 @@ const AddAlbumModal = ({ onClose }) => {
 
           <div className={styles["songs-array"]}>
             {songList.map((song, index) => (
-              <div key={song.id} className={styles["songs-svyazka"]}>
-                <input
-                  type="text"
-                  className={styles["songname"]}
-                  placeholder={`Name of song #${index + 1}`}
-                  value={songTitles[index]}
-                  onChange={(e) => {
-                    const updatedItems = [...songTitles]; // створюємо копію масиву
-                    updatedItems[index] = e.target.value; // змінюємо значення за індексом
-                    setSongTitles(updatedItems);
-                  }}
-                />
-                <div className={styles["music-delete"]}>
-                  <button className={styles["music-file"]}>Music file</button>
-                  <button
-                    className={styles["delete-song-btn"]}
-                    onClick={() => removeSong(song)}
-                  >
-                    ×
-                  </button>
+              <div key={song.id || song.name} className={styles["flex-position"]}>
+                <div className={styles["add-photo"]}></div>
+
+                <div className={styles["songs-svyazka"]}>
+                  <input
+                    type="text"
+                    className={styles["songname"]}
+                    placeholder={`Name of song #${index + 1}`}
+                    value={songTitles[index]}
+                    onChange={(e) => {
+                      const updatedItems = [...songTitles];
+                      updatedItems[index] = e.target.value;
+                      setSongTitles(updatedItems);
+                    }}
+                  />
+
+                  <div className={styles["music-delete"]}>
+                    <button className={styles["music-file"]}>
+                      {song.name || "Music file"}
+                    </button>
+                    <button
+                      className={styles["delete-song-btn"]}
+                      onClick={() => removeSong(song)}
+                    >
+                      ×
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}
@@ -152,21 +159,19 @@ const AddAlbumModal = ({ onClose }) => {
                 const newFiles = Array.from(e.target.files);
                 if (songList.length + newFiles.length > 10) return;
                 setSongList([...songList, ...newFiles]);
-                console.log("Song List", songList);
               }}
               accept="audio/*"
               multiple
             />
+
             <button
               className={styles["add-song-btn"]}
-              onClick={() => {
-                songInputRef.current.click();
-                // addSong();
-              }}
+              onClick={() => songInputRef.current.click()}
             >
               +
             </button>
           </div>
+
 
           <div className={styles["cancel-create"]}>
             <button className={styles["cancel"]} onClick={onClose}>
