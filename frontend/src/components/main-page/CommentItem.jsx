@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./main.module.css";
+import { formatPostDate, isPostLikedFunc } from "../../js/functions/functions";
 
 export default function CommentItem({ comment }) {
   return (
@@ -13,7 +14,7 @@ export default function CommentItem({ comment }) {
             <span className={styles.message1}>{comment.text}</span>
           </div>
         </div>
-        <div className={styles.commentTime}>{comment.createdAt}</div>
+        <div className={styles.commentTime}>{formatPostDate(comment.createdAt)}</div>
       </div>
     </div>
   );
