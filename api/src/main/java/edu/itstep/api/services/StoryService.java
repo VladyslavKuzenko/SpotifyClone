@@ -4,10 +4,12 @@ import edu.itstep.api.models.Story;
 import edu.itstep.api.models.User;
 import edu.itstep.api.repositories.StoryRepository;
 import edu.itstep.api.repositories.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -43,5 +45,23 @@ public class StoryService {
         Set<User> followings = user.getFollowings();
         followings.add(user);
         return storyRepository.findStoriesByFollowings(followings);
+    }
+
+    public void deleteById(Long storyId) {
+        Optional<Story> storyOptional = storyRepository.findById(storyId);
+
+        if (storyOptional.isPresent()) {
+            Story story = storyOptional.get();
+
+            for (User user : story.getLikedBy()) {
+                user.getLikedStory().remove(story);
+            }
+
+            story.getLikedBy().clear();
+
+            storyRepository.delete(story);
+        } else {
+            throw new EntityNotFoundException("Story not found with id: " + storyId);
+        }
     }
 }

@@ -434,10 +434,13 @@ const Stories = () => {
                       {currentStoryGroup[currentStoryIndex]?.likesCount}
                     </div>
                   </div>
-                  <button
-                    className={styles["delete-stories"]}
-                    onClick={openDeleteConfirmModal}
-                  ></button>
+                  {currentStoryGroup[currentStoryIndex]?.user.id ===
+                    user?.sub && (
+                    <button
+                      className={styles["delete-stories"]}
+                      onClick={openDeleteConfirmModal}
+                    ></button>
+                  )}
                 </div>
 
                 {/* <div className={styles["storie-like"]} onClick={()=>submiteUserLike(currentStoryGroup[currentStoryIndex])}>{currentStoryGroup[currentStoryIndex].isLiked}+{currentStoryGroup[currentStoryIndex].likesCount}</div> */}
