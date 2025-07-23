@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import styles from "./MyProfile.module.css";
 import mainPageStyles from "../main-page/main.module.css";
 import { useAPI } from "../../hooks/useApi";
-import { useAuth0 } from "@auth0/auth0-react";
 import { submitAlbum } from "../../js/functions/functions";
 import { useAudio } from "../../hooks/useAudio";
 
@@ -11,26 +10,33 @@ const AddAlbumModal = ({ onClose }) => {
   const [selectedGenre, setSelectedGenre] = useState("Select genre");
   const genreRef = useRef(null);
   const [albumImage, setAlbumImage] = useState(null);
-  const [songTitles, setSongTitles] = useState("");
+  const [songTitles, setSongTitles] = useState([]);
   const [songList, setSongList] = useState([]);
-  const [albumTitle, setAlbumTitle] = useState([]);
-  //   const [songs, setSongs] = useState([{ id: Date.now() }]);
+  const [albumTitle, setAlbumTitle] = useState("");
   const imageInputRef = useRef(null);
   const songInputRef = useRef(null);
   const { apiFetch, apiAxiosPost, user } = useAPI();
   const { genres } = useAudio();
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
+
+
 
   const handleSelectGenre = (genre) => {
     setSelectedGenre(genre);
     setShowGenreMenu(false);
   };
 
-  //   const addSong = () => {
-  //     setSongs((prev) => [...prev, { id: Date.now() }]);
-  //   };
-
   const removeSong = (currentSong) => {
     setSongList((prev) => prev.filter((song) => song !== currentSong));
+    setSongTitles((prev) => {
+      const index = songList.indexOf(currentSong);
+      if (index === -1) return prev;
+      const newTitles = [...prev];
+      newTitles.splice(index, 1);
+      return newTitles;
+    });
   };
 
   useEffect(() => {
@@ -51,8 +57,45 @@ const AddAlbumModal = ({ onClose }) => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const handleCreateClick = () => {
+    setIsConfirmModalOpen(true);
+  };
+
+  const handleConfirmUpload = async () => {
+    setIsUploading(true);
+    try {
+      await submitAlbum(
+        albumTitle,
+        songTitles,
+        songList,
+        albumImage,
+        selectedGenre,
+        user?.sub,
+        apiFetch,
+        apiAxiosPost
+      );
+      setIsConfirmModalOpen(false);
+      onClose();
+    } catch (error) {
+      alert("Upload failed!");
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
+  const handleCancelConfirm = () => {
+    setIsConfirmModalOpen(false);
+  };
+
   return (
     <div className={styles["amm-overlay"]}>
+      {isUploading && (
+        <div className={mainPageStyles["upload-modal"]}>
+          <div className={mainPageStyles["upload-spinner"]}></div>
+          <div className={mainPageStyles["upload-text"]}>Uploading...</div>
+        </div>
+      )}
+
       <div className={styles["abm-modal"]}>
         <div className={styles["amm-left"]}>
           <h3 className={styles["h3"]}>Add album</h3>
@@ -61,7 +104,7 @@ const AddAlbumModal = ({ onClose }) => {
               <img
                 className={mainPageStyles["preview-image"]}
                 src={URL.createObjectURL(albumImage)}
-                // alt="preview"
+                alt="preview"
               />
             )}
           </div>
@@ -72,7 +115,6 @@ const AddAlbumModal = ({ onClose }) => {
             onChange={(e) => setAlbumImage(e.target.files[0])}
             accept="image/*"
           />
-
           <button
             className={styles["cover-btn"]}
             onClick={() => imageInputRef.current.click()}
@@ -87,9 +129,7 @@ const AddAlbumModal = ({ onClose }) => {
             className={styles["amm-name"]}
             placeholder="Name of album"
             value={albumTitle}
-            onChange={(e) => {
-              setAlbumTitle(e.target.value);
-            }}
+            onChange={(e) => setAlbumTitle(e.target.value)}
           />
 
           <div className={styles["amm-genre-container"]} ref={genreRef}>
@@ -120,26 +160,33 @@ const AddAlbumModal = ({ onClose }) => {
 
           <div className={styles["songs-array"]}>
             {songList.map((song, index) => (
-              <div key={song.id} className={styles["songs-svyazka"]}>
-                <input
-                  type="text"
-                  className={styles["songname"]}
-                  placeholder={`Name of song #${index + 1}`}
-                  value={songTitles[index]}
-                  onChange={(e) => {
-                    const updatedItems = [...songTitles]; // створюємо копію масиву
-                    updatedItems[index] = e.target.value; // змінюємо значення за індексом
-                    setSongTitles(updatedItems);
-                  }}
-                />
-                <div className={styles["music-delete"]}>
-                  <button className={styles["music-file"]}>Music file</button>
-                  <button
-                    className={styles["delete-song-btn"]}
-                    onClick={() => removeSong(song)}
-                  >
-                    ×
-                  </button>
+              <div key={song.name || song.id || index} className={styles["flex-position"]}>
+                <div className={styles["add-photo"]}></div>
+
+                <div className={styles["songs-svyazka"]}>
+                  <input
+                    type="text"
+                    className={styles["songname"]}
+                    placeholder={`Name of song #${index + 1}`}
+                    value={songTitles[index] || ""}
+                    onChange={(e) => {
+                      const updatedTitles = [...songTitles];
+                      updatedTitles[index] = e.target.value;
+                      setSongTitles(updatedTitles);
+                    }}
+                  />
+
+                  <div className={styles["music-delete"]}>
+                    <button className={styles["music-file"]}>
+                      {song.name || "Music file"}
+                    </button>
+                    <button
+                      className={styles["delete-song-btn"]}
+                      onClick={() => removeSong(song)}
+                    >
+                      ×
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}
@@ -152,17 +199,15 @@ const AddAlbumModal = ({ onClose }) => {
                 const newFiles = Array.from(e.target.files);
                 if (songList.length + newFiles.length > 10) return;
                 setSongList([...songList, ...newFiles]);
-                console.log("Song List", songList);
+                setSongTitles((prev) => [...prev, ...newFiles.map(() => "")]);
               }}
               accept="audio/*"
               multiple
             />
+
             <button
               className={styles["add-song-btn"]}
-              onClick={() => {
-                songInputRef.current.click();
-                // addSong();
-              }}
+              onClick={() => songInputRef.current.click()}
             >
               +
             </button>
@@ -172,26 +217,48 @@ const AddAlbumModal = ({ onClose }) => {
             <button className={styles["cancel"]} onClick={onClose}>
               Cancel
             </button>
-            <button
-              className={styles["create"]}
-              onClick={() =>
-                submitAlbum(
-                  albumTitle,
-                  songTitles,
-                  songList,
-                  albumImage,
-                  selectedGenre,
-                  user?.sub,
-                  apiFetch,
-                  apiAxiosPost
-                )
-              }
-            >
+            <button className={styles["create"]} onClick={handleCreateClick}>
               Create
             </button>
           </div>
         </div>
       </div>
+
+      {/* Модальне підтвердження */}
+      {isConfirmModalOpen && (
+        <div className={styles["confirm-overlay"]}>
+          <div className={styles["confirm-modal"]}>
+            <p className={styles["confirm-text"]}>
+              Підтверджую, що я є власником цього альбому або маю дозвіл на його публікацію.
+              Уся відповідальність за авторські права лежить на мені.
+            </p>
+
+            <label className={styles["confirm-checkbox-label"]}>
+              <input
+                type="checkbox"
+                checked={isCheckboxChecked}
+                onChange={() => setIsCheckboxChecked(!isCheckboxChecked)}
+              />
+              Я погоджуюсь
+            </label>
+
+            <div className={styles["confirm-actions"]}>
+              <button className={styles["cancel"]} onClick={handleCancelConfirm}>
+                Скасувати
+              </button>
+              <button
+                className={`${styles["confirm-button"]} ${
+                  !isCheckboxChecked ? styles["disabled-button"] : ""
+                }`}
+                disabled={!isCheckboxChecked}
+                onClick={handleConfirmUpload}
+              >
+                Підтвердити
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -109,8 +109,15 @@ artist.twitterLink=twitterLink;
             <button onClick={onClose} className={styles["eam-cancel"]}>
               Cancel
             </button>
-            <button className={styles["eam-save"]} onClick={submitAbout}>Save</button>
-          </div>
+<button
+  className={styles["eam-save"]}
+  onClick={() => {
+    submitAbout();
+    onClose();
+  }}
+>
+  Save
+</button>          </div>
         </div>
       </div>
     </div>

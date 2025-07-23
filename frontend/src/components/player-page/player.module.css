@@ -490,9 +490,9 @@
   flex-direction: column;
   justify-content: center;
   height: 100%;
-  width: 45%;           
+  width: 45%;
   text-indent: 30px;
-  overflow: hidden;     
+  overflow: hidden;
 }
 
 
@@ -505,12 +505,14 @@
   text-align: start;
   color: white;
 
-  white-space: nowrap;        
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 
-  width: 100%;          /* ← обов’язково */
-  display: block;       /* або inline-block */
+  width: 100%;
+  /* ← обов’язково */
+  display: block;
+  /* або inline-block */
 }
 
 .artist {
@@ -918,7 +920,7 @@
   line-height: 100%;
   letter-spacing: 0%;
   color: #575757;
-  border:none;
+  border: none;
 }
 
 .dropdown-itemup1 {
@@ -1253,14 +1255,16 @@
   background-repeat: no-repeat;
   background-position: center;
 }
+
 .btn1ls {
   background-image: url(/public/images/Group\ 1171275925\ \(1\).svg);
   background-size: 30px;
   background-repeat: no-repeat;
   background-position: center;
 }
+
 .btn2ls {
-    background-image: url(/public/images/pause31333E.png);
+  background-image: url(/public/images/pause31333E.png);
   background-repeat: no-repeat;
   background-position: center;
   width: 81px;
@@ -1292,6 +1296,7 @@
   background-repeat: no-repeat;
   background-position: center;
 }
+
 .ls-wrap {
   width: 81px;
   height: 100%;
@@ -1310,6 +1315,7 @@
   position: relative;
   margin-top: 20px;
 }
+
 .bmr-bar-fill {
   height: 100%;
   position: absolute;
@@ -1457,8 +1463,9 @@
   gap: 20px;
 
   overflow-x: auto;
-  scrollbar-width: none;
-
+  overflow-y: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: #ffffff transparent;
 
 }
 
@@ -1712,4 +1719,3 @@
   background-repeat: no-repeat;
   background-position: center;
 }
-

@@ -3,6 +3,7 @@ import styles from "../main-page/main.module.css";
 import MusicPlayer from "../sharedComponents/MusicPlayer";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAPI } from "../../hooks/useApi";
+import { useAudio } from "../../hooks/useAudio";
 
 const LeftSide = () => {
   const navigate = useNavigate();
@@ -10,6 +11,7 @@ const LeftSide = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [userFullInfo, setUserFullInfo] = useState();
   const { user, apiFetch } = useAPI();
+  const { currentSong } = useAudio();
 
   const fetchUser = async () => {
     const respose = await apiFetch(`/users/${user.sub}`);
@@ -110,7 +112,7 @@ const LeftSide = () => {
         </button>
       </div>
 
-      <MusicPlayer isHovered={isHovered} />
+      {currentSong && <MusicPlayer isHovered={isHovered} />}
     </div>
   );
 };
