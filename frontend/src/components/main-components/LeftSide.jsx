@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import styles from "../main-page/main.module.css";
 import MusicPlayer from "../sharedComponents/MusicPlayer";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useAudio } from "../../hooks/useAudio";
 
 const LeftSide = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [isHovered, setIsHovered] = useState(false);
+  const { currentSong } = useAudio();
 
   return (
     <div className={styles["left-side"]} onMouseEnter={() => setIsHovered(true)}
@@ -62,8 +64,8 @@ const LeftSide = () => {
             className={`${styles.label} ${location.pathname === "/rating" ? styles.activeLabel : ""}`}
           >
             Rating
-          </span>       
-           </button>
+          </span>
+        </button>
 
         <button className={styles["menu-btn"]} onClick={() => navigate("/chat")}>
           <span className={`${styles.icon} ${styles.chatIcon}`}></span>
@@ -71,7 +73,7 @@ const LeftSide = () => {
         </button>
       </div>
 
-      <MusicPlayer isHovered={isHovered} />
+      {currentSong && <MusicPlayer isHovered={isHovered} />}
     </div>
   );
 };

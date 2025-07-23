@@ -1304,3 +1304,7 @@
     background-size: contain;
     border: none;
 }
+
+.full-add {
+    display: flex;
+}
