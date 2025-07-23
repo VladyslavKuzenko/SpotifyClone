@@ -157,6 +157,7 @@ export default function Rating() {
       <div className={styles["raitinig-container"]}>
         <div className={styles["upper-platform"]}>
           <div className={styles["upper-left"]}>
+            {/* <img src={tracks[0]?.imageUrl}/> */}
             <div className={styles["top-content"]}>
               <div className={styles["text1"]}>Popular Tracks</div>
               <div className={styles["btn-container"]}>
@@ -222,7 +223,6 @@ export default function Rating() {
               </div>
             </div>
 
-            {/* Example Content */}
             <div className={styles["info-song"]}>
               <div className={styles["info-place"]}></div>
               <div className={styles["info-content"]}>
@@ -252,7 +252,8 @@ export default function Rating() {
                   >
                     <div className={styles["item-place"]}>{index + 1}</div>
                     <div className={styles["item-info"]}>
-                      <div className={styles["item-photo"]}></div>
+                      {/* <div className={styles["item-photo"]}></div> */}
+                      <img  className={styles["item-photo"]} src={item.imageUrl}/>
                       <div className={styles["inside-info"]}>
                         <div className={styles["inside-name"]}>
                           {item.title}
@@ -277,7 +278,8 @@ export default function Rating() {
           <div className={styles["bottom-content"]}>
             <div className={styles["raite-wrapper"]}>
               <div className={styles["raite-item1"]}>
-                <div className={styles["raite-photo"]}></div>
+                {/* <div className={styles["raite-photo"]}></div> */}
+                <img className={styles["raite-photo"]} src={artist[0]?.user.avatarImgUrl}/> 
                 <div className={styles["raite-center"]}>
                   <div className={styles["raite-text"]}>
                     {artist[0]?.user?.username}
@@ -292,7 +294,8 @@ export default function Rating() {
 
             <div className={styles["raite-wrapper"]}>
               <div className={styles["raite-item2"]}>
-                <div className={styles["raite-photo"]}></div>
+                {/* <div className={styles["raite-photo"]}></div> */}
+                <img className={styles["raite-photo"]} src={artist[1]?.user.avatarImgUrl}/> 
                 <div className={styles["raite-center"]}>
                   <div className={styles["raite-text"]}>
                     {artist[1]?.user?.username}
@@ -307,7 +310,8 @@ export default function Rating() {
 
             <div className={styles["raite-wrapper"]}>
               <div className={styles["raite-item3"]}>
-                <div className={styles["raite-photo"]}></div>
+                <img className={styles["raite-photo"]} src={artist[2]?.user.avatarImgUrl}/> 
+                {/* <div className={styles["raite-photo"]}></div> */}
                 <div className={styles["raite-center"]}>
                   <div className={styles["raite-text"]}>
                     {artist[2]?.user?.username}
@@ -322,7 +326,9 @@ export default function Rating() {
 
             <div className={styles["raite-wrapper"]}>
               <div className={styles["raite-item4"]}>
-                <div className={styles["raite-photo"]}></div>
+                {/* <div className={styles["raite-photo"]}></div> */}
+                <img className={styles["raite-photo"]} src={artist[3]?.user.avatarImgUrl}/> 
+
                 <div className={styles["raite-center"]}>
                   <div className={styles["raite-text"]}>
                     {artist[3]?.user?.username}
@@ -337,7 +343,9 @@ export default function Rating() {
 
             <div className={styles["raite-wrapper"]}>
               <div className={styles["raite-item5"]}>
-                <div className={styles["raite-photo"]}></div>
+                {/* <div className={styles["raite-photo"]}></div> */}
+                <img className={styles["raite-photo"]} src={artist[4]?.user.avatarImgUrl}/> 
+
                 <div className={styles["raite-center"]}>
                   <div className={styles["raite-text"]}>
                     {artist[4]?.user?.username}
