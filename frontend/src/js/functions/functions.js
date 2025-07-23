@@ -129,12 +129,12 @@ export async function submiteMusic(
   apiFetch,
   apiAxiosPost
 ) {
-  const artist = await fetchArtistData(userId,apiFetch);
+  const artist = await fetchArtistData(userId, apiFetch);
 
   const resultMusic = {
     artist: { id: artist.id },
     title: songTitle,
-    genre:selectedGenre,
+    genre: selectedGenre,
     listeningCount: 0,
     createdAt: new Date(),
   };
@@ -192,7 +192,7 @@ export const submiteAlbumSongs = async (
     artist: { id: artist.id },
     album: album,
     title: songTitle,
-    genre:selectedGenre,
+    genre: selectedGenre,
     listeningCount: 0,
     createdAt: new Date().toISOString(),
   };
@@ -250,7 +250,7 @@ export const submitAlbum = async (
   const resultAlbum = {
     artist: { id: artist.id },
     title: albumTitle,
-    genre:selectedGenre
+    genre: selectedGenre,
   };
   const response = await apiFetch("/albums", {
     method: "POST",
@@ -321,32 +321,46 @@ export function formatPostDate(postDateString) {
 
 function getSecondWord(n) {
   if (n % 10 === 1 && n % 100 !== 11) return "second";
-  if ([2, 3, 4].includes(n % 10) && ![12, 13, 14].includes(n % 100)) return "seconds";
+  if ([2, 3, 4].includes(n % 10) && ![12, 13, 14].includes(n % 100))
+    return "seconds";
   return "seconds";
 }
 
 function getMinuteWord(n) {
   if (n % 10 === 1 && n % 100 !== 11) return "minute";
-  if ([2, 3, 4].includes(n % 10) && ![12, 13, 14].includes(n % 100)) return "minutes";
+  if ([2, 3, 4].includes(n % 10) && ![12, 13, 14].includes(n % 100))
+    return "minutes";
   return "minutes";
 }
 
 function getHourWord(n) {
   if (n % 10 === 1 && n % 100 !== 11) return "hour";
-  if ([2, 3, 4].includes(n % 10) && ![12, 13, 14].includes(n % 100)) return "hours";
+  if ([2, 3, 4].includes(n % 10) && ![12, 13, 14].includes(n % 100))
+    return "hours";
   return "hours";
 }
 
 function getDayWord(n) {
   if (n % 10 === 1 && n % 100 !== 11) return "day";
-  if ([2, 3, 4].includes(n % 10) && ![12, 13, 14].includes(n % 100)) return "days";
+  if ([2, 3, 4].includes(n % 10) && ![12, 13, 14].includes(n % 100))
+    return "days";
   return "days";
 }
 
 function formatFullDate(date) {
   const months = [
-    "January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
   ];
   const day = date.getDate();
   const month = months[date.getMonth()];
@@ -354,3 +368,10 @@ function formatFullDate(date) {
 
   return `${day} ${month} ${year}`;
 }
+
+export const fetchGenresTypes = async (apiFetch) => {
+  const response = await apiFetch("/genres");
+  const data = await response.json();
+  const types = data.map((e) => e.title);
+  return ([...types]);
+};

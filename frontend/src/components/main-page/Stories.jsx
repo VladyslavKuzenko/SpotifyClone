@@ -14,6 +14,8 @@ const Stories = () => {
   const [stories, setStories] = useState([]);
   const [currentUserIndex, setCurrentUserIndex] = useState(0);
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
+  const [userFullInfo, setUserFullInfo] = useState();
+
   const { apiFetch, user } = useAPI();
   const { isLoading } = useAuth0();
   const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
@@ -71,32 +73,30 @@ const Stories = () => {
     );
 
     if (response.ok) {
-        const isLikedNew = !story.isLiked;
-    const likesCountNew = isLikedNew
-      ? story.likesCount + 1
-      : story.likesCount - 1;
+      const isLikedNew = !story.isLiked;
+      const likesCountNew = isLikedNew
+        ? story.likesCount + 1
+        : story.likesCount - 1;
 
-    // Оновити stories
-    const updatedStories = stories.map((s) =>
-      s.id === story.id
-        ? { ...s, isLiked: isLikedNew, likesCount: likesCountNew }
-        : s
-    );
-    setStories(updatedStories);
+      // Оновити stories
+      const updatedStories = stories.map((s) =>
+        s.id === story.id
+          ? { ...s, isLiked: isLikedNew, likesCount: likesCountNew }
+          : s
+      );
+      setStories(updatedStories);
 
-    // Оновити currentStoryGroup
-    const updatedCurrentGroup = currentStoryGroup.map((s) =>
-      s.id === story.id
-        ? { ...s, isLiked: isLikedNew, likesCount: likesCountNew }
-        : s
-    );
-    setCurrentStoryGroup(updatedCurrentGroup);
+      // Оновити currentStoryGroup
+      const updatedCurrentGroup = currentStoryGroup.map((s) =>
+        s.id === story.id
+          ? { ...s, isLiked: isLikedNew, likesCount: likesCountNew }
+          : s
+      );
+      setCurrentStoryGroup(updatedCurrentGroup);
     } else {
       console.error("Failed to like/unlike the story");
     }
   };
-
-
 
   const handleScroll = (direction) => {
     const el = scrollRef.current;
@@ -127,6 +127,11 @@ const Stories = () => {
     }
   };
   //______________________________________________________________________________
+  const fetchUser = async () => {
+    const respose = await apiFetch(`/users/${user.sub}`);
+    const data = await respose.json();
+    setUserFullInfo(data);
+  };
 
   const fetchStories = async () => {
     const response = await apiFetch(`/story/followings/${user.sub}`);
@@ -157,6 +162,11 @@ const Stories = () => {
     return `linear-gradient(${angle}deg, ${lightOrange}, ${deepOrange})`;
   };
   //______________________________________________________________________________
+
+  useEffect(() => {
+    if (!user) return;
+    fetchUser();
+  }, [user]);
 
   useEffect(() => {
     if (!isLoading) {
@@ -300,7 +310,7 @@ const Stories = () => {
             }}
           >
             <img
-              src={currentStoryGroup[currentStoryIndex]?.user.avatarImgUrl}
+              src={userFullInfo?.avatarImgUrl}
               alt="Story"
               className={styles["preview-image-btn"]}
               style={{
@@ -424,7 +434,13 @@ const Stories = () => {
                       {currentStoryGroup[currentStoryIndex]?.likesCount}
                     </div>
                   </div>
-                  <button className={styles["delete-stories"]} onClick={openDeleteConfirmModal}></button>
+                  {currentStoryGroup[currentStoryIndex]?.user.id ===
+                    user?.sub && (
+                    <button
+                      className={styles["delete-stories"]}
+                      onClick={openDeleteConfirmModal}
+                    ></button>
+                  )}
                 </div>
 
                 {/* <div className={styles["storie-like"]} onClick={()=>submiteUserLike(currentStoryGroup[currentStoryIndex])}>{currentStoryGroup[currentStoryIndex].isLiked}+{currentStoryGroup[currentStoryIndex].likesCount}</div> */}
@@ -438,10 +454,22 @@ const Stories = () => {
       {isDeleteConfirmOpen && (
         <div className={styles["confirm-overlay"]}>
           <div className={styles["confirm-modal"]}>
-            <h2 className={styles["confirm-text"]}>Are you sure you want to delete this story?</h2>
+            <h2 className={styles["confirm-text"]}>
+              Are you sure you want to delete this story?
+            </h2>
             <div className={styles["confirm-buttons"]}>
-              <button className={styles["cancel-btn"]} onClick={closeDeleteConfirmModal}>Cancel</button>
-              <button className={styles["delete-btn"]} onClick={handleDeleteConfirm} >Yes, sure</button>
+              <button
+                className={styles["cancel-btn"]}
+                onClick={closeDeleteConfirmModal}
+              >
+                Cancel
+              </button>
+              <button
+                className={styles["delete-btn"]}
+                onClick={handleDeleteConfirm}
+              >
+                Yes, sure
+              </button>
             </div>
           </div>
         </div>

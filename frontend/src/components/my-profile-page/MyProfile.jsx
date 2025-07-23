@@ -73,7 +73,7 @@ const MyProfile = ({ profileInfo }) => {
     return <div>Loading...</div>;
   }
 
-  const isArtist = true; //перевірка чи артист
+  const isArtist = false; //перевірка чи артист
 
   return (
     <div className={styles.container}>

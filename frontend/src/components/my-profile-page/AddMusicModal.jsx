@@ -172,7 +172,12 @@ import styles from "./MyProfile.module.css";
 import mainPageStyles from "../main-page/main.module.css";
 import { useAPI } from "../../hooks/useApi";
 import { useAuth0 } from "@auth0/auth0-react";
-import { handleUploadFile, submiteMusic } from "../../js/functions/functions";
+import {
+  fetchGenresTypes,
+  handleUploadFile,
+  submiteMusic,
+} from "../../js/functions/functions";
+import { useAudio } from "../../hooks/useAudio";
 
 const AddMusicModal = ({ onClose }) => {
   const [showGenreMenu, setShowGenreMenu] = useState(false);
@@ -188,13 +193,16 @@ const AddMusicModal = ({ onClose }) => {
   const imageInputRef = useRef(null);
   const songInputRef = useRef(null);
   const { apiFetch, apiAxiosPost, user } = useAPI();
-
-  const genres = ["Hip hop", "Pop", "Rock", "Jazz", "Electronic", "Reggae"];
+  const { genres } = useAudio();
 
   const handleSelectGenre = (genre) => {
     setSelectedGenre(genre);
     setShowGenreMenu(false);
   };
+
+  // useEffect(() => {
+  //   console.log("SONG: ", song);
+  // }, [song]);
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
