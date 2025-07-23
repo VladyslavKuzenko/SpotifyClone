@@ -1,5 +1,6 @@
 import { createContext, useEffect, useRef, useState } from "react";
 import { useAPI } from "../hooks/useApi";
+import { fetchGenresTypes } from "../js/functions/functions";
 
 export const AudioContext = createContext(undefined);
 
@@ -9,13 +10,16 @@ export const AudioProvider = ({ children }) => {
   const [originalSongList, setOriginalSongList] = useState("");
   const [isRandomList, setIsRandomList] = useState(false);
   const [isLoop, setIsLoop] = useState(false);
-  const [isListeningCountIncremented,setIsListeningCountIncremented]=useState(false);
+  const [isListeningCountIncremented, setIsListeningCountIncremented] =
+    useState(false);
   const audioRef = useRef(null);
   const [isSongPlayed, setIsSongPlayed] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(0);
   const { apiFetch } = useAPI();
+  const [genres, setGenres] = useState();
+
   /*  const [autoStart, setAutoStart] = useState(false); */
 
   useEffect(() => {
@@ -29,17 +33,25 @@ export const AudioProvider = ({ children }) => {
       console.log("current list", originalSongList);
     }
     console.log(isRandomList);
-    
   }, [isRandomList]);
 
-  // useEffect(() => {
-  //   if (!isRandomList) setOriginalSongList(currentSongList);
-  // }, [currentSongList]);
+  useEffect(() => {
+    fetchGenres();
+  },[]);
+
+  const fetchGenres = async () => {
+    const result = await fetchGenresTypes(apiFetch);
+    console.log("Genres: ",result)
+    setGenres(result);
+  };
 
   const addListening = async (song) => {
-    const response = await apiFetch(`/tracks/add-listening/${song.id}/${song.artist.id}`, {
-      method: "PUT",
-    });
+    const response = await apiFetch(
+      `/tracks/add-listening/${song.id}/${song.artist.id}`,
+      {
+        method: "PUT",
+      }
+    );
 
     if (response.ok) {
       song.listeningCount += 1;
@@ -120,7 +132,8 @@ export const AudioProvider = ({ children }) => {
         isLoop,
         setIsLoop,
         isListeningCountIncremented,
-        setIsListeningCountIncremented
+        setIsListeningCountIncremented,
+        genres
       }}
     >
       <audio

@@ -6,6 +6,8 @@ import edu.itstep.api.repositories.TrackRepository;
 import edu.itstep.api.services.ArtistService;
 import edu.itstep.api.services.PostService;
 import edu.itstep.api.services.TrackService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -25,6 +27,8 @@ import java.util.Set;
 @RequestMapping("/tracks")
 @CrossOrigin(origins = "http://localhost:3000")
 public class TrackController {
+    private static final Logger logger = LoggerFactory.getLogger(TrackController.class);
+
     private final TrackRepository trackRepository;
     private final PlaylistRepository playlistRepository;
     @Autowired
@@ -79,12 +83,12 @@ public class TrackController {
     }
 
     @GetMapping("/top")
-    public List<Track> getAllByOrderByListeningCountDescWithParams(@RequestParam Integer first, @RequestParam Integer count, @RequestParam(required = false, defaultValue = "all") String period) {
+    public List<Track> getAllByOrderByListeningCountDescWithParams(@RequestParam Integer first, @RequestParam Integer count, @RequestParam(required = false, defaultValue = "all") String period, @RequestParam(required = false, defaultValue = "all") String genre) {
         Pageable pageable = PageRequest.of(first, count);
         LocalDateTime localDateTime;
         Instant from;
-
-
+        logger.info("Genre ");
+        System.out.println(genre);
         switch (period.toLowerCase()) {
             case "day":
                 localDateTime = LocalDateTime.now().minusDays(1);
@@ -102,13 +106,46 @@ public class TrackController {
                 localDateTime = null;
                 break;
         }
+//        switch (genre.toLowerCase()) {
+//            case "pop":
+//                localDateTime = LocalDateTime.now().minusDays(1);
+//                break;
+//            case "week":
+//                localDateTime = LocalDateTime.now().minusWeeks(1);
+//                break;
+//            case "month":
+//                localDateTime = LocalDateTime.now().minusMonths(1);
+//                break;
+//            case "year":
+//                localDateTime = LocalDateTime.now().minusYears(1);
+//                break;
+//            default:
+//                localDateTime = null;
+//                break;
+//        }
 
-        if (localDateTime == null)
-            return trackRepository.findAllByOrderByListeningCountDesc(pageable);
-        else{
-            from = localDateTime.atZone(ZoneId.of("UTC")).toInstant();;
-            return trackRepository.findByCreatedAtAfterOrderByListeningCountDesc(from, pageable);
+        if (localDateTime != null) {
+            from = localDateTime.atZone(ZoneId.of("UTC")).toInstant();
+        } else {
+            from = null;
+        }
 
+        if (from == null && genre.equals("All Types")) {
+            List<Track> result=trackRepository.findAllByOrderByListeningCountDesc(pageable);
+            logger.info(result.toString());
+            return result;
+        } else if (from != null && genre.equals("All Types")) {
+            List<Track> result=trackRepository.findByCreatedAtAfterOrderByListeningCountDesc(from, pageable);
+            logger.info(result.toString());
+            return result;
+        } else if (from == null) {
+            List<Track> result=trackRepository.findByGenreOrderByListeningCountDesc(genre, pageable);
+            logger.info(result.toString());
+            return result;
+        } else {
+            List<Track> result=trackRepository.findByGenreAndCreatedAtAfterOrderByListeningCountDesc(genre, from, pageable);
+            logger.info(result.toString());
+            return result;
         }
     }
 

@@ -4,6 +4,7 @@ import mainPageStyles from "../main-page/main.module.css";
 import { useAPI } from "../../hooks/useApi";
 import { useAuth0 } from "@auth0/auth0-react";
 import { submitAlbum } from "../../js/functions/functions";
+import { useAudio } from "../../hooks/useAudio";
 
 const AddAlbumModal = ({ onClose }) => {
   const [showGenreMenu, setShowGenreMenu] = useState(false);
@@ -16,9 +17,8 @@ const AddAlbumModal = ({ onClose }) => {
   //   const [songs, setSongs] = useState([{ id: Date.now() }]);
   const imageInputRef = useRef(null);
   const songInputRef = useRef(null);
-  const { apiFetch, apiAxiosPost,user } = useAPI();
-
-  const genres = ["Hip hop", "Pop", "Rock", "Jazz", "Electronic", "Reggae"];
+  const { apiFetch, apiAxiosPost, user } = useAPI();
+  const { genres } = useAudio();
 
   const handleSelectGenre = (genre) => {
     setSelectedGenre(genre);

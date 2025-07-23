@@ -18,6 +18,9 @@ public interface TrackRepository extends JpaRepository<Track, Long> {
 
     List<Track> findByCreatedAtAfterOrderByListeningCountDesc(Instant after, Pageable pageable);
 
+    List<Track> findByGenreOrderByListeningCountDesc(String type, Pageable pageable);
+
+    List<Track> findByGenreAndCreatedAtAfterOrderByListeningCountDesc(String type, Instant from, Pageable pageable);
     @Query("""
                 SELECT t FROM Track t
                 WHERE t.id NOT IN (
