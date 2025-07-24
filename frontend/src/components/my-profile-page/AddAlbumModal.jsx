@@ -20,6 +20,10 @@ const AddAlbumModal = ({ onClose }) => {
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
+  const isCreateDisabled =
+    !albumTitle.trim() ||
+    !albumImage ||
+    songList.length === 0;
 
 
 
@@ -130,6 +134,7 @@ const AddAlbumModal = ({ onClose }) => {
             placeholder="Name of album"
             value={albumTitle}
             onChange={(e) => setAlbumTitle(e.target.value)}
+            maxLength={40}
           />
 
           <div className={styles["amm-genre-container"]} ref={genreRef}>
@@ -217,9 +222,14 @@ const AddAlbumModal = ({ onClose }) => {
             <button className={styles["cancel"]} onClick={onClose}>
               Cancel
             </button>
-            <button className={styles["create"]} onClick={handleCreateClick}>
+            <button
+              className={`${styles["create"]} ${isCreateDisabled ? styles["disabled-button"] : ""}`}
+              onClick={handleCreateClick}
+              disabled={isCreateDisabled}
+            >
               Create
             </button>
+
           </div>
         </div>
       </div>
@@ -247,9 +257,8 @@ const AddAlbumModal = ({ onClose }) => {
                 Скасувати
               </button>
               <button
-                className={`${styles["confirm-button"]} ${
-                  !isCheckboxChecked ? styles["disabled-button"] : ""
-                }`}
+                className={`${styles["confirm-button"]} ${!isCheckboxChecked ? styles["disabled-button"] : ""
+                  }`}
                 disabled={!isCheckboxChecked}
                 onClick={handleConfirmUpload}
               >

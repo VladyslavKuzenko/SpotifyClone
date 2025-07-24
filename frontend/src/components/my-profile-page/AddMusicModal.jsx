@@ -194,6 +194,8 @@ const AddMusicModal = ({ onClose }) => {
   const songInputRef = useRef(null);
   const { apiFetch, apiAxiosPost, user } = useAPI();
   const { genres } = useAudio();
+const isCreateDisabled = !songTitle.trim() || !songImage || !song;
+
 
   const handleSelectGenre = (genre) => {
     setSelectedGenre(genre);
@@ -299,6 +301,7 @@ const AddMusicModal = ({ onClose }) => {
             placeholder="Name"
             value={songTitle}
             onChange={(e) => setSongTitle(e.target.value)}
+            maxLength={40}
           />
 
           <div className={styles["amm-genre-container"]} ref={genreRef}>
@@ -345,9 +348,14 @@ const AddMusicModal = ({ onClose }) => {
             <button className={styles["cancel"]} onClick={onClose}>
               Cancel
             </button>
-            <button className={styles["create"]} onClick={handleCreateClick}>
-              Create
-            </button>
+           <button
+  className={`${styles["create"]} ${isCreateDisabled ? styles["disabled-button"] : ""}`}
+  onClick={handleCreateClick}
+  disabled={isCreateDisabled}
+>
+  Create
+</button>
+
           </div>
         </div>
       </div>

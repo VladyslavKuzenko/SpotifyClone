@@ -433,6 +433,8 @@
     line-height: 120%;
     letter-spacing: 0%;
     color: #FFFFFF;
+    overflow: hidden;
+
 }
 
 .ait-author {
@@ -1442,3 +1444,9 @@
     background-color: #ffffff;
 
 }
+
+.disabled-button {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: not-allowed;
+} 

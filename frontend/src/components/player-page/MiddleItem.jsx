@@ -299,7 +299,7 @@ export default function MiddleItem({
                 </div>
 
                 <div className={styles["albums-array-songs"]}>
-                  {/* {[...Array(14)].map((_, i) => ( */}
+                 
                   <>
                     {albumSongs.length > 0 ? (
                       albumSongs.map((song) => (
@@ -325,7 +325,6 @@ export default function MiddleItem({
                       <div>{/*No songs found*/}</div>
                     )}
                   </>
-                  {/* ))} */}
                 </div>
               </div>
             )}
