@@ -4,12 +4,14 @@ import { useAPI } from "../../hooks/useApi";
 import { searchSongs, searchUsers } from "../../js/functions/functions";
 import SongItem from "../player-page/SongItem";
 import { useAudio } from "../../hooks/useAudio";
+import { useNavigate } from "react-router-dom";
 
 const SearchModal = ({
   isSearchModalOpen,
   setIsSearchModalOpen,
   searchParams,
 }) => {
+  const navigate=useNavigate();
   const peopleRef = useRef(null);
   const { apiFetch, user } = useAPI();
   const [usersOriginalList, setUsersOriginalList] = useState([]);
@@ -130,7 +132,11 @@ const SearchModal = ({
                 {usersFilteredList.map((item, index) => (
                   <>
                     {user.sub !== item.id && (
-                      <div key={index} className={styles["people-icon"]}>
+                      <div key={index} className={styles["people-icon"]} onClick={()=>{
+                               if (item.id === user.sub) {
+                        navigate(`/my-profile`);
+                      } else navigate(`/user-profile/${item.id}`);
+                      }}>
                         <div className={styles["people-photo"]}>
                           <img
                             src={item.avatarImgUrl}
