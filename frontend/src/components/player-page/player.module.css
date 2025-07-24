@@ -467,6 +467,7 @@
   height: 66px;
   border-radius: 5px;
   aspect-ratio: 1 / 1;
+  object-fit: cover;
 }
 
 
@@ -1423,7 +1424,8 @@
   height: 100%;
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+    margin-top: 180px;
+
 }
 
 .recommended-array {
@@ -1703,3 +1705,4 @@
   background-repeat: no-repeat;
   background-position: center;
 }
+

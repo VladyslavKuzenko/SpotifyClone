@@ -266,12 +266,6 @@
 
 
 
-
-
-
-
-
-
 import { useEffect, useRef, useState } from "react";
 import palyerStyles from "../player-page/player.module.css";
 import styles from "./likes.module.css";
@@ -401,6 +395,8 @@ export default function Likes({ exit }) {
           {renderUpper()}
 
           <div className={styles["middle"]}>
+            <button className={styles["pa-delete"]}></button>
+
             <img
               className={styles["likes-photo"]}
               src={songsFullList[0]?.imageUrl}
