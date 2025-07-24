@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { searchSongs } from "../../js/functions/functions";
+import { handleSaveAlbum, isAlbumSaved, searchSongs } from "../../js/functions/functions";
 import styles from "./player.module.css";
 import SongItem from "./SongItem";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -37,6 +37,8 @@ export default function MiddleItem({
 
   const [activeTab, setActiveTab] = useState("artist");
 
+ 
+
   const handleArtistSongs = async () => {
     const response = await apiFetch(
       `/tracks/tracks-by-artists/${currentArtist?.user.id}`
@@ -45,6 +47,7 @@ export default function MiddleItem({
     setSongs(body);
     setSongsFullList(body);
   };
+
   const handleRecomendedSongs = async () => {
     const response = await apiFetch(`/tracks/tracks-without-like/${user?.sub}`);
     const body = await response.json();
@@ -59,9 +62,18 @@ export default function MiddleItem({
       `/albums/albums-by-artists/${currentArtist.id}`
     );
     const data = await response.json();
-    setAlbums(data);
-    setCurrentAlbum(data[0]);
+
+    const newData = await Promise.all(
+      data.map(async (item) => {
+        const isSaved = await isAlbumSaved(item, user, apiFetch);
+        return{...item,isSaved}
+      })
+    );
+
+    setAlbums(newData);
+    setCurrentAlbum(newData[0]);
   };
+
   const fetchAlbumTracks = async () => {
     if (!currentAlbum) {
       setAlbumSongs([]);
@@ -287,10 +299,12 @@ export default function MiddleItem({
                 <div className={styles["albums-array"]}>
                   {albums.map((item, index) => (
                     <AlbumItem
+                    key={index}
                       album={item}
                       idx={index}
                       onClickFunck={() => setCurrentAlbum(item)}
                       variant="special"
+                      handleSaveAlbum={()=>{handleSaveAlbum(item,user,apiFetch)}}
                     />
                   ))}
                 </div>

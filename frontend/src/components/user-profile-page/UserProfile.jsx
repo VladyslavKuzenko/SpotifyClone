@@ -106,9 +106,9 @@ const UserProfile = () => {
         </div> */}
         <div className={styles["functional-container1"]}></div>
         {userFullInfo.isArtist ? (
-          <ArtistOwnMediaLibrary user={userFullInfo} />
+          <ArtistOwnMediaLibrary userToShowProfile={userFullInfo} />
         ) : (
-          <UserLikedMediaLibrary user={userFullInfo} />
+          <UserLikedMediaLibrary userToShowProfile={userFullInfo} />
         )}
 
         <div className={styles["bottom-place"]}>

@@ -172,12 +172,12 @@ const MyProfile = ({ profileInfo }) => {
             {/* Контент вкладок */}
             <div className={styles["tab-content"]}>
               {activeTab1 === "profile" && (
-                <UserLikedMediaLibrary user={userFullInfo} />
+                <UserLikedMediaLibrary userToShowProfile={userFullInfo} />
               )}
 
               {activeTab1 === "artistTools" && (
                 <ArtistOwnMediaLibrary
-                  user={userFullInfo}
+                  userToShowProfile={userFullInfo}
                   isAddButtonsAvaliable
                 />
               )}
@@ -186,7 +186,7 @@ const MyProfile = ({ profileInfo }) => {
         ) : (
           //перевірка не артист
           <>
-            <UserLikedMediaLibrary user={userFullInfo} />
+            <UserLikedMediaLibrary userToShowProfile={userFullInfo} />
           </>
         )}
         <div className={styles["about-artist-platform"]}>

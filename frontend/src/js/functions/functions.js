@@ -91,6 +91,14 @@ export async function isStoryLiked(story, user, apiFetch) {
   return body;
 }
 
+export async function isAlbumSaved(album, user, apiFetch) {
+  const response = await apiFetch(
+    `/users/isAlbumSaved/${user.sub}/${album.id}`
+  );
+  const body = await response.json();
+  return body;
+}
+
 export async function handleUploadFile(content, file, apiAxiosPost, path) {
   if (!file) return;
 
@@ -108,6 +116,19 @@ export async function handleUploadFile(content, file, apiAxiosPost, path) {
     return data;
   } catch (err) {
     alert("Помилка: " + err.message);
+  }
+}
+
+export async function handleSaveAlbum(album,user,apiFetch) {
+  const response = await apiFetch(`/users/savedAlbum/${album.id}/${user.sub}`, {
+    method: album.isSaved ? "DELETE" : "POST",
+  });
+  if (response.ok) {
+    album.isSaved = !album.isSaved;
+    console.log("Album: ",album)
+    // console.log("Albums: ",albums)
+  } else {
+    console.error("Failed to like/unlike the song");
   }
 }
 
@@ -373,5 +394,5 @@ export const fetchGenresTypes = async (apiFetch) => {
   const response = await apiFetch("/genres");
   const data = await response.json();
   const types = data.map((e) => e.title);
-  return ([...types]);
+  return [...types];
 };
