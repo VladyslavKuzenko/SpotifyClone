@@ -52,10 +52,11 @@ const PlayerPage = () => {
       ) : (
         <div className={styles.container}>
           <div className={styles["middle-right"]}>
-            <div className={styles["empty-div11"]}></div>
 
             <div className={styles["mr-middle"]}>
               <div className={styles["mr-left"]}>
+                <div className={styles["empty-div11"]}></div>
+
                 <YourLibrary
                   isPlaylistsChangesControl={{
                     isPlaylistsChanges,

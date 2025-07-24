@@ -7,6 +7,7 @@ import { useAPI } from "../../hooks/useApi";
 import { useAudio } from "../../hooks/useAudio";
 import AddAlbumModal from "./AddAlbumModal";
 import AddMusicModal from "./AddMusicModal";
+import WatchAlbum from "./WatchAlbum"; 
 
 const ArtistOwnMediaLibrary = ({ user, isAddButtonsAvaliable }) => {
   const { setCurrentSong, setCurrentSongList, setIsRandomList } = useAudio();
@@ -16,7 +17,8 @@ const ArtistOwnMediaLibrary = ({ user, isAddButtonsAvaliable }) => {
   const { apiFetch } = useAPI();
   const [showModal, setShowModal] = useState(false);
   const [showModal1, setShowModal1] = useState(false);
-
+  const [showWatchAlbum, setShowWatchAlbum] = useState(false);
+  const [selectedAlbum, setSelectedAlbum] = useState(null);
   const fetchArtistTracks = async () => {
     const response = await apiFetch(`/tracks/tracks-by-artists/${user.id}`);
     const body = await response.json();
@@ -94,22 +96,37 @@ const ArtistOwnMediaLibrary = ({ user, isAddButtonsAvaliable }) => {
               <div className={styles["saved-album-text"]}>Artist's Albums</div>
             )}
           </div>
-          <div className={styles["album-array"]}>
-            {albums.length === 0 ? (
-              <div className={styles["empty-message"]}>
-                <h2>There are no albums here yet</h2>
-                <h3>+ Add your first album</h3>
-              </div>
-            ) : (
-              albums.map((item, idx) => <AlbumItem album={item} key={idx} />)
-            )}
+            <div className={styles["album-array"]}>
+        {albums.length === 0 ? (
+          <div className={styles["empty-message"]}>
+            <h2>There are no albums here yet</h2>
+            <h3>+ Add your first album</h3>
           </div>
+        ) : (
+          albums.map((item, idx) => (
+            <AlbumItem
+              album={item}
+              key={idx}
+              onClickFunck={() => {
+                setSelectedAlbum(item);
+                setShowWatchAlbum(true);
+              }}
+            />
+          ))
+        )}
+      </div>
         </div>
       </div>
 
       {/* Modals */}
+      
       {showModal && <AddMusicModal onClose={() => setShowModal(false)} />}
       {showModal1 && <AddAlbumModal onClose={() => setShowModal1(false)} />}
+        <WatchAlbum
+        isOpen={showWatchAlbum}
+        onClose={() => setShowWatchAlbum(false)}
+      >
+      </WatchAlbum>
     </div>
   );
 };

@@ -3,7 +3,6 @@ import styles from './MyProfile.module.css'; // Заміни на актуаль
 import mainPageStyles from "../main-page/main.module.css";
 
 const AlbumItem = ({ album, idx, onClickFunck, variant }) => {
-  // Вибираємо основний клас для обгортки залежно від variant
   const wrapperClass = variant === "special" ? styles['album-wrapper-special'] : styles['album-wrapper'];
 
   return (
