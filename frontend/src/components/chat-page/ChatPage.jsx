@@ -10,12 +10,13 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useAPI } from "../../hooks/useApi";
 
 const ChatPage = () => {
-    const { user, isLoading } = useAuth0();
-    const { apiFetch } = useAPI();
+    const { isLoading } = useAuth0();
+    const { apiFetch, user } = useAPI();
     const [currentChat, setCurrentChat] = useState(null);
     const [messages, setMessages] = useState([]);
     const [chatId, setChatId] = useState(null);
-      const navigate = useNavigate();
+
+    const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
     const fetchChat = async (id) => {
         const response = await apiFetch(`/chats/${id}`);
@@ -39,7 +40,7 @@ const ChatPage = () => {
         }
 
         console.log(messages);
-        
+
     };
 
     useEffect(() => {
@@ -54,25 +55,26 @@ const ChatPage = () => {
 
         const interval = setInterval(() => {
             fetchMessages(chatId);
-        }, 5000);
+        }, 1000);
 
         return () => clearInterval(interval);
     }, [chatId]);
+
+    const navigate = useNavigate();
 
     if (isLoading) {
         return <div>Loading...</div>;
     }
 
-    
     return (
 
         <div className={styles.container}>
-                <div className={styles["chat-back"]}> 
-                    <button className={styles["chat-back-btn"]}  onClick={() => navigate("/")}></button>
-                </div>
+            <div className={styles["chat-back"]}>
+                <button className={styles["chat-back-btn"]} onClick={() => navigate("/main")}></button>
+            </div>
 
             <div className={styles["right-side"]}>
-                <ChatList onChatSelected={setChatId} />
+                <ChatList onChatSelected={setChatId} onCreateGroup={() => setIsCreateModalOpen(true)} />
                 <div className={styles["chat-messages"]}>
                     <div className={styles["upper-side"]}>
                         <UpperContent chat={currentChat} />
@@ -90,6 +92,31 @@ const ChatPage = () => {
 
                 </div>
             </div>
+            {isCreateModalOpen && (
+                <div className={styles.modalOverlay }  >
+                    <div className={styles.modal1}>
+                        <h2 className={styles.cgtext}>Create Group</h2>
+
+
+                        <div className={styles.groupInfo}>
+                            <div className={styles.groupPhoto}>Choose photo</div>
+                            <input className={styles.groupName} placeholder="Group name" />
+                        </div>
+
+                        <div className={styles.AddMembers}>
+                            <h2 className={styles.cgtext1}>Add members</h2>
+                            <div className={styles.membersArray}> </div>
+
+                        </div>
+
+
+                        <div className={styles.modalActions}>
+                            <button className={styles.cancel} onClick={() => setIsCreateModalOpen(false)}>Cancel</button>
+                            <button className={styles.create} onClick={() => { /* тут створення групи */ setIsCreateModalOpen(false); }}>Create</button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

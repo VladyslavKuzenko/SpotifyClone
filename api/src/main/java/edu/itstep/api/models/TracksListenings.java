@@ -3,7 +3,7 @@ package edu.itstep.api.models;
 import edu.itstep.api.models.idClasses.TracksListeningsId;
 import jakarta.persistence.*;
 
-import java.util.Date;
+import java.time.Instant;
 
 @Entity
 @Table(name = "tracks_listenings")
@@ -19,7 +19,7 @@ public class TracksListenings {
     @JoinColumn(name = "track_id")
     private Track track;
     @Column(name = "listened_datetime")
-    private Date listenedDatetime;
+    private Instant listenedDatetime;
 
     public TracksListenings() {
     }
@@ -48,11 +48,11 @@ public class TracksListenings {
         this.track = track;
     }
 
-    public Date getListenedDatetime() {
+    public Instant getListenedDatetime() {
         return listenedDatetime;
     }
 
-    public void setListenedDatetime(Date listenedDatetime) {
+    public void setListenedDatetime(Instant listenedDatetime) {
         this.listenedDatetime = listenedDatetime;
     }
 }

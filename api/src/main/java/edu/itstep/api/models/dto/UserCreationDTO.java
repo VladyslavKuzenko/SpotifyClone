@@ -8,8 +8,8 @@ public class UserCreationDTO {
     public String lastName;
     public String username;
     public String shortBio;
-    public IdWrapper goal;
     public List<IdWrapper> genres;
-    public List<IdWrapper> vibes;
+    public Boolean isArtist;
+    public String avatarImgUrl;
 }
 

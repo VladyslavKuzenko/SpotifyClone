@@ -9,6 +9,7 @@ import { useAPI } from "../../hooks/useApi";
 import Select from "react-select";
 import { useNavigate } from "react-router-dom";
 import { useAudio } from "../../hooks/useAudio";
+import Likes from "../likes-page/Likes";
 
 const options = [
   { value: "recent", label: "Recent" },
@@ -16,7 +17,7 @@ const options = [
   // { value: "artist", label: "By Artist" },
 ];
 
-const YourLibrary = ({ isPlaylistsChangesControl }) => {
+const YourLibrary = ({ isPlaylistsChangesControl, isLikesPageControl }) => {
   // State
   const [search, setSearch] = useState("");
   const [songs, setSongs] = useState([]);
@@ -25,14 +26,14 @@ const YourLibrary = ({ isPlaylistsChangesControl }) => {
   const [playlists, setPlaylists] = useState([]);
   const [titlePlaylist, setTitlePlaylist] = useState("");
   const [sortType, setSortType] = useState("recent");
+  const { apiFetch } = useAPI();
   const dropdownRef = useRef();
   const navigate = useNavigate();
 
   // Hooks
-  const { setCurrentSongList } = useAudio();
-  const { getAccessTokenSilently, user } = useAuth0();
+  const { setCurrentSongList, setIsRandomList } = useAudio();
   const { isLoading, isAuthenticated } = useAuth0();
-
+  const { user } = useAPI();
   // Effects
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -62,61 +63,36 @@ const YourLibrary = ({ isPlaylistsChangesControl }) => {
 
   // Handlers
   const handleCreatePlaylist = async () => {
-    if (isAuthenticated) {
-      const token = await getAccessTokenSilently({
-        authorizationParams: { audience: API_URL },
-      });
-      const response = await fetch(`http://localhost:8080/playlists`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ title: titlePlaylist, user: { id: user.sub } }),
-      });
-
-      if (response.ok) {
-        setIsModalOpen(false);
-        setTitlePlaylist("");
-        isPlaylistsChangesControl.setIsPlaylistsChanges(true);
-      } else {
-        console.error("Failed to create playlist");
-      }
+    const response = await apiFetch("/playlists", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ title: titlePlaylist, user: { id: user.sub } }),
+    });
+    if (response.ok) {
+      setIsModalOpen(false);
+      setTitlePlaylist("");
+      isPlaylistsChangesControl.setIsPlaylistsChanges(true);
+    } else {
+      console.error("Failed to create playlist");
     }
   };
 
   const fetchPlaylists = async () => {
-    if (isAuthenticated) {
-      const token = await getAccessTokenSilently({
-        authorizationParams: { audience: API_URL },
-      });
-      const response = await fetch(
-        `http://localhost:8080/playlists/playlists/${user.sub}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      const body = await response.json();
-      setPlaylists(body);
-      handleGetCurrentPlaylistTracks(body.find((i) => i.title === "Like"));
-    }
+    const response = await apiFetch(`/playlists/playlists/${user.sub}`);
+    const body = await response.json();
+    setPlaylists(body);
+    handleGetCurrentPlaylistTracks(body.find((i) => i.title === "Like"));
   };
 
   const handleGetCurrentPlaylistTracks = async (currentPlaylist) => {
-    if (isAuthenticated && currentPlaylist) {
-      const token = await getAccessTokenSilently({
-        authorizationParams: { audience: API_URL },
-      });
-      const response = await fetch(
-        `http://localhost:8080/tracks/tracks/${currentPlaylist.id}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      const body = await response.json();
-      setSongs(body);
-      setSongsFullList(body);
-    }
+    const response = await apiFetch(
+      `/tracks/tracks-by-postTime/${currentPlaylist.id}`
+    );
+    const body = await response.json();
+    setSongs(body);
+    setSongsFullList(body);
   };
 
   const handleSortSongs = (type) => {
@@ -150,7 +126,12 @@ const YourLibrary = ({ isPlaylistsChangesControl }) => {
             <div className={styles["go-likes"]}>
               <button
                 className={styles["golikes-btn"]}
-                onClick={() => navigate("/likes")}
+                // onClick={() => navigate("/likes")}
+                onClick={() =>
+                  isLikesPageControl.setIsLikesPage(
+                    !isLikesPageControl.isLikesPage
+                  )
+                }
               ></button>
             </div>
           </div>
@@ -203,7 +184,10 @@ const YourLibrary = ({ isPlaylistsChangesControl }) => {
               <SongItem
                 key={i.id}
                 song={i}
-                onSetCurrentSongList={() => setCurrentSongList(songs)}
+                onSetCurrentSongList={() => {
+                  setIsRandomList(false);
+                  setCurrentSongList(songs);
+                }}
               />
             ))}
           </div>
@@ -246,21 +230,6 @@ const YourLibrary = ({ isPlaylistsChangesControl }) => {
                   </button>
                 </div>
               </div>
-              {/* 
-              <div className={styles["access"]}>
-                <div className={styles["access-text"]}>Playlist access</div>
-                <div className={styles["private-public"]}>
-                  <label className={styles["private-label"]}>
-                    <input type="checkbox" className={styles["private-box"]} />
-                    <span>Private</span>
-                  </label>
-                  <label className={styles["public-label"]}>
-                    <input type="checkbox" className={styles["public-box"]} />
-                    <span>Public</span>
-                  </label>
-                </div>
-              </div>
-              */}
             </div>
           </div>
         </div>

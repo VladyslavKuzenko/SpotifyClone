@@ -2,10 +2,14 @@ package edu.itstep.api.controlers;
 
 import edu.itstep.api.models.Artist;
 import edu.itstep.api.repositories.ArtistRepository;
+import edu.itstep.api.services.ArtistService;
+import edu.itstep.api.services.PostService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -15,6 +19,10 @@ import java.util.List;
 @RequestMapping("/artists")
 @CrossOrigin(origins = "http://localhost:3000")
 public class ArtistController {
+    @Autowired
+    private ArtistService artistService;
+    @Autowired
+    private PostService postService;
     private final ArtistRepository artistRepository;
 
     public ArtistController(ArtistRepository artistRepository) {this.artistRepository = artistRepository;}
@@ -25,7 +33,7 @@ public class ArtistController {
     }
 
     @GetMapping("/{id}")
-    public Artist getArtist(@PathVariable Long id) {
+    public Artist getArtist(@PathVariable String id) {
         return artistRepository.findById(id).orElseThrow(RuntimeException::new);
     }
     @GetMapping("/byUser/{id}")
@@ -50,8 +58,17 @@ public class ArtistController {
         Artist savedArtist = artistRepository.save(artist);
         return ResponseEntity.created(new URI("/artists/" + savedArtist.getId())).body(savedArtist);
     }
+    @PostMapping("/upload/{artistId}")
+    public String handleFileUpload(@RequestParam("file") MultipartFile file, @PathVariable String artistId) {
+        return postService.postFileToVM(file, "artistAbout" + artistId);
+    }
+    @PutMapping("/updateAbout")
+    public ResponseEntity<Artist> updateAbout(@RequestBody Artist updatedArtist) {
+        Artist artist = artistService.updateAbout(updatedArtist);
+        return ResponseEntity.ok(artist);
+    }
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteArtist(@PathVariable Long id) {
+    public ResponseEntity deleteArtist(@PathVariable String id) {
         artistRepository.deleteById(id);
         return ResponseEntity.ok().build();
     }

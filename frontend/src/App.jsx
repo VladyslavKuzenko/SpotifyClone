@@ -23,14 +23,14 @@ function App() {
 
     <>
 
-      {!shouldHideLeftSide && <LeftSide />}
+      {!shouldHideLeftSide && <LeftSide /> }
       <Routes>
-        <Route path="/" element={<Main />} />
+        <Route path="/main" element={<Main />} />
         <Route path="/player" element={<PlayerPage />} />
         <Route path="/login" element={<LoginButton />} />
         <Route path="/logout" element={<LogoutButton />} />
         <Route path="/chat" element={<ChatPage />} />
-        <Route path="/user-profile" element={<UserProfile />} />
+        <Route path="/user-profile/:userId" element={<UserProfile />} />
         <Route path="/my-profile" element={<MyProfile />} />
         <Route path="/edit-profile" element={<EditProfile />} />
 

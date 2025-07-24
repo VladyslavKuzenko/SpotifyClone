@@ -1,12 +1,7 @@
 package edu.itstep.api.models;
 
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.*;
-
 import java.util.Set;
 
 @Entity
@@ -23,9 +18,6 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "country_id")
     private Country country;
-    @ManyToOne
-    @JoinColumn(name = "goal_id")
-    private Goal goal;
     @ManyToMany
     @JoinTable(
             name = "users_genres",
@@ -33,13 +25,6 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "genre_id"))
     @JsonIgnore
     private Set<Genre> genres;
-    @ManyToMany
-    @JoinTable(
-            name = "users_vibes",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "vibe_id"))
-    @JsonIgnore
-    private Set<Vibe> vibes;
     @Column(name = "short_bio")
     private String shortBio;
     @Column(name = "followings_count")
@@ -53,8 +38,10 @@ public class User {
     private boolean showListeningHistory;
     @Column(name = "allow_messages")
     private boolean allowMessages;
-    @Column(name = "ui_theme")
-    private String uiTheme;
+    @Column(name = "is_artist")
+    private Boolean isArtist;
+    @Column(name = "avatar_img_url")
+    private String avatarImgUrl;
     @ManyToMany
     @JoinTable(
             name = "users_followings",
@@ -82,6 +69,13 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "posts_id"))
     private Set<Post> likedPosts;
+    @ManyToMany
+    @JsonIgnore
+    @JoinTable(
+            name = "likes_story",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "posts_id"))
+    private Set<Story> likedStory;
 
     public User() {
     }
@@ -126,28 +120,12 @@ public class User {
         this.country = country;
     }
 
-    public Goal getGoal() {
-        return goal;
-    }
-
-    public void setGoal(Goal goal) {
-        this.goal = goal;
-    }
-
     public Set<Genre> getGenres() {
         return genres;
     }
 
     public void setGenres(Set<Genre> genres) {
         this.genres = genres;
-    }
-
-    public Set<Vibe> getVibes() {
-        return vibes;
-    }
-
-    public void setVibes(Set<Vibe> vibes) {
-        this.vibes = vibes;
     }
 
     public String getShortBio() {
@@ -174,6 +152,14 @@ public class User {
         this.followersCount = followersCount;
     }
 
+    public Track getDayTrack() {
+        return dayTrack;
+    }
+
+    public void setDayTrack(Track dayTrack) {
+        this.dayTrack = dayTrack;
+    }
+
     public boolean isShowListeningHistory() {
         return showListeningHistory;
     }
@@ -190,12 +176,20 @@ public class User {
         this.allowMessages = allowMessages;
     }
 
-    public String getUiTheme() {
-        return uiTheme;
+    public Boolean getIsArtist() {
+        return isArtist;
     }
 
-    public void setUiTheme(String uiTheme) {
-        this.uiTheme = uiTheme;
+    public void setIsArtist(Boolean artist) {
+        isArtist = artist;
+    }
+
+    public String getAvatarImgUrl() {
+        return avatarImgUrl;
+    }
+
+    public void setAvatarImgUrl(String avatarImgUrl) {
+        this.avatarImgUrl = avatarImgUrl;
     }
 
     public Set<User> getFollowings() {
@@ -212,14 +206,6 @@ public class User {
 
     public void setFollowers(Set<User> followers) {
         this.followers = followers;
-    }
-
-    public Track getDayTrack() {
-        return dayTrack;
-    }
-
-    public void setDayTrack(Track dayTrack) {
-        this.dayTrack = dayTrack;
     }
 
     public Set<Chat> getChats() {
@@ -244,5 +230,13 @@ public class User {
 
     public void setLikedPosts(Set<Post> likedPosts) {
         this.likedPosts = likedPosts;
+    }
+
+    public Set<Story> getLikedStory() {
+        return likedStory;
+    }
+
+    public void setLikedStory(Set<Story> likedStory) {
+        this.likedStory = likedStory;
     }
 }

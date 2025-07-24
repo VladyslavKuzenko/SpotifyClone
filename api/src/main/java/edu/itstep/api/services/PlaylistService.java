@@ -40,4 +40,13 @@ public class PlaylistService {
         playlistRepository.save(playlist);
         trackRepository.save(track);
     }
+
+    public Boolean isPlaylistContainSong(Long playlistId, Long trackId) {
+        Playlist playlist = playlistRepository.findById(playlistId)
+                .orElseThrow(() -> new RuntimeException("Playlist not found"));
+        Track track = trackRepository.findById(trackId)
+                .orElseThrow(() -> new RuntimeException("Track not found"));
+
+        return playlist.getTracks().contains(track);
+    }
 }

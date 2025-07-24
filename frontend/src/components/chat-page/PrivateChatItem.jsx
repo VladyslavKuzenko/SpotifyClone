@@ -6,7 +6,7 @@ const PrivateChatItem = ({ title, id, onChatSelected, lastMessage }) => {
   };
 
   let previewText = "";
-
+ 
   try {
     const contentObj = JSON.parse(lastMessage?.contentJson || "{}");
 
@@ -33,13 +33,10 @@ const PrivateChatItem = ({ title, id, onChatSelected, lastMessage }) => {
         <div className={styles["chat-name"]}>{title}</div>
         <div className={styles["chat-message"]}>{previewText}</div>
       </div>
-      <div className={styles["settings-platform"]}>
-        <button className={styles.settings}>
-          <div className={styles.mcircle}></div>
-          <div className={styles.mcircle}></div>
-          <div className={styles.mcircle}></div>
-        </button>
+      <div className={styles["chat-time-plat"]}>
+        <div className={styles["chat-time"]}>11:29</div>
       </div>
+      
     </div>
   );
 };

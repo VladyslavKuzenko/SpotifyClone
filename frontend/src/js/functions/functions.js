@@ -10,11 +10,13 @@ export function convertTime(timeInSeconds) {
 }
 
 export function searchSongs(songs, searchParameter, setSongs) {
-  console.log("Track inside search",songs)
+  console.log("Track inside search", songs);
   const newSongs = songs.filter((song) => {
     if (
       song.title.toLowerCase().includes(searchParameter.toLowerCase()) ||
-      song.artist.user.username.toLowerCase().includes(searchParameter.toLowerCase())
+      song.artist.user.username
+        .toLowerCase()
+        .includes(searchParameter.toLowerCase())
     )
       return song;
   });
@@ -26,15 +28,15 @@ export function searchUsers(users, searchParameter, setUsers) {
   // console.log("users list inside function");
   // console.log(users);
   // if (searchParameter.length > 0) {
-    const newUsersList = users.filter((user) => {
-      if (
-        user.firstName.toLowerCase().includes(searchParameter.toLowerCase()) ||
-        user.lastName.toLowerCase().includes(searchParameter.toLowerCase()) ||
-        user.username.toLowerCase().includes(searchParameter.toLowerCase())
-      )
-        return user;
-    });
-    setUsers(newUsersList);
+  const newUsersList = users.filter((user) => {
+    if (
+      user.firstName.toLowerCase().includes(searchParameter.toLowerCase()) ||
+      user.lastName.toLowerCase().includes(searchParameter.toLowerCase()) ||
+      user.username.toLowerCase().includes(searchParameter.toLowerCase())
+    )
+      return user;
+  });
+  setUsers(newUsersList);
   // } else setUsers(users);
 }
 
@@ -46,36 +48,14 @@ export function getUser_metadata_lastName(user) {
   return user["https://diplomaapp.com/lastName"];
 }
 
-export async function isUserPlaylistContainsSong(
-  song,
-  user,
-  getAccessTokenSilently
-) {
-  const token = await getAccessTokenSilently({
-    authorizationParams: {
-      audience: API_URL,
-    },
-  });
-  const responsePlaylist = await fetch(
-    `http://localhost:8080/playlists/playlists/${user.sub}`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
+export async function isUserPlaylistContainsSong(song, user, apiFetch) {
+  const responsePlaylist = await apiFetch(`/playlists/playlists/${user.sub}`);
   const body = await responsePlaylist.json();
   const playlist = body.find((i) => i.title === "Like");
-  const responsePlaylistTracks = await fetch(
-    `http://localhost:8080/tracks/tracks/${playlist.id}`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
+  const responsePlaylistTracks = await apiFetch(
+    `/tracks/tracks-by-postTime/${playlist.id}`
   );
   const tracks = await responsePlaylistTracks.json();
-
   //var playlist = body;
   /* console.log(song) */
   const result = tracks.some((track) => track.id === song.id);
@@ -83,32 +63,14 @@ export async function isUserPlaylistContainsSong(
   return result;
 }
 
-export async function isSubscribed(
-  user,
-  userToCheckSubscription,
-  getAccessTokenSilently
-) {
-  const token = await getAccessTokenSilently({
-    authorizationParams: {
-      audience: API_URL,
-    },
-  });
-  const response = await fetch(
-    `http://localhost:8080/users/userFollowing/${user.sub}`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
+export async function isSubscribed(user, userToCheckSubscription, apiFetch) {
+  const response = await apiFetch(`/users/userFollowing/${user.sub}`);
   const body = await response.json();
-  // console.log("isSubscribed: ");
-  // console.log(body);
   var isSubscribed = body.some((i) => i.id === userToCheckSubscription.id);
   return isSubscribed;
 }
 
-export async function isLiked(post, user, apiFetch) {
+export async function isPostLikedFunc(post, user, apiFetch) {
   // console.log("isLiked called");
   // console.log("user",user);
   // console.log("post",post);
@@ -121,6 +83,14 @@ export async function isLiked(post, user, apiFetch) {
   return isLiked;
 }
 
+export async function isStoryLiked(story, user, apiFetch) {
+  const response = await apiFetch(
+    `/users/isStoryLiked/${user.sub}/${story.id}`
+  );
+  const body = await response.json();
+  return body;
+}
+
 export async function handleUploadFile(content, file, apiAxiosPost, path) {
   if (!file) return;
 
@@ -129,7 +99,7 @@ export async function handleUploadFile(content, file, apiAxiosPost, path) {
   formData.append("file", file);
 
   try {
-    console.log("apiAxiosPost")
+    console.log("apiAxiosPost");
     const res = await apiAxiosPost(`${path}${content.id}`, formData);
     const data = res.data;
 
@@ -140,3 +110,268 @@ export async function handleUploadFile(content, file, apiAxiosPost, path) {
     alert("Помилка: " + err.message);
   }
 }
+
+const fetchArtistData = async (userId, apiFetch) => {
+  console.log("USER ID: ", userId);
+  const response = await apiFetch(`/artists/byUser/${userId}`);
+  console.log("RESPONSE: ", response);
+
+  const data = await response.json();
+  return data;
+};
+
+export async function submiteMusic(
+  songTitle,
+  song,
+  songImage,
+  selectedGenre,
+  userId,
+  apiFetch,
+  apiAxiosPost
+) {
+  const artist = await fetchArtistData(userId, apiFetch);
+
+  const resultMusic = {
+    artist: { id: artist.id },
+    title: songTitle,
+    genre: selectedGenre,
+    listeningCount: 0,
+    createdAt: new Date(),
+  };
+
+  const response = await apiFetch("/tracks", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(resultMusic),
+  });
+  console.log("POST SUCCESS");
+  const music = await response.json();
+
+  const musicImgUrl = await handleUploadFile(
+    music,
+    songImage,
+    apiAxiosPost,
+    "/tracks/upload/"
+  );
+  const musicUrl = await handleUploadFile(
+    music,
+    song,
+    apiAxiosPost,
+    "/tracks/upload/"
+  );
+
+  music.sourceUrl = musicUrl;
+  music.imageUrl = musicImgUrl;
+
+  const responseUpdate = await apiFetch(`/tracks/${music.id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(music),
+  });
+}
+
+export const submiteAlbumSongs = async (
+  songTitle,
+  song,
+  songImage,
+  selectedGenre,
+  userId,
+  apiFetch,
+  apiAxiosPost,
+  musicImgUrl,
+  albumId
+) => {
+  const artist = await fetchArtistData(userId, apiFetch);
+  const album = albumId ? { id: albumId } : {};
+  console.log("Album id: ", albumId);
+  const resultMusic = {
+    artist: { id: artist.id },
+    album: album,
+    title: songTitle,
+    genre: selectedGenre,
+    listeningCount: 0,
+    createdAt: new Date().toISOString(),
+  };
+  console.log("Result Music", resultMusic);
+  const response = await apiFetch("/tracks", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(resultMusic),
+  });
+  console.log("POST SUCCESS");
+  const music = await response.json();
+
+  musicImgUrl = musicImgUrl
+    ? musicImgUrl
+    : (musicImgUrl = await handleUploadFile(
+        music,
+        songImage,
+        apiAxiosPost,
+        "/tracks/upload/"
+      ));
+  const musicUrl = await handleUploadFile(
+    music,
+    song,
+    apiAxiosPost,
+    "/tracks/upload/"
+  );
+
+  music.sourceUrl = musicUrl;
+  music.imageUrl = musicImgUrl;
+
+  const responseUpdate = await apiFetch(`/tracks/${music.id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(music),
+  });
+  return music.id;
+};
+
+export const submitAlbum = async (
+  albumTitle,
+  songTitles,
+  songList,
+  songImage,
+  selectedGenre,
+  userId,
+  apiFetch,
+  apiAxiosPost
+) => {
+  const artist = await fetchArtistData(userId, apiFetch);
+
+  const resultAlbum = {
+    artist: { id: artist.id },
+    title: albumTitle,
+    genre: selectedGenre,
+  };
+  const response = await apiFetch("/albums", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(resultAlbum),
+  });
+  const album = await response.json();
+
+  const musicImgUrl = await handleUploadFile(
+    album,
+    songImage,
+    apiAxiosPost,
+    "/tracks/upload/"
+  );
+
+  var musicList = [];
+  songList.map((item, index) => {
+    const songId = submiteAlbumSongs(
+      songTitles[index],
+      item,
+      songImage,
+      selectedGenre,
+      userId,
+      apiFetch,
+      apiAxiosPost,
+      musicImgUrl,
+      album.id
+    );
+    musicList += { id: songId };
+  });
+
+  album.tracks = musicList;
+  album.imageUrl = musicImgUrl;
+  const responseUpdate = await apiFetch(`/albums/${album.id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(album),
+  });
+};
+
+// --- Форматування дати ---
+export function formatPostDate(postDateString) {
+  const postDate = new Date(postDateString);
+  const now = new Date();
+  const diffMs = now - postDate;
+
+  const diffSeconds = Math.floor(diffMs / 1000);
+  const diffMinutes = Math.floor(diffMs / (1000 * 60));
+  const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+  if (diffSeconds < 60) {
+    return `${diffSeconds} ${getSecondWord(diffSeconds)} ago`;
+  } else if (diffMinutes < 60) {
+    return `${diffMinutes} ${getMinuteWord(diffMinutes)} ago`;
+  } else if (diffHours < 24) {
+    return `${diffHours} ${getHourWord(diffHours)} ago`;
+  } else if (diffDays < 31) {
+    return `${diffDays} ${getDayWord(diffDays)} ago`;
+  } else {
+    return formatFullDate(postDate);
+  }
+}
+
+function getSecondWord(n) {
+  if (n % 10 === 1 && n % 100 !== 11) return "second";
+  if ([2, 3, 4].includes(n % 10) && ![12, 13, 14].includes(n % 100))
+    return "seconds";
+  return "seconds";
+}
+
+function getMinuteWord(n) {
+  if (n % 10 === 1 && n % 100 !== 11) return "minute";
+  if ([2, 3, 4].includes(n % 10) && ![12, 13, 14].includes(n % 100))
+    return "minutes";
+  return "minutes";
+}
+
+function getHourWord(n) {
+  if (n % 10 === 1 && n % 100 !== 11) return "hour";
+  if ([2, 3, 4].includes(n % 10) && ![12, 13, 14].includes(n % 100))
+    return "hours";
+  return "hours";
+}
+
+function getDayWord(n) {
+  if (n % 10 === 1 && n % 100 !== 11) return "day";
+  if ([2, 3, 4].includes(n % 10) && ![12, 13, 14].includes(n % 100))
+    return "days";
+  return "days";
+}
+
+function formatFullDate(date) {
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  const day = date.getDate();
+  const month = months[date.getMonth()];
+  const year = date.getFullYear();
+
+  return `${day} ${month} ${year}`;
+}
+
+export const fetchGenresTypes = async (apiFetch) => {
+  const response = await apiFetch("/genres");
+  const data = await response.json();
+  const types = data.map((e) => e.title);
+  return ([...types]);
+};

@@ -6,8 +6,11 @@ import AudioControl from "./AudioControl";
 import { useAPI } from "../../hooks/useApi";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useAudio } from "../../hooks/useAudio";
+import SongItem from "../player-page/SongItem";
 
 const Modal = ({ onClose, song }) => {
+  const { currentSong, currentSongList, setCurrentSongList, setIsRandomList } =
+    useAudio();
   return (
     <div className={stylesFooter.modalBackdrop} onClick={onClose}>
       <div
@@ -15,18 +18,28 @@ const Modal = ({ onClose, song }) => {
         onClick={(e) => e.stopPropagation()}
       >
         <div className={stylesFooter["foot-left"]}>
-          <div className={stylesFooter["foot-photo"]}></div>
-
+          {/* <div className={stylesFooter["foot-photo"]}></div> */}
+          <img
+            className={stylesFooter["foot-photo"]}
+            src={currentSong.imageUrl}
+          />
           <div className={stylesFooter["foot-bcontent"]}>
             <div className={stylesFooter["foot-songartist"]}>
-              <div className={stylesFooter["foot-song"]}>Song tittle</div>
-              <div className={stylesFooter["foot-artist"]}>Song artist</div>
+              <div className={stylesFooter["foot-song"]}>
+                {currentSong.title}
+              </div>
+              <div className={stylesFooter["foot-artist"]}>
+                {currentSong.artist.user.username}
+              </div>
             </div>
             <div className={stylesFooter["foot-likeslisteners"]}>
-              <div className={stylesFooter["foot-likes"]}>520204 likes</div>
+              <div className={stylesFooter["foot-likes"]}>
+                {currentSong.listeningCount} listenings
+              </div>
+              {/* <div className={stylesFooter["foot-likes"]}>520204 likes</div>
               <div className={stylesFooter["foot-listeners"]}>
                 14784235 listeners
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -37,8 +50,19 @@ const Modal = ({ onClose, song }) => {
           </div>
 
           <div className={stylesFooter["foot-array"]}>
-            {[...Array(16)].map((_, i) => (
+            {/* {[...Array(16)].map((_, i) => (
               <div key={i} className={stylesFooter["songfsdfs"]}></div>
+            ))} */}
+            {currentSongList.map((i) => (
+              <SongItem
+                key={i.id}
+                song={i}
+                onSetCurrentSongList={() => {
+                  setIsRandomList(false);
+                  setCurrentSongList(currentSongList);
+                }}
+                moreInfo
+              />
             ))}
           </div>
         </div>
@@ -48,12 +72,11 @@ const Modal = ({ onClose, song }) => {
 };
 
 const MusicPlayer = ({ footerPlayer, isHovered }) => {
-  const { apiFetch}=useAPI()
-  const { currentSong, setCurrentSong, setCurrentSongList } =
-    useAudio();
+  // const { apiFetch}=useAPI()
+  const { currentSong } = useAudio();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { user, isLoading } = useAuth0();
+  // const { user, isLoading } = useAuth0();
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -63,32 +86,17 @@ const MusicPlayer = ({ footerPlayer, isHovered }) => {
     setIsModalOpen(false);
   };
 
-  /*  const fetchPlaylist = async () => {
-    const response = await apiFetch(`/playlists/playlists/${user?.sub}/Like`);
-    const data = await response.json();
-    console.log("Playlist fetched:", data);
-    return data;
-  };
-  const fetchSong = async () => {
-    if (isLoading) return;
-    console.log(isLoading);
-    const playlist = await fetchPlaylist();
-    const response = await apiFetch(`/tracks/tracks/${playlist.id}`);
-    const data = await response.json();
-    console.log("Songs fetched:", data);
-    setCurrentSongList(data);
-    setCurrentSong(data[0]);
-  };
-  useEffect(() => {
-    fetchSong();
-  }, [isLoading]); */
   return (
     <>
       {footerPlayer ? (
         <div className={stylesFooter["footer-container"]}>
           <div className={stylesFooter["mr-bottom"]}>
             <div className={stylesFooter["mrb-left"]} onClick={handleOpenModal}>
-              <div className={stylesFooter["bmr-cover"]}></div>
+              {/* <div className={stylesFooter["bmr-cover"]}></div> */}
+              <img
+                className={stylesFooter["bmr-cover"]}
+                src={currentSong.imageUrl}
+              />
               <div className={stylesFooter["bmr-song-info"]}>
                 <div className={stylesFooter["bmr-title"]}>
                   {currentSong?.title}
@@ -112,8 +120,7 @@ const MusicPlayer = ({ footerPlayer, isHovered }) => {
           <div className={stylesLeft.singer}>
             {currentSong?.artist?.user?.username}
           </div>
-          <AudioControl isHovered={isHovered}/>
-
+          <AudioControl isHovered={isHovered} />
 
           {/* <div className={stylesLeft["circle-song"]}></div> */}
           {/* <AudioControl /> */}

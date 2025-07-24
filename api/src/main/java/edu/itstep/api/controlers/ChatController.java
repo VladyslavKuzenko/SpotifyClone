@@ -67,6 +67,9 @@ public class ChatController {
                 }
             }
         }
+        else if(!chat.getIsPrivate()){
+            return ResponseEntity.ok(Map.of("title", chat.getTitle()));
+        }
 
         return ResponseEntity.notFound().build();
     }

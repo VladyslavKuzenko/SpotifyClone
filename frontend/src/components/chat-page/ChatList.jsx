@@ -3,11 +3,9 @@ import styles from "./ChatPage.module.css";
 import PrivateChatItem from './PrivateChatItem';
 import GroupChatItem from './GroupChatItem';
 import { useAPI } from "../../hooks/useApi";
-import { useAuth0 } from "@auth0/auth0-react";
 
-const ChatList = ({ onChatSelected }) => {
-  const { apiFetch } = useAPI();
-  const { user } = useAuth0();
+const ChatList = ({ onChatSelected, onCreateGroup }) => {
+  const { apiFetch, user } = useAPI();
   const [chats, setChats] = useState([]);
   const firstLoad = useRef(true);
 
@@ -21,7 +19,9 @@ const ChatList = ({ onChatSelected }) => {
         const titleData = await titleResponse.json();
 
         const messageResponse = await apiFetch(`/chats/${chat.id}/lastMessage`);
-        const messageData = await messageResponse.json();
+        const messageText = await messageResponse.text();
+        const messageData = messageText.trim() ? JSON.parse(messageText) : "";
+
         return { ...chat, title: titleData.title, lastMessage: messageData };
       }
       return chat;
@@ -64,13 +64,20 @@ const ChatList = ({ onChatSelected }) => {
           className={styles["chat-search"]}
           placeholder="Search"
         />
+
+        <button
+          className={styles["create-group"]}
+          onClick={onCreateGroup}
+        >
+        </button>
+
       </div>
 
       <div className={styles["groups-block"]}>
         <div className={styles.text1}>Groups:</div>
         <div className={styles.groups}>
           {chats.map((chat) =>
-            !chat.isPrivate ? <GroupChatItem key={chat.id} {...chat} /> : null
+            !chat.isPrivate ? <GroupChatItem key={chat.id} onChatSelected={onChatSelected} {...chat} /> : null
           )}
         </div>
       </div>

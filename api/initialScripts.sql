@@ -21,25 +21,224 @@ SELECT TABLE_SCHEMA,
 FROM information_schema.columns
 ORDER BY TABLE_SCHEMA, TABLE_NAME, ORDINAL_POSITION;
 
-# delete from users_genres where user_id = "auth0|685d8d89dfd50588889a181d";
-# delete from users_vibes where user_id = "auth0|685d8d89dfd50588889a181d";
-# delete from users where id = "auth0|685d8d89dfd50588889a181d";
+delete from users_genres where user_id = "auth0|687d672250e5ce653980abaf";
+delete from users_followings where follower_user_id = "auth0|687d672250e5ce653980abaf";
+delete from playlists where user_id = "auth0|687d672250e5ce653980abaf";
+delete from users where id = "auth0|687d672250e5ce653980abaf";
 
-select id, username
+select *
 from users;
 select *
-from chats;
+from users_chats;
 select *
 from messages;
 
-INSERT INTO countries (id, name)
-VALUES (1, 'Spain'),
-       (2, 'Poland'),
-       (3, 'Ukraine');
 
-INSERT INTO goals (id, title)
-VALUES (1, 'Become cool producer'),
-       (2, 'Listen all songs');
+INSERT INTO countries (name)
+VALUES ('Afghanistan'),
+       ('Albania'),
+       ('Algeria'),
+       ('Andorra'),
+       ('Angola'),
+       ('Antigua and Barbuda'),
+       ('Argentina'),
+       ('Armenia'),
+       ('Australia'),
+       ('Austria'),
+       ('Azerbaijan'),
+       ('Bahamas'),
+       ('Bahrain'),
+       ('Bangladesh'),
+       ('Barbados'),
+       ('Belarus'),
+       ('Belgium'),
+       ('Belize'),
+       ('Benin'),
+       ('Bhutan'),
+       ('Bolivia'),
+       ('Bosnia and Herzegovina'),
+       ('Botswana'),
+       ('Brazil'),
+       ('Brunei'),
+       ('Bulgaria'),
+       ('Burkina Faso'),
+       ('Burundi'),
+       ('Cabo Verde'),
+       ('Cambodia'),
+       ('Cameroon'),
+       ('Canada'),
+       ('Central African Republic'),
+       ('Chad'),
+       ('Chile'),
+       ('China'),
+       ('Colombia'),
+       ('Comoros'),
+       ('Congo (Congo-Brazzaville)'),
+       ('Costa Rica'),
+       ('Croatia'),
+       ('Cuba'),
+       ('Cyprus'),
+       ('Czech Republic'),
+       ('Denmark'),
+       ('Djibouti'),
+       ('Dominica'),
+       ('Dominican Republic'),
+       ('Ecuador'),
+       ('Egypt'),
+       ('El Salvador'),
+       ('Equatorial Guinea'),
+       ('Eritrea'),
+       ('Estonia'),
+       ('Eswatini'),
+       ('Ethiopia'),
+       ('Fiji'),
+       ('Finland'),
+       ('France'),
+       ('Gabon'),
+       ('Gambia'),
+       ('Georgia'),
+       ('Germany'),
+       ('Ghana'),
+       ('Greece'),
+       ('Grenada'),
+       ('Guatemala'),
+       ('Guinea'),
+       ('Guinea-Bissau'),
+       ('Guyana'),
+       ('Haiti'),
+       ('Honduras'),
+       ('Hungary'),
+       ('Iceland'),
+       ('India'),
+       ('Indonesia'),
+       ('Iran'),
+       ('Iraq'),
+       ('Ireland'),
+       ('Israel'),
+       ('Italy'),
+       ('Jamaica'),
+       ('Japan'),
+       ('Jordan'),
+       ('Kazakhstan'),
+       ('Kenya'),
+       ('Kiribati'),
+       ('Kuwait'),
+       ('Kyrgyzstan'),
+       ('Laos'),
+       ('Latvia'),
+       ('Lebanon'),
+       ('Lesotho'),
+       ('Liberia'),
+       ('Libya'),
+       ('Liechtenstein'),
+       ('Lithuania'),
+       ('Luxembourg'),
+       ('Madagascar'),
+       ('Malawi'),
+       ('Malaysia'),
+       ('Maldives'),
+       ('Mali'),
+       ('Malta'),
+       ('Marshall Islands'),
+       ('Mauritania'),
+       ('Mauritius'),
+       ('Mexico'),
+       ('Micronesia'),
+       ('Moldova'),
+       ('Monaco'),
+       ('Mongolia'),
+       ('Montenegro'),
+       ('Morocco'),
+       ('Mozambique'),
+       ('Myanmar'),
+       ('Namibia'),
+       ('Nauru'),
+       ('Nepal'),
+       ('Netherlands'),
+       ('New Zealand'),
+       ('Nicaragua'),
+       ('Niger'),
+       ('Nigeria'),
+       ('North Korea'),
+       ('North Macedonia'),
+       ('Norway'),
+       ('Oman'),
+       ('Pakistan'),
+       ('Palau'),
+       ('Palestine'),
+       ('Panama'),
+       ('Papua New Guinea'),
+       ('Paraguay'),
+       ('Peru'),
+       ('Philippines'),
+       ('Poland'),
+       ('Portugal'),
+       ('Qatar'),
+       ('Romania'),
+       ('Russia'),
+       ('Rwanda'),
+       ('Saint Kitts and Nevis'),
+       ('Saint Lucia'),
+       ('Saint Vincent and the Grenadines'),
+       ('Samoa'),
+       ('San Marino'),
+       ('Sao Tome and Principe'),
+       ('Saudi Arabia'),
+       ('Senegal'),
+       ('Serbia'),
+       ('Seychelles'),
+       ('Sierra Leone'),
+       ('Singapore'),
+       ('Slovakia'),
+       ('Slovenia'),
+       ('Solomon Islands'),
+       ('Somalia'),
+       ('South Africa'),
+       ('South Korea'),
+       ('South Sudan'),
+       ('Spain'),
+       ('Sri Lanka'),
+       ('Sudan'),
+       ('Suriname'),
+       ('Sweden'),
+       ('Switzerland'),
+       ('Syria'),
+       ('Taiwan'),
+       ('Tajikistan'),
+       ('Tanzania'),
+       ('Thailand'),
+       ('Timor-Leste'),
+       ('Togo'),
+       ('Tonga'),
+       ('Trinidad and Tobago'),
+       ('Tunisia'),
+       ('Turkey'),
+       ('Turkmenistan'),
+       ('Tuvalu'),
+       ('Uganda'),
+       ('Ukraine'),
+       ('United Arab Emirates'),
+       ('United Kingdom'),
+       ('United States'),
+       ('Uruguay'),
+       ('Uzbekistan'),
+       ('Vanuatu'),
+       ('Vatican City'),
+       ('Venezuela'),
+       ('Vietnam'),
+       ('Yemen'),
+       ('Zambia'),
+       ('Zimbabwe');
+
+INSERT INTO genres (title)
+VALUES ('Pop'),
+       ('Rock'),
+       ('Classical'),
+       ('R&B'),
+       ('Hip-Hop'),
+       ('Jazz'),
+       ('Electronic'),
+       ('Indie');
 
 INSERT INTO users (id, allow_messages, first_name, followers_count, followings_count, last_name, short_bio,
                    show_listening_history, ui_theme, username, country_id, day_track_id, goal_id)
@@ -59,7 +258,7 @@ VALUES (1, 'https://www.wheeler.com/', 'Song One', 1, 1),
        (2, NULL, 'Song Two', 2, 2);
 
 INSERT INTO chats (id, picture_url, is_private, title, update_time)
-VALUES (3, '', false, 'Gang', null);
+VALUES (2, '', false, 'Planet destroyers online', null);
 
 INSERT INTO posts (id, comments_count, description, likes_count, media_json, media_type, reposts_count, title,
                    views_count, user_id)
@@ -95,12 +294,12 @@ VALUES (1, 501),
        (2, 502);
 
 INSERT INTO users_chats (user_id, chat_id)
-VALUES ("auth0|685da34feafd0587561b2ac9", 1),
-       ("auth0|685d8d89dfd50588889a181d", 1);
+VALUES ("auth0|68376fb27d4340d1988fac91", 1),
+       ("auth0|687d672250e5ce653980abaf", 1);
 
 INSERT INTO users_chats (user_id, chat_id)
-VALUES ("auth0|68786d00fa9569c786c01278", 2),
-       ("auth0|685d8d89dfd50588889a181d", 2);
+VALUES ("auth0|68376fb27d4340d1988fac91", 2),
+       ("auth0|687d672250e5ce653980abaf", 2);
 
 INSERT INTO users_chats (user_id, chat_id)
 VALUES ("auth0|68786d00fa9569c786c01278", 3),
@@ -111,18 +310,6 @@ INSERT INTO users_followings (follower_user_id, followed_user_id)
 VALUES ("abc123", "abc321"),
        ("abc321", "abc123");
 
-INSERT INTO genres (id, title)
-VALUES (10, 'Rock'),
-       (11, 'Jazz');
-
 INSERT INTO users_genres (user_id, genre_id)
 VALUES ("abc123", 10),
        ("abc321", 11);
-
-INSERT INTO vibes (id, title)
-VALUES (1, 'Chill'),
-       (2, 'Energetic');
-
-INSERT INTO users_vibes (user_id, vibe_id)
-VALUES ("abc123", 1),
-       ("abc321", 2);

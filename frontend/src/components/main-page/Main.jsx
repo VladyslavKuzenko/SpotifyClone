@@ -1,16 +1,14 @@
-import React, { useState, useEffect, useRef, use } from "react";
+import { useState, useEffect, useRef } from "react";
 import styles from "./main.module.css";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Navigate } from "react-router-dom";
-import LeftSide from "../main-components/LeftSide";
-import StoriesItem from "./StoriesItem";
+import Stories from "./Stories";
 import WhoToFollow from "./WhoToFollow";
 import NewSongs from "./NewSongs";
-import ContainerVibe from "./ContainerVibe";
 import SearchModal from "./SearchModal";
 import NewPost from "./NewPost";
 import { useAPI } from "../../hooks/useApi";
-import PostItem from "./PostItem";
+import Posts from "./Posts";
 
 const Main = () => {
   const { isAuthenticated, isLoading } = useAuth0();
@@ -20,7 +18,7 @@ const Main = () => {
   const [selectedTab, setSelectedTab] = useState("all");
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [notificationTab, setNotificationTab] = useState("all");
-  const { apiFetch, isProfileConfirmed, profileConfirmationLoading } = useAPI();
+  const { isProfileConfirmed, profileConfirmationLoading } = useAPI();
 
   const notificationRef = useRef(null);
 
@@ -44,13 +42,6 @@ const Main = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isNotificationOpen]);
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     /* const response = await apiFetch(""); */
-  //   };
-
-  //   fetchData();
-  // }, [isLoading]);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -67,32 +58,6 @@ const Main = () => {
   if (!isProfileConfirmed) {
     return <Navigate to="/profileSetup" replace />;
   }
-
-  // const renderContent = () => {
-  //   return (
-  //     <div className={styles["all-post-content"]}>
-  //       <PostItem selectedTab={selectedTab} />
-  //     </div>
-  //   );
-
-  //   /*     console.log("renderContent called")
-  //   switch (selectedTab) {
-  //     case "all":
-
-
-  //     case "artists":
-  //       return <div>Це контент для Artists</div>;
-
-
-  //     case "friends":
-  //       return <div className={styles["all-post-content"]}><PostItem friends/></div>;
-
-
-
-  //     default:
-  //       return null;
-  //   } */
-  // };
 
   const renderNotificationContent = () => {
     switch (notificationTab) {
@@ -112,7 +77,6 @@ const Main = () => {
   return (
     <>
       <div className={styles.container}>
-
         <div className={styles["home-text"]}></div>
 
         <div className={styles.middle}>
@@ -125,7 +89,6 @@ const Main = () => {
                 setSearchParams(e.target.value);
               }}
               value={searchParams}
-              // type="search"
               placeholder="Search"
               className={styles.search}
               onFocus={() => setIsSearchModalOpen(true)}
@@ -157,8 +120,9 @@ const Main = () => {
                   {["all", "likes", "comments", "follows"].map((tab) => (
                     <div
                       key={tab}
-                      className={`${styles.notificationTab} ${notificationTab === tab ? styles.active : ""
-                        }`}
+                      className={`${styles.notificationTab} ${
+                        notificationTab === tab ? styles.active : ""
+                      }`}
                       onClick={() => setNotificationTab(tab)}
                     >
                       {tab.charAt(0).toUpperCase() + tab.slice(1)}
@@ -173,39 +137,40 @@ const Main = () => {
             )}
           </div>
 
-
           <div className={styles["empty-div4"]}></div>
-          <StoriesItem />
+          <Stories />
           <div className={styles["empty-div5"]}></div>
 
           <div className={styles["swipe-box"]}>
             <div
-              className={`${styles["all-div"]} ${selectedTab === "all" ? styles.active : ""
-                }`}
+              className={`${styles["all-div"]} ${
+                selectedTab === "all" ? styles.active : ""
+              }`}
               onClick={() => setSelectedTab("all")}
             >
               All
             </div>
             <div
-              className={`${styles["artists-div"]} ${selectedTab === "artists" ? styles.active : ""
-                }`}
+              className={`${styles["artists-div"]} ${
+                selectedTab === "artists" ? styles.active : ""
+              }`}
               onClick={() => setSelectedTab("artists")}
             >
               Artists
             </div>
             <div
-              className={`${styles["friends-div"]} ${selectedTab === "friends" ? styles.active : ""
-                }`}
+              className={`${styles["friends-div"]} ${
+                selectedTab === "friends" ? styles.active : ""
+              }`}
               onClick={() => setSelectedTab("friends")}
             >
               Friends
             </div>
           </div>
 
-          {/* <div className={styles["users-content"]}>{renderContent()}</div> */}
           <div className={styles["users-content"]}>
             <div className={styles["all-post-content"]}>
-              <PostItem selectedTab={selectedTab} />
+              <Posts selectedTab={selectedTab} />
             </div>
           </div>
         </div>

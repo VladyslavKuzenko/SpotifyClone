@@ -12,13 +12,13 @@ export default function Rating() {
   const [periodIsDropdownOpen, setPeriodIsDropdownOpen] = useState(false);
   const [periodSelectedOption, setPeriodSelectedOption] = useState("All time");
   const periodDropdownRef = useRef(null);
-  const [artist, setArtists] = useState([])
-  const [tracks, setTracks] = useState([])
+  const [artist, setArtists] = useState([]);
+  const [tracks, setTracks] = useState([]);
+  const [allTypeOptions, setAllTypeOptions] = useState();
   const { apiFetch } = useAPI();
   const { isLoading } = useAuth0();
-  const { setCurrentSong, setCurrentSongList } = useAudio();
-
-
+  const { setCurrentSong, setCurrentSongList, setIsRandomList, genres } =
+    useAudio();
 
   const fetchUsers = async () => {
     if (isLoading) return;
@@ -28,8 +28,9 @@ export default function Rating() {
     const data = await response.json();
     setArtists(data);
 
-    console.log("Rating: data: ", data)
+    console.log("Rating: data: ", data);
   };
+
   const fetchTracks = async () => {
     if (isLoading) return;
     console.log("Rating: fetchTracks()");
@@ -54,12 +55,24 @@ export default function Rating() {
       default:
         break;
     }
-    const response = await apiFetch(`/tracks/top?first=0&count=10&period=${period}`);
+    console.log(
+      `/tracks/top?first=0&count=10&period=${period}&genre=${selectedType}`
+    );
+    console.log("Selected type: ", selectedType);
+    const response = await apiFetch(
+      `/tracks/top?first=0&count=10&period=${period}&genre=${selectedType}`
+    );
     const data = await response.json();
     setTracks(data);
 
-    console.log("Rating: track data: ", data)
+    console.log("Rating: track data: ", data);
   };
+
+  const fetchGenres = async () => {
+    console.log("Genres in: ",genres)
+    setAllTypeOptions([...genres, "All Types"]);
+  };
+
   const toggleTypeDropdown = () => {
     setTypeDropdownOpen(!isTypeDropdownOpen);
     setPeriodIsDropdownOpen(false);
@@ -76,7 +89,6 @@ export default function Rating() {
   };
 
   const handlePeriodSelect = (period) => {
-
     setPeriodSelectedOption(period);
     setPeriodIsDropdownOpen(false);
   };
@@ -84,7 +96,12 @@ export default function Rating() {
   useEffect(() => {
     fetchUsers();
     fetchTracks();
-  }, [isLoading, periodSelectedOption])
+    // fetchGenres();
+  }, [isLoading, periodSelectedOption, selectedType]);
+  useEffect(() => {
+    if(!genres)return;
+    fetchGenres();
+  }, [genres]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -107,14 +124,14 @@ export default function Rating() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const allTypeOptions = [
-    "Hip Hop",
-    "Pop",
-    "Rock",
-    "Classical",
-    "All Types",
-    "Another",
-  ];
+  // const allTypeOptions = [
+  //   "Hip Hop",
+  //   "Pop",
+  //   "Rock",
+  //   "Classical",
+  //   "All Types",
+  //   "Another",
+  // ];
   const typeOptions =
     selectedType === "All Types"
       ? allTypeOptions
@@ -131,15 +148,16 @@ export default function Rating() {
     periodSelectedOption === "Monthly"
       ? periodOptions
       : [
-        periodSelectedOption,
-        ...periodOptions.filter((opt) => opt !== periodSelectedOption),
-      ];
+          periodSelectedOption,
+          ...periodOptions.filter((opt) => opt !== periodSelectedOption),
+        ];
 
   return (
     <>
       <div className={styles["raitinig-container"]}>
         <div className={styles["upper-platform"]}>
           <div className={styles["upper-left"]}>
+            {/* <img src={tracks[0]?.imageUrl}/> */}
             <div className={styles["top-content"]}>
               <div className={styles["text1"]}>Popular Tracks</div>
               <div className={styles["btn-container"]}>
@@ -160,13 +178,13 @@ export default function Rating() {
 
                   {isTypeDropdownOpen && (
                     <div className={styles["dropdown-menu"]}>
-                      {typeOptions.map((type, index) => (
+                      {typeOptions?.map((item, index) => (
                         <div
                           key={index}
                           className={styles["dropdown-item"]}
-                          onClick={() => handleTypeSelect(type)}
+                          onClick={() => handleTypeSelect(item)}
                         >
-                          {type}
+                          {item}
                         </div>
                       ))}
                     </div>
@@ -202,33 +220,44 @@ export default function Rating() {
                     </div>
                   )}
                 </div>
-
-
               </div>
             </div>
 
-            {/* Example Content */}
             <div className={styles["info-song"]}>
               <div className={styles["info-place"]}></div>
               <div className={styles["info-content"]}>
-                <div className={styles["info-artist"]}>{tracks[0]?.artist.user.username} </div>
-                <div className={styles["info-song-name"]}>{tracks[0]?.title} </div>
-                <div className={styles["info-listeners"]}>{tracks[0]?.listeningCount} listeners</div>
+                <div className={styles["info-artist"]}>
+                  {tracks[0]?.artist.user.username}{" "}
+                </div>
+                <div className={styles["info-song-name"]}>
+                  {tracks[0]?.title}{" "}
+                </div>
+                <div className={styles["info-listeners"]}>
+                  {tracks[0]?.listeningCount} listeners
+                </div>
               </div>
             </div>
 
             <div className={styles["upper-right"]}>
               <div className={styles["scroll-container"]}>
                 {tracks.map((item, index) => (
-                  <div key={index} className={styles["scroll-item"]} onClick={() => {
-                    setCurrentSong(item);
-                    setCurrentSongList(tracks);
-                  }}>
+                  <div
+                    key={index}
+                    className={styles["scroll-item"]}
+                    onClick={() => {
+                      setIsRandomList(false);
+                      setCurrentSong(item);
+                      setCurrentSongList(tracks);
+                    }}
+                  >
                     <div className={styles["item-place"]}>{index + 1}</div>
                     <div className={styles["item-info"]}>
-                      <div className={styles["item-photo"]}></div>
+                      {/* <div className={styles["item-photo"]}></div> */}
+                      <img  className={styles["item-photo"]} src={item.imageUrl}/>
                       <div className={styles["inside-info"]}>
-                        <div className={styles["inside-name"]}>{item.title}</div>
+                        <div className={styles["inside-name"]}>
+                          {item.title}
+                        </div>
                         <div className={styles["inside-singer"]}>
                           {item.artist.user.username}
                         </div>
@@ -242,8 +271,6 @@ export default function Rating() {
               </div>
             </div>
           </div>
-
-
         </div>
 
         <div className={styles["bottom-platform"]}>
@@ -251,57 +278,84 @@ export default function Rating() {
           <div className={styles["bottom-content"]}>
             <div className={styles["raite-wrapper"]}>
               <div className={styles["raite-item1"]}>
-                <div className={styles["raite-photo"]}></div>
+                {/* <div className={styles["raite-photo"]}></div> */}
+                <img className={styles["raite-photo"]} src={artist[0]?.user.avatarImgUrl}/> 
                 <div className={styles["raite-center"]}>
-                  <div className={styles["raite-text"]}>{artist[0]?.user?.username}</div>
+                  <div className={styles["raite-text"]}>
+                    {artist[0]?.user?.username}
+                  </div>
                 </div>
                 <div className={styles["raite-end1"]}></div>
               </div>
-              <div className={styles["raite-listeners"]}>{artist[0]?.listeningCount} listeners</div>
+              <div className={styles["raite-listeners"]}>
+                {artist[0]?.listeningCount} listeners
+              </div>
             </div>
 
             <div className={styles["raite-wrapper"]}>
               <div className={styles["raite-item2"]}>
-                <div className={styles["raite-photo"]}></div>
+                {/* <div className={styles["raite-photo"]}></div> */}
+                <img className={styles["raite-photo"]} src={artist[1]?.user.avatarImgUrl}/> 
                 <div className={styles["raite-center"]}>
-                  <div className={styles["raite-text"]}>{artist[1]?.user?.username}</div>
+                  <div className={styles["raite-text"]}>
+                    {artist[1]?.user?.username}
+                  </div>
                 </div>
                 <div className={styles["raite-end2"]}></div>
               </div>
-              <div className={styles["raite-listeners"]}>{artist[1]?.listeningCount} listeners</div>
+              <div className={styles["raite-listeners"]}>
+                {artist[1]?.listeningCount} listeners
+              </div>
             </div>
 
             <div className={styles["raite-wrapper"]}>
               <div className={styles["raite-item3"]}>
-                <div className={styles["raite-photo"]}></div>
+                <img className={styles["raite-photo"]} src={artist[2]?.user.avatarImgUrl}/> 
+                {/* <div className={styles["raite-photo"]}></div> */}
                 <div className={styles["raite-center"]}>
-                  <div className={styles["raite-text"]}>{artist[2]?.user?.username}</div>
+                  <div className={styles["raite-text"]}>
+                    {artist[2]?.user?.username}
+                  </div>
                 </div>
                 <div className={styles["raite-end3"]}></div>
               </div>
-              <div className={styles["raite-listeners"]}>{artist[2]?.listeningCount} listeners</div>
+              <div className={styles["raite-listeners"]}>
+                {artist[2]?.listeningCount} listeners
+              </div>
             </div>
 
             <div className={styles["raite-wrapper"]}>
               <div className={styles["raite-item4"]}>
-                <div className={styles["raite-photo"]}></div>
+                {/* <div className={styles["raite-photo"]}></div> */}
+                <img className={styles["raite-photo"]} src={artist[3]?.user.avatarImgUrl}/> 
+
                 <div className={styles["raite-center"]}>
-                  <div className={styles["raite-text"]}>{artist[3]?.user?.username}</div>
+                  <div className={styles["raite-text"]}>
+                    {artist[3]?.user?.username}
+                  </div>
                 </div>
                 <div className={styles["raite-end4"]}></div>
               </div>
-              <div className={styles["raite-listeners"]}>{artist[3]?.listeningCount} listeners</div>
+              <div className={styles["raite-listeners"]}>
+                {artist[3]?.listeningCount} listeners
+              </div>
             </div>
 
             <div className={styles["raite-wrapper"]}>
               <div className={styles["raite-item5"]}>
-                <div className={styles["raite-photo"]}></div>
+                {/* <div className={styles["raite-photo"]}></div> */}
+                <img className={styles["raite-photo"]} src={artist[4]?.user.avatarImgUrl}/> 
+
                 <div className={styles["raite-center"]}>
-                  <div className={styles["raite-text"]}>{artist[4]?.user?.username}</div>
+                  <div className={styles["raite-text"]}>
+                    {artist[4]?.user?.username}
+                  </div>
                 </div>
                 <div className={styles["raite-end5"]}></div>
               </div>
-              <div className={styles["raite-listeners"]}>{artist[4]?.listeningCount} listeners</div>
+              <div className={styles["raite-listeners"]}>
+                {artist[4]?.listeningCount} listeners
+              </div>
             </div>
           </div>
         </div>

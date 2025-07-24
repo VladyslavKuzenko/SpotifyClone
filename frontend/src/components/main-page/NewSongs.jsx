@@ -13,11 +13,19 @@ const NewSongs = () => {
     playAudio,
     setCurrentSong,
     setCurrentSongList,
+    setIsRandomList
   } = useAudio();
   async function fetchSong() {
     const response = await apiFetch("/tracks/lastTrack");
-    const data = await response.json();
+    const text = await response.text();
+
+  if (text) {
+    const data = JSON.parse(text);
     setSong(data);
+  
+  } else {
+  }
+
     // console.log("New song fetched:", data);
   }
   useState(() => {
@@ -25,9 +33,14 @@ const NewSongs = () => {
   });
   return (
     <div className={styles["new-song-div"]}>
+
       <div className={styles["ns-text1"]}>New</div>
-      <div className={styles["ns-middle"]}></div>
+      <div className={styles["ns-middle"]}>
+      <img className={styles["preview-image"]} src={song?.imageUrl} style={{borderStartEndRadius:'5px', borderStartStartRadius:'5px'}}/>
+
+      </div>
       <div className={styles["ns-bottom"]}>
+        
         <div className={styles["ns-song-author"]}>
           <div className={styles["ns-song"]}>{song?.title}</div>
           <div className={styles["ns-author"]}>
@@ -46,6 +59,7 @@ const NewSongs = () => {
             <button
               className={styles["ns-play-btn"]}
               onClick={() => {
+                setIsRandomList(false)
                 setCurrentSong(song);
                 setCurrentSongList([song]);
                 //playAudio();

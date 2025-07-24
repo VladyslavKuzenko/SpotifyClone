@@ -1,8 +1,10 @@
 package edu.itstep.api.services;
 
 import edu.itstep.api.models.Post;
+import edu.itstep.api.models.Story;
 import edu.itstep.api.models.User;
 import edu.itstep.api.repositories.PostRepository;
+import edu.itstep.api.repositories.StoryRepository;
 import edu.itstep.api.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -20,7 +22,8 @@ public class UserService {
     private UserRepository userRepository;
     @Autowired
     private PostRepository postRepository;
-
+    @Autowired
+    private StoryRepository storyRepository;
     public User updateUser(String id, User updatedUser) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -63,7 +66,7 @@ public class UserService {
         userRepository.save(follower);
     }
 
-    public User addLike(Long post_id, String user_id) {
+    public User addPostLike(Long post_id, String user_id) {
         User user = userRepository.findById(user_id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
         Post post = postRepository.findById(post_id)
@@ -79,7 +82,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User deleteLike(Long post_id, String user_id) {
+    public User deletePostLike(Long post_id, String user_id) {
         User user = userRepository.findById(user_id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
         Post post = postRepository.findById(post_id)
@@ -92,6 +95,36 @@ public class UserService {
         post.setLikesCount(post.getLikesCount() - 1);
 
         postRepository.save(post);
+        return userRepository.save(user);
+    }
+
+    public User addStoryLike(Long story_id, String user_id) {
+        User user = userRepository.findById(user_id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        Story story = storyRepository.findById(story_id)
+                .orElseThrow(() -> new RuntimeException("Story not found"));
+
+        user.getLikedStory().add(story);
+
+        story.getLikedBy().add(user);
+        story.setLikesCount(story.getLikesCount() + 1);
+
+        storyRepository.save(story);
+        return userRepository.save(user);
+    }
+
+    public User deleteStoryLike(Long story_id, String user_id) {
+        User user = userRepository.findById(user_id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        Story story = storyRepository.findById(story_id)
+                .orElseThrow(() -> new RuntimeException("Story not found"));
+
+        user.getLikedStory().remove(story);
+
+        story.getLikedBy().remove(user);
+        story.setLikesCount(story.getLikesCount() - 1);
+
+        storyRepository.save(story);
         return userRepository.save(user);
     }
 
@@ -108,6 +141,15 @@ public class UserService {
         else
             return userRepository.findByIdNotInOrderByFollowersCountDesc(ids, pageable);
 
+    }
+
+    public Boolean isStoryLiked(Long story_id, String user_id) {
+        User user = userRepository.findById(user_id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        Story story = storyRepository.findById(story_id)
+                .orElseThrow(() -> new RuntimeException("Story not found"));
+
+        return user.getLikedStory().contains(story);
     }
 
 }

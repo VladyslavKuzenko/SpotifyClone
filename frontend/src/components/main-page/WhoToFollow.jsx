@@ -2,15 +2,14 @@ import React, { useEffect } from "react";
 import styles from "./main.module.css";
 import { Navigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
-import { API_URL } from "../../js/properties/properties";
 import FollowAccountCard from "./FollowAccountCard";
 import { useAPI } from "../../hooks/useApi";
 
 const WhoToFollow = () => {
-  const { user, isAuthenticated, isLoading, getAccessTokenSilently } =
+  const { isAuthenticated, isLoading } =
     useAuth0();
   const [users, setUsers] = React.useState([]);
-  const { apiFetch } = useAPI();
+  const { apiFetch,user } = useAPI();
 
   const fetchUsers = async () => {
     // const response = await apiFetch("/users/usersToSubscribe/15");

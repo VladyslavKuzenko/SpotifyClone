@@ -1,30 +1,38 @@
-import { use, useEffect, useState } from "react";
-import { isSubscribed, searchSongs } from "../../js/functions/functions";
+import { useEffect, useState } from "react";
+import { searchSongs } from "../../js/functions/functions";
 import styles from "./player.module.css";
-
 import SongItem from "./SongItem";
-
-import { API_URL } from "../../js/properties/properties";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Navigate } from "react-router-dom";
 import FollowingButton from "../sharedComponents/FollowingButton";
 import { useAPI } from "../../hooks/useApi";
 import { useAudio } from "../../hooks/useAudio";
+import AlbumItem from "../my-profile-page/AlbumItem";
 
 export default function MiddleItem({
- /*  
+  /*  
   onSetCurrentSongList, */
   isPlaylistsChangesControl,
 }) {
+  const { apiFetch, user } = useAPI();
   const [search, setSearch] = useState("");
   const [songs, setSongs] = useState([]);
   const [songsFullList, setSongsFullList] = useState([]);
-  const [albums, setAlbums] = useState([]); // стан для альбомів
+  const [albumSongs, setAlbumSongs] = useState([]);
+  const [albumSongsFullList, setAlbumSongsFullList] = useState([]);
+  const [albums, setAlbums] = useState([]);
+  const [currentAlbum, setCurrentAlbum] = useState();
   const [artists, setArtists] = useState([]);
   const [currentArtist, setCurrentArtist] = useState(null);
-  const { user, isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0();
+  const { isAuthenticated, isLoading } = useAuth0();
   const [openMenuSongId, setOpenMenuSongId] = useState(null);
-  const { setCurrentSong, setCurrentSongList } = useAudio();
+  const {
+    setCurrentSong,
+    setCurrentSongList,
+    setIsRandomList,
+    isListeningCountIncremented,
+    setIsListeningCountIncremented,
+  } = useAudio();
   // Вкладка для артиста: 'songs' або 'albums'
   const [activeArtistTab, setActiveArtistTab] = useState("songs");
 
@@ -32,80 +40,94 @@ export default function MiddleItem({
   const [activeTab, setActiveTab] = useState("artist");
 
   const handleArtistSongs = async () => {
-    if (isAuthenticated && currentArtist) {
-      const token = await getAccessTokenSilently({
-        authorizationParams: { audience: API_URL },
-      });
-      const response = await fetch(
-        `http://localhost:8080/tracks/tracks-by-artists/${currentArtist?.user.id}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      const body = await response.json();
-      setSongs(body);
-      setSongsFullList(body);
-    }
+    const response = await apiFetch(
+      `/tracks/tracks-by-artists/${currentArtist?.user.id}`
+    );
+    const body = await response.json();
+    setSongs(body);
+    setSongsFullList(body);
+  };
+  const handleRecomendedSongs = async () => {
+    const response = await apiFetch(`/tracks/tracks-without-like/${user?.sub}`);
+    const body = await response.json();
+    setSongs(body);
+    setSongsFullList(body);
   };
 
-/*   const handleArtistAlbums = async () => {
-    if (isAuthenticated && currentArtist) {
-      const token = await getAccessTokenSilently({
-        authorizationParams: { audience: API_URL },
-      });
-      const responseAlbums = await fetch(
-        `http://localhost:8080/albums/by-artist/${currentArtist?.user.id}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      const bodyAlbums = await responseAlbums.json();
+  const fetchAlbum = async () => {
+    if (!currentArtist) return;
 
-      // Якщо сервер повертає об'єкт із масивом альбомів в іншій властивості, наприклад bodyAlbums.albums - поправте тут
-      // setAlbums(bodyAlbums.albums || []);
-      setAlbums(Array.isArray(bodyAlbums) ? bodyAlbums : []);
-    }
-  }; */
+    const response = await apiFetch(
+      `/albums/albums-by-artists/${currentArtist.id}`
+    );
+    const data = await response.json();
+    setAlbums(data);
+    setCurrentAlbum(data[0]);
+  };
+  const fetchAlbumTracks = async () => {
+    if (!currentAlbum) return;
+    const response = await apiFetch(
+      `/albums/albums-tracks/${currentAlbum?.id}`
+    );
+    const data = await response.json();
+    setAlbumSongs(data);
+    setAlbumSongsFullList(data);
+  };
 
   const handleStart = async () => {
-    if (isAuthenticated) {
-      const token = await getAccessTokenSilently({
-        authorizationParams: { audience: API_URL },
-      });
-      const responseArtist = await fetch(
-        "http://localhost:8080/artists/top/0/20",
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      const bodyArtists = await responseArtist.json();
-      setArtists(bodyArtists);
-      setCurrentArtist(bodyArtists[0]);
-    }
+    const responseArtist = await apiFetch("/artists/top/0/20");
+    const bodyArtists = await responseArtist.json();
+    setArtists(bodyArtists);
+    setCurrentArtist(bodyArtists[0]);
   };
 
   useEffect(() => {
+    if (isLoading) return;
     const fetchData = async () => {
       await handleStart();
     };
+
     fetchData();
-    /*  setSongs(songsList); */
-    /*    console.log("MiddleItem");
-    console.log(songsList);
-    console.log(songs); */
+    fetchAlbum();
   }, [isLoading]);
+
   useEffect(() => {
     const fetchData = async () => {
       await handleArtistSongs();
     };
 
     fetchData();
+    fetchAlbum();
   }, [currentArtist]);
+
+  useEffect(() => {
+    fetchAlbumTracks();
+  }, [currentAlbum]);
+
+  useEffect(() => {
+    if (activeTab === "recommended") {
+      handleRecomendedSongs();
+    } else {
+      handleArtistSongs();
+    }
+  }, [activeTab]);
+
+  useEffect(() => {
+    console.log("Songs changes: ", songs);
+  }, [songs]);
+
+  useEffect(() => {
+    if (!currentArtist) return;
+    if (isListeningCountIncremented) {
+      currentArtist.listeningCount += 1;
+      setIsListeningCountIncremented(false);
+    }
+  }, [isListeningCountIncremented]);
 
   const nextArtist = () => {
     if (artists && artists.indexOf(currentArtist) + 1 < artists.length) {
       setCurrentArtist(artists[artists.indexOf(currentArtist) + 1]);
-      setActiveArtistTab("songs"); // сброс вкладки при зміні артиста
+      setActiveArtistTab("songs");
     }
   };
   const prevArtist = () => {
@@ -128,9 +150,10 @@ export default function MiddleItem({
               type="text"
               onChange={(e) => {
                 setSearch(e.target.value);
-                if (activeTab === "artist" && activeArtistTab === "songs") {
-                  searchSongs(songsFullList, e.target.value, setSongs);
-                }
+                // if (activeTab === "artist" && activeArtistTab === "songs") {
+                searchSongs(songsFullList, e.target.value, setSongs);
+                searchSongs(albumSongsFullList, e.target.value, setAlbumSongs);
+                // }
               }}
               value={search}
               placeholder="Search"
@@ -138,17 +161,15 @@ export default function MiddleItem({
           </div>
           <div className={styles["recommended-artist"]}>
             <div
-              className={`${styles["recommended-text1"]} ${
-                activeTab === "recommended" ? styles.activeTab : ""
-              }`}
+              className={`${styles["recommended-text1"]} ${activeTab === "recommended" ? styles.activeTab : ""
+                }`}
               onClick={() => setActiveTab("recommended")}
             >
               Recommended for you
             </div>
             <div
-              className={`${styles["artist-text"]} ${
-                activeTab === "artist" ? styles.activeTab : ""
-              }`}
+              className={`${styles["artist-text"]} ${activeTab === "artist" ? styles.activeTab : ""
+                }`}
               onClick={() => setActiveTab("artist")}
             >
               Artist
@@ -165,13 +186,11 @@ export default function MiddleItem({
                   <button
                     className={styles["left-btn-plat"]}
                     onClick={prevArtist}
-                  >
-                  </button>
+                  ></button>
                   <button
                     className={styles["right-btn-plat"]}
                     onClick={nextArtist}
-                  >
-                  </button>
+                  ></button>
                 </div>
                 <div className={styles["al-artist"]}>
                   {currentArtist?.user.firstName} {currentArtist?.user.lastName}
@@ -187,8 +206,15 @@ export default function MiddleItem({
                     className={styles["pf-play"]}
                     onClick={() => {
                       if (songs.length > 0) {
-                        setCurrentSong(songs[0]);
-                        setCurrentSongList(songs);
+                        if (activeArtistTab === "songs") {
+                          setIsRandomList(false);
+                          setCurrentSong(songs[0]);
+                          setCurrentSongList(songs);
+                        } else {
+                          setIsRandomList(false);
+                          setCurrentSong(albumSongs[0]);
+                          setCurrentSongList(albumSongs);
+                        }
                       }
                     }}
                   >
@@ -203,12 +229,10 @@ export default function MiddleItem({
               </div>
             </div>
 
-            
             <div className={styles["recommended-text"]}>
               <div
-                className={`${styles["rec-songs"]} ${
-                  activeArtistTab === "songs" ? styles.activeTab1 : ""
-                }`}
+                className={`${styles["rec-songs"]} ${activeArtistTab === "songs" ? styles.activeTab1 : ""
+                  }`}
                 onClick={() => setActiveArtistTab("songs")}
               >
                 {/*    Play
@@ -217,9 +241,8 @@ export default function MiddleItem({
                 Songs
               </div>
               <div
-                className={`${styles["rec-album"]} ${
-                  activeArtistTab === "albums" ? styles.activeTab1 : ""
-                }`}
+                className={`${styles["rec-album"]} ${activeArtistTab === "albums" ? styles.activeTab1 : ""
+                  }`}
                 onClick={() => setActiveArtistTab("albums")}
               >
                 Albums
@@ -235,9 +258,11 @@ export default function MiddleItem({
                         key={song.id}
                         song={song}
                         moreInfo
-                        onSetCurrentSongList={() => setCurrentSongList(songs)}
+                        onSetCurrentSongList={() => {
+                          setIsRandomList(false);
+                          setCurrentSongList(songs);
+                        }}
                         isPlaylistsChangesControl={isPlaylistsChangesControl}
-                       
                         openMenu={openMenuSongId === song.id}
                         toggleMenu={() =>
                           setOpenMenuSongId(
@@ -246,7 +271,6 @@ export default function MiddleItem({
                         }
                         closeMenu={() => setOpenMenuSongId(null)}
                       />
-                      
                     ))
                   ) : (
                     <div>No songs found</div>
@@ -258,47 +282,48 @@ export default function MiddleItem({
             {activeArtistTab === "albums" && (
               <div className={styles["albums-container"]}>
                 <div className={styles["albums-array"]}>
-                  {[...Array(6)].map((_, i) => (
-                    <div key={i} className={styles["albums-item"]}>
-                      <div className={styles["albums-nameartist"]}>
-                        <div className={styles["albumsname"]}>Album name</div>
-                        <div className={styles["albumsartist"]}>
-                          Album artist
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+
+                  {albums.map((item, index) => (
+                        <AlbumItem
+                          album={item}
+                          idx={index}
+                          onClickFunck={() => setCurrentAlbum(item)}
+                          variant="special" // або пропусти цей пропс, щоб отримати базовий стиль
+                        />
+                      ))
+                    }
+
+                  
                 </div>
 
                 <div className={styles["albums-array-songs"]}>
-                  {[...Array(14)].map((_, i) => (
-                    <>
-                      {songs.length > 0 ? (
-                        songs.map((song) => (
-                          <SongItem
-                            key={song.id}
-                            song={song}
-                            moreInfo
-                            onSetCurrentSongList={() =>
-                              setCurrentSongList(songs)
-                            }
-                            isPlaylistsChangesControl={
-                              isPlaylistsChangesControl
-                            }
-                            openMenu={openMenuSongId === song.id}
-                            toggleMenu={() =>
-                              setOpenMenuSongId(
-                                openMenuSongId === song.id ? null : song.id
-                              )
-                            }
-                            closeMenu={() => setOpenMenuSongId(null)}
-                          />
-                        ))
-                      ) : (
-                        <div>No songs found</div>
-                      )}
-                    </>
-                  ))}
+                  {/* {[...Array(14)].map((_, i) => ( */}
+                  <>
+                    {albumSongs.length > 0 ? (
+                      albumSongs.map((song) => (
+                        <SongItem
+                          key={song.id}
+                          song={song}
+                          moreInfo
+                          onSetCurrentSongList={() => {
+                            setIsRandomList(false);
+                            setCurrentSongList(albumSongs);
+                          }}
+                          isPlaylistsChangesControl={isPlaylistsChangesControl}
+                          openMenu={openMenuSongId === song.id}
+                          toggleMenu={() =>
+                            setOpenMenuSongId(
+                              openMenuSongId === song.id ? null : song.id
+                            )
+                          }
+                          closeMenu={() => setOpenMenuSongId(null)}
+                        />
+                      ))
+                    ) : (
+                      <div>{/*No songs found*/}</div>
+                    )}
+                  </>
+                  {/* ))} */}
                 </div>
               </div>
             )}
@@ -313,7 +338,10 @@ export default function MiddleItem({
                   key={song.id}
                   song={song}
                   moreInfo
-                  onSetCurrentSongList={() => setCurrentSongList(songs)}
+                  onSetCurrentSongList={() => {
+                    setIsRandomList(false);
+                    setCurrentSongList(songs);
+                  }}
                   isPlaylistsChangesControl={isPlaylistsChangesControl}
                   openMenu={openMenuSongId === song.id}
                   toggleMenu={() =>

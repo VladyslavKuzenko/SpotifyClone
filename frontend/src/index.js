@@ -15,12 +15,13 @@ root.render(
     clientId={CLIENT_ID}
     authorizationParams={{
       redirect_uri: window.location.origin,
+      
     }}
+    
   >
     <BrowserRouter>
       <APIProvider>
         <AudioProvider>
-          {/* <LeftSide/> */}
           <App />
         </AudioProvider>
       </APIProvider>

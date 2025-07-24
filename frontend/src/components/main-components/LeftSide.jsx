@@ -1,60 +1,118 @@
-import React, { useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import styles from "../main-page/main.module.css";
 import MusicPlayer from "../sharedComponents/MusicPlayer";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useAPI } from "../../hooks/useApi";
+import { useAudio } from "../../hooks/useAudio";
 
 const LeftSide = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [isHovered, setIsHovered] = useState(false);
+  const [userFullInfo, setUserFullInfo] = useState();
+  const { user, apiFetch } = useAPI();
+  const { currentSong } = useAudio();
 
+  const fetchUser = async () => {
+    const respose = await apiFetch(`/users/${user.sub}`);
+    const data = await respose.json();
+    setUserFullInfo(data);
+  };
+  useEffect(() => {
+    if (!user) return;
+    fetchUser();
+  }, [user]);
+  
   return (
-    <div className={styles["left-side"]} onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}>
-      <div className={styles["ava-place"]} >
-        <div className={styles.avatarka} onClick={() => navigate("/my-profile")}></div>
+    <div
+      className={styles["left-side"]}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <div className={styles["ava-place"]}>
+        <img
+          className={styles.avatarka}
+          src={userFullInfo?.avatarImgUrl}
+          alt="!!!!!!!!"
+          onClick={() => navigate("/my-profile")}
+        />
       </div>
 
       <div className={styles["pages-btns-div"]}>
         <button
-          className={`${styles["menu-btn"]} ${location.pathname === "/" ? styles.active1 : ""}`}
-          onClick={() => navigate("/")}
+          className={`${styles["menu-btn"]} ${
+            location.pathname === "/main" ? styles.active1 : ""
+          }`}
+          onClick={() => navigate("/main")}
         >
           <span className={`${styles.icon} ${styles.homeIcon}`}></span>
-          <span className={styles.label}>Home</span>
+          <span
+            className={`${styles.label} ${
+              location.pathname === "/main" ? styles.activeLabel : ""
+            }`}
+          >
+            Home
+          </span>
         </button>
 
         <button
-          className={`${styles["menu-btn"]} ${location.pathname === "/player" ? styles.active2 : ""}`}
+          className={`${styles["menu-btn"]} ${
+            location.pathname === "/player" ? styles.active2 : ""
+          }`}
           onClick={() => navigate("/player")}
         >
           <span className={`${styles.icon} ${styles.playerIcon}`}></span>
-          <span className={styles.label}>Player</span>
+          <span
+            className={`${styles.label} ${
+              location.pathname === "/player" ? styles.activeLabel : ""
+            }`}
+          >
+            Player
+          </span>
         </button>
 
         <button
-          className={`${styles["menu-btn"]} ${location.pathname === "/my-profile" ? styles.active3 : ""}`}
+          className={`${styles["menu-btn"]} ${
+            location.pathname === "/my-profile" ? styles.active3 : ""
+          }`}
           onClick={() => navigate("/my-profile")}
         >
           <span className={`${styles.icon} ${styles.profileIcon}`}></span>
-          <span className={styles.label}>Profile</span>
+          <span
+            className={`${styles.label} ${
+              location.pathname === "/my-profile" ? styles.activeLabel : ""
+            }`}
+          >
+            Profile
+          </span>
         </button>
 
         <button
-          className={`${styles["menu-btn"]} ${location.pathname === "/rating" ? styles.active4 : ""}`}
+          className={`${styles["menu-btn"]} ${
+            location.pathname === "/rating" ? styles.active4 : ""
+          }`}
           onClick={() => navigate("/rating")}
         >
           <span className={`${styles.icon} ${styles.ratingIcon}`}></span>
-          <span className={styles.label}>Rating</span>
+          <span
+            className={`${styles.label} ${
+              location.pathname === "/rating" ? styles.activeLabel : ""
+            }`}
+          >
+            Rating
+          </span>
         </button>
 
-        <button className={styles["menu-btn"]} onClick={() => navigate("/chat")}>
+        <button
+          className={styles["menu-btn"]}
+          onClick={() => navigate("/chat")}
+        >
           <span className={`${styles.icon} ${styles.chatIcon}`}></span>
           <div className={styles.label}>Chats</div>
         </button>
       </div>
 
-      <MusicPlayer isHovered={isHovered} />
+      {currentSong && <MusicPlayer isHovered={isHovered} />}
     </div>
   );
 };

@@ -1,9 +1,9 @@
 package edu.itstep.api.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import edu.itstep.api.models.contentModels.ContentType;
 import jakarta.persistence.*;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -17,15 +17,9 @@ public class Post {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-//    @Column(nullable = false)
-//    private String title;
     private String description;
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Content> contents = new ArrayList<>();
-//    @Column(name = "media_type", nullable = false)
-//    private ContentType mediaType;
-//    @Column(name = "media_url", nullable = false)
-//    private String mediaUrl;
     @Column(name = "likes_count")
     private int likesCount;
     @Column(name = "views_count")
@@ -34,6 +28,12 @@ public class Post {
     private int commentsCount;
     @Column(name = "reposts_count")
     private int repostsCount;
+    @Column(name = "created_at")
+    private Instant createdAt;
+    @Column(name = "is_comments_open")
+    private Boolean isCommentsOpen;
+    @Column(name = "location")
+    private String location;
     @ManyToMany
     @JoinTable(
             name = "posts_hashtags",
@@ -65,13 +65,6 @@ public class Post {
         this.user = user;
     }
 
-//    public String getTitle() {
-//        return title;
-//    }
-//
-//    public void setTitle(String title) {
-//        this.title = title;
-//    }
 
     public String getDescription() {
         return description;
@@ -80,22 +73,6 @@ public class Post {
     public void setDescription(String description) {
         this.description = description;
     }
-
-//    public ContentType getMediaType() {
-//        return mediaType;
-//    }
-//
-//    public void setMediaType(ContentType mediaType) {
-//        this.mediaType = mediaType;
-//    }
-//
-//    public String getMediaUrl() {
-//        return mediaUrl;
-//    }
-//
-//    public void setMediaUrl(String mediaUrl) {
-//        this.mediaUrl = mediaUrl;
-//    }
 
     public List<Content> getContents() {
         return contents;
@@ -135,6 +112,30 @@ public class Post {
 
     public void setRepostsCount(int repostsCount) {
         this.repostsCount = repostsCount;
+    }
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setIsCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Boolean getIsCommentsOpen() {
+        return isCommentsOpen;
+    }
+
+    public void setCommentsOpen(Boolean commentsOpen) {
+        isCommentsOpen = commentsOpen;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public Set<HashTag> getHashtags() {

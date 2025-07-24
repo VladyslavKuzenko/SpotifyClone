@@ -4,70 +4,62 @@ import { useAPI } from "../../hooks/useApi";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { API_URL } from "../../js/properties/properties";
+import {
+  getUser_metadata_firstName,
+  getUser_metadata_lastName,
+  handleUploadFile,
+} from "../../js/functions/functions";
 
 export default function ProfileSetup() {
-  const { isAuthenticated, isLoading, user, getAccessTokenWithPopup } = useAuth0();
-  const { apiFetch } = useAPI();
-  const navigate = useNavigate();
-  const [goalDropdownOpen, setGoalDropdownOpen] = useState(false);
-  const [selectedGoal, setSelectedGoal] = useState({ id: -1, title: "Select goal" });
+  const { isAuthenticated, isLoading, getAccessTokenWithPopup } = useAuth0();
+  const { apiAxiosPost, apiFetch, apiFetchWithoutAutorization, user } = useAPI();
   const [selectedGenres, setSelectedGenres] = useState([]);
-  const [selectedVibes, setSelectedVibes] = useState([]);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [isUserArtist, setIsUserArtist] = useState(false);
   const [username, setUsername] = useState(undefined);
   const [shortBio, setShortBio] = useState(undefined);
   const dropdownRef = useRef(null);
   const [countries, setCountries] = useState([]);
-  const [goals, setGoals] = useState([]);
   const [genres, setGenres] = useState([]);
-  const [vibes, setVibes] = useState([]);
+  const profileOptions = ["Artist", "Listener"];
+  const [profilePictureFile, setProfilePictureFile] = useState(null);
+  const profilePictureInputRef = useRef(null);
 
   const fetchCountries = async () => {
-    const response = await apiFetch("/countries");
+    const response = await apiFetchWithoutAutorization("/countries");
     const data = await response.json();
     setCountries(data);
   };
 
-  const fetchGoals = async () => {
-    const response = await apiFetch("/goals");
-    const data = await response.json();
-    setGoals(data);
-  };
-
   const fetchGenres = async () => {
-    const response = await apiFetch("/genres");
+    const response = await apiFetchWithoutAutorization("/genres");
     const data = await response.json();
     setGenres(data);
-  };
-
-  const fetchVibes = async () => {
-    const response = await apiFetch("/vibes");
-    const data = await response.json();
-    setVibes(data);
   };
 
   const isUsernameUnique = async (username) => {
     const response = await apiFetch(`/users/isUsernameUnique/${username}`);
     const data = await response.json();
     return data;
-  }
+  };
 
   useEffect(() => {
     function handleClickOutside(event) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setGoalDropdownOpen(false);
+        setDropdownOpen(false);
       }
     }
     document.addEventListener("click", handleClickOutside);
 
     fetchCountries();
-    fetchGoals();
     fetchGenres();
-    fetchVibes();
 
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
   }, []);
+
+  const navigate = useNavigate();
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -76,91 +68,133 @@ export default function ProfileSetup() {
     return <Navigate to="/login" replace />;
   }
 
-  function selectGoalOption(option) {
-    setSelectedGoal(option);
-    setGoalDropdownOpen(false);
+  function selectProfileOption(option) {
+    setDropdownOpen(false);
+    setIsUserArtist(option === profileOptions[0] ? true : false);
   }
 
   function selectGenre(genre) {
     if (isGenreSelected(genre)) {
-      setSelectedGenres(prevState =>
-        prevState.filter(g => g.id !== genre.id)
+      setSelectedGenres((prevState) =>
+        prevState.filter((g) => g.id !== genre.id)
       );
     } else {
-      setSelectedGenres(prevState => [...prevState, genre]);
-    }
-  }
-
-  function selectVibe(vibe) {
-    if (isVibeSelected(vibe)) {
-      setSelectedVibes(prevState =>
-        prevState.filter(v => v.id !== vibe.id)
-      );
-    } else {
-      setSelectedVibes(prevState => [...prevState, vibe]);
+      setSelectedGenres((prevState) => [...prevState, genre]);
     }
   }
 
   function isGenreSelected(genre) {
-    return selectedGenres.find(g => g.id === genre.id)
-  }
-
-  function isVibeSelected(vibe) {
-    return selectedVibes.find(v => v.id === vibe.id)
+    return selectedGenres.find((g) => g.id === genre.id);
   }
 
   async function submitProfileSetup() {
-    navigate("/", { replace: true });
-
     await getAccessTokenWithPopup({
       authorizationParams: {
-        audience: API_URL
+        audience: API_URL,
       },
     });
 
-    if (!await isUsernameUnique(username)) {
+    if (!(await isUsernameUnique(username))) return;
 
-      return;
+    let profilePictureUrl = null;
+
+    if (profilePictureFile) {
+      const content = { id: user.sub };
+      const uploadResult = await handleUploadFile(
+        content,
+        profilePictureFile,
+        apiAxiosPost,
+        "/users/avatar/upload/"
+      );
+
+      profilePictureUrl = uploadResult;
     }
 
     const resultUser = {
       id: user.sub,
-      firstName: "firstname",
-      lastName: "lastname",
+      firstName: getUser_metadata_firstName(user),
+      lastName: getUser_metadata_lastName(user),
       username,
-      goal: { id: selectedGoal.id },
-      genres: selectedGenres.map(g => ({ id: g.id })),
-      vibes: selectedVibes.map(v => ({ id: v.id })),
-      shortBio
+      genres: selectedGenres.map((g) => ({ id: g.id })),
+      shortBio,
+      isArtist: isUserArtist,
+      avatarImgUrl: profilePictureUrl,
     };
 
     try {
-      const res = await apiFetch('/users', {
-        method: 'POST',
+      const res = await apiFetch("/users", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(resultUser)
+        body: JSON.stringify(resultUser),
       });
 
-      if (!res.ok) {
-        throw new Error('Failed to save user');
-      }
-
+      if (!res.ok) throw new Error("Failed to save user");
     } catch (err) {
       console.error(err);
     }
+
+    const resultPlaylist = {
+      user: { id: user.sub },
+      title: "Like",
+    };
+
+    await apiFetch("/playlists", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(resultPlaylist),
+    });
+    console.log("Ready");
+    navigate("/main", { replace: true });
   }
+
 
   return (
     <div className={styles["background"]}>
-
       <div className={styles["main-container"]}>
         <div className={styles.text1}>Profile Setup</div>
-        <div className={styles.picture}></div>
+        <div className={styles.picture}>
+          {profilePictureFile ? (
+            <img
+              src={URL.createObjectURL(profilePictureFile)}
+              alt="Profile Preview"
+              style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "50%" }}
+            />
+          ) : (null)}
+        </div>
         <div className={styles.container}>
-          <button className={styles["change-picture"]}>Change picture</button>
-          <button className={styles["delete-picture"]}>Delete picture</button>
+          <input
+            type="file"
+            accept="image/*"
+            ref={profilePictureInputRef}
+            style={{ display: "none" }}
+            onChange={(e) => {
+              const file = e.target.files[0];
+              if (file) {
+                setProfilePictureFile(file);
+              }
+            }}
+          />
+          <button
+            className={styles["change-picture"]}
+            onClick={() => profilePictureInputRef.current.click()}
+          >
+            Change picture
+          </button>
+          <button
+            className={styles["delete-picture"]}
+            onClick={() => {
+              setProfilePictureFile(null);
+              if (profilePictureInputRef.current) {
+                profilePictureInputRef.current.value = "";
+              }
+            }}
+          >
+            Delete picture
+          </button>
         </div>
         <div className={styles.username}>Username</div>
         <input
@@ -168,7 +202,9 @@ export default function ProfileSetup() {
           id="user-name"
           placeholder="@Name"
           className={styles["user-name"]}
-          onChange={(e) => { setUsername(e.target.value) }}
+          onChange={(e) => {
+            setUsername(e.target.value);
+          }}
         />
 
         <div className={styles["bottom-block"]}>
@@ -183,26 +219,28 @@ export default function ProfileSetup() {
                 list="genres"
               />
               <datalist id="genres">
-                {countries.map(country => (
+                {countries.map((country) => (
                   <option key={country.id} value={country.name} />
                 ))}
               </datalist>
             </div>
 
             <div className={styles.b2}>
-              <div className={styles.text11}>Your Role</div>
+              <div className={styles.text11}>Profile View</div>
               <div className={styles.dropdown} ref={dropdownRef}>
-                <div className={styles["dropdown-toggle"]} onClick={() => { setGoalDropdownOpen(!goalDropdownOpen) }}>
-                  <span className={styles.label}>{selectedGoal.title}</span>
-                  <span className={styles.arrow}>{goalDropdownOpen ? "˄" : "˅"}</span>
+                <div
+                  className={styles["dropdown-toggle"]}
+                  onClick={() => {
+                    setDropdownOpen(!dropdownOpen);
+                  }}
+                >
+                  <span className={styles.label}>{isUserArtist ? "Artist" : "Listener"}</span>
                 </div>
-                {goalDropdownOpen && (
+                {dropdownOpen && (
                   <div className={styles["dropdown-options"]}>
-                    {goals.map((goal) => (
-                      <div key={goal.id} onClick={() => selectGoalOption(goal)}>
-                        {goal.title}
-                      </div>
-                    ))}
+                    {<div onClick={() => selectProfileOption(isUserArtist ? profileOptions[1] : profileOptions[0])}>
+                      {isUserArtist ? profileOptions[1] : profileOptions[0]}
+                    </div>}
                   </div>
                 )}
               </div>
@@ -215,39 +253,40 @@ export default function ProfileSetup() {
             id="bio"
             placeholder="Add a few words about your music taste..."
             className={styles.bio}
-            onChange={(e) => { setShortBio(e.target.value) }}
+            onChange={(e) => {
+              setShortBio(e.target.value);
+            }}
           />
 
           <div className={styles.text11}>Select your favorite genres:</div>
           <div className={styles["cont-block"]}>
-            <div className={styles.up}>
+            <div className={styles.genres}>
               {genres.map((genre) => (
-                <div className={`${styles.block} ${isGenreSelected(genre) ? styles['block-selected'] : ''}`} onClick={() => { selectGenre(genre) }}>{genre.title}</div>
+                <div
+                  key={genre.id}
+                  className={`${styles.block} ${isGenreSelected(genre) ? styles["block-selected"] : ""
+                    }`}
+                  onClick={() => {
+                    selectGenre(genre);
+                  }}
+                >
+                  {genre.title}
+                </div>
               ))}
             </div>
           </div>
-
-          <div className={styles.text11}>Pick Your Vibe:</div>
-          <div className={styles.bottom}>
-            {vibes.map((vibe) => (
-              <div className={`${styles.block} ${isVibeSelected(vibe) ? styles['block-selected'] : ''}`} onClick={() => { selectVibe(vibe) }}>{vibe.title}</div>
-            ))}
-          </div>
-
-          <div className={styles.text11}>Pick Your Vibe:</div>
-          <div className={styles.bottom}>
-            {vibes.map((vibe) => (
-              <div className={`${styles.block} ${isVibeSelected(vibe) ? styles['block-selected'] : ''}`} onClick={() => { selectVibe(vibe) }}>{vibe.title}</div>
-            ))}
-          </div>
-
           <div className={styles.f}>
-            <button className={styles["cnt-btn"]} onClick={async () => { await submitProfileSetup(); }}>Continue</button>
-
+            <button
+              className={styles["cnt-btn"]}
+              onClick={async () => {
+                await submitProfileSetup();
+              }}
+            >
+              Continue
+            </button>
           </div>
         </div>
       </div>
     </div>
-
   );
 }
