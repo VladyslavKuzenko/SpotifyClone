@@ -243,8 +243,8 @@ const SongItem = ({
                     <div
                       className={styles["dropdown-itemup1"]}
                       onClick={(e) => {
-                        e.stopPropagation(); // Зупиняє "підйом" події
-                        setIsAtpModalOpen((prev) => !prev); // Відкриває/закриває модалку
+                        e.stopPropagation(); 
+                        setIsAtpModalOpen((prev) => !prev); 
                       }}
                     >
                       Add to playlist
@@ -258,10 +258,10 @@ const SongItem = ({
                             key={index}
                             className={styles["atp-item"]}
                             onClick={(e) => {
-                              e.stopPropagation();  // Зупиняємо підйом події
+                              e.stopPropagation();  
                               handleAddToPlaylistClick(item);
-                              setIsMenuOpen(false);  // Закриваємо меню
-                              setIsAtpModalOpen(false); // Закриваємо модалку Add to playlist, якщо потрібно
+                              setIsMenuOpen(false);  
+                              setIsAtpModalOpen(false); 
                             }}
                           >
                             {item.title}

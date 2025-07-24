@@ -38,21 +38,20 @@
 }
 
 .menu-wrapper {
-    position: relative;
-    display: inline-block;
-    left: 95%;
-    top: 20%;
+    position: absolute;
+    left: 90%;
+    top:5%;
 }
 
 .dropdown-menu {
     position: absolute;
     top: 100%;
-    right: 0;
+    right: 20px;
     background-color: #535353;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     z-index: 999;
-    width: 361px;
+    width: 300px;
     display: flex;
     flex-direction: column;
 
@@ -216,10 +215,10 @@
 
 .functional-container1 {
     width: 100%;
-    height: auto;
     margin-top: 100px;
     display: flex;
     flex-wrap: wrap;
+    background-color: red;
 }
 
 .saved-album-container {
@@ -458,6 +457,7 @@
     letter-spacing: 0%;
 
     height: 35px;
+    padding-bottom: 15px;
 }
 
 .groups-text {

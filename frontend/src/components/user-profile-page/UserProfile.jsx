@@ -45,6 +45,8 @@ const UserProfile = () => {
     const data = await respose.json();
     setUserFullInfo(data);
   };
+  const isArtist = false; //перевіка
+
   return (
     <div className={styles.container}>
       <div className={styles["empty-div1"]}></div>
@@ -62,12 +64,7 @@ const UserProfile = () => {
 
             {menuOpen && (
               <div className={styles["dropdown-menu"]}>
-                <button className={styles["dropdown-item"]}>
-                  Edit Profile
-                </button>
                 <button className={styles["dropdown-item"]}>Share</button>
-                <button className={styles["dropdown-item"]}>Settings</button>
-                <button className={styles["dropdown-item"]}>Logout</button>
               </div>
             )}
           </div>
@@ -110,9 +107,13 @@ const UserProfile = () => {
             <div className={styles["song-array"]}></div>
           </div>
         </div> */}
+<div className={styles["functional-container1"]}></div>
+       {isArtist ? (
+  <ArtistOwnMediaLibrary user={userFullInfo} />
+) : (
+  <UserLikedMediaLibrary user={userFullInfo} />
+)}
 
-        <UserLikedMediaLibrary user={userFullInfo} />
-                {/* <ArtistOwnMediaLibrary user={userFullInfo} /> */}
 
 
         <div className={styles["bottom-place"]}>
