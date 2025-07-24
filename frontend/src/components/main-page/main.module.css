@@ -1388,12 +1388,14 @@ html {
 }
 
 .storie-avatar {
-  width: 60px;
+  width: 63px;
   height: 63px;
   background-color: #060708;
   border-radius: 50%;
   margin-left: 45px;
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.15);
+  object-fit: cover;
+
 }
 
 .storie-author {
@@ -1448,6 +1450,7 @@ html {
   position: absolute;
   align-self: center;
   transform: translate(-20%, 0%);
+
 }
 
 .main {

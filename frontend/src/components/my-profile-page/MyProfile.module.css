@@ -1450,3 +1450,74 @@
   pointer-events: none;
   cursor: not-allowed;
 } 
+
+.wam-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: calc(100% - 225px);
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 1000;
+  margin-left: 225px;
+}
+
+.wam-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 68%;
+  min-width: 900px;
+  height: 750px;
+  z-index: 1001;
+  transform: translate(-50%, -50%);
+  margin-left: 80px;
+  display: flex;
+  justify-content: space-between;
+}
+.wam-songartist {
+  width: 85%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 100%;
+
+}
+.wam-btnplace {
+    width: 15%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.wam-closeBtn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.wam-content {
+  margin-top: 30px;
+}
+
+.wam-svyazka {
+    display: flex;
+    height: 62px;
+}
+
+.wam-play {
+    width: 59px;
+    height: 59px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url(/public/images/playorange.svg);
+    background-size: 60px 60px;
+    background-color: transparent;
+}
