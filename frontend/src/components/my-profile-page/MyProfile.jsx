@@ -152,7 +152,7 @@ const MyProfile = ({ profileInfo }) => {
 
             {/* Контент вкладок */}
             <div className={styles["tab-content"]}>
-              {activeTab1 === "profile" && <UserLikedMediaLibrary />}
+              {activeTab1 === "profile" && <UserLikedMediaLibrary user={userFullInfo}/>}
 
               {activeTab1 === "artistTools" && <ArtistOwnMediaLibrary />}
             </div>
@@ -160,7 +160,7 @@ const MyProfile = ({ profileInfo }) => {
         ) : (
           //перевірка не артист
           <>
-            <UserLikedMediaLibrary />
+            <UserLikedMediaLibrary user={userFullInfo}/>
           </>
         )}
         <div className={styles["about-artist-platform"]}>

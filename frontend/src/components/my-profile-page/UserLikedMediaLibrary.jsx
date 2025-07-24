@@ -6,21 +6,21 @@ import { useAudio } from "../../hooks/useAudio";
 import { useAPI } from "../../hooks/useApi";
 import { useAuth0 } from "@auth0/auth0-react";
 
-const UserLikedMediaLibrary = () => {
+const UserLikedMediaLibrary = ({user}) => {
   const { setCurrentSongList, setIsRandomList } = useAudio();
   const [songs, setSongs] = useState([]);
   const [albums, setAlbums] = useState([]);
   const { isLoading } = useAuth0();
-  const { apiFetch, user } = useAPI();
+  const { apiFetch } = useAPI();
 
   const fetchPlaylists = async () => {
-    const response = await apiFetch(`/playlists/playlists/${user.sub}`);
+    const response = await apiFetch(`/playlists/playlists/${user.id}`);
     const body = await response.json();
     fetchCurrentPlaylistTracks(body.find((i) => i.title === "Like"));
   };
 
   const fetchArtistAlbums = async () => {
-    const response = await apiFetch(`/albums/albums-by-artists/${user.sub}`);
+    const response = await apiFetch(`/albums/albums-by-artists/${user.id}`);
     const body = await response.json();
     setAlbums(body);
   };
@@ -30,13 +30,14 @@ const UserLikedMediaLibrary = () => {
     const response = await apiFetch(`/tracks/tracks-by-postTime/${currentPlaylist.id}`);
     const body = await response.json();
     setSongs(body);
+    console.log("UserLikedMediaLibrary: ",body)
   };
 
   useEffect(() => {
-    if (isLoading) return;
+    if (!user) return;
     fetchPlaylists();
     fetchArtistAlbums();
-  }, [isLoading]);
+  }, [user]);
 
   return (
     <div>
@@ -66,6 +67,7 @@ const UserLikedMediaLibrary = () => {
             <div className={styles["saved-songs-text"]}>Saved Songs</div>
           </div>
           <div className={styles["song-array"]}>
+            {console.log("Songs: ",songs )}
             {songs.length > 0 ? (
               songs.map((song) => (
                 <SongItem
