@@ -65,13 +65,11 @@ const UserProfile = () => {
             {menuOpen && (
               <div className={styles["dropdown-menu"]}>
                 <button className={styles["dropdown-item"]}>Share</button>
+                
               </div>
             )}
           </div>
 
-          {/* <div className={styles["profile-photo"]}>
-            <div className={styles.status}></div>
-          </div> */}
           <img
             src={userFullInfo.avatarImgUrl}
             className={styles["profile-photo"]}
@@ -96,30 +94,20 @@ const UserProfile = () => {
             <button className={styles["message-btn"]}>Message</button>
           </div>
         </div>
-        {/* 
-        <div className={styles["functional-container1"]}>
-          <div className={styles["saved-album-container"]}>
-            <div className={styles["saved-album-text"]}>Saved Albums</div>
-            <div className={styles["album-array"]}></div>
-          </div>
-          <div className={styles["saved-songs-container"]}>
-            <div className={styles["saved-songs-text"]}>Saved Songs</div>
-            <div className={styles["song-array"]}></div>
-          </div>
-        </div> */}
-<div className={styles["functional-container1"]}></div>
-       {isArtist ? (
-  <ArtistOwnMediaLibrary user={userFullInfo} />
-) : (
-  <UserLikedMediaLibrary user={userFullInfo} />
-)}
+
+        <div className={styles["functional-container1"]}></div>
+        {isArtist ? (
+          <ArtistOwnMediaLibrary user={userFullInfo} />
+        ) : (
+          <UserLikedMediaLibrary user={userFullInfo} />
+        )}
 
 
 
         <div className={styles["bottom-place"]}>
           <div className={styles["posts-place"]}>
             <div className={styles["posts-text"]}>Posts</div>
-              <Posts selectedTab="user" userId={userId} />
+            <Posts selectedTab="user" userId={userId} />
           </div>
           <div className={styles["groups-place"]}>
             <div className={styles["groups-text"]}>Groups</div>

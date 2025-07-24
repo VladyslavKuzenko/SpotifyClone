@@ -1,5 +1,5 @@
 // MyProfile.jsx
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styles from "./MyProfile.module.css";
 import LeftSide from "../main-components/LeftSide";
 import AlbumItem from "./AlbumItem";
@@ -29,7 +29,12 @@ const MyProfile = ({ profileInfo }) => {
   const [activeTab1, setActiveTab1] = useState("profile");
   const [followings, setFollowings] = useState([]);
   const [followers, setFollowers] = useState([]);
+  const [menuOpen, setMenuOpen] = useState(false);
 
+
+  const toggleMenu = () => {
+    setMenuOpen((prev) => !prev);
+  };
   const openModal = (tab) => {
     setActiveTab(tab);
     setIsModalOpen(true);
@@ -62,6 +67,23 @@ const MyProfile = ({ profileInfo }) => {
     console.log("User: ", user);
     console.log("User full info: ", newData);
   };
+  const menuRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setMenuOpen(false);
+      }
+    };
+
+    if (menuOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [menuOpen]);
 
   useEffect(() => {
     if (isLoading) return;
@@ -83,11 +105,15 @@ const MyProfile = ({ profileInfo }) => {
         <div className={styles["channel-hat"]}>
           <button
             className={styles["edit-profile"]}
-            onClick={() => navigate("/edit-profile")}
+            onClick={toggleMenu}
           >
-            Edit profile
+            <div className={styles["setting-circles"]}></div>
+            <div className={styles["setting-circles"]}></div>
+            <div className={styles["setting-circles"]}></div>
+
+
           </button>
-          {/* <div className={styles["profile-photo"]}></div> */}
+
           <img
             src={userFullInfo.avatarImgUrl}
             className={styles["profile-photo"]}
@@ -152,7 +178,7 @@ const MyProfile = ({ profileInfo }) => {
 
             {/* Контент вкладок */}
             <div className={styles["tab-content"]}>
-              {activeTab1 === "profile" && <UserLikedMediaLibrary user={userFullInfo}/>}
+              {activeTab1 === "profile" && <UserLikedMediaLibrary user={userFullInfo} />}
 
               {activeTab1 === "artistTools" && <ArtistOwnMediaLibrary />}
             </div>
@@ -160,7 +186,7 @@ const MyProfile = ({ profileInfo }) => {
         ) : (
           //перевірка не артист
           <>
-            <UserLikedMediaLibrary user={userFullInfo}/>
+            <UserLikedMediaLibrary user={userFullInfo} />
           </>
         )}
         <div className={styles["about-artist-platform"]}>
@@ -212,6 +238,14 @@ const MyProfile = ({ profileInfo }) => {
           </div>
         </div>
       </div>
+      {menuOpen && (
+        <div className={styles["dropdown-menu"]} ref={menuRef}>
+          <button className={styles["dropdown-item"]} onClick={() => navigate("/edit-profile")}>Edit profile</button>
+          <button className={styles["dropdown-item"]}>Share</button>
+          <button className={styles["dropdown-item"]}>Logout</button>
+
+        </div>
+      )}
       {showModal && <AddMusicModal onClose={() => setShowModal(false)} />}
       {showModal1 && <AddAlbumModal onClose={() => setShowModal1(false)} />}
       {showModal2 && (
