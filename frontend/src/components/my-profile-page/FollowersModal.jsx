@@ -32,13 +32,13 @@ const FollowersModal = ({
           >
             Followers
           </button>
-          <button
+          <button 
             className={`${styles["ffm-tab"]} ${
-              tab === "follows" ? styles["ffm-active"] : ""
+              tab === "followings" ? styles["ffm-active"] : ""
             }`}
-            onClick={() => setTab("follows")}
+            onClick={() => setTab("followings")}
           >
-            Follows
+            Followings
           </button>
           <button className={styles["ffm-close"]} onClick={onClose}>
             ✕
@@ -69,7 +69,7 @@ const FollowersModal = ({
             <>
               {/* <div>Followings</div> */}
               {followingsControl.followings.map((i) => (
-                <FollowAccountCard userToFollow={i} key={i.id} />
+                <FollowAccountCard userToFollow={i} key={i.id}/>
               ))}
             </>
           )}

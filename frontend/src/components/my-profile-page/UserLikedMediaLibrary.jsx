@@ -5,22 +5,26 @@ import SongItem from "../player-page/SongItem";
 import { useAudio } from "../../hooks/useAudio";
 import { useAPI } from "../../hooks/useApi";
 import { useAuth0 } from "@auth0/auth0-react";
+import WatchAlbum from "./WatchAlbum";
 
-const UserLikedMediaLibrary = () => {
+const UserLikedMediaLibrary = ({ user }) => {
   const { setCurrentSongList, setIsRandomList } = useAudio();
   const [songs, setSongs] = useState([]);
   const [albums, setAlbums] = useState([]);
   const { isLoading } = useAuth0();
-  const { apiFetch, user } = useAPI();
+  const { apiFetch } = useAPI();
+
+  const [showWatchAlbum, setShowWatchAlbum] = useState(false);
+  const [selectedAlbum, setSelectedAlbum] = useState(null);
 
   const fetchPlaylists = async () => {
-    const response = await apiFetch(`/playlists/playlists/${user.sub}`);
+    const response = await apiFetch(`/playlists/playlists/${user.id}`);
     const body = await response.json();
     fetchCurrentPlaylistTracks(body.find((i) => i.title === "Like"));
   };
 
   const fetchArtistAlbums = async () => {
-    const response = await apiFetch(`/albums/albums-by-artists/${user.sub}`);
+    const response = await apiFetch(`/albums/albums-by-artists/${user.id}`);
     const body = await response.json();
     setAlbums(body);
   };
@@ -30,13 +34,14 @@ const UserLikedMediaLibrary = () => {
     const response = await apiFetch(`/tracks/tracks-by-postTime/${currentPlaylist.id}`);
     const body = await response.json();
     setSongs(body);
+    console.log("UserLikedMediaLibrary: ", body)
   };
 
   useEffect(() => {
-    if (isLoading) return;
+    if (!user) return;
     fetchPlaylists();
     fetchArtistAlbums();
-  }, [isLoading]);
+  }, [user]);
 
   return (
     <div>
@@ -46,7 +51,7 @@ const UserLikedMediaLibrary = () => {
           <div className={styles["svyazka"]}>
             <div className={styles["saved-album-text"]}>Saved Albums</div>
           </div>
-          <div className={styles["album-array"]}>
+          {/* <div className={styles["album-array"]}>
             {albums.length > 0 ? (
               albums.map((item, idx) => (
                 <AlbumItem album={item} key={idx} />
@@ -57,6 +62,25 @@ const UserLikedMediaLibrary = () => {
                 <h3>Start exploring and save your favorites!</h3>
               </div>
             )}
+          </div> */}
+          <div className={styles["album-array"]}>
+            {albums.length === 0 ? (
+              <div className={styles["empty-message"]}>
+                <h2>There are no albums here yet</h2>
+                <h3>+ Add your first album</h3>
+              </div>
+            ) : (
+              albums.map((item, idx) => (
+                <AlbumItem
+                  album={item}
+                  key={idx}
+                  onClickFunck={() => {
+                    setSelectedAlbum(item);
+                    setShowWatchAlbum(true);
+                  }}
+                />
+              ))
+            )}
           </div>
         </div>
 
@@ -66,6 +90,7 @@ const UserLikedMediaLibrary = () => {
             <div className={styles["saved-songs-text"]}>Saved Songs</div>
           </div>
           <div className={styles["song-array"]}>
+            {console.log("Songs: ", songs)}
             {songs.length > 0 ? (
               songs.map((song) => (
                 <SongItem
@@ -88,6 +113,11 @@ const UserLikedMediaLibrary = () => {
           </div>
         </div>
       </div>
+      <WatchAlbum
+        isOpen={showWatchAlbum}
+        onClose={() => setShowWatchAlbum(false)}
+      >
+      </WatchAlbum>
     </div>
   );
 };

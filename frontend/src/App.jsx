@@ -10,7 +10,7 @@ import EditProfile from "./components/edit-profile-page/EditProfile";
 
 import LoginButton from "./components/exampleAuth0/LoginButton";
 import LogoutButton from "./components/exampleAuth0/LogoutButton";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 
 import Test from "./components/exampleAuth0/Test";
 import LeftSide from "./components/main-components/LeftSide";
@@ -20,11 +20,10 @@ function App() {
   const hiddenLeftSideRoutes = ["/chat"];
   const shouldHideLeftSide = hiddenLeftSideRoutes.includes(location.pathname);
   return (
-
     <>
-
-      {!shouldHideLeftSide && <LeftSide /> }
+      {!shouldHideLeftSide && <LeftSide />}
       <Routes>
+        <Route path="/" element={<Navigate to="/main" replace />} />
         <Route path="/main" element={<Main />} />
         <Route path="/player" element={<PlayerPage />} />
         <Route path="/login" element={<LoginButton />} />

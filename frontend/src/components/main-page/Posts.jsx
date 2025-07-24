@@ -4,7 +4,7 @@ import { useAPI } from "../../hooks/useApi";
 import { useAuth0 } from "@auth0/auth0-react";
 import PostItem from "./PostItem";
 
-export default function Posts({ selectedTab, userId }) {
+export default function Posts({ selectedTab, userId, isProfilePage = false }) {
   const [posts, setPosts] = useState([]);
   const { apiFetch, user } = useAPI();
   const { isLoading } = useAuth0();
@@ -55,7 +55,7 @@ export default function Posts({ selectedTab, userId }) {
     <>
       <div className={styles["posts-container"]}>
         {reversedVisiblePosts.map((post, index) => (
-          <PostItem key={index} post={post} />
+          <PostItem key={index} post={post} isProfilePage={isProfilePage}/>
         ))}
         {visibleCount < posts.length && (
           <div className={styles["show-more-container"]}>

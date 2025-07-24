@@ -1,8 +1,6 @@
 package edu.itstep.api.controlers;
 
-import edu.itstep.api.models.Country;
 import edu.itstep.api.models.Genre;
-import edu.itstep.api.repositories.CountryRepository;
 import edu.itstep.api.repositories.GenreRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/genres")
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
 public class GenreController {
 
     private final GenreRepository genreRepository;

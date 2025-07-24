@@ -19,6 +19,10 @@
     background-color: #D9D9D9;
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;
+    background:
+        linear-gradient(125deg, #BABCD0 80%, #191B30 100%, #BABCD0 70%),
+        linear-gradient(-125deg, #BABCD0 80%, #191B30 100%, #BABCD0 70%);
+    background-blend-mode: multiply;
 }
 
 .hat-setting-platform {
@@ -34,21 +38,20 @@
 }
 
 .menu-wrapper {
-    position: relative;
-    display: inline-block;
-    left: 95%;
-    top: 20%;
+    position: absolute;
+    left: 90%;
+    top: 5%;
 }
 
 .dropdown-menu {
     position: absolute;
     top: 100%;
-    right: 0;
+    right: 20px;
     background-color: #535353;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     z-index: 999;
-    width: 361px;
+    width: 300px;
     display: flex;
     flex-direction: column;
 
@@ -89,6 +92,7 @@
     border-radius: 50%;
     margin-left: 80px;
     margin-top: 180px;
+    object-fit: cover;
 }
 
 .status {
@@ -211,10 +215,10 @@
 
 .functional-container1 {
     width: 100%;
-    height: auto;
     margin-top: 100px;
     display: flex;
     flex-wrap: wrap;
+    background-color: red;
 }
 
 .saved-album-container {
@@ -451,8 +455,8 @@
     color: white;
     line-height: 100%;
     letter-spacing: 0%;
-
     height: 35px;
+    padding-bottom: 15px;
 }
 
 .groups-text {
@@ -464,7 +468,6 @@
     color: white;
     line-height: 100%;
     letter-spacing: 0%;
-
     height: 35px;
     text-indent: 5%;
 }
@@ -483,8 +486,8 @@
 
 .groups-container {
     width: 95%;
-    flex:1;
-    gap:10px;
+    flex: 1;
+    gap: 10px;
     overflow: auto;
     scrollbar-width: none;
     display: flex;

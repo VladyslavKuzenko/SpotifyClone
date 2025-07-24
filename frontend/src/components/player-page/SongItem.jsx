@@ -179,7 +179,7 @@ const SongItem = ({
 
   return (
     <>
-      <button
+      <div
         className={styles["song-item"]}
         onClick={() => {
           setCurrentSong(song);
@@ -189,7 +189,6 @@ const SongItem = ({
           setIsAtpModalOpen1(false);
         }}
       >
-        {/* <div className={styles.cover}></div> */}
         <img className={styles.cover} src={song.imageUrl} />
         <div className={styles.info}>
           <div className={styles.title}>{song.title}</div>
@@ -257,27 +256,28 @@ const SongItem = ({
                           <div
                             key={index}
                             className={styles["atp-item"]}
-                            onClick={() => handleAddToPlaylistClick(item)}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleAddToPlaylistClick(item);
+                              setIsMenuOpen(false);
+                              setIsAtpModalOpen(false);
+                            }}
                           >
                             {item.title}
                           </div>
                         ))}
                       </div>
                     )}
-
-                    {/* {isAtpModalOpen1 && (
-                      <div className={styles["atp-modal"]}>
-                        <div className={styles["atp-item"]}>delete playlist 1</div>
-                        <div className={styles["atp-item"]}>delete playlist 2</div>
-                        <div className={styles["atp-item"]}>delete playlist 3</div>
-                      </div>
-                    )} */}
                   </div>
 
                   <button
                     className={styles["dropdown-item"]}
-                    onClick={() => {
-                      navigate(`/user-profile/${song.artist.user.id}`);
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (song.artist.user.id === user.sub) {
+                        navigate(`/my-profile`);
+                      } else navigate(`/user-profile/${song.artist.user.id}`);
+                      setIsMenuOpen(false);
                     }}
                   >
                     Go to artist
@@ -300,7 +300,7 @@ const SongItem = ({
         ) : (
           <div className={styles.duration}>{convertTime(duration)}</div>
         )}
-      </button>
+      </div>
     </>
   );
 };

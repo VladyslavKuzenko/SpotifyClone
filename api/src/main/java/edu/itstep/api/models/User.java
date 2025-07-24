@@ -76,6 +76,13 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "posts_id"))
     private Set<Story> likedStory;
+    @ManyToMany
+    @JsonIgnore
+    @JoinTable(
+            name = "saved_albums",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "albums_id"))
+    private Set<Album> savedAlbums;
 
     public User() {
     }
@@ -238,5 +245,13 @@ public class User {
 
     public void setLikedStory(Set<Story> likedStory) {
         this.likedStory = likedStory;
+    }
+
+    public Set<Album> getSavedAlbums() {
+        return savedAlbums;
+    }
+
+    public void setSavedAlbums(Set<Album> savedAlbums) {
+        this.savedAlbums = savedAlbums;
     }
 }

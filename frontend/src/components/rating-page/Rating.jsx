@@ -153,11 +153,215 @@ export default function Rating() {
         ];
 
   return (
+    // <>
+    //   <div className={styles["raitinig-container"]}>
+    //     <div className={styles["upper-platform"]}>
+    //       <div className={styles["upper-left"]}>
+    //          <img src={tracks[0]?.imageUrl} className={styles["upper-img"]}/> 
+
+    //         <div className={styles["top-content"]}>
+    //           <div className={styles["text1"]}>Popular Tracks</div>
+    //           <div className={styles["btn-container"]}>
+    //             {/* Type Dropdown */}
+    //             <div
+    //               className={styles["dropdown-wrapper"]}
+    //               ref={typeDropdownRef}
+    //             >
+    //               <button
+    //                 className={styles["all-type"]}
+    //                 onClick={toggleTypeDropdown}
+    //               >
+    //                 {selectedType}
+    //                 <span className={styles["arrow"]}>
+    //                   {isTypeDropdownOpen ? "▲" : "▼"}
+    //                 </span>
+    //               </button>
+
+    //               {isTypeDropdownOpen && (
+    //                 <div className={styles["dropdown-menu"]}>
+    //                   {typeOptions?.map((item, index) => (
+    //                     <div
+    //                       key={index}
+    //                       className={styles["dropdown-item"]}
+    //                       onClick={() => handleTypeSelect(item)}
+    //                     >
+    //                       {item}
+    //                     </div>
+    //                   ))}
+    //                 </div>
+    //               )}
+    //             </div>
+
+    //             {/* Period Dropdown */}
+    //             <div
+    //               className={styles["period-dropdown-wrapper"]}
+    //               ref={periodDropdownRef}
+    //             >
+    //               <button
+    //                 className={styles["period-button"]}
+    //                 onClick={togglePeriodDropdown}
+    //               >
+    //                 {periodSelectedOption}
+    //                 <span className={styles["period-arrow"]}>
+    //                   {periodIsDropdownOpen ? "▲" : "▼"}
+    //                 </span>
+    //               </button>
+
+    //               {periodIsDropdownOpen && (
+    //                 <div className={styles["period-dropdown-menu"]}>
+    //                   {orderedPeriodOptions.map((period, index) => (
+    //                     <div
+    //                       key={index}
+    //                       className={styles["period-dropdown-item"]}
+    //                       onClick={() => handlePeriodSelect(period)}
+    //                     >
+    //                       {period}
+    //                     </div>
+    //                   ))}
+    //                 </div>
+    //               )}
+    //             </div>
+    //           </div>
+    //         </div>
+
+    //         <div className={styles["info-song"]}>
+    //           <div className={styles["info-place"]}></div>
+    //           <div className={styles["info-content"]}>
+    //             <div className={styles["info-artist"]}>
+    //               {tracks[0]?.artist.user.username}{" "}
+    //             </div>
+    //             <div className={styles["info-song-name"]}>
+    //               {tracks[0]?.title}{" "}
+    //             </div>
+    //             <div className={styles["info-listeners"]}>
+    //               {tracks[0]?.listeningCount} listeners
+    //             </div>
+    //           </div>
+    //         </div>
+
+    //         <div className={styles["upper-right"]}>
+    //           <div className={styles["scroll-container"]}>
+    //             {tracks.map((item, index) => (
+    //               <div
+    //                 key={index}
+    //                 className={styles["scroll-item"]}
+    //                 onClick={() => {
+    //                   setIsRandomList(false);
+    //                   setCurrentSong(item);
+    //                   setCurrentSongList(tracks);
+    //                 }}
+    //               >
+    //                 <div className={styles["item-place"]}>{index + 1}</div>
+    //                 <div className={styles["item-info"]}>
+    //                   <img  className={styles["item-photo"]} src={item.imageUrl}/>
+    //                   <div className={styles["inside-info"]}>
+    //                     <div className={styles["inside-name"]}>
+    //                       {item.title}
+    //                     </div>
+    //                     <div className={styles["inside-singer"]}>
+    //                       {item.artist.user.username}
+    //                     </div>
+    //                     <div className={styles["inside-listeners"]}>
+    //                       {item.listeningCount} listeners
+    //                     </div>
+    //                   </div>
+    //                 </div>
+    //               </div>
+    //             ))}
+    //           </div>
+    //         </div>
+    //       </div>
+    //     </div>
+
+    //     <div className={styles["bottom-platform"]}>
+    //       <div className={styles["text2"]}>Top Artists</div>
+    //       <div className={styles["bottom-content"]}>
+    //         <div className={styles["raite-wrapper"]}>
+    //           <div className={styles["raite-item1"]}>
+    //             <img className={styles["raite-photo"]} src={artist[0]?.user.avatarImgUrl}/> 
+    //             <div className={styles["raite-center"]}>
+    //               <div className={styles["raite-text"]}>
+    //                 {artist[0]?.user?.username}
+    //               </div>
+    //             </div>
+    //             <div className={styles["raite-end1"]}></div>
+    //           </div>
+    //           <div className={styles["raite-listeners"]}>
+    //             {artist[0]?.listeningCount} listeners
+    //           </div>
+    //         </div>
+
+    //         <div className={styles["raite-wrapper"]}>
+    //           <div className={styles["raite-item2"]}>
+    //             <img className={styles["raite-photo"]} src={artist[1]?.user.avatarImgUrl}/> 
+    //             <div className={styles["raite-center"]}>
+    //               <div className={styles["raite-text"]}>
+    //                 {artist[1]?.user?.username}
+    //               </div>
+    //             </div>
+    //             <div className={styles["raite-end2"]}></div>
+    //           </div>
+    //           <div className={styles["raite-listeners"]}>
+    //             {artist[1]?.listeningCount} listeners
+    //           </div>
+    //         </div>
+
+    //         <div className={styles["raite-wrapper"]}>
+    //           <div className={styles["raite-item3"]}>
+    //             <img className={styles["raite-photo"]} src={artist[2]?.user.avatarImgUrl}/> 
+    //             <div className={styles["raite-center"]}>
+    //               <div className={styles["raite-text"]}>
+    //                 {artist[2]?.user?.username}
+    //               </div>
+    //             </div>
+    //             <div className={styles["raite-end3"]}></div>
+    //           </div>
+    //           <div className={styles["raite-listeners"]}>
+    //             {artist[2]?.listeningCount} listeners
+    //           </div>
+    //         </div>
+
+    //         <div className={styles["raite-wrapper"]}>
+    //           <div className={styles["raite-item4"]}>
+    //             <img className={styles["raite-photo"]} src={artist[3]?.user.avatarImgUrl}/> 
+
+    //             <div className={styles["raite-center"]}>
+    //               <div className={styles["raite-text"]}>
+    //                 {artist[3]?.user?.username}
+    //               </div>
+    //             </div>
+    //             <div className={styles["raite-end4"]}></div>
+    //           </div>
+    //           <div className={styles["raite-listeners"]}>
+    //             {artist[3]?.listeningCount} listeners
+    //           </div>
+    //         </div>
+
+    //         <div className={styles["raite-wrapper"]}>
+    //           <div className={styles["raite-item5"]}>
+    //             <img className={styles["raite-photo"]} src={artist[4]?.user.avatarImgUrl}/> 
+
+    //             <div className={styles["raite-center"]}>
+    //               <div className={styles["raite-text"]}>
+    //                 {artist[4]?.user?.username}
+    //               </div>
+    //             </div>
+    //             <div className={styles["raite-end5"]}></div>
+    //           </div>
+    //           <div className={styles["raite-listeners"]}>
+    //             {artist[4]?.listeningCount} listeners
+    //           </div>
+    //         </div>
+    //       </div>
+    //     </div>
+    //   </div>
+    // </>
     <>
       <div className={styles["raitinig-container"]}>
         <div className={styles["upper-platform"]}>
           <div className={styles["upper-left"]}>
-            {/* <img src={tracks[0]?.imageUrl}/> */}
+            <img src={tracks[0]?.imageUrl} className={styles["upper-img"]}/> 
+
             <div className={styles["top-content"]}>
               <div className={styles["text1"]}>Popular Tracks</div>
               <div className={styles["btn-container"]}>
@@ -233,7 +437,9 @@ export default function Rating() {
                   {tracks[0]?.title}{" "}
                 </div>
                 <div className={styles["info-listeners"]}>
-                  {tracks[0]?.listeningCount} listeners
+                  {tracks[0]?.listeningCount === 0
+                    ? "0 listeners"
+                    : `${tracks[0]?.listeningCount} listeners`}
                 </div>
               </div>
             </div>
@@ -250,10 +456,10 @@ export default function Rating() {
                       setCurrentSongList(tracks);
                     }}
                   >
-                    <div className={styles["item-place"]}>{index + 1}</div>
+                                 <div className={styles["item-place"]}>{index + 1}</div>
+
                     <div className={styles["item-info"]}>
-                      {/* <div className={styles["item-photo"]}></div> */}
-                      <img  className={styles["item-photo"]} src={item.imageUrl}/>
+                      <img className={styles["item-photo"]} src={item.imageUrl} />
                       <div className={styles["inside-info"]}>
                         <div className={styles["inside-name"]}>
                           {item.title}
@@ -262,7 +468,9 @@ export default function Rating() {
                           {item.artist.user.username}
                         </div>
                         <div className={styles["inside-listeners"]}>
-                          {item.listeningCount} listeners
+                          {item.listeningCount === 0
+                            ? "0 listeners"
+                            : `${item.listeningCount} listeners`}
                         </div>
                       </div>
                     </div>
@@ -276,87 +484,24 @@ export default function Rating() {
         <div className={styles["bottom-platform"]}>
           <div className={styles["text2"]}>Top Artists</div>
           <div className={styles["bottom-content"]}>
-            <div className={styles["raite-wrapper"]}>
-              <div className={styles["raite-item1"]}>
-                {/* <div className={styles["raite-photo"]}></div> */}
-                <img className={styles["raite-photo"]} src={artist[0]?.user.avatarImgUrl}/> 
-                <div className={styles["raite-center"]}>
-                  <div className={styles["raite-text"]}>
-                    {artist[0]?.user?.username}
+            {artist.map((art, index) => (
+              <div key={index} className={styles["raite-wrapper"]}>
+                <div className={styles[`raite-item${index + 1}`]}>
+                  <img className={styles["raite-photo"]} src={art?.user.avatarImgUrl} />
+                  <div className={styles["raite-center"]}>
+                    <div className={styles["raite-text"]}>
+                      {art?.user?.username}
+                    </div>
                   </div>
+                  <div className={styles[`raite-end${index + 1}`]}></div>
                 </div>
-                <div className={styles["raite-end1"]}></div>
-              </div>
-              <div className={styles["raite-listeners"]}>
-                {artist[0]?.listeningCount} listeners
-              </div>
-            </div>
-
-            <div className={styles["raite-wrapper"]}>
-              <div className={styles["raite-item2"]}>
-                {/* <div className={styles["raite-photo"]}></div> */}
-                <img className={styles["raite-photo"]} src={artist[1]?.user.avatarImgUrl}/> 
-                <div className={styles["raite-center"]}>
-                  <div className={styles["raite-text"]}>
-                    {artist[1]?.user?.username}
-                  </div>
+                <div className={styles["raite-listeners"]}>
+                  {art?.listeningCount === 0
+                    ? "0 listeners"
+                    : `${art?.listeningCount} listeners`}
                 </div>
-                <div className={styles["raite-end2"]}></div>
               </div>
-              <div className={styles["raite-listeners"]}>
-                {artist[1]?.listeningCount} listeners
-              </div>
-            </div>
-
-            <div className={styles["raite-wrapper"]}>
-              <div className={styles["raite-item3"]}>
-                <img className={styles["raite-photo"]} src={artist[2]?.user.avatarImgUrl}/> 
-                {/* <div className={styles["raite-photo"]}></div> */}
-                <div className={styles["raite-center"]}>
-                  <div className={styles["raite-text"]}>
-                    {artist[2]?.user?.username}
-                  </div>
-                </div>
-                <div className={styles["raite-end3"]}></div>
-              </div>
-              <div className={styles["raite-listeners"]}>
-                {artist[2]?.listeningCount} listeners
-              </div>
-            </div>
-
-            <div className={styles["raite-wrapper"]}>
-              <div className={styles["raite-item4"]}>
-                {/* <div className={styles["raite-photo"]}></div> */}
-                <img className={styles["raite-photo"]} src={artist[3]?.user.avatarImgUrl}/> 
-
-                <div className={styles["raite-center"]}>
-                  <div className={styles["raite-text"]}>
-                    {artist[3]?.user?.username}
-                  </div>
-                </div>
-                <div className={styles["raite-end4"]}></div>
-              </div>
-              <div className={styles["raite-listeners"]}>
-                {artist[3]?.listeningCount} listeners
-              </div>
-            </div>
-
-            <div className={styles["raite-wrapper"]}>
-              <div className={styles["raite-item5"]}>
-                {/* <div className={styles["raite-photo"]}></div> */}
-                <img className={styles["raite-photo"]} src={artist[4]?.user.avatarImgUrl}/> 
-
-                <div className={styles["raite-center"]}>
-                  <div className={styles["raite-text"]}>
-                    {artist[4]?.user?.username}
-                  </div>
-                </div>
-                <div className={styles["raite-end5"]}></div>
-              </div>
-              <div className={styles["raite-listeners"]}>
-                {artist[4]?.listeningCount} listeners
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>

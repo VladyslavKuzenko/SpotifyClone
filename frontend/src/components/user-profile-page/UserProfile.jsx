@@ -2,14 +2,25 @@ import React, { useState, useEffect, useRef } from "react";
 import styles from "./user-profile.module.css";
 import LeftSide from "../main-components/LeftSide";
 import { useParams } from "react-router-dom";
-
+import { useAPI } from "../../hooks/useApi";
+import FollowingButton from "../sharedComponents/FollowingButton";
+import UserLikedMediaLibrary from "../my-profile-page/UserLikedMediaLibrary";
+import Posts from "../main-page/Posts";
+import ArtistOwnMediaLibrary from "../my-profile-page/ArtistOwnMediaLibrary";
 const UserProfile = () => {
   const { userId } = useParams();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [userFullInfo, setUserFullInfo] = useState("");
+  const { apiFetch } = useAPI();
   const menuRef = useRef(null);
   const toggleMenu = () => {
     setMenuOpen((prev) => !prev);
   };
+
+  useEffect(() => {
+    if (!userId) return;
+    fetchUserFullInfo();
+  }, [userId]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -28,6 +39,14 @@ const UserProfile = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [menuOpen]);
+
+  const fetchUserFullInfo = async () => {
+    const respose = await apiFetch(`/users/${userId}`);
+    const data = await respose.json();
+    setUserFullInfo(data);
+  };
+  // const isArtist = true; //перевіка
+
   return (
     <div className={styles.container}>
       <div className={styles["empty-div1"]}></div>
@@ -45,37 +64,36 @@ const UserProfile = () => {
 
             {menuOpen && (
               <div className={styles["dropdown-menu"]}>
-                <button className={styles["dropdown-item"]}>
-                  Edit Profile
-                </button>
                 <button className={styles["dropdown-item"]}>Share</button>
-                <button className={styles["dropdown-item"]}>Settings</button>
-                <button className={styles["dropdown-item"]}>Logout</button>
               </div>
             )}
           </div>
 
-          <div className={styles["profile-photo"]}>
-            <div className={styles.status}></div>
-          </div>
+          <img
+            src={userFullInfo.avatarImgUrl}
+            className={styles["profile-photo"]}
+          />
         </div>
 
         <div className={styles["nbf-cont"]}>
           <div className={styles["name-bio"]}>
             <div className={styles["profile-name"]}>
-              Jane Doe with id {userId}
+              {userFullInfo.username}
             </div>
-            <div className={styles["profile-bio"]}>
-              Nisi ut aliquip ex ea commodo consequatt in mmmmmmmmmmmmmmmmmmmmm
-            </div>
+            <div className={styles["profile-bio"]}>{userFullInfo.shortBio}</div>
           </div>
-          <div className={styles["followers-count"]}>999k followers</div>
+          <div className={styles["followers-count"]}>
+            {userFullInfo.followersCount} followers
+          </div>
           <div className={styles["follow-message-container"]}>
-            <button className={styles["follow-btn"]}>Follow</button>
+            <FollowingButton
+              userToFollow={userFullInfo}
+              styles={styles["follow-btn"]}
+            />
             <button className={styles["message-btn"]}>Message</button>
           </div>
         </div>
-
+        {/* 
         <div className={styles["functional-container1"]}>
           <div className={styles["saved-album-container"]}>
             <div className={styles["saved-album-text"]}>Saved Albums</div>
@@ -85,12 +103,18 @@ const UserProfile = () => {
             <div className={styles["saved-songs-text"]}>Saved Songs</div>
             <div className={styles["song-array"]}></div>
           </div>
-        </div>
+        </div> */}
+        <div className={styles["functional-container1"]}></div>
+        {userFullInfo.isArtist ? (
+          <ArtistOwnMediaLibrary user={userFullInfo} />
+        ) : (
+          <UserLikedMediaLibrary user={userFullInfo} />
+        )}
 
         <div className={styles["bottom-place"]}>
           <div className={styles["posts-place"]}>
             <div className={styles["posts-text"]}>Posts</div>
-            <div className={styles["posts-array"]}></div>
+            <Posts selectedTab="user" userId={userId} />
           </div>
           <div className={styles["groups-place"]}>
             <div className={styles["groups-text"]}>Groups</div>

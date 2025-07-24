@@ -4,14 +4,16 @@ import { useAPI } from "../../hooks/useApi";
 import { searchSongs, searchUsers } from "../../js/functions/functions";
 import SongItem from "../player-page/SongItem";
 import { useAudio } from "../../hooks/useAudio";
+import { useNavigate } from "react-router-dom";
 
 const SearchModal = ({
   isSearchModalOpen,
   setIsSearchModalOpen,
   searchParams,
 }) => {
+  const navigate=useNavigate();
   const peopleRef = useRef(null);
-  const { apiFetch } = useAPI();
+  const { apiFetch, user } = useAPI();
   const [usersOriginalList, setUsersOriginalList] = useState([]);
   const [usersFilteredList, setUsersFilteredList] = useState([]);
   const [songsOriginalList, setSongsOriginalList] = useState([]);
@@ -128,21 +130,29 @@ const SearchModal = ({
 
               <div className={styles["people-array"]} ref={peopleRef}>
                 {usersFilteredList.map((item, index) => (
-                  <div key={index} className={styles["people-icon"]}>
-                    <div className={styles["people-photo"]}>
-                      <img
-                        src={item.avatarImgUrl}
-                        className={styles["preview-image"]}
-                        alt=""
-                      />
-                    </div>
-                    <div className={styles["name-surname"]}>
-                      {item.firstName} {item.lastName}
-                    </div>
-                    <div className={styles["people-nickname"]}>
-                      {item.username}
-                    </div>
-                  </div>
+                  <>
+                    {user.sub !== item.id && (
+                      <div key={index} className={styles["people-icon"]} onClick={()=>{
+                               if (item.id === user.sub) {
+                        navigate(`/my-profile`);
+                      } else navigate(`/user-profile/${item.id}`);
+                      }}>
+                        <div className={styles["people-photo"]}>
+                          <img
+                            src={item.avatarImgUrl}
+                            className={styles["preview-image"]}
+                            alt=""
+                          />
+                        </div>
+                        <div className={styles["name-surname"]}>
+                          {item.firstName} {item.lastName}
+                        </div>
+                        <div className={styles["people-nickname"]}>
+                          {item.username}
+                        </div>
+                      </div>
+                    )}
+                  </>
                 ))}
               </div>
 
@@ -170,20 +180,6 @@ const SearchModal = ({
                     }}
                     moreInfo
                   />
-                  {/* <div key={index} className={styles["song-item"]}>
-                  <div className={styles["song-image"]}></div>
-                  <div className={styles["tittle-artist"]}>
-                    <div className={styles["song-tittle"]}>{item.title}</div>
-                    <div className={styles["song-artist"]}>{item.artist.user.username}</div>
-                  </div>
-                  <div className={styles["song-duration"]}>13:21</div>
-                  <button className={styles["song-playbtn"]}>▶</button>
-                  <button className={styles["song-menu"]}>
-                    <div className={styles["menu-circle"]}></div>
-                    <div className={styles["menu-circle"]}></div>
-                    <div className={styles["menu-circle"]}></div>
-                  </button>
-                </div> */}
                 </>
               ))}
             </div>

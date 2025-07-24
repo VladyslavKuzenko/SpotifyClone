@@ -2,18 +2,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap');
 
 html {
-  background-color: #181920;
   background-image: url('/public/images/shum-main.jpg');
   background-repeat: repeat;
   background-size: auto;
   opacity: 1;
+  
 }
 
 .container {
   width: 100%;
   display: flex;
   flex-direction: row;
-
 }
 
 .left-side {
@@ -54,7 +53,6 @@ html {
   border-radius: 32px;
 }
 
-
 .left-side:hover .menu-btn {
   justify-content: center;
 }
@@ -91,9 +89,7 @@ html {
   width: 80px;
   text-align: start;
   margin-left: 20px;
-
 }
-
 
 .left-side:hover .label {
   opacity: 1;
@@ -107,17 +103,15 @@ html {
   justify-content: center;
   position: absolute;
   top: 128px;
-
 }
 
 .avatarka {
   width: 89px;
   height: 89px;
   border-radius: 50%;
-  background-color: #BFBFBF;
   cursor: pointer;
   margin-bottom: 30px;
-
+  object-fit: cover;
 }
 
 .pages-btns-div {
@@ -131,14 +125,12 @@ html {
   gap: 20px;
 }
 
-
 .activeLabel {
   color: #FE7C14;
 }
 
 .active1 {
   background-image: url(/public/images/orangehome.svg) !important;
-
 }
 
 .active2 {
@@ -152,7 +144,6 @@ html {
 .active4 {
   background-image: url(/public/images/orangestar.svg) !important;
 }
-
 
 .song-place-div {
   width: 100%;
@@ -174,10 +165,7 @@ html {
   letter-spacing: 0%;
   color: white;
   height: 20px;
-
 }
-
-
 
 .singer {
   width: 100%;
@@ -188,24 +176,9 @@ html {
   font-size: 10px;
   line-height: 100%;
   letter-spacing: 0%;
-
   text-align: center;
   color: white;
   height: 10px;
-
-}
-
-.circle-song {
-  width: 81px;
-  height: 81px;
-  border-radius: 50%;
-  background-color: #FFFFFF;
-  margin-top: 13px;
-  border: none;
-  cursor: pointer;
-  background-image: url(/public/images/play-btn.png);
-  background-repeat: no-repeat;
-  background-position: center;
 }
 
 .home-text {
@@ -213,24 +186,19 @@ html {
   height: 100vh;
   margin-left: 225px;
   margin-right: 30px;
-
 }
 
 .middle {
   width: 50%;
   margin-left: 40px;
   margin-right: 40px;
-
 }
-
-
 
 .right-side {
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-
 }
 
 .text-home {
@@ -239,13 +207,11 @@ html {
   margin-top: 50px;
   text-indent: 18px;
   align-content: center;
-
   font-family: 'Inter', sans-serif;
   font-weight: 400;
   font-size: 32px;
   line-height: 100%;
   letter-spacing: 0%;
-
 }
 
 .empty-div2 {
@@ -259,7 +225,6 @@ html {
   line-height: 100%;
   letter-spacing: 0%;
   color: white;
-
 }
 
 .platform1 {
@@ -274,11 +239,9 @@ html {
   border: none;
   outline: none;
   height: 100%;
-  background-color: #FFFFFF;
   text-indent: 13px;
   z-index: 1000;
   border-radius: 5px;
-
   background-image: url(/public/images/Search.png);
   background-repeat: no-repeat;
   background-position-x: 95%;
@@ -293,7 +256,6 @@ html {
   font-size: 14px;
   line-height: 100%;
   letter-spacing: 0%;
-
 }
 
 .new-post {
@@ -313,9 +275,7 @@ html {
   font-size: 14px;
   line-height: 100%;
   letter-spacing: 0%;
-
   color: black;
-
 }
 
 .notification {
@@ -336,7 +296,6 @@ html {
   line-height: 100%;
   letter-spacing: 0%;
   color: black;
-
 }
 
 .notificationMenu {
@@ -359,15 +318,11 @@ html {
   font-size: 16px;
   line-height: 100%;
   letter-spacing: 0%;
-
   color: black;
   width: 191px;
   height: 41px;
   text-align: start;
   text-indent: 10px;
-
-
-
 }
 
 .notificationTabs {
@@ -385,8 +340,6 @@ html {
   font-weight: 600;
 }
 
-
-
 .notificationTab.active {
   color: #FF4400;
 }
@@ -402,36 +355,6 @@ html {
 .empty-div3 {
   width: 100%;
   height: 40px;
-
-}
-
-.container-vibe {
-  width: 100%;
-  height: 39px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-
-
-}
-
-.vibe-div {
-  width: 14.88%;
-  height: 100%;
-  background-color: #FFFFFF;
-  text-align: center;
-  align-content: center;
-  font-family: Manrope;
-  font-weight: 300;
-  font-style: Light;
-  font-size: 14px;
-  line-height: 100%;
-  letter-spacing: 0%;
-  cursor: pointer;
-  border-radius: 20px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .empty-div4 {
@@ -458,7 +381,6 @@ html {
   z-index: 2;
 }
 
-
 .leftplat button {
   background: transparent;
   border: none;
@@ -467,7 +389,6 @@ html {
   cursor: pointer;
   width: 40px;
   height: 40px;
-
   background-image: url(/public/images/scroll-left.png);
   background-repeat: no-repeat;
   background-size: 50%;
@@ -482,7 +403,6 @@ html {
   cursor: pointer;
   width: 40px;
   height: 40px;
-
   background-image: url(/public/images/scroll-right.png);
   background-repeat: no-repeat;
   background-size: 50%;
@@ -490,7 +410,6 @@ html {
 }
 
 .container-stories {
-
   display: flex;
   width: calc(100%);
   height: 145px;
@@ -501,7 +420,6 @@ html {
   gap: 2%;
 }
 
-
 .stories-plat {
   height: 100%;
   display: flex;
@@ -510,7 +428,6 @@ html {
   align-items: center;
   width: 180px;
   flex: 0 0 auto;
-
 }
 
 .stories {
@@ -522,7 +439,6 @@ html {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-
 }
 
 .stories-inner {
@@ -530,16 +446,13 @@ html {
   height: 100%;
   border-radius: 50%;
   overflow: hidden;
-
 }
 
 .stories-inner1 {
   width: 100%;
   height: 100%;
   border-radius: 50%;
-
 }
-
 
 .nickname {
   font-family: 'Manrope', sans-serif;
@@ -551,8 +464,6 @@ html {
   text-align: center;
   color: white;
   width: 100%;
-
-
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -568,7 +479,6 @@ html {
   background-repeat: repeat;
   background-size: auto;
   opacity: 1;
-
 }
 
 .rightplat {
@@ -586,7 +496,6 @@ html {
   height: 60px;
 }
 
-
 .swipe-box {
   width: 100%;
   height: 40px;
@@ -602,13 +511,11 @@ html {
   line-height: 100%;
   letter-spacing: 0%;
   cursor: pointer;
-
 }
 
 .all-post-content {
   display: flex;
   flex-direction: column-reverse;
-
 }
 
 .artists-div {
@@ -631,7 +538,6 @@ html {
   line-height: 100%;
   letter-spacing: 0%;
   cursor: pointer;
-
 }
 
 .who-to-follow-div {
@@ -643,9 +549,7 @@ html {
   margin-left: 20px;
   margin-right: 20px;
   border-radius: 10px;
-
 }
-
 
 .who-to-follow-text {
   height: 50px;
@@ -660,7 +564,6 @@ html {
   line-height: 100%;
   letter-spacing: 0%;
   color: white;
-
 }
 
 .who-to-follow-accounts {
@@ -670,8 +573,6 @@ html {
   flex-direction: column;
   padding-top: 10px;
 }
-
-
 
 .account-platform {
   width: 100%;
@@ -687,7 +588,6 @@ html {
   height: 100%;
   margin-left: 22px;
   align-content: center;
-
 }
 
 .name-nickname {
@@ -711,11 +611,9 @@ html {
   font-size: 14px;
   line-height: 100%;
   letter-spacing: 0%;
-
   border: none;
   cursor: pointer;
   border-radius: 5px;
-
 }
 
 .name-follow {
@@ -730,7 +628,6 @@ html {
   color: white;
   cursor: pointer;
   padding-bottom: 5px;
-
 }
 
 .nickname-follow {
@@ -744,17 +641,14 @@ html {
   letter-spacing: 0%;
   color: #767676;
   cursor: pointer;
-
 }
 
 .ava-follow {
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background-color: #D9D9D9;
   cursor: pointer;
   object-fit: cover;
-
 }
 
 .users-content {
@@ -766,7 +660,6 @@ html {
   width: 415px;
   height: 450px;
   margin-top: 30px;
-
 }
 
 .ns-text1 {
@@ -778,19 +671,15 @@ html {
   font-size: 16px;
   line-height: 100%;
   letter-spacing: 0%;
-
   color: #FFFFFF;
-
 }
 
 .ns-middle {
   width: 100%;
   height: 315px;
-  background-color: #C1C1C1;
   margin-top: 5px;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-
 }
 
 .ns-bottom {
@@ -817,8 +706,6 @@ html {
   display: flex;
   justify-content: center;
   align-items: center;
-
-
 }
 
 .ns-play-btn {
@@ -832,7 +719,6 @@ html {
   border: none;
   background-image: url(/public/images/Polygon\ 4.png);
   background-position-x: 20px;
-
 }
 
 .ns-play-btn1 {
@@ -846,7 +732,6 @@ html {
   border: none;
   background-image: url(/public/images/pause1.png);
   background-size: 40%;
-
 }
 
 .ns-song {
@@ -857,7 +742,6 @@ html {
   font-size: 16px;
   line-height: 100%;
   letter-spacing: 0%;
-
   color: white;
   align-content: end;
 }
@@ -873,10 +757,7 @@ html {
   letter-spacing: 0%;
   color: #B8B8B8;
   align-content: center;
-
 }
-
-
 
 .search-dropdown-overlay {
   position: fixed;
@@ -911,7 +792,6 @@ html {
   background-position: center;
   background-size: 55%;
   background-color: transparent;
-
 }
 
 .xxxtext {
@@ -925,7 +805,6 @@ html {
   color: white;
   line-height: 100%;
   letter-spacing: 0%;
-
 }
 
 .modal-container {
@@ -933,7 +812,6 @@ html {
   height: 89%;
   position: absolute;
   bottom: 0;
-
 }
 
 .modal-content {
@@ -947,7 +825,6 @@ html {
   display: flex;
 }
 
-
 .people {
   font-family: 'Manrope', sans-serif;
   font-weight: 400;
@@ -956,7 +833,6 @@ html {
   color: white;
   line-height: 100%;
   letter-spacing: 0%;
-
   margin-top: 50px;
 }
 
@@ -968,10 +844,8 @@ html {
   color: white;
   line-height: 100%;
   letter-spacing: 0%;
-
   margin-bottom: 10px;
   margin-top: 40px;
-
 }
 
 .search-array {
@@ -981,105 +855,6 @@ html {
   overflow: auto;
   scrollbar-width: none;
   margin-top: 20px;
-}
-
-.song-item {
-  width: 100%;
-  height: 79px;
-  margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  background-color: #E9E9E91A;
-  border-radius: 5px;
-
-}
-
-.song-image {
-  height: 66px;
-  background-color: white;
-  width: 66px;
-  margin-left: 40px;
-  border-radius: 5px;
-}
-
-.song-tittle {
-  font-family: 'Inter', sans-serif;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 100%;
-  letter-spacing: 0%;
-  color: #FFFFFF;
-  margin-bottom: 6px;
-}
-
-.song-artist {
-  margin-top: 4px;
-  font-family: 'Inter', sans-serif;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 100%;
-  letter-spacing: 0%;
-  color: black;
-}
-
-.tittle-artist {
-  margin-left: 15px;
-  height: 100%;
-  align-content: center;
-  width: 300px;
-  text-indent: 12px;
-}
-
-.song-duration {
-  height: 100%;
-  width: 70px;
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  font-family: 'Inter', sans-serif;
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 100%;
-  letter-spacing: 0%;
-  margin-right: 100px;
-  color: white;
-}
-
-.song-playbtn {
-  width: 66px;
-  height: 66px;
-  border-radius: 50%;
-  background-color: #1E1F24;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 30px;
-  margin-right: 70px;
-  color: #FFFFFF3D;
-  text-indent: 5px;
-
-}
-
-.song-menu {
-  border: none;
-  width: 7px;
-  height: 25px;
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-  align-items: center;
-  background-color: transparent;
-  cursor: pointer;
-
-}
-
-.menu-circle {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background-color: white;
 }
 
 .empty1 {
@@ -1106,7 +881,6 @@ html {
   justify-content: space-between;
   flex: 0 0 auto;
   align-items: center;
-
 }
 
 .people-photo {
@@ -1114,7 +888,6 @@ html {
   height: 125px;
   border: none;
   border-radius: 50%;
-  background-color: white;
   overflow: hidden;
 
 }
@@ -1127,12 +900,9 @@ html {
   color: white;
   line-height: 100%;
   letter-spacing: 0%;
-
-
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-
 }
 
 .people-nickname {
@@ -1143,35 +913,9 @@ html {
   color: #919191;
   line-height: 100%;
   letter-spacing: 0%;
-
-
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-.grid-container {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 4.7%;
-  width: 100%;
-  height: 109px;
-  overflow: auto;
-  scrollbar-width: none;
-  margin-top: 30px;
-
-}
-
-.grid-item {
-  height: 50px;
-  background-color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  width: 125px;
-  border: none;
-  cursor: pointer;
 }
 
 .people-slider {
@@ -1181,7 +925,6 @@ html {
   width: 100%;
   margin: 20px 0;
 }
-
 
 .scroll-btn-left,
 .scroll-btn-right {
@@ -1221,7 +964,6 @@ html {
   justify-content: center;
   z-index: 11000;
   width: 100%;
-
 }
 
 .post-modal-window {
@@ -1268,8 +1010,6 @@ html {
   width: 100%;
   height: 70px;
   display: flex;
-
-
 }
 
 .newpost-text {
@@ -1282,7 +1022,6 @@ html {
   font-size: 18px;
   line-height: 100%;
   letter-spacing: 0%;
-
   cursor: pointer;
 }
 
@@ -1296,7 +1035,6 @@ html {
   font-size: 18px;
   line-height: 100%;
   letter-spacing: 0%;
-
   cursor: pointer;
 }
 
@@ -1313,7 +1051,6 @@ html {
   width: 100%;
   height: 60px;
   display: flex;
-
   align-items: end;
   padding-bottom: 15px;
 }
@@ -1329,7 +1066,6 @@ html {
   line-height: 100%;
   letter-spacing: 0%;
   color: white;
-
   cursor: pointer;
   height: 38px;
   width: 33%;
@@ -1368,7 +1104,6 @@ html {
   line-height: 100%;
   letter-spacing: 0%;
   color: #FFFFFF;
-
 }
 
 .attributes {
@@ -1384,7 +1119,6 @@ html {
   overflow-y: hidden;
 }
 
-
 .at-gallery {
   height: 38px;
   width: 33%;
@@ -1398,15 +1132,13 @@ html {
   font-size: 14px;
   line-height: 100%;
   letter-spacing: 0%;
-
   color: white;
   flex-shrink: 0;
   margin-left: 10px;
-
 }
 
 .pomh-close:hover {
-  background-color: rgb(199, 18, 54);
+  background-color: rgb(197, 8, 46);
 }
 
 .check-text {
@@ -1416,7 +1148,6 @@ html {
   font-size: 16px;
   line-height: 100%;
   letter-spacing: 0%;
-
   display: inline-flex;
   align-items: center;
   color: black;
@@ -1454,9 +1185,7 @@ html {
   margin-left: 20px;
   margin-right: 20px;
   cursor: pointer;
-
 }
-
 
 .comments-text {
   margin-left: 15px;
@@ -1466,7 +1195,6 @@ html {
   font-size: 16px;
   line-height: 100%;
   letter-spacing: 0%;
-
   color: black
 }
 
@@ -1481,7 +1209,6 @@ html {
   line-height: 100%;
   letter-spacing: 0%;
   margin-top: 162px;
-
   color: #FFFFFF;
   cursor: pointer;
   background-color: #FF4400;
@@ -1536,12 +1263,10 @@ html {
   line-height: 100%;
   letter-spacing: 0%;
   margin-top: 162px;
-
   color: #FFFFFF;
   cursor: pointer;
   background-color: #FF4400;
   border-radius: 10px;
-
 }
 
 .all-div,
@@ -1557,8 +1282,6 @@ html {
   font-size: 16px;
   line-height: 100%;
   letter-spacing: 0%;
-
-
 }
 
 .all-div.active,
@@ -1571,7 +1294,6 @@ html {
   font-size: 16px;
   line-height: 100%;
   letter-spacing: 0%;
-
 }
 
 .sts-modal-overlay {
@@ -1600,7 +1322,6 @@ html {
   align-items: center;
   flex-direction: column;
   margin-right: 225px;
-
 }
 
 .sts-modal-close {
@@ -1613,42 +1334,33 @@ html {
   width: 20px;
   height: 20px;
   margin-left: 93%;
-
 }
 
 .storie-upper {
   width: 700px;
-  background-color: #232428;
   height: 6%;
   align-content: end;
   backdrop-filter: blur(30px);
   border-bottom: none;
-
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   padding-bottom: 0px;
   background-color: transparent;
-
   border-top: 1px solid white;
   border-left: 1px solid white;
   border-right: 1px solid white;
   box-shadow:
     0 -4px 10px rgba(255, 255, 255, 0.15),
-    /* top */
     -4px 0 10px rgba(255, 255, 255, 0.15),
-    /* left */
     4px 0 10px rgba(255, 255, 255, 0.15);
-  /* right */
 }
 
 .sts-modal-content {
   height: 87%;
   overflow-y: auto;
   scrollbar-width: none;
-  background-color: #232428;
   width: 600px;
   overflow: hidden;
-  background-color: transparent;
   border-left: 1px solid white;
   border-right: 1px solid white;
   backdrop-filter: blur(30px);
@@ -1657,17 +1369,14 @@ html {
   padding-left: 50px;
   padding-top: 10px;
   box-shadow: -4px 0 10px rgba(255, 255, 255, 0.15), 4px 0 10px rgba(255, 255, 255, 0.15);
-
   padding-bottom: 10px;
 }
 
 .storie-bottom {
   width: 700px;
   height: 10%;
-  background-color: #232428;
   background-color: transparent;
   box-shadow: -4px 0 10px rgba(255, 255, 255, 0.15), 4px 0 10px rgba(255, 255, 255, 0.15), 0 4px 10px rgba(255, 255, 255, 0.15);
-
   display: flex;
   align-items: center;
   backdrop-filter: blur(30px);
@@ -1676,16 +1385,16 @@ html {
   border-bottom: 1px solid white;
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
-
 }
 
 .storie-avatar {
-  width: 60px;
+  width: 63px;
   height: 63px;
   background-color: #060708;
   border-radius: 50%;
   margin-left: 45px;
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.15);
+  object-fit: cover;
 
 }
 
@@ -1698,7 +1407,6 @@ html {
   letter-spacing: 0%;
   color: white;
   margin-left: 20px;
-
 }
 
 .storie-data {
@@ -1708,10 +1416,8 @@ html {
   font-size: 14px;
   line-height: 100%;
   letter-spacing: 0%;
-
   color: white;
   margin-left: 20px;
-
 }
 
 .author-data {
@@ -1747,7 +1453,6 @@ html {
 
 }
 
-
 .main {
   width: 100%;
   background-color: #FFFFFF0F;
@@ -1768,7 +1473,6 @@ html {
   align-items: center;
   display: flex;
   flex-direction: column;
-
 }
 
 .upper-content {
@@ -1776,13 +1480,11 @@ html {
   height: 56px;
   display: flex;
   margin-bottom: 20px;
-
 }
 
 .post-ava-plat {
   width: 56px;
   height: 56px;
-
 }
 
 .name-time {
@@ -1824,13 +1526,11 @@ html {
   font-size: 14px;
   line-height: 100%;
   letter-spacing: 0%;
-
   color: #B3B3B3;
   height: 50%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-
 }
 
 .post-like,
@@ -1850,7 +1550,6 @@ html {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-
 }
 
 .post-like-btn-active {
@@ -1868,10 +1567,11 @@ html {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-
 }
 
-.post-like-btn {
+.post-like-btn,
+.post-coment-btn,
+.post-repost-btn {
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100%;
@@ -1886,44 +1586,23 @@ html {
 
 .post-coment-btn {
   background-image: url('/public/images/comment.svg');
-  background-repeat: no-repeat;
-  background-position: center;
   background-size: 90%;
-  display: inline-block;
-  height: 35px;
-  width: 24px;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  margin-bottom: 5px;
 }
 
 .post-repost-btn {
   background-image: url('/public/images/repost.svg');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 100%;
-  display: inline-block;
-  height: 35px;
-  width: 24px;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  margin-bottom: 5px;
 }
 
 .post-ava {
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background-color: #B3B3B3;
   object-fit: cover;
 }
 
 .middle-content {
   width: 100%;
   margin-top: 10px;
-
 }
 
 .text-content {
@@ -1948,7 +1627,6 @@ html {
   justify-content: center;
   align-items: center;
   width: 100%;
-
 }
 
 .prl-photo-wrapper {
@@ -1957,7 +1635,6 @@ html {
   display: flex;
   justify-content: center;
   align-items: center;
-
 }
 
 .prl-preview-image {
@@ -1966,7 +1643,6 @@ html {
   max-height: 600px;
   object-fit: contain;
   border-radius: 5px;
-
 }
 
 .prl-slider-btn {
@@ -1985,7 +1661,6 @@ html {
   justify-content: center;
   align-items: center;
   background-color: transparent;
-
 }
 
 .prl-left {
@@ -2021,7 +1696,7 @@ html {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background-color: #ccc;
+  background-color: #ffffff;
   margin: 0 4px;
 }
 
@@ -2030,7 +1705,6 @@ html {
   width: 8px;
   height: 8px;
 }
-
 
 .preview-image-album {
   width: 100%;
@@ -2052,9 +1726,7 @@ html {
   flex-shrink: 0;
   border-radius: 5px;
   margin-right: 15px;
-
 }
-
 
 .psb-modal-prev-button,
 .psb-modal-next-button {
@@ -2168,7 +1840,7 @@ html {
   width: 60px;
   height: 60px;
   border: 6px solid #ccc;
-  border-top: 6px solid #3498db;
+  border-top: 6px solid #FF4400;
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -2185,7 +1857,6 @@ html {
     transform: rotate(360deg);
   }
 }
-
 
 .pomh-close {
   position: absolute;
@@ -2205,7 +1876,7 @@ html {
 .post-comment {
   width: 100%;
   height: auto;
-  margin-top: 40px;
+  margin-top: 10px;
   display: flex;
   justify-content: center;
 }
@@ -2218,8 +1889,6 @@ html {
   border: 1px solid #00000069;
   background-color: transparent;
   border-radius: 5px 0px 0px 5px;
-
-
   border-right: none;
   resize: none;
   overflow-y: auto;
@@ -2237,7 +1906,6 @@ html {
   font-size: 14px;
   line-height: 100%;
   letter-spacing: 0%;
-
 }
 
 .post-comment-btn {
@@ -2250,10 +1918,6 @@ html {
   display: flex;
   justify-content: start;
   align-items: center;
-
-
-
-
 }
 
 .publish-btn {
@@ -2270,7 +1934,6 @@ html {
   font-size: 12px;
   line-height: 100%;
   letter-spacing: 0%;
-
 }
 
 .see-coments {
@@ -2282,7 +1945,6 @@ html {
   user-select: none;
   transition: color 0.2s ease;
   margin-top: 10px;
-
 }
 
 .show-more-container {
@@ -2322,7 +1984,6 @@ html {
   align-self: center;
   border-bottom-left-radius: 15px;
   border-top-left-radius: 15px;
-
 }
 
 @keyframes slideInRight {
@@ -2342,7 +2003,7 @@ html {
   justify-content: space-between;
   align-items: center;
   border-top-left-radius: 15px;
-
+  flex-direction: column;
 }
 
 .close-btn {
@@ -2356,12 +2017,10 @@ html {
   padding: 16px;
   overflow-y: auto;
   flex-grow: 1;
-
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
 }
-
 
 .chatMessage1 {
   display: flex;
@@ -2369,12 +2028,9 @@ html {
   gap: 12px;
   padding-top: 20px;
   padding-bottom: 30px;
-
-
   border-radius: 16px;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
-
   max-width: 600px;
   border-bottom: 1px solid #D0D0D0;
 }
@@ -2384,7 +2040,6 @@ html {
   height: 68px;
   border-radius: 50%;
   object-fit: cover;
-  background-color: #ccc;
   flex-shrink: 0;
 }
 
@@ -2415,7 +2070,6 @@ html {
   line-height: 100%;
   letter-spacing: 0%;
   color: #222222;
-
 }
 
 .message1 {
@@ -2432,14 +2086,12 @@ html {
   line-height: 100%;
   letter-spacing: 0%;
   color: #696969;
-
 }
 
 .storiesbtn-place {
   height: 100%;
   width: 130px;
   flex-shrink: 0;
-
 }
 
 .stories-btn {
@@ -2449,7 +2101,6 @@ html {
   border: none;
   cursor: pointer;
   flex-shrink: 0;
-
 }
 
 .storiesbtn-plus {
@@ -2468,13 +2119,11 @@ html {
 }
 
 .empty-posts-message {
-
   width: 100%;
   height: 400px;
   background-color: rgba(39, 39, 38, 0.3);
   border-radius: 10px;
   align-content: center;
-
 }
 
 .h3-empty {
@@ -2487,7 +2136,6 @@ html {
   line-height: 100%;
   letter-spacing: 0%;
   opacity: 0.7;
-
 }
 
 .h2-empty {
@@ -2501,7 +2149,6 @@ html {
   letter-spacing: 0%;
   margin-bottom: 130px;
   opacity: 0.7;
-
 }
 
 .aml-location-menu-wrapper {
@@ -2524,7 +2171,6 @@ html {
   font-size: 14px;
   line-height: 100%;
   letter-spacing: 0%;
-
   color: white;
   flex-shrink: 0;
 }
@@ -2563,7 +2209,6 @@ html {
   font-size: 14px;
   line-height: 100%;
   letter-spacing: 0%;
-
 }
 
 .aml-location-item:hover {
@@ -2581,8 +2226,6 @@ html {
 .post-location {
   display: flex;
   align-items: center;
-  position: relative;
-  top: 15px;
   padding-left: 4.7%;
 }
 
@@ -2595,7 +2238,6 @@ html {
   color: white;
   line-height: 100%;
   letter-spacing: 0%;
-
 }
 
 .commentTime {
@@ -2608,7 +2250,6 @@ html {
   color: #797979;
   line-height: 100%;
   letter-spacing: 0%;
-
 }
 
 .like-count {
@@ -2621,15 +2262,11 @@ html {
   letter-spacing: 0%;
   text-align: center;
   width: 100%;
-
 }
 
 .storie-wrap {
   height: 50px;
   width: 50px;
-
-
-
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -2641,7 +2278,6 @@ html {
   left: 80%;
   display: flex;
   gap: 40px;
-  align-items: center;
 }
 
 .delete-stories {
@@ -2723,5 +2359,90 @@ html {
   font-size: 18px;
   line-height: 100%;
   letter-spacing: 0%;
+}
 
+.dummy-button {
+  margin-left: auto;
+  border: none;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  background-color: transparent;
+  background-image: url(/public/images/trash.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+
+.location-deletepost {
+  width: 95%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.delete-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.delete-modal-content {
+  background: white;
+  padding: 20px 30px;
+  border-radius: 12px;
+  text-align: center;
+  max-width: 320px;
+  width: 100%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.delete-modal-text {
+  font-size: 18px;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.delete-modal-actions {
+  display: flex;
+  justify-content: space-around;
+  gap: 10px;
+}
+
+.confirm-delete-btn {
+  padding: 8px 16px;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.cancel-delete-btn {
+  padding: 8px 16px;
+  background-color: #bdc3c7;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.back-chat {
+  width: 50px;
+  height: 20px;
+  margin-right: auto;
+  margin-top: 20px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  background-image: url(/public/images/left.svg);
+  background-repeat: no-repeat;
 }

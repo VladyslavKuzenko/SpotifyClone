@@ -22,7 +22,7 @@ const LocationMenu = ({locationControl}) => {
   const handleSelectLocation = (loc) => {
     console.log("Selected location:", loc);
     locationControl.setLocation(loc)
-    setIsOpen(false); // Закриваємо меню при виборі
+    setIsOpen(false); 
   };
 
   useEffect(() => {

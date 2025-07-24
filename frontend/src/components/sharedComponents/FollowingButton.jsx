@@ -7,7 +7,7 @@ import { useAPI } from "../../hooks/useApi";
 export default function FollowingButton({ userToFollow, styles }) {
   const { isAuthenticated } = useAuth0();
   const [isFollowed, setIsFollowed] = useState(false);
-  const { apiFetch, user } = useAPI();
+  const { apiFetch,user } = useAPI();
   useEffect(() => {
     const checkFollowed = async () => {
       if (isAuthenticated && user && userToFollow) {
