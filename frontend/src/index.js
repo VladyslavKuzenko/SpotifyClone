@@ -14,7 +14,7 @@ root.render(
     domain={DOMAIN}
     clientId={CLIENT_ID}
     authorizationParams={{
-      redirect_uri: window.location.origin,
+      redirect_uri:  `${window.location.origin}/main`,
       
     }}
     

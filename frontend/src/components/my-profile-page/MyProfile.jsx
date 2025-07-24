@@ -20,8 +20,7 @@ const MyProfile = ({ profileInfo }) => {
   const [showModal, setShowModal] = useState(false);
   const [showModal1, setShowModal1] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
-
-  const { isLoading } = useAuth0();
+  const { isLoading, logout } = useAuth0();
   const { apiFetch, user } = useAPI();
   const [userFullInfo, setUserFullInfo] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -30,7 +29,6 @@ const MyProfile = ({ profileInfo }) => {
   const [followings, setFollowings] = useState([]);
   const [followers, setFollowers] = useState([]);
   const [menuOpen, setMenuOpen] = useState(false);
-
 
   const toggleMenu = () => {
     setMenuOpen((prev) => !prev);
@@ -103,15 +101,10 @@ const MyProfile = ({ profileInfo }) => {
 
       <div className={styles["profile-side"]}>
         <div className={styles["channel-hat"]}>
-          <button
-            className={styles["edit-profile"]}
-            onClick={toggleMenu}
-          >
+          <button className={styles["edit-profile"]} onClick={toggleMenu}>
             <div className={styles["setting-circles"]}></div>
             <div className={styles["setting-circles"]}></div>
             <div className={styles["setting-circles"]}></div>
-
-
           </button>
 
           <img
@@ -178,9 +171,16 @@ const MyProfile = ({ profileInfo }) => {
 
             {/* Контент вкладок */}
             <div className={styles["tab-content"]}>
-              {activeTab1 === "profile" && <UserLikedMediaLibrary user={userFullInfo} />}
+              {activeTab1 === "profile" && (
+                <UserLikedMediaLibrary user={userFullInfo} />
+              )}
 
-              {activeTab1 === "artistTools" && <ArtistOwnMediaLibrary user={userFullInfo} isAddButtonsAvaliable/>}
+              {activeTab1 === "artistTools" && (
+                <ArtistOwnMediaLibrary
+                  user={userFullInfo}
+                  isAddButtonsAvaliable
+                />
+              )}
             </div>
           </div>
         ) : (
@@ -192,16 +192,28 @@ const MyProfile = ({ profileInfo }) => {
         <div className={styles["about-artist-platform"]}>
           <div className={styles["aap-left"]}>
             <div className={styles["aap-text"]}>About artist</div>
-            <img className={styles["aap-photo"]} src={userFullInfo?.artist?.aboutImgUrl} />
+            <img
+              className={styles["aap-photo"]}
+              src={userFullInfo?.artist?.aboutImgUrl}
+            />
           </div>
           <div className={styles["aap-right"]}>
             <div className={styles["aap-information"]}>
               {userFullInfo?.artist?.aboutArtist}
             </div>
             <div className={styles["aap-socials"]}>
-              <a className={styles["facebook"]} href={userFullInfo?.artist?.facebookLink}></a>
-              <a className={styles["instagram"]} href={userFullInfo?.artist?.instagramLink}></a>
-              <a className={styles["twitter"]} href={userFullInfo?.artist?.twitterLink}></a>
+              <a
+                className={styles["facebook"]}
+                href={userFullInfo?.artist?.facebookLink}
+              ></a>
+              <a
+                className={styles["instagram"]}
+                href={userFullInfo?.artist?.instagramLink}
+              ></a>
+              <a
+                className={styles["twitter"]}
+                href={userFullInfo?.artist?.twitterLink}
+              ></a>
             </div>
 
             <button
@@ -217,7 +229,11 @@ const MyProfile = ({ profileInfo }) => {
           <div className={styles["posts-place"]}>
             <div className={styles["posts-text"]}>Posts</div>
             <div className={styles["posts-array"]}>
-              <Posts selectedTab="user" userId={user?.sub} isProfilePage={true} />
+              <Posts
+                selectedTab="user"
+                userId={user?.sub}
+                isProfilePage={true}
+              />
             </div>
           </div>
           <div className={styles["groups-place"]}>
@@ -240,10 +256,23 @@ const MyProfile = ({ profileInfo }) => {
       </div>
       {menuOpen && (
         <div className={styles["dropdown-menu"]} ref={menuRef}>
-          <button className={styles["dropdown-item"]} onClick={() => navigate("/edit-profile")}>Edit profile</button>
+          <button
+            className={styles["dropdown-item"]}
+            onClick={() => navigate("/edit-profile")}
+          >
+            Edit profile
+          </button>
           <button className={styles["dropdown-item"]}>Share</button>
-          <button className={styles["dropdown-item"]}>Logout</button>
-
+          <button
+            className={styles["dropdown-item"]}
+            onClick={() =>
+              logout({
+                logoutParams: { returnTo: `${window.location.origin}/main` },
+              })
+            }
+          >
+            Logout
+          </button>
         </div>
       )}
       {showModal && <AddMusicModal onClose={() => setShowModal(false)} />}

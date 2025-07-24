@@ -4,15 +4,19 @@ const LogoutButton = () => {
   const { logout } = useAuth0();
 
   return (
-    <div style={{
+    <div
+      style={{
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        height: "100vh",  // щоб по вертикалі було по центру всього екрану
-      }}>
+        height: "100vh", // щоб по вертикалі було по центру всього екрану
+      }}
+    >
       <button
         onClick={() =>
-          logout({ logoutParams: { returnTo: window.location.origin } })
+          logout({
+            logoutParams: { returnTo: `${window.location.origin}/main` },
+          })
         }
       >
         Log Out
