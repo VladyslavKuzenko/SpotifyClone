@@ -45,7 +45,7 @@ const UserProfile = () => {
     const data = await respose.json();
     setUserFullInfo(data);
   };
-  const isArtist = false; //перевіка
+  // const isArtist = true; //перевіка
 
   return (
     <div className={styles.container}>
@@ -108,8 +108,8 @@ const UserProfile = () => {
           </div>
         </div> */}
 <div className={styles["functional-container1"]}></div>
-       {isArtist ? (
-  <ArtistOwnMediaLibrary user={userFullInfo} />
+       {userFullInfo.isArtist ? (
+  <ArtistOwnMediaLibrary user={userFullInfo}/>
 ) : (
   <UserLikedMediaLibrary user={userFullInfo} />
 )}

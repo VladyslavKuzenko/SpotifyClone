@@ -3,7 +3,9 @@ import styles from "./main.module.css";
 import { useAPI } from "../../hooks/useApi";
 import CommentItem from "./CommentItem";
 import { formatPostDate, isPostLikedFunc } from "../../js/functions/functions";
+import { useNavigate } from "react-router-dom";
 export default function PostItem({ post, isProfilePage = false }) {
+  const navigate = useNavigate();
   const [isPostLiked, setIsPostLiked] = useState();
   const { user, apiFetch } = useAPI();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -104,7 +106,7 @@ export default function PostItem({ post, isProfilePage = false }) {
         <div className={styles["post-item"]}>
           <div className={styles["post-content"]}>
             <div className={styles["upper-content"]}>
-              <div className={styles["post-ava-plat"]}>
+              <div className={styles["post-ava-plat"]} onClick={()=>{ navigate(`/user-profile/${post.user.id}`)}}>
                 <img
                   className={styles["post-ava"]}
                   src={post.user.avatarImgUrl}
@@ -112,7 +114,7 @@ export default function PostItem({ post, isProfilePage = false }) {
                 />
               </div>
               <div className={styles["name-time"]}>
-                <div className={styles["post-author"]}>
+                <div className={styles["post-author"]} onClick={()=>{ navigate(`/user-profile/${post.user.id}`)}}>
                   {post.user.username}
                 </div>
                 <div className={styles["post-time"]}>
