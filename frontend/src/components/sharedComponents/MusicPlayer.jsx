@@ -88,7 +88,7 @@ const MusicPlayer = ({ footerPlayer, isHovered }) => {
 
   return (
     <>
-      {footerPlayer && currentSong?.id ? (
+      {footerPlayer && currentSong ? (
   <div className={stylesFooter["footer-container"]}>
     <div className={stylesFooter["mr-bottom"]}>
       <div

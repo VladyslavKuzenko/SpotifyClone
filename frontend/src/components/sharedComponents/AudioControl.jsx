@@ -162,7 +162,6 @@ export default function AudioControl({ footerPlayer, isHovered }) {
                   <button
                     className={`${stylesPlayer["bmr-btn"]} ${stylesPlayer["btn3ls"]}`}
                     onClick={playAudio}
-                  // Додано показ при наведенні
                   ></button>
                 </div>
               )}
@@ -170,7 +169,7 @@ export default function AudioControl({ footerPlayer, isHovered }) {
               <button
                 className={`${stylesPlayer["bmr-btn"]} ${stylesPlayer["btn4ls"]}`}
                 onClick={nextSong}
-                style={isHovered ? visibleStyle : hiddenStyle} // Додано показ при наведенні
+                style={isHovered ? visibleStyle : hiddenStyle}
               ></button>
             </div>
 
@@ -183,7 +182,7 @@ export default function AudioControl({ footerPlayer, isHovered }) {
                 value={currentTime}
                 onChange={handleProgressChange}
                 className={stylesPlayer["bmr-bar-wrapper1"]}
-                style={isHovered ? visibleStyle : hiddenStyle} // Додано показ при наведенні
+                style={isHovered ? visibleStyle : hiddenStyle}
               />
             </div>
           </div>
