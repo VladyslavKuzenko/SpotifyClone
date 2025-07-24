@@ -1,6 +1,7 @@
 package edu.itstep.api.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import edu.itstep.api.models.contentModels.ContentType;
 import jakarta.persistence.*;
 
 @Entity
@@ -9,6 +10,8 @@ public class Content {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "media_type", nullable = false)
+    private ContentType mediaType;
     @Column(name = "media_url", nullable = false)
     private String mediaUrl;
     @ManyToOne
@@ -25,6 +28,14 @@ public class Content {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public ContentType getMediaType() {
+        return mediaType;
+    }
+
+    public void setMediaType(ContentType mediaType) {
+        this.mediaType = mediaType;
     }
 
     public String getMediaUrl() {
