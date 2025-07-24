@@ -456,9 +456,8 @@ export default function Rating() {
                       setCurrentSongList(tracks);
                     }}
                   >
-                    <div className={styles["item-place"]}>
-                      {item.listeningCount > 0 ? index + 1 : "No place"}
-                    </div>
+                                 <div className={styles["item-place"]}>{index + 1}</div>
+
                     <div className={styles["item-info"]}>
                       <img className={styles["item-photo"]} src={item.imageUrl} />
                       <div className={styles["inside-info"]}>
