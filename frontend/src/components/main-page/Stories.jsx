@@ -483,7 +483,6 @@
 
 // export default Stories;
 
-
 import { useRef, useEffect, useState, useMemo } from "react";
 import styles from "./main.module.css";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -865,7 +864,13 @@ const Stories = () => {
                 display: "block",
               }}
             />
-            <div className={styles["storiesbtn-plus"]}></div>
+            <div
+              className={styles["storiesbtn-plus"]}
+              onClick={(e) => {
+                e.stopPropagation(); // зупиняє клік, щоб не пішов до батьків
+                setIsPostModalOpen(true);
+              }}
+            ></div>
           </div>
         </div>
 
@@ -916,7 +921,7 @@ const Stories = () => {
               )}
             </div>
 
-            {(currentStoryIndex > 0 || currentUserIndex > 0 || userHasStoriesBefore()) && (
+            {!(currentUserIndex === -1 && currentStoryIndex === 0) && (
               <button
                 className={styles["psb-modal-prev-button"]}
                 onClick={goToPrevStory}

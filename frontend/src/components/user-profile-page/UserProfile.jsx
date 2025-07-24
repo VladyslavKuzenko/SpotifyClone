@@ -6,7 +6,7 @@ import { useAPI } from "../../hooks/useApi";
 import FollowingButton from "../sharedComponents/FollowingButton";
 import UserLikedMediaLibrary from "../my-profile-page/UserLikedMediaLibrary";
 import Posts from "../main-page/Posts";
-
+import ArtistOwnMediaLibrary from "../my-profile-page/ArtistOwnMediaLibrary";
 const UserProfile = () => {
   const { userId } = useParams();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -112,6 +112,8 @@ const UserProfile = () => {
         </div> */}
 
         <UserLikedMediaLibrary user={userFullInfo} />
+                {/* <ArtistOwnMediaLibrary user={userFullInfo} /> */}
+
 
         <div className={styles["bottom-place"]}>
           <div className={styles["posts-place"]}>
