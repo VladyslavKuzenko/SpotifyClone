@@ -2,11 +2,12 @@ import React, { use, useState } from "react";
 import styles from "./main.module.css";
 import { useAPI } from "../../hooks/useApi";
 import { useAudio } from "../../hooks/useAudio";
+import { useNavigate } from "react-router-dom";
 
 const NewSongs = () => {
+  const navigate=useNavigate();
   const [song, setSong] = useState();
-
-  const { apiFetch } = useAPI();
+  const { apiFetch,user } = useAPI();
   const {
     isSongPlayed,
     pauseAudio,
@@ -43,7 +44,11 @@ const NewSongs = () => {
         
         <div className={styles["ns-song-author"]}>
           <div className={styles["ns-song"]}>{song?.title}</div>
-          <div className={styles["ns-author"]}>
+          <div className={styles["ns-author"]} onClick={()=>{
+             if (song?.artist.user === user.sub) {
+                    navigate(`/my-profile`);
+                  } else navigate(`/user-profile/${song?.artist.user.id}`);
+          }}>
             {song?.artist.user.username}
           </div>
         </div>

@@ -33,10 +33,8 @@ export default function MiddleItem({
     isListeningCountIncremented,
     setIsListeningCountIncremented,
   } = useAudio();
-  // Вкладка для артиста: 'songs' або 'albums'
   const [activeArtistTab, setActiveArtistTab] = useState("songs");
 
-  // Вкладка зовнішня: "artist" або "recommended"
   const [activeTab, setActiveTab] = useState("artist");
 
   const handleArtistSongs = async () => {
@@ -65,13 +63,17 @@ export default function MiddleItem({
     setCurrentAlbum(data[0]);
   };
   const fetchAlbumTracks = async () => {
-    if (!currentAlbum) return;
-    const response = await apiFetch(
-      `/albums/albums-tracks/${currentAlbum?.id}`
-    );
-    const data = await response.json();
-    setAlbumSongs(data);
-    setAlbumSongsFullList(data);
+    if (!currentAlbum) {
+      setAlbumSongs([]);
+      setAlbumSongsFullList([]);
+    } else {
+      const response = await apiFetch(
+        `/albums/albums-tracks/${currentAlbum?.id}`
+      );
+      const data = await response.json();
+      setAlbumSongs(data);
+      setAlbumSongsFullList(data);
+    }
   };
 
   const handleStart = async () => {
@@ -150,10 +152,8 @@ export default function MiddleItem({
               type="text"
               onChange={(e) => {
                 setSearch(e.target.value);
-                // if (activeTab === "artist" && activeArtistTab === "songs") {
                 searchSongs(songsFullList, e.target.value, setSongs);
                 searchSongs(albumSongsFullList, e.target.value, setAlbumSongs);
-                // }
               }}
               value={search}
               placeholder="Search"
@@ -240,9 +240,6 @@ export default function MiddleItem({
                 }`}
                 onClick={() => setActiveArtistTab("songs")}
               >
-                {/*    Play
-              </button>
-              <FollowingButton userToFollow={currentArtist?.user} styles={styles["pf-follow"]}/>  */}
                 Songs
               </div>
               <div
@@ -293,13 +290,12 @@ export default function MiddleItem({
                       album={item}
                       idx={index}
                       onClickFunck={() => setCurrentAlbum(item)}
-                      variant="special" // або пропусти цей пропс, щоб отримати базовий стиль
+                      variant="special"
                     />
                   ))}
                 </div>
 
                 <div className={styles["albums-array-songs"]}>
-                  {/* {[...Array(14)].map((_, i) => ( */}
                   <>
                     {albumSongs.length > 0 ? (
                       albumSongs.map((song) => (
