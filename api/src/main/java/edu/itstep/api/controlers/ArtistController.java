@@ -15,6 +15,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
 
@@ -67,7 +69,8 @@ public class ArtistController {
 
         artist.setUser(optionalUser.get());
         Artist savedArtist = artistRepository.save(artist);
-        return ResponseEntity.created(new URI("/artists/" + savedArtist.getId())).body(savedArtist);
+        String encodedId = URLEncoder.encode(savedArtist.getId(), StandardCharsets.UTF_8);
+        return ResponseEntity.created(new URI("/users/" + encodedId)).body(savedArtist);
     }
     @PostMapping("/upload/{artistId}")
     public String handleFileUpload(@RequestParam("file") MultipartFile file, @PathVariable String artistId) {

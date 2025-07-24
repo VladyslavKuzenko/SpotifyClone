@@ -7,7 +7,7 @@ const PrivateChatItem = ({ title, id, onChatSelected, lastMessage }) => {
 
   let previewText = "";
   let previewTime = "";
- 
+
   try {
     const contentObj = JSON.parse(lastMessage?.contentJson || "{}");
     previewTime = lastMessage.sentDateTime;
@@ -38,7 +38,7 @@ const PrivateChatItem = ({ title, id, onChatSelected, lastMessage }) => {
       <div className={styles["chat-time-plat"]}>
         <div className={styles["chat-time"]}>{previewTime}</div>
       </div>
-      
+
     </div>
   );
 };

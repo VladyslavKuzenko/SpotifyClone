@@ -910,3 +910,10 @@ body {
     cursor: pointer;
 
 }
+
+.no-chats {
+  text-align: center;
+  color: gray;
+  margin-top: 20px;
+  font-style: italic;
+}

@@ -69,6 +69,8 @@ export default function ProfileSetup() {
   }
 
   if (isConfirmed) {
+    console.log("navigating in progresssss");
+    
     return <Navigate to="/main" replace />;
   }
 

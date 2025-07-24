@@ -2,6 +2,7 @@ package edu.itstep.api.controlers;
 
 import edu.itstep.api.models.Chat;
 import edu.itstep.api.models.User;
+import edu.itstep.api.models.dto.PrivateChatDTO;
 import edu.itstep.api.repositories.ChatRepository;
 import edu.itstep.api.repositories.UserRepository;
 import org.springframework.http.ResponseEntity;
@@ -11,8 +12,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 
@@ -93,6 +97,22 @@ public class ChatController {
     public ResponseEntity createChat(@RequestBody Chat Chat) throws URISyntaxException {
         Chat savedChat = chatRepository.save(Chat);
         return ResponseEntity.created(new URI("/chats/" + savedChat.getId())).body(savedChat);
+    }
+
+    @PostMapping("/chats/private")
+    public ResponseEntity<Chat> createPrivateChat(@RequestBody PrivateChatDTO request) {
+        Optional<Chat> existingChat = chatRepository.findPrivateChatBetween(request.getUser1Id(), request.getUser2Id());
+        Chat chat = existingChat.orElseGet(() -> {
+            Chat newChat = new Chat();
+            newChat.setIsPrivate(true);
+            newChat.setUpdateTime(LocalDateTime.from(Instant.now()));
+            newChat.setUsers(Set.of(
+                    userRepository.findById(request.getUser1Id()).orElseThrow(),
+                    userRepository.findById(request.getUser2Id()).orElseThrow()
+            ));
+            return chatRepository.save(newChat);
+        });
+        return ResponseEntity.ok(chat);
     }
 
     @DeleteMapping("/{id}")

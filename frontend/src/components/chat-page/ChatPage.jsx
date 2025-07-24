@@ -3,7 +3,7 @@ import styles from "./ChatPage.module.css";
 import ChatList from './ChatList';
 import MessageItem from './MessageItem';
 import MessageInputField from './MessageInputField';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import UpperContent from "./UpperContent";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -61,7 +61,13 @@ const ChatPage = () => {
     }, [chatId]);
 
     const navigate = useNavigate();
-
+    const location = useLocation();
+    useEffect(() => {
+        if (location.state?.openChatId) {
+            setChatId(location.state.openChatId);
+        }
+    }, [location.state]);
+    
     if (isLoading) {
         return <div>Loading...</div>;
     }
@@ -93,7 +99,7 @@ const ChatPage = () => {
                 </div>
             </div>
             {isCreateModalOpen && (
-                <div className={styles.modalOverlay }  >
+                <div className={styles.modalOverlay}  >
                     <div className={styles.modal1}>
                         <h2 className={styles.cgtext}>Create Group</h2>
 

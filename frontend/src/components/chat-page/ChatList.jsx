@@ -56,6 +56,9 @@ const ChatList = ({ onChatSelected, onCreateGroup }) => {
     return () => clearInterval(interval);
   }, []);
 
+  const privateChats = chats.filter(chat => chat.isPrivate);
+  const groupChats = chats.filter(chat => !chat.isPrivate);
+
   return (
     <div className={styles["chat-platform"]}>
       <div className={styles["search-block"]}>
@@ -64,32 +67,37 @@ const ChatList = ({ onChatSelected, onCreateGroup }) => {
           className={styles["chat-search"]}
           placeholder="Search"
         />
-
         <button
           className={styles["create-group"]}
           onClick={onCreateGroup}
-        >
-        </button>
-
+        />
       </div>
 
-      <div className={styles["groups-block"]}>
-        <div className={styles.text1}>Groups:</div>
-        <div className={styles.groups}>
-          {chats.map((chat) =>
-            !chat.isPrivate ? <GroupChatItem key={chat.id} onChatSelected={onChatSelected} {...chat} /> : null
-          )}
+      {groupChats.length > 0 && (
+        <div className={styles["groups-block"]}>
+          <div className={styles.text1}>Groups:</div>
+          <div className={styles.groups}>
+            {groupChats.map(chat => (
+              <GroupChatItem key={chat.id} onChatSelected={onChatSelected} {...chat} />
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
-      <div className={styles["chats-block"]}>
-        <div className={styles.text2}>Chats:</div>
-        <div className={styles["chats-array"]}>
-          {chats.map((chat) =>
-            chat.isPrivate ? <PrivateChatItem key={chat.id} onChatSelected={onChatSelected} {...chat} /> : null
-          )}
+      {privateChats.length > 0 && (
+        <div className={styles["chats-block"]}>
+          <div className={styles.text2}>Chats:</div>
+          <div className={styles["chats-array"]}>
+            {privateChats.map(chat => (
+              <PrivateChatItem key={chat.id} onChatSelected={onChatSelected} {...chat} />
+            ))}
+          </div>
         </div>
-      </div>
+      )}
+
+      {groupChats.length === 0 && privateChats.length === 0 && (
+        <div className={styles["no-chats"]}>There's no chats yet</div>
+      )}
     </div>
   );
 };
