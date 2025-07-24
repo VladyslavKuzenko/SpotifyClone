@@ -1565,7 +1565,9 @@ html {
   justify-content: space-evenly;
 }
 
-.post-like-btn, .post-coment-btn , .post-repost-btn{
+.post-like-btn,
+.post-coment-btn,
+.post-repost-btn {
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100%;
@@ -1583,7 +1585,7 @@ html {
   background-size: 90%;
 }
 
- .post-repost-btn{
+.post-repost-btn {
   background-image: url('/public/images/repost.svg');
 }
 
@@ -1870,7 +1872,7 @@ html {
 .post-comment {
   width: 100%;
   height: auto;
-  margin-top: 40px;
+  margin-top: 10px;
   display: flex;
   justify-content: center;
 }
@@ -1997,6 +1999,7 @@ html {
   justify-content: space-between;
   align-items: center;
   border-top-left-radius: 15px;
+  flex-direction: column;
 }
 
 .close-btn {
@@ -2355,7 +2358,7 @@ html {
 }
 
 .dummy-button {
-  margin-left: auto; 
+  margin-left: auto;
   border: none;
   cursor: pointer;
   width: 24px;
@@ -2372,7 +2375,7 @@ html {
   width: 95%;
   display: flex;
   align-items: center;
-  justify-content: space-between; 
+  justify-content: space-between;
 }
 
 .delete-modal-overlay {
@@ -2395,7 +2398,7 @@ html {
   text-align: center;
   max-width: 320px;
   width: 100%;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
 .delete-modal-text {
@@ -2426,4 +2429,16 @@ html {
   border: none;
   border-radius: 6px;
   cursor: pointer;
+}
+
+.back-chat {
+  width: 50px;
+  height: 20px;
+  margin-right: auto;
+  margin-top: 20px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  background-image: url(/public/images/left.svg);
+  background-repeat: no-repeat;
 }

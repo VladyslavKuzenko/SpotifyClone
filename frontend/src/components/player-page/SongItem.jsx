@@ -189,7 +189,6 @@ const SongItem = ({
           setIsAtpModalOpen1(false);
         }}
       >
-        {/* <div className={styles.cover}></div> */}
         <img className={styles.cover} src={song.imageUrl} />
         <div className={styles.info}>
           <div className={styles.title}>{song.title}</div>

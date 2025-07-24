@@ -28,7 +28,7 @@ export default function AudioControl({ footerPlayer, isHovered }) {
 
   const loopTrack = () => {
     setIsLoop(!isLoop);
-    console.log("is loop: ",!isLoop)
+    console.log("is loop: ", !isLoop)
   };
 
   const reduceVolume = () => {
@@ -67,9 +67,14 @@ export default function AudioControl({ footerPlayer, isHovered }) {
           <div className={stylesPlayer["mrb-center"]}>
             <div className={stylesPlayer["bmr-controls"]}>
               <button
-                className={`${stylesPlayer["bmr-btn"]} ${styles["btn0"]}`}
+                className={`
+    ${stylesPlayer["bmr-btn"]}
+    ${styles["btn0"]}
+    ${isRandomList ? styles["random-active"] : ""}
+  `}
                 onClick={randomList}
               ></button>
+
 
               <button
                 className={`${stylesPlayer["bmr-btn"]} ${styles["btn1"]}`}
@@ -142,7 +147,7 @@ export default function AudioControl({ footerPlayer, isHovered }) {
               <button
                 className={`${stylesPlayer["bmr-btn"]} ${stylesPlayer["btn1ls"]}`}
                 onClick={prevSong}
-                style={isHovered ? visibleStyle : hiddenStyle} 
+                style={isHovered ? visibleStyle : hiddenStyle}
               ></button>
 
               {isSongPlayed ? (
@@ -157,7 +162,7 @@ export default function AudioControl({ footerPlayer, isHovered }) {
                   <button
                     className={`${stylesPlayer["bmr-btn"]} ${stylesPlayer["btn3ls"]}`}
                     onClick={playAudio}
-                    // Додано показ при наведенні
+                  // Додано показ при наведенні
                   ></button>
                 </div>
               )}

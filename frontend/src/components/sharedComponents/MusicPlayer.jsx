@@ -88,44 +88,45 @@ const MusicPlayer = ({ footerPlayer, isHovered }) => {
 
   return (
     <>
-      {footerPlayer ? (
-        <div className={stylesFooter["footer-container"]}>
-          <div className={stylesFooter["mr-bottom"]}>
-            <div className={stylesFooter["mrb-left"]} onClick={handleOpenModal}>
-              {/* <div className={stylesFooter["bmr-cover"]}></div> */}
-              <img
-                className={stylesFooter["bmr-cover"]}
-                src={currentSong.imageUrl}
-              />
-              <div className={stylesFooter["bmr-song-info"]}>
-                <div className={stylesFooter["bmr-title"]}>
-                  {currentSong?.title}
-                </div>
-                <div className={stylesFooter["bmr-artist"]}>
-                  {currentSong?.artist?.user?.username}
-                </div>
-              </div>
-            </div>
-
-            <AudioControl footerPlayer />
+      {footerPlayer && currentSong?.id ? (
+  <div className={stylesFooter["footer-container"]}>
+    <div className={stylesFooter["mr-bottom"]}>
+      <div
+        className={stylesFooter["mrb-left"]}
+        onClick={handleOpenModal}
+      >
+        <img
+          className={stylesFooter["bmr-cover"]}
+          src={currentSong.imageUrl}
+          alt="cover"
+        />
+        <div className={stylesFooter["bmr-song-info"]}>
+          <div className={stylesFooter["bmr-title"]}>
+            {currentSong?.title}
           </div>
-
-          {isModalOpen && (
-            <Modal onClose={handleCloseModal} song={currentSong} />
-          )}
-        </div>
-      ) : (
-        <div className={stylesLeft["song-place-div"]}>
-          <div className={stylesLeft["song-name"]}>{currentSong?.title}</div>
-          <div className={stylesLeft.singer}>
+          <div className={stylesFooter["bmr-artist"]}>
             {currentSong?.artist?.user?.username}
           </div>
-          <AudioControl isHovered={isHovered} />
-
-          {/* <div className={stylesLeft["circle-song"]}></div> */}
-          {/* <AudioControl /> */}
         </div>
-      )}
+      </div>
+
+      <AudioControl footerPlayer />
+    </div>
+
+    {isModalOpen && (
+      <Modal onClose={handleCloseModal} song={currentSong} />
+    )}
+  </div>
+) : !isModalOpen && currentSong?.id ? (
+  <div className={stylesLeft["song-place-div"]}>
+    <div className={stylesLeft["song-name"]}>{currentSong?.title}</div>
+    <div className={stylesLeft.singer}>
+      {currentSong?.artist?.user?.username}
+    </div>
+    <AudioControl isHovered={isHovered} />
+  </div>
+) : null}
+
     </>
   );
 };

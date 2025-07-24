@@ -290,6 +290,7 @@ export default function PostItem({ post, isProfilePage = false }) {
             onClick={(e) => e.stopPropagation()}
           >
             <div className={styles["discussion-header"]}>
+              <button  className={styles["back-chat"]}onClick={closeDiscussion}></button>
               <div className={styles["post-comment"]}>
                 <textarea
                   className={styles["send-comment"]}
