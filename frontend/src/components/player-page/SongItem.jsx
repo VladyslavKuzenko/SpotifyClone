@@ -179,7 +179,7 @@ const SongItem = ({
 
   return (
     <>
-      <button
+      <div
         className={styles["song-item"]}
         onClick={() => {
           setCurrentSong(song);
@@ -211,9 +211,8 @@ const SongItem = ({
                   handleLikeClick();
                 }}
                 style={{
-                  backgroundImage: `url(${
-                    isLiked ? "/images/heartred.svg" : "/images/heart.svg"
-                  })`,
+                  backgroundImage: `url(${isLiked ? "/images/heartred.svg" : "/images/heart.svg"
+                    })`,
                   backgroundSize: "19px 19px",
                   backgroundRepeat: "no-repeat",
                   backgroundPosition: "center",
@@ -244,12 +243,13 @@ const SongItem = ({
                     <div
                       className={styles["dropdown-itemup1"]}
                       onClick={(e) => {
-                        e.stopPropagation();
-                        setIsAtpModalOpen((prev) => !prev);
+                        e.stopPropagation(); // Зупиняє "підйом" події
+                        setIsAtpModalOpen((prev) => !prev); // Відкриває/закриває модалку
                       }}
                     >
                       Add to playlist
                     </div>
+
 
                     {isAtpModalOpen && (
                       <div className={styles["atp-modal"]}>
@@ -257,31 +257,34 @@ const SongItem = ({
                           <div
                             key={index}
                             className={styles["atp-item"]}
-                            onClick={() => handleAddToPlaylistClick(item)}
+                            onClick={(e) => {
+                              e.stopPropagation();  // Зупиняємо підйом події
+                              handleAddToPlaylistClick(item);
+                              setIsMenuOpen(false);  // Закриваємо меню
+                              setIsAtpModalOpen(false); // Закриваємо модалку Add to playlist, якщо потрібно
+                            }}
                           >
                             {item.title}
                           </div>
                         ))}
+
+
                       </div>
                     )}
 
-                    {/* {isAtpModalOpen1 && (
-                      <div className={styles["atp-modal"]}>
-                        <div className={styles["atp-item"]}>delete playlist 1</div>
-                        <div className={styles["atp-item"]}>delete playlist 2</div>
-                        <div className={styles["atp-item"]}>delete playlist 3</div>
-                      </div>
-                    )} */}
                   </div>
 
                   <button
                     className={styles["dropdown-item"]}
-                    onClick={() => {
+                    onClick={(e) => {
+                      e.stopPropagation();
                       navigate(`/user-profile/${song.artist.user.id}`);
+                      setIsMenuOpen(false);
                     }}
                   >
                     Go to artist
                   </button>
+
 
                   {currentPlaylist && (
                     <button
@@ -300,7 +303,7 @@ const SongItem = ({
         ) : (
           <div className={styles.duration}>{convertTime(duration)}</div>
         )}
-      </button>
+      </div>
     </>
   );
 };
