@@ -6,10 +6,9 @@ import FollowAccountCard from "./FollowAccountCard";
 import { useAPI } from "../../hooks/useApi";
 
 const WhoToFollow = () => {
-  const { isAuthenticated, isLoading } =
-    useAuth0();
+  const { isAuthenticated, isLoading } = useAuth0();
   const [users, setUsers] = React.useState([]);
-  const { apiFetch,user } = useAPI();
+  const { apiFetch, user } = useAPI();
 
   const fetchUsers = async () => {
     // const response = await apiFetch("/users/usersToSubscribe/15");
@@ -23,7 +22,7 @@ const WhoToFollow = () => {
   }, [isLoading]);
 
   if (isLoading) return <div>Loading...</div>;
-  
+
   if (!isAuthenticated) return <Navigate to="/login" replace />;
 
   return (
@@ -31,7 +30,13 @@ const WhoToFollow = () => {
       <div className={styles["who-to-follow-text"]}>Who to follow</div>
       <div className={styles["who-to-follow-accounts"]}>
         {users.map((i) => (
-          <FollowAccountCard userToFollow={i} key={i.id} />
+          <>
+            {i.id !== user.sub ? (
+              <FollowAccountCard userToFollow={i} key={i.id} />
+            ) : (
+              <></>
+            )}
+          </>
         ))}
       </div>
     </div>

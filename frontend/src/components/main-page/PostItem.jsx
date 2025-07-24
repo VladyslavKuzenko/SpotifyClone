@@ -106,7 +106,14 @@ export default function PostItem({ post, isProfilePage = false }) {
         <div className={styles["post-item"]}>
           <div className={styles["post-content"]}>
             <div className={styles["upper-content"]}>
-              <div className={styles["post-ava-plat"]} onClick={()=>{ navigate(`/user-profile/${post.user.id}`)}}>
+              <div
+                className={styles["post-ava-plat"]}
+                onClick={() => {
+                  if (post.user.id === user.sub) {
+                    navigate(`/my-profile`);
+                  } else navigate(`/user-profile/${post.user.id}`);
+                }}
+              >
                 <img
                   className={styles["post-ava"]}
                   src={post.user.avatarImgUrl}
@@ -114,7 +121,14 @@ export default function PostItem({ post, isProfilePage = false }) {
                 />
               </div>
               <div className={styles["name-time"]}>
-                <div className={styles["post-author"]} onClick={()=>{ navigate(`/user-profile/${post.user.id}`)}}>
+                <div
+                  className={styles["post-author"]}
+                  onClick={() => {
+                    if (post.user.id === user.sub) {
+                      navigate(`/my-profile`);
+                    } else navigate(`/user-profile/${post.user.id}`);
+                  }}
+                >
                   {post.user.username}
                 </div>
                 <div className={styles["post-time"]}>
@@ -202,10 +216,11 @@ export default function PostItem({ post, isProfilePage = false }) {
                     {images.map((_, index) => (
                       <span
                         key={index}
-                        className={`${styles["prl-dot"]} ${index === currentImageIndex
-                          ? styles["prl-active"]
-                          : ""
-                          }`}
+                        className={`${styles["prl-dot"]} ${
+                          index === currentImageIndex
+                            ? styles["prl-active"]
+                            : ""
+                        }`}
                       ></span>
                     ))}
                   </div>
@@ -222,8 +237,6 @@ export default function PostItem({ post, isProfilePage = false }) {
           </div>
         </div>
         <div className={styles["location-deletepost"]}>
-
-
           {post.location && post.location.trim() !== "" && (
             <div className={styles["post-location"]}>
               <div className={styles["location-icon"]}></div>
@@ -236,39 +249,41 @@ export default function PostItem({ post, isProfilePage = false }) {
               onClick={() => setIsDeleteModalOpen(true)}
             ></button>
           )}
-
         </div>
       </div>
-{isDeleteModalOpen && (
-  <div className={styles["delete-modal-overlay"]} onClick={() => setIsDeleteModalOpen(false)}>
-    <div
-      className={styles["delete-modal-content"]}
-      onClick={(e) => e.stopPropagation()}
-    >
-      <div className={styles["delete-modal-text"]}>
-        Are you sure you want to delete this post?
-      </div>
-      <div className={styles["delete-modal-actions"]}>
-        <button
-          className={styles["confirm-delete-btn"]}
-          onClick={() => {
-            // TODO: реалізуй реальне видалення через API тут
-            console.log("Post deleted (stub)");
-            setIsDeleteModalOpen(false);
-          }}
-        >
-          Yes, delete
-        </button>
-        <button
-          className={styles["cancel-delete-btn"]}
+      {isDeleteModalOpen && (
+        <div
+          className={styles["delete-modal-overlay"]}
           onClick={() => setIsDeleteModalOpen(false)}
         >
-          Cancel
-        </button>
-      </div>
-    </div>
-  </div>
-)}
+          <div
+            className={styles["delete-modal-content"]}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className={styles["delete-modal-text"]}>
+              Are you sure you want to delete this post?
+            </div>
+            <div className={styles["delete-modal-actions"]}>
+              <button
+                className={styles["confirm-delete-btn"]}
+                onClick={() => {
+                  // TODO: реалізуй реальне видалення через API тут
+                  console.log("Post deleted (stub)");
+                  setIsDeleteModalOpen(false);
+                }}
+              >
+                Yes, delete
+              </button>
+              <button
+                className={styles["cancel-delete-btn"]}
+                onClick={() => setIsDeleteModalOpen(false)}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {pomhIsModalOpen && (
         <div className={styles["pomh-modal-overlay"]} onClick={closePomhModal}>

@@ -161,15 +161,17 @@ export default function MiddleItem({
           </div>
           <div className={styles["recommended-artist"]}>
             <div
-              className={`${styles["recommended-text1"]} ${activeTab === "recommended" ? styles.activeTab : ""
-                }`}
+              className={`${styles["recommended-text1"]} ${
+                activeTab === "recommended" ? styles.activeTab : ""
+              }`}
               onClick={() => setActiveTab("recommended")}
             >
               Recommended for you
             </div>
             <div
-              className={`${styles["artist-text"]} ${activeTab === "artist" ? styles.activeTab : ""
-                }`}
+              className={`${styles["artist-text"]} ${
+                activeTab === "artist" ? styles.activeTab : ""
+              }`}
               onClick={() => setActiveTab("artist")}
             >
               Artist
@@ -221,18 +223,21 @@ export default function MiddleItem({
                     Play
                   </button>
 
-                  <FollowingButton
-                    userToFollow={currentArtist?.user}
-                    styles={styles["pf-follow"]}
-                  />
+                  {currentArtist?.user.id !== user.sub && (
+                    <FollowingButton
+                      userToFollow={currentArtist?.user}
+                      styles={styles["pf-follow"]}
+                    />
+                  )}
                 </div>
               </div>
             </div>
 
             <div className={styles["recommended-text"]}>
               <div
-                className={`${styles["rec-songs"]} ${activeArtistTab === "songs" ? styles.activeTab1 : ""
-                  }`}
+                className={`${styles["rec-songs"]} ${
+                  activeArtistTab === "songs" ? styles.activeTab1 : ""
+                }`}
                 onClick={() => setActiveArtistTab("songs")}
               >
                 {/*    Play
@@ -241,8 +246,9 @@ export default function MiddleItem({
                 Songs
               </div>
               <div
-                className={`${styles["rec-album"]} ${activeArtistTab === "albums" ? styles.activeTab1 : ""
-                  }`}
+                className={`${styles["rec-album"]} ${
+                  activeArtistTab === "albums" ? styles.activeTab1 : ""
+                }`}
                 onClick={() => setActiveArtistTab("albums")}
               >
                 Albums
@@ -282,18 +288,14 @@ export default function MiddleItem({
             {activeArtistTab === "albums" && (
               <div className={styles["albums-container"]}>
                 <div className={styles["albums-array"]}>
-
                   {albums.map((item, index) => (
-                        <AlbumItem
-                          album={item}
-                          idx={index}
-                          onClickFunck={() => setCurrentAlbum(item)}
-                          variant="special" // або пропусти цей пропс, щоб отримати базовий стиль
-                        />
-                      ))
-                    }
-
-                  
+                    <AlbumItem
+                      album={item}
+                      idx={index}
+                      onClickFunck={() => setCurrentAlbum(item)}
+                      variant="special" // або пропусти цей пропс, щоб отримати базовий стиль
+                    />
+                  ))}
                 </div>
 
                 <div className={styles["albums-array-songs"]}>

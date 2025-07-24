@@ -489,8 +489,10 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useAPI } from "../../hooks/useApi";
 import NewPost from "./NewPost";
 import { isStoryLiked, formatPostDate } from "../../js/functions/functions";
+import { useNavigate } from "react-router-dom";
 
 const Stories = () => {
+  const navigate = useNavigate();
   const scrollRef = useRef(null);
   const [canScroll, setCanScroll] = useState({ left: false, right: false });
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -943,12 +945,39 @@ const Stories = () => {
             <div className={styles["storie-bottom"]}>
               <div className={styles["avatar-author"]}>
                 {/* <div className={styles["storie-avatar"]}></div> */}
-                <img
-                className={styles["storie-avatar"]}
-                  src={currentStoryGroup[currentStoryIndex].user.avatarImgUrl}
-                />
+
+                <div
+                  onClick={() => {
+                    if (
+                      currentStoryGroup[currentStoryIndex].user.id === user.sub
+                    ) {
+                      navigate(`/my-profile`);
+                    } else
+                      navigate(
+                        `/user-profile/${currentStoryGroup[currentStoryIndex].user.id}`
+                      );
+                  }}
+                >
+                  <img
+                    className={styles["storie-avatar"]}
+                    src={currentStoryGroup[currentStoryIndex].user.avatarImgUrl}
+                  />
+                </div>
                 <div className={styles["author-data"]}>
-                  <div className={styles["storie-author"]}>
+                  <div
+                    className={styles["storie-author"]}
+                    onClick={() => {
+                      if (
+                        currentStoryGroup[currentStoryIndex].user.id ===
+                        user.sub
+                      ) {
+                        navigate(`/my-profile`);
+                      } else
+                        navigate(
+                          `/user-profile/${currentStoryGroup[currentStoryIndex].user.id}`
+                        );
+                    }}
+                  >
                     {currentStoryGroup[currentStoryIndex].user.username}
                   </div>
 
@@ -958,6 +987,7 @@ const Stories = () => {
                     )}
                   </div>
                 </div>
+
                 <div className={styles["like-delete"]}>
                   <div className={styles["storie-wrap"]}>
                     <button
