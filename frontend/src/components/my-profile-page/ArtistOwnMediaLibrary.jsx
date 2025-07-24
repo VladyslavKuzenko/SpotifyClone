@@ -142,6 +142,7 @@ const ArtistOwnMediaLibrary = ({
       <WatchAlbum
         isOpen={showWatchAlbum}
         onClose={() => setShowWatchAlbum(false)}
+        album={selectedAlbum}
       ></WatchAlbum>
     </div>
   );

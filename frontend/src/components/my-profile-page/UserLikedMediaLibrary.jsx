@@ -132,6 +132,7 @@ const UserLikedMediaLibrary = ({ userToShowProfile }) => {
       <WatchAlbum
         isOpen={showWatchAlbum}
         onClose={() => setShowWatchAlbum(false)}
+        album={selectedAlbum}
       ></WatchAlbum>
     </div>
   );
