@@ -69,9 +69,6 @@ const UserProfile = () => {
             )}
           </div>
 
-          {/* <div className={styles["profile-photo"]}>
-            <div className={styles.status}></div>
-          </div> */}
           <img
             src={userFullInfo.avatarImgUrl}
             className={styles["profile-photo"]}
@@ -107,19 +104,17 @@ const UserProfile = () => {
             <div className={styles["song-array"]}></div>
           </div>
         </div> */}
-<div className={styles["functional-container1"]}></div>
-       {userFullInfo.isArtist ? (
-  <ArtistOwnMediaLibrary user={userFullInfo}/>
-) : (
-  <UserLikedMediaLibrary user={userFullInfo} />
-)}
-
-
+        <div className={styles["functional-container1"]}></div>
+        {userFullInfo.isArtist ? (
+          <ArtistOwnMediaLibrary user={userFullInfo} />
+        ) : (
+          <UserLikedMediaLibrary user={userFullInfo} />
+        )}
 
         <div className={styles["bottom-place"]}>
           <div className={styles["posts-place"]}>
             <div className={styles["posts-text"]}>Posts</div>
-              <Posts selectedTab="user" userId={userId} />
+            <Posts selectedTab="user" userId={userId} />
           </div>
           <div className={styles["groups-place"]}>
             <div className={styles["groups-text"]}>Groups</div>
