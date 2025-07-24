@@ -11,7 +11,7 @@ const SearchModal = ({
   searchParams,
 }) => {
   const peopleRef = useRef(null);
-  const { apiFetch } = useAPI();
+  const { apiFetch, user } = useAPI();
   const [usersOriginalList, setUsersOriginalList] = useState([]);
   const [usersFilteredList, setUsersFilteredList] = useState([]);
   const [songsOriginalList, setSongsOriginalList] = useState([]);
@@ -128,21 +128,25 @@ const SearchModal = ({
 
               <div className={styles["people-array"]} ref={peopleRef}>
                 {usersFilteredList.map((item, index) => (
-                  <div key={index} className={styles["people-icon"]}>
-                    <div className={styles["people-photo"]}>
-                      <img
-                        src={item.avatarImgUrl}
-                        className={styles["preview-image"]}
-                        alt=""
-                      />
-                    </div>
-                    <div className={styles["name-surname"]}>
-                      {item.firstName} {item.lastName}
-                    </div>
-                    <div className={styles["people-nickname"]}>
-                      {item.username}
-                    </div>
-                  </div>
+                  <>
+                    {user.sub !== item.id && (
+                      <div key={index} className={styles["people-icon"]}>
+                        <div className={styles["people-photo"]}>
+                          <img
+                            src={item.avatarImgUrl}
+                            className={styles["preview-image"]}
+                            alt=""
+                          />
+                        </div>
+                        <div className={styles["name-surname"]}>
+                          {item.firstName} {item.lastName}
+                        </div>
+                        <div className={styles["people-nickname"]}>
+                          {item.username}
+                        </div>
+                      </div>
+                    )}
+                  </>
                 ))}
               </div>
 
@@ -170,7 +174,6 @@ const SearchModal = ({
                     }}
                     moreInfo
                   />
-                  
                 </>
               ))}
             </div>

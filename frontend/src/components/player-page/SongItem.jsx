@@ -210,8 +210,9 @@ const SongItem = ({
                   handleLikeClick();
                 }}
                 style={{
-                  backgroundImage: `url(${isLiked ? "/images/heartred.svg" : "/images/heart.svg"
-                    })`,
+                  backgroundImage: `url(${
+                    isLiked ? "/images/heartred.svg" : "/images/heart.svg"
+                  })`,
                   backgroundSize: "19px 19px",
                   backgroundRepeat: "no-repeat",
                   backgroundPosition: "center",
@@ -242,13 +243,12 @@ const SongItem = ({
                     <div
                       className={styles["dropdown-itemup1"]}
                       onClick={(e) => {
-                        e.stopPropagation(); 
-                        setIsAtpModalOpen((prev) => !prev); 
+                        e.stopPropagation();
+                        setIsAtpModalOpen((prev) => !prev);
                       }}
                     >
                       Add to playlist
                     </div>
-
 
                     {isAtpModalOpen && (
                       <div className={styles["atp-modal"]}>
@@ -257,33 +257,31 @@ const SongItem = ({
                             key={index}
                             className={styles["atp-item"]}
                             onClick={(e) => {
-                              e.stopPropagation();  
+                              e.stopPropagation();
                               handleAddToPlaylistClick(item);
-                              setIsMenuOpen(false);  
-                              setIsAtpModalOpen(false); 
+                              setIsMenuOpen(false);
+                              setIsAtpModalOpen(false);
                             }}
                           >
                             {item.title}
                           </div>
                         ))}
-
-
                       </div>
                     )}
-
                   </div>
 
                   <button
                     className={styles["dropdown-item"]}
                     onClick={(e) => {
                       e.stopPropagation();
-                      navigate(`/user-profile/${song.artist.user.id}`);
+                      if (song.artist.user.id === user.sub) {
+                        navigate(`/my-profile`);
+                      } else navigate(`/user-profile/${song.artist.user.id}`);
                       setIsMenuOpen(false);
                     }}
                   >
                     Go to artist
                   </button>
-
 
                   {currentPlaylist && (
                     <button
