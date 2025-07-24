@@ -865,13 +865,7 @@ const Stories = () => {
                 display: "block",
               }}
             />
-           <div
-    className={styles["storiesbtn-plus"]}
-    onClick={(e) => {
-      e.stopPropagation(); // зупиняє клік, щоб не пішов до батьків
-      setIsPostModalOpen(true);
-    }}
-  ></div>
+            <div className={styles["storiesbtn-plus"]}></div>
           </div>
         </div>
 
@@ -922,7 +916,7 @@ const Stories = () => {
               )}
             </div>
 
-            {!(currentUserIndex === -1 && currentStoryIndex === 0) && (
+            {(currentStoryIndex > 0 || currentUserIndex > 0 || userHasStoriesBefore()) && (
               <button
                 className={styles["psb-modal-prev-button"]}
                 onClick={goToPrevStory}
