@@ -692,10 +692,8 @@ const Stories = () => {
     .map((storyGroup) => storyGroup[0])
     .filter((story) => story.user?.id !== user?.sub); // ← виключаємо себе
 
-
   const myStories = groupedStories[user?.sub];
   const hasMyStories = myStories && myStories.length > 0;
-
 
   //______________________________________________________________________________
 
@@ -874,7 +872,6 @@ const Stories = () => {
           </div>
         </div>
 
-
         {uniqueUsers.map((story, index) => (
           <div
             key={story.id || story.mediaUrl}
@@ -893,7 +890,7 @@ const Stories = () => {
               <div className={styles["stories-inner"]}>
                 <img
                   className={styles["preview-image"]}
-                  src={story.user.avatarImgUrl}
+                  src={story.user?.avatarImgUrl}
                 />
               </div>
             </div>
@@ -928,7 +925,6 @@ const Stories = () => {
               ></button>
             )}
 
-
             <div className={styles["sts-modal-content"]}>
               <img
                 className={styles["preview-image"]}
@@ -938,16 +934,19 @@ const Stories = () => {
 
             {(currentStoryIndex < currentStoryGroup.length - 1 ||
               currentUserIndex < uniqueUsers.length - 1) && (
-                <button
-                  className={styles["psb-modal-next-button"]}
-                  onClick={goToNextStory}
-                ></button>
-              )}
+              <button
+                className={styles["psb-modal-next-button"]}
+                onClick={goToNextStory}
+              ></button>
+            )}
 
             <div className={styles["storie-bottom"]}>
               <div className={styles["avatar-author"]}>
-                <div className={styles["storie-avatar"]}></div>
-
+                {/* <div className={styles["storie-avatar"]}></div> */}
+                <img
+                className={styles["storie-avatar"]}
+                  src={currentStoryGroup[currentStoryIndex].user.avatarImgUrl}
+                />
                 <div className={styles["author-data"]}>
                   <div className={styles["storie-author"]}>
                     {currentStoryGroup[currentStoryIndex].user.username}
@@ -968,10 +967,11 @@ const Stories = () => {
                       }
                     >
                       <img
-                        src={`/images/${currentStoryGroup[currentStoryIndex]?.isLiked
-                          ? "heartred"
-                          : "heart"
-                          }.svg`}
+                        src={`/images/${
+                          currentStoryGroup[currentStoryIndex]?.isLiked
+                            ? "heartred"
+                            : "heart"
+                        }.svg`}
                         alt="like"
                       />
                     </button>
@@ -981,11 +981,11 @@ const Stories = () => {
                   </div>
                   {currentStoryGroup[currentStoryIndex]?.user.id ===
                     user?.sub && (
-                      <button
-                        className={styles["delete-stories"]}
-                        onClick={openDeleteConfirmModal}
-                      ></button>
-                    )}
+                    <button
+                      className={styles["delete-stories"]}
+                      onClick={openDeleteConfirmModal}
+                    ></button>
+                  )}
                 </div>
 
                 {/* <div className={styles["storie-like"]} onClick={()=>submiteUserLike(currentStoryGroup[currentStoryIndex])}>{currentStoryGroup[currentStoryIndex].isLiked}+{currentStoryGroup[currentStoryIndex].likesCount}</div> */}

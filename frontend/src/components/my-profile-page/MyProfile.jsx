@@ -95,7 +95,7 @@ const MyProfile = ({ profileInfo }) => {
     return <div>Loading...</div>;
   }
 
-  const isArtist = true; //перевірка чи артист
+  // const isArtist = true; //перевірка чи артист
 
   return (
     <div className={styles.container}>
@@ -128,13 +128,13 @@ const MyProfile = ({ profileInfo }) => {
             className={styles["ff-followers"]}
             onClick={() => openModal("followers")}
           >
-            {userFullInfo?.followersCount} followers
+            {userFullInfo?.followers?.length} followers
           </div>
           <div
             className={styles["ff-follows"]}
             onClick={() => openModal("follows")}
           >
-            {userFullInfo.followingsCount} followings
+            {userFullInfo?.followings?.length} followings
           </div>
         </div>
 
@@ -148,7 +148,7 @@ const MyProfile = ({ profileInfo }) => {
           />
         )}
 
-        {isArtist ? ( //перевірка артист
+        {userFullInfo.isArtist ? ( //перевірка артист
           <div>
             {/* Вкладки */}
             <div className={styles["tabs-container"]}>
@@ -180,7 +180,7 @@ const MyProfile = ({ profileInfo }) => {
             <div className={styles["tab-content"]}>
               {activeTab1 === "profile" && <UserLikedMediaLibrary user={userFullInfo} />}
 
-              {activeTab1 === "artistTools" && <ArtistOwnMediaLibrary />}
+              {activeTab1 === "artistTools" && <ArtistOwnMediaLibrary user={userFullInfo} isAddButtonsAvaliable/>}
             </div>
           </div>
         ) : (

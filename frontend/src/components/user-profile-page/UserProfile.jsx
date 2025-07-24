@@ -45,7 +45,7 @@ const UserProfile = () => {
     const data = await respose.json();
     setUserFullInfo(data);
   };
-  const isArtist = false; //перевіка
+  // const isArtist = true; //перевіка
 
   return (
     <div className={styles.container}>
@@ -65,7 +65,6 @@ const UserProfile = () => {
             {menuOpen && (
               <div className={styles["dropdown-menu"]}>
                 <button className={styles["dropdown-item"]}>Share</button>
-                
               </div>
             )}
           </div>
@@ -94,15 +93,23 @@ const UserProfile = () => {
             <button className={styles["message-btn"]}>Message</button>
           </div>
         </div>
-
+        {/* 
+        <div className={styles["functional-container1"]}>
+          <div className={styles["saved-album-container"]}>
+            <div className={styles["saved-album-text"]}>Saved Albums</div>
+            <div className={styles["album-array"]}></div>
+          </div>
+          <div className={styles["saved-songs-container"]}>
+            <div className={styles["saved-songs-text"]}>Saved Songs</div>
+            <div className={styles["song-array"]}></div>
+          </div>
+        </div> */}
         <div className={styles["functional-container1"]}></div>
-        {isArtist ? (
+        {userFullInfo.isArtist ? (
           <ArtistOwnMediaLibrary user={userFullInfo} />
         ) : (
           <UserLikedMediaLibrary user={userFullInfo} />
         )}
-
-
 
         <div className={styles["bottom-place"]}>
           <div className={styles["posts-place"]}>
