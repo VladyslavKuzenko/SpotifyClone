@@ -97,9 +97,16 @@ export default function AudioControl({ footerPlayer, isHovered }) {
                 onClick={nextSong}
               ></button>
               <button
-                className={`${stylesPlayer["bmr-btn"]} ${styles["btn5"]}`}
-                onClick={loopTrack}
-              ></button>
+  className={`
+    ${stylesPlayer["bmr-btn"]}
+    ${styles["btn5"]}
+    ${isLoop ? styles["reverse-active"] : ""}
+  `}
+  onClick={loopTrack}
+></button>
+
+
+    
             </div>
 
             <div className={stylesPlayer["bmr-progress"]}>

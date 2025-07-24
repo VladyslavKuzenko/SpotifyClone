@@ -163,7 +163,7 @@ const YourLibrary = ({ isPlaylistsChangesControl, isLikesPageControl }) => {
                 placeholder="Search"
               />
             </div>
-            <div className={styles["sr-recent"]}>
+            {/* <div className={styles["sr-recent"]}>
               <Select
                 classNamePrefix="sr-select"
                 value={options.find((opt) => opt.value === sortType)}
@@ -175,7 +175,7 @@ const YourLibrary = ({ isPlaylistsChangesControl, isLikesPageControl }) => {
                 isSearchable={false}
                 placeholder="Select sort type"
               />
-            </div>
+            </div> */}
           </div>
 
           {/* Songs */}

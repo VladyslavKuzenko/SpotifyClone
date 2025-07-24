@@ -33,7 +33,6 @@ const LeftSide = () => {
         <img
           className={styles.avatarka}
           src={userFullInfo?.avatarImgUrl}
-          alt="!!!!!!!!"
           onClick={() => navigate("/my-profile")}
         />
       </div>
