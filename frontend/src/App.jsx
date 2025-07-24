@@ -17,7 +17,7 @@ import LeftSide from "./components/main-components/LeftSide";
 
 function App() {
   const location = useLocation();
-  const hiddenLeftSideRoutes = ["/chat"];
+  const hiddenLeftSideRoutes = ["/chat", "/profileSetup"];
   const shouldHideLeftSide = hiddenLeftSideRoutes.includes(location.pathname);
   return (
     <>
