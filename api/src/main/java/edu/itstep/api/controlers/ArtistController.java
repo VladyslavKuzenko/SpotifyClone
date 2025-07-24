@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/artists")
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
 public class ArtistController {
     @Autowired
     private ArtistService artistService;

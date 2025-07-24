@@ -23,6 +23,9 @@ public class Album {
     @OneToMany(mappedBy = "album")
     @JsonIgnore
     private Set<Track> tracks;
+    @ManyToMany(mappedBy = "savedAlbums")
+    @JsonIgnore
+    private Set<User> savedBy;
 
     public Album() {
     }
@@ -73,6 +76,14 @@ public class Album {
 
     public void setTracks(Set<Track> tracks) {
         this.tracks = tracks;
+    }
+
+    public Set<User> getSavedBy() {
+        return savedBy;
+    }
+
+    public void setSavedBy(Set<User> savedBy) {
+        this.savedBy = savedBy;
     }
 }
 

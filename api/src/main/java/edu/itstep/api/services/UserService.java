@@ -1,8 +1,10 @@
 package edu.itstep.api.services;
 
+import edu.itstep.api.models.Album;
 import edu.itstep.api.models.Post;
 import edu.itstep.api.models.Story;
 import edu.itstep.api.models.User;
+import edu.itstep.api.repositories.AlbumRepository;
 import edu.itstep.api.repositories.PostRepository;
 import edu.itstep.api.repositories.StoryRepository;
 import edu.itstep.api.repositories.UserRepository;
@@ -24,6 +26,9 @@ public class UserService {
     private PostRepository postRepository;
     @Autowired
     private StoryRepository storyRepository;
+    @Autowired
+    private AlbumRepository albumRepository;
+
     public User updateUser(String id, User updatedUser) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -152,4 +157,29 @@ public class UserService {
         return user.getLikedStory().contains(story);
     }
 
+    public User addAlbumSavedBy(Long album_id, String user_id) {
+        User user = userRepository.findById(user_id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        Album album = albumRepository.findById(album_id)
+                .orElseThrow(() -> new RuntimeException("Album not found"));
+
+        user.getSavedAlbums().add(album);
+        album.getSavedBy().add(user);
+
+        albumRepository.save(album);
+        return userRepository.save(user);
+    }
+
+    public User deleteAlbumSavedBy(Long album_id, String user_id) {
+        User user = userRepository.findById(user_id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        Album album = albumRepository.findById(album_id)
+                .orElseThrow(() -> new RuntimeException("Album not found"));
+
+        user.getSavedAlbums().remove(album);
+        album.getSavedBy().remove(user);
+
+        albumRepository.save(album);
+        return userRepository.save(user);
+    }
 }

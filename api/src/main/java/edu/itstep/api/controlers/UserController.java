@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/users")
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
     @Autowired
     private final UserRepository userRepository;
@@ -135,6 +135,12 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
+    @PostMapping("/savedAlbum/{album_id}/{user_id}")
+    public ResponseEntity<User> addAlbumSavedBy(@PathVariable Long album_id, @PathVariable String user_id) throws URISyntaxException {
+        User user = userService.addAlbumSavedBy(album_id, user_id);
+        return ResponseEntity.ok(user);
+    }
+
     @PostMapping("/avatar/upload/{userId}")
     public String handleFileUpload(@RequestParam("file") MultipartFile file, @PathVariable String userId) {
         return postService.postFileToVM(file, "avatar" + userId);
@@ -160,6 +166,11 @@ public class UserController {
     @DeleteMapping("/story-like/{story_id}/{user_id}")
     public ResponseEntity<User> deleteStoryLike(@PathVariable Long story_id, @PathVariable String user_id) throws URISyntaxException {
         User user = userService.deleteStoryLike(story_id, user_id);
+        return ResponseEntity.ok(user);
+    }
+    @DeleteMapping("/savedAlbum/{album_id}/{user_id}")
+    public ResponseEntity<User> deleteAlbumSavedBy(@PathVariable Long album_id, @PathVariable String user_id) throws URISyntaxException {
+        User user = userService.deleteAlbumSavedBy(album_id, user_id);
         return ResponseEntity.ok(user);
     }
 

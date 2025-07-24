@@ -24,7 +24,7 @@ import java.util.LinkedHashSet;
 
 @RestController
 @RequestMapping("/messages")
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
 public class MessageController {
 
     private final MessageRepository messageRepository;

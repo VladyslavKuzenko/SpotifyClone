@@ -25,7 +25,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/tracks")
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
 public class TrackController {
     private static final Logger logger = LoggerFactory.getLogger(TrackController.class);
 

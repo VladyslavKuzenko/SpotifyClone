@@ -13,7 +13,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/albums")
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
 public class AlbumController {
     private final AlbumRepository albumRepository;
     private final AlbumService albumService;
