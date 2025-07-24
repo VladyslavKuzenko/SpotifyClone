@@ -89,7 +89,6 @@ const Main = () => {
                 setSearchParams(e.target.value);
               }}
               value={searchParams}
-              // type="search"
               placeholder="Search"
               className={styles.search}
               onFocus={() => setIsSearchModalOpen(true)}

@@ -166,16 +166,16 @@ const MyProfile = ({ profileInfo }) => {
         <div className={styles["about-artist-platform"]}>
           <div className={styles["aap-left"]}>
             <div className={styles["aap-text"]}>About artist</div>
-            <img className={styles["aap-photo"]} src={userFullInfo?.artist?.aboutImgUrl}/>
+            <img className={styles["aap-photo"]} src={userFullInfo?.artist?.aboutImgUrl} />
           </div>
           <div className={styles["aap-right"]}>
             <div className={styles["aap-information"]}>
-            {userFullInfo?.artist?.aboutArtist}
+              {userFullInfo?.artist?.aboutArtist}
             </div>
             <div className={styles["aap-socials"]}>
               <a className={styles["facebook"]} href={userFullInfo?.artist?.facebookLink}></a>
-              <a className={styles["instagram"]}href={userFullInfo?.artist?.instagramLink}></a>
-              <a className={styles["twitter"]}href={userFullInfo?.artist?.twitterLink}></a>
+              <a className={styles["instagram"]} href={userFullInfo?.artist?.instagramLink}></a>
+              <a className={styles["twitter"]} href={userFullInfo?.artist?.twitterLink}></a>
             </div>
 
             <button
@@ -191,8 +191,8 @@ const MyProfile = ({ profileInfo }) => {
           <div className={styles["posts-place"]}>
             <div className={styles["posts-text"]}>Posts</div>
             <div className={styles["posts-array"]}>
-            <Posts selectedTab="user" userId={user?.sub} />
-              </div> 
+              <Posts selectedTab="user" userId={user?.sub} isProfilePage={true} />
+            </div>
           </div>
           <div className={styles["groups-place"]}>
             <div className={styles["groups-text"]}>Groups</div>

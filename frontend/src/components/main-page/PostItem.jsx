@@ -3,7 +3,7 @@ import styles from "./main.module.css";
 import { useAPI } from "../../hooks/useApi";
 import CommentItem from "./CommentItem";
 import { formatPostDate, isPostLikedFunc } from "../../js/functions/functions";
-export default function PostItem({ post }) {
+export default function PostItem({ post, isProfilePage = false }) {
   const [isPostLiked, setIsPostLiked] = useState();
   const { user, apiFetch } = useAPI();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -16,6 +16,7 @@ export default function PostItem({ post }) {
   const [isDiscussionOpen, setIsDiscussionOpen] = useState(false);
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const openDiscussion = () => setIsDiscussionOpen(true);
   const closeDiscussion = () => setIsDiscussionOpen(false);
@@ -200,8 +201,8 @@ export default function PostItem({ post }) {
                       <span
                         key={index}
                         className={`${styles["prl-dot"]} ${index === currentImageIndex
-                            ? styles["prl-active"]
-                            : ""
+                          ? styles["prl-active"]
+                          : ""
                           }`}
                       ></span>
                     ))}
@@ -218,44 +219,54 @@ export default function PostItem({ post }) {
             )}
           </div>
         </div>
+        <div className={styles["location-deletepost"]}>
 
-        {post.location && post.location.trim() !== "" && (
-          <div className={styles["post-location"]}>
-            <div className={styles["location-icon"]}></div>
-            <div className={styles["location-place"]}>{post.location}</div>
-          </div>
-        )}
 
-        {/*} <div className={styles["post-comment"]}>
-          <textarea
-            className={styles["send-comment"]}
-            placeholder="Write a comment..."
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            rows={1}
-            onInput={(e) => {
-              const target = e.target;
-              target.style.height = "auto";
-              target.style.height = Math.min(target.scrollHeight, 100) + "px";
-            }}
-            onBlur={(e) => {
-              const target = e.target;
-              if (target.value.trim() === "") {
-                target.style.height = "31px";
-              }
-            }}
-          />
-          <div className={styles["post-comment-btn"]}>
-            <button className={styles["publish-btn"]} onClick={submiteComment}>
-              Publish
-            </button>
-          </div>
-        </div>*/}
+          {post.location && post.location.trim() !== "" && (
+            <div className={styles["post-location"]}>
+              <div className={styles["location-icon"]}></div>
+              <div className={styles["location-place"]}>{post.location}</div>
+            </div>
+          )}
+          {isProfilePage && (
+            <button
+              className={styles["dummy-button"]}
+              onClick={() => setIsDeleteModalOpen(true)}
+            ></button>
+          )}
 
-        {/*<div className={styles["see-coments"]} onClick={openDiscussion}>
-          View discussion (12)
-        </div>*/}
+        </div>
       </div>
+{isDeleteModalOpen && (
+  <div className={styles["delete-modal-overlay"]} onClick={() => setIsDeleteModalOpen(false)}>
+    <div
+      className={styles["delete-modal-content"]}
+      onClick={(e) => e.stopPropagation()}
+    >
+      <div className={styles["delete-modal-text"]}>
+        Are you sure you want to delete this post?
+      </div>
+      <div className={styles["delete-modal-actions"]}>
+        <button
+          className={styles["confirm-delete-btn"]}
+          onClick={() => {
+            // TODO: реалізуй реальне видалення через API тут
+            console.log("Post deleted (stub)");
+            setIsDeleteModalOpen(false);
+          }}
+        >
+          Yes, delete
+        </button>
+        <button
+          className={styles["cancel-delete-btn"]}
+          onClick={() => setIsDeleteModalOpen(false)}
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+)}
 
       {pomhIsModalOpen && (
         <div className={styles["pomh-modal-overlay"]} onClick={closePomhModal}>

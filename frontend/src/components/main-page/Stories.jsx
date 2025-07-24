@@ -311,7 +311,6 @@ const Stories = () => {
           >
             <img
               src={userFullInfo?.avatarImgUrl}
-              alt="Story"
               className={styles["preview-image-btn"]}
               style={{
                 width: "100%",
@@ -347,7 +346,6 @@ const Stories = () => {
                 <img
                   className={styles["preview-image"]}
                   src={story.user.avatarImgUrl}
-                  alt="Story"
                 />
               </div>
             </div>
@@ -386,7 +384,6 @@ const Stories = () => {
               <img
                 className={styles["preview-image"]}
                 src={currentStoryGroup[currentStoryIndex].mediaUrl}
-                alt="Story"
               />
             </div>
 

@@ -406,17 +406,17 @@
     aspect-ratio: 1 / 1;
     border-radius: 15px;
     overflow: hidden;
-    background-color: rgb(95, 93, 93);
     position: relative;
     transition: transform 0.3s ease;
 }
 
 .album-wrapper-special {
-  width: 235px;
-  height: 235px;
-  border-radius: 15px;
-  flex-shrink: 0;
+    width: 235px;
+    height: 235px;
+    border-radius: 15px;
+    flex-shrink: 0;
 }
+
 .it-container {
     margin-top: 8px;
     box-sizing: border-box;
@@ -462,7 +462,6 @@
 .song-photo {
     width: 66px;
     height: 66px;
-    background-color: #DBDBDB;
     border-radius: 5px;
 
 }
@@ -1119,7 +1118,6 @@
     width: 270px;
     height: 270px;
     border-radius: 10px;
-    background-color: white;
 }
 
 .aap-information {
@@ -1278,7 +1276,6 @@
     height: 137px;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
-    background-color: rgb(29, 29, 29);
     cursor: pointer;
 }
 
@@ -1403,3 +1400,4 @@
     display: flex;
     width: 100%;
 }
+
