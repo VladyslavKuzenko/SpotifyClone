@@ -492,9 +492,7 @@
   text-overflow: ellipsis;
 
   width: 100%;
-  /* ← обов’язково */
   display: block;
-  /* або inline-block */
 }
 
 .artist {
@@ -1194,7 +1192,7 @@
 }
 
 .btn0 {
-  background-image: url(/public/images/shuffle\ \(1\)\ 1.png);
+  background-image: url(/public/images/newshuffle.svg);
   background-size: 30px;
   background-repeat: no-repeat;
   background-position: center;
@@ -1687,4 +1685,11 @@
 .atp-item:hover {
   background-color: #dbd9d9;
 
+}
+
+.random-active {
+  background-image: url(/public/images/shuffleorange.svg);
+    background-size: 30px;
+  background-repeat: no-repeat;
+  background-position: center;
 }
