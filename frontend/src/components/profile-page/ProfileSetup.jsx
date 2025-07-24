@@ -24,6 +24,7 @@ export default function ProfileSetup() {
   const profileOptions = ["Artist", "Listener"];
   const [profilePictureFile, setProfilePictureFile] = useState(null);
   const profilePictureInputRef = useRef(null);
+  const [isConfirmed, setIsConfirmed] = useState(false);
 
   const fetchCountries = async () => {
     const response = await apiFetchWithoutAutorization("/countries");
@@ -59,13 +60,16 @@ export default function ProfileSetup() {
     };
   }, []);
 
-  const navigate = useNavigate();
-
   if (isLoading) {
     return <div>Loading...</div>;
   }
+
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
+  }
+
+  if (isConfirmed) {
+    return <Navigate to="/main" replace />;
   }
 
   function selectProfileOption(option) {
@@ -147,8 +151,22 @@ export default function ProfileSetup() {
       },
       body: JSON.stringify(resultPlaylist),
     });
-    console.log("Ready");
-    navigate("/main", { replace: true });
+
+    if (isUserArtist) {
+      const resultArtist = {
+        id: user.sub,
+      };
+
+      await apiFetch("/artists", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(resultArtist),
+      });
+    }
+
+    setIsConfirmed(true);
   }
 
 

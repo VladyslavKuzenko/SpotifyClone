@@ -1,7 +1,9 @@
 package edu.itstep.api.controlers;
 
 import edu.itstep.api.models.Artist;
+import edu.itstep.api.models.User;
 import edu.itstep.api.repositories.ArtistRepository;
+import edu.itstep.api.repositories.UserRepository;
 import edu.itstep.api.services.ArtistService;
 import edu.itstep.api.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/artists")
@@ -24,6 +27,8 @@ public class ArtistController {
     @Autowired
     private PostService postService;
     private final ArtistRepository artistRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     public ArtistController(ArtistRepository artistRepository) {this.artistRepository = artistRepository;}
 
@@ -55,6 +60,12 @@ public class ArtistController {
     }
     @PostMapping
     public ResponseEntity createArtist(@RequestBody Artist artist) throws URISyntaxException {
+        Optional<User> optionalUser = userRepository.findById(artist.getId());
+        if (optionalUser.isEmpty()) {
+            return ResponseEntity.badRequest().body("User with id " + artist.getId() + " not found");
+        }
+
+        artist.setUser(optionalUser.get());
         Artist savedArtist = artistRepository.save(artist);
         return ResponseEntity.created(new URI("/artists/" + savedArtist.getId())).body(savedArtist);
     }

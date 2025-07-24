@@ -24,10 +24,15 @@ ORDER BY TABLE_SCHEMA, TABLE_NAME, ORDINAL_POSITION;
 delete from users_genres where user_id = "auth0|687d672250e5ce653980abaf";
 delete from users_followings where follower_user_id = "auth0|687d672250e5ce653980abaf";
 delete from playlists where user_id = "auth0|687d672250e5ce653980abaf";
+delete from users_chats where user_id = "auth0|687d672250e5ce653980abaf";
+delete from messages where user_id = "auth0|687d672250e5ce653980abaf";
+delete from artists where id = "auth0|687d672250e5ce653980abaf";
 delete from users where id = "auth0|687d672250e5ce653980abaf";
 
 select *
 from users;
+select *
+from artists;
 select *
 from users_chats;
 select *
@@ -258,6 +263,12 @@ VALUES (1, 'https://www.wheeler.com/', 'Song One', 1, 1),
        (2, NULL, 'Song Two', 2, 2);
 
 INSERT INTO chats (id, picture_url, is_private, title, update_time)
+VALUES (1, '', true, '', null);
+
+INSERT INTO chats (id, picture_url, is_private, title, update_time)
+VALUES (3, '', true, '', null);
+
+INSERT INTO chats (id, picture_url, is_private, title, update_time)
 VALUES (2, '', false, 'Planet destroyers online', null);
 
 INSERT INTO posts (id, comments_count, description, likes_count, media_json, media_type, reposts_count, title,
@@ -295,11 +306,11 @@ VALUES (1, 501),
 
 INSERT INTO users_chats (user_id, chat_id)
 VALUES ("auth0|68376fb27d4340d1988fac91", 1),
-       ("auth0|687d672250e5ce653980abaf", 1);
+       ("auth0|687f986fb0170176e20d3ac2", 1);
 
 INSERT INTO users_chats (user_id, chat_id)
-VALUES ("auth0|68376fb27d4340d1988fac91", 2),
-       ("auth0|687d672250e5ce653980abaf", 2);
+VALUES ("auth0|68376fb27d4340d1988fac91", 3),
+       ("auth0|687d672250e5ce653980abaf", 3);
 
 INSERT INTO users_chats (user_id, chat_id)
 VALUES ("auth0|68786d00fa9569c786c01278", 3),

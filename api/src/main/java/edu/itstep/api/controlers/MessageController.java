@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
@@ -74,7 +75,7 @@ public class MessageController {
         createdMessage.setContentJson(message.getContentJson());
         createdMessage.setChat(selectedChat);
         createdMessage.setUser(sender);
-        createdMessage.setSentDateTime(LocalDateTime.now());
+        createdMessage.setSentDateTime(LocalDateTime.from(Instant.now()));
 
         Message savedMessage = messageRepository.save(createdMessage);
         return ResponseEntity.created(new URI("/messages/" + savedMessage.getId()))
