@@ -21,9 +21,9 @@ root.render(
     <BrowserRouter>
       <APIProvider>
         <AudioProvider>
-          <UserInfoProvider>
+          {/* <UserInfoProvider> */}
             <App />
-          </UserInfoProvider>
+          {/* </UserInfoProvider> */}
         </AudioProvider>
       </APIProvider>
     </BrowserRouter>
