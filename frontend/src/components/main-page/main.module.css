@@ -1710,17 +1710,17 @@ html {
 }
 
 .prl-dot {
-  width: 6px;
-  height: 6px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
-  background-color: #ffffff;
+  background-color: #6B6B6F;
   margin: 0 4px;
 }
 
 .prl-active {
   background-color: #FF4400;
-  width: 8px;
-  height: 8px;
+  width: 11px;
+  height: 11px;
 }
 
 .preview-image-album {
@@ -2495,8 +2495,9 @@ html {
     transition: width 0.3s ease;
     scrollbar-width: none;
     overflow-x: hidden;
-  background-color: #06070A;
-border-top: 2px solid white;;
+    background-color: #06070A;
+    border-top: 2px solid white;
+    ;
   }
 
   .left-side:hover {
@@ -2796,13 +2797,13 @@ border-top: 2px solid white;;
     display: block;
   }
 
-.storie-upper,
+  .storie-upper,
   .storie-bottom,
   .sts-modal-content {
     width: 100%;
     padding: 0;
     margin: 0;
-    border:none;
+    border: none;
     border-radius: 0;
     box-shadow: none;
   }
@@ -2810,14 +2811,14 @@ border-top: 2px solid white;;
 
   .psb-modal-prev-button {
     background-image: url(/public/images/scroll-left.png);
-    top:85%;
-    left:5%;
+    top: 85%;
+    left: 5%;
   }
 
   .psb-modal-next-button {
     background-image: url(/public/images/scroll-right.png);
-    top:85%;
-    right:5%;
+    top: 85%;
+    right: 5%;
   }
 
   .discussion-modal {
@@ -2851,12 +2852,14 @@ border-top: 2px solid white;;
   .prl-slider-btn {
     background-color: rgb(0, 0, 0, 0.3);
     background-size: 30%;
-    top:100%;
+    top: 100%;
   }
+
   .prl-left {
     position: absolute;
     left: 60px;
   }
+
   .prl-right {
     position: absolute;
     right: 60px;
