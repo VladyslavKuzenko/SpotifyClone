@@ -221,7 +221,6 @@ export default function ProfileSetup() {
 
 
 
-        <div className={styles["bottom-block"]}>
           <div className={styles.ocnt}>
             <div className={styles.b1}>
               {/* <div className={styles.text11}>Location</div>
@@ -336,7 +335,6 @@ export default function ProfileSetup() {
             </button>
           </div>
         </div>
-      </div>
     </div>
   );
 }

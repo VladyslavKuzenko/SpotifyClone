@@ -196,7 +196,7 @@
 
 .block-selected {
   background: #FF4400;
-  color:white
+  color: white
 }
 
 .cnt-btn {
@@ -335,4 +335,143 @@
 
 .dropdownItem:hover {
   background-color: #f0f0f0;
+}
+
+@media (min-width: 320px) and (max-width: 768px) {
+
+  .main-container {
+    width: 90%;
+    height: 90%;
+    background-color: transparent;
+  }
+
+  .bottom-block {
+    width: 100%;
+  }
+
+  .ocnt {
+    width: 100%;
+  }
+
+  .b1 {
+    width: 50%;
+  }
+
+  .location {
+    width: 90%;
+    box-sizing: border-box;
+    height: 38px;
+  }
+
+  .b2 {
+    width: 50%;
+    margin-top: 15px;
+
+  }
+
+  .dropdown {
+    width: 100%;
+
+box-sizing: border-box;
+    background-color: #1E1E1E;
+
+    display: flex;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+
+
+  }
+  .dropdown-toggle {
+        height: 38px;
+
+  }
+
+  .dropdown-options {
+    width: 100%;
+    display: flex;
+
+  }
+
+  .bio {
+    box-sizing: border-box;
+    height: 39px;
+  }
+
+  .cont-block {
+    height: auto;
+    overflow: auto;
+    scrollbar-width: thin;
+  }
+
+  .block {
+    width: 100%;
+    height: 33px;
+  }
+
+  .text1 {
+    font-family: Montserrat;
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 20px;
+    line-height: 100%;
+    letter-spacing: 0%;
+
+  }
+
+  .picture {
+    width: 76px;
+    height: 76px;
+  }
+
+  .change-picture,
+  .delete-picture {
+    width: 99px;
+    height: 37px;
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 12px;
+    line-height: 100%;
+    letter-spacing: 0%;
+
+  }
+
+  .container {
+    width: 213px;
+  }
+
+  .username {
+    font-family: Manrope;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 12px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    margin-right: 20px;
+
+  }
+
+  .user-name {
+    height: 38px;
+    width: 213px;
+    box-sizing: border-box;
+
+  }
+
+  .text11 {
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 12px;
+    line-height: 100%;
+    letter-spacing: 0%;
+
+  }
+
+  .customSelectWrapper {
+    margin-top: 15px;
+  }
+  .cnt-btn {
+    height: 39px;
+  }
 }
