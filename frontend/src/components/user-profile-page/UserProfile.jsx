@@ -126,7 +126,7 @@ const UserProfile = () => {
             <div className={styles["posts-text"]}>Posts</div>
             <Posts selectedTab="user" userId={userId} />
           </div>
-          <div className={styles["groups-place"]}>
+          {/* <div className={styles["groups-place"]}>
             <div className={styles["groups-text"]}>Groups</div>
             <div className={styles["groups-container"]}>
               {[...Array(12)].map((_, i) => (
@@ -141,7 +141,7 @@ const UserProfile = () => {
                 </div>
               ))}
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
