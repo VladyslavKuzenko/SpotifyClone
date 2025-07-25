@@ -206,135 +206,123 @@ export default function ProfileSetup() {
             Delete picture
           </button>
         </div>
-        <div className={styles.username}>Username</div>
-        <input
-          type="text"
-          id="user-name"
-          placeholder="@Name"
-          className={styles["user-name"]}
-          onChange={(e) => {
-            const filteredValue = e.target.value.replace(/[^a-zA-Z0-9_.]/g, "");
-            setUsername(filteredValue);
-          }}
-          value={username || ""}
-        />
-
-
-
-          <div className={styles.ocnt}>
-            <div className={styles.b1}>
-              {/* <div className={styles.text11}>Location</div>
-              <input
-                type="text"
-                id="location"
-                placeholder="City or Country"
-                className={styles.location}
-                list="genres"
-              />
-              
-              <datalist id="genres" >
-                {countries.map((country) => (
-                  <option key={country.id} value={country.name} />
-                ))}
-              </datalist> */}
-              <div className={styles.customSelectWrapper}>
-                <div className={styles.text11}>Location</div>
-
-               <input
-  type="text"
-  value={filter}
-  onChange={(e) => {
-    const filteredValue = e.target.value.replace(/[^a-zA-Z0-9_.]/g, "");
-    setFilter(filteredValue);
-    setShowCountries(true);
-  }}
-  onFocus={() => setShowCountries(true)}
-  placeholder="City or Country"
-  className={styles.location}
-/>
-
-                {showCountries && (
-                  <div className={styles.dropdownList} >
-                    {countries
-                      .filter((c) => c.name.toLowerCase().includes(filter.toLowerCase()))
-                      .map((country) => (
-                        <div
-                          key={country.id}
-                          className={styles.dropdownItem}
-                          onClick={() => {
-                            setFilter(country.name);
-                            setShowCountries(false);
-                          }}
-                        >
-                          {country.name}
-                        </div>
-                      ))}
-                  </div>
-                )}
-              </div>
-            </div>
-
-            <div className={styles.b2}>
-              <div className={styles.text11}>Profile View</div>
-              <div className={styles.dropdown} ref={dropdownRef}>
-                <div
-                  className={styles["dropdown-toggle"]}
-                  onClick={() => {
-                    setDropdownOpen(!dropdownOpen);
-                  }}
-                >
-                  <span className={styles.label}>{isUserArtist ? "Artist" : "Listener"}</span>
-                </div>
-                {dropdownOpen && (
-                  <div className={styles["dropdown-options"]}>
-                    {<div onClick={() => selectProfileOption(isUserArtist ? profileOptions[1] : profileOptions[0])}>
-                      {isUserArtist ? profileOptions[1] : profileOptions[0]}
-                    </div>}
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-
-          <div className={styles.text11}>Short Bio</div>
+        <div className={styles.usernamewrap}>
+          <div className={styles.username}>Username</div>
           <input
             type="text"
-            id="bio"
-            placeholder="Add a few words about your music taste..."
-            className={styles.bio}
+            id="user-name"
+            placeholder="@Name"
+            className={styles["user-name"]}
             onChange={(e) => {
-              setShortBio(e.target.value);
+              const filteredValue = e.target.value.replace(/[^a-zA-Z0-9_.]/g, "");
+              setUsername(filteredValue);
             }}
+            value={username || ""}
           />
+        </div>
 
-          <div className={styles.text11}>Select your favorite genres:</div>
-          <div className={styles["cont-block"]}>
-            <div className={styles.genres}>
-              {genres.map((genre) => (
-                <div
-                  key={genre.id}
-                  className={`${styles.block} ${isGenreSelected(genre) ? styles["block-selected"] : ""
-                    }`}
-                  onClick={() => {
-                    selectGenre(genre);
-                  }}
-                >
-                  {genre.title}
+
+        <div className={styles.ocnt}>
+          <div className={styles.b1}>
+
+            <div className={styles.customSelectWrapper}>
+              <div className={styles.text11}>Location</div>
+
+              <input
+                type="text"
+                value={filter}
+                onChange={(e) => {
+                  const filteredValue = e.target.value.replace(/[^a-zA-Z0-9_.]/g, "");
+                  setFilter(filteredValue);
+                  setShowCountries(true);
+                }}
+                onFocus={() => setShowCountries(true)}
+                placeholder="City or Country"
+                className={styles.location}
+              />
+
+              {showCountries && (
+                <div className={styles.dropdownList} >
+                  {countries
+                    .filter((c) => c.name.toLowerCase().includes(filter.toLowerCase()))
+                    .map((country) => (
+                      <div
+                        key={country.id}
+                        className={styles.dropdownItem}
+                        onClick={() => {
+                          setFilter(country.name);
+                          setShowCountries(false);
+                        }}
+                      >
+                        {country.name}
+                      </div>
+                    ))}
                 </div>
-              ))}
+              )}
             </div>
           </div>
-          <div className={styles.f}>
-            <button
-              className={styles["cnt-btn"]}
-              onClick={async () => {
-                await submitProfileSetup();
-              }}
-            >
-              Continue
-            </button>
+
+          <div className={styles.b2}>
+            <div className={styles.text11}>Profile View</div>
+            <div className={styles.dropdown} ref={dropdownRef}>
+              <div
+                className={styles["dropdown-toggle"]}
+                onClick={() => {
+                  setDropdownOpen(!dropdownOpen);
+                }}
+              >
+                <span className={styles.label}>{isUserArtist ? "Artist" : "Listener"}</span>
+              </div>
+              {dropdownOpen && (
+                <div className={styles["dropdown-options"]}>
+                  {<div onClick={() => selectProfileOption(isUserArtist ? profileOptions[1] : profileOptions[0])}>
+                    {isUserArtist ? profileOptions[1] : profileOptions[0]}
+                  </div>}
+                </div>
+              )}
+            </div>
           </div>
         </div>
+
+        <div className={styles.text12}  >Short Bio</div>
+        <input
+          type="text"
+          id="bio"
+          placeholder="Add a few words about your music taste..."
+          className={styles.bio}
+          onChange={(e) => {
+            setShortBio(e.target.value);
+          }}
+        />
+
+        <div className={styles.text12}>Select your favorite genres:</div>
+        <div className={styles["cont-block"]}>
+          <div className={styles.genres}>
+            {genres.map((genre) => (
+              <div
+                key={genre.id}
+                className={`${styles.block} ${isGenreSelected(genre) ? styles["block-selected"] : ""
+                  }`}
+                onClick={() => {
+                  selectGenre(genre);
+                }}
+              >
+                {genre.title}
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className={styles.f}>
+          <button
+            className={styles["cnt-btn"]}
+            onClick={async () => {
+              await submitProfileSetup();
+            }}
+          >
+            Continue
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
