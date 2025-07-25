@@ -4,6 +4,7 @@ import stylesProfileSetup from "../profile-page/profileSetup.module.css";
 import LeftSide from "../main-components/LeftSide";
 import { useNavigate } from "react-router-dom";
 import { useAPI } from "../../hooks/useApi";
+import styleSetup from "../profile-page/profileSetup.module.css"
 
 export default function EditProfile() {
   const navigate = useNavigate();
@@ -34,26 +35,20 @@ export default function EditProfile() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
   useEffect(() => {
-    function handleClickOutside(event) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setDropdownOpen(false);
-      }
-      if (
-        event.target.tagName.toLowerCase() === "button" ||
-        !event.target.closest(`.${styles.customSelectWrapper}`)
-      ) {
-        setShowCountries(false);
-      }
+  function handleClickOutside(event) {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setDropdownOpen(false);
     }
+   
+  }
 
-    document.addEventListener("click", handleClickOutside);
+  document.addEventListener("click", handleClickOutside);
+  fetchCountries();
 
-    fetchCountries();
-
-    return () => {
-      document.removeEventListener("click", handleClickOutside);
-    };
-  }, []);
+  return () => {
+    document.removeEventListener("click", handleClickOutside);
+  };
+}, []);
 
   const fetchCountries = async () => {
     const response = await apiFetchWithoutAutorization("/countries");
@@ -65,6 +60,22 @@ export default function EditProfile() {
     setDropdownOpen(false);
     setIsUserArtist(option === profileOptions[0] ? true : false);
   }
+const locationWrapperRef = useRef(null);
+
+useEffect(() => {
+  function handleClickOutside(event) {
+    if (
+      locationWrapperRef.current &&
+      !locationWrapperRef.current.contains(event.target)
+    ) {
+      setShowCountries(false);
+    }
+  }
+  document.addEventListener("click", handleClickOutside);
+  return () => {
+    document.removeEventListener("click", handleClickOutside);
+  };
+}, []);
 
   return (
     <div className={styles.container}>
@@ -205,7 +216,7 @@ export default function EditProfile() {
                   <option key={country.id} value={country.name} />
                 ))}
               </datalist> */}
-              <div className={styles.customSelectWrapper}>
+              <div className={styleSetup.customSelectWrapper} ref={locationWrapperRef}>
                 <div className={styles.text11}>Location</div>
 
                 <input
@@ -221,11 +232,11 @@ export default function EditProfile() {
                   }}
                   onFocus={() => setShowCountries(true)}
                   placeholder="City or Country"
-                  className={styles.location}
+                  className={styleSetup.location}
                 />
 
                 {showCountries && (
-                  <div className={styles.dropdownList}>
+                  <div className={styleSetup.dropdownList}>
                     {countries
                       .filter((c) =>
                         c.name.toLowerCase().includes(filter.toLowerCase())
@@ -233,7 +244,7 @@ export default function EditProfile() {
                       .map((country) => (
                         <div
                           key={country.id}
-                          className={styles.dropdownItem}
+                          className={styleSetup.dropdownItem}
                           onClick={() => {
                             setFilter(country.name);
                             setShowCountries(false);
