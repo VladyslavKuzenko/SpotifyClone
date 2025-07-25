@@ -38,6 +38,19 @@ public class UserService {
         return userRepository.save(user); // це оновлення
     }
 
+    public User updateUserEditProfile(String id, User updatedUser) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        // Оновлюємо лише потрібні поля
+        user.setUsername(updatedUser.getUsername());
+        user.setFirstName(updatedUser.getFirstName());
+        user.setLastName(updatedUser.getLastName());
+        user.setIsArtist(updatedUser.getIsArtist());
+        user.setCountry(updatedUser.getCountry());
+        return userRepository.save(user); // це оновлення
+    }
+
     public void addFollowing(String follower_id, String followed_id) {//follower- це я, бо на когось підписуюсь. followed - тей на кого підписуюсь
         User follower = userRepository.findById(follower_id)
                 .orElseThrow(() -> new RuntimeException("User not found"));

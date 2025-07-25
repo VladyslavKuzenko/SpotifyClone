@@ -1,9 +1,6 @@
 package edu.itstep.api.controlers;
 
-import edu.itstep.api.models.Album;
-import edu.itstep.api.models.Genre;
-import edu.itstep.api.models.Post;
-import edu.itstep.api.models.User;
+import edu.itstep.api.models.*;
 import edu.itstep.api.models.dto.UserCreationDTO;
 import edu.itstep.api.repositories.GenreRepository;
 import edu.itstep.api.repositories.UserRepository;
@@ -201,5 +198,9 @@ public class UserController {
 //        System.out.println(value);
 //        return value;
     }
-
+    @PutMapping("/{user_id}")
+    public ResponseEntity<User> updateUser(@PathVariable String user_id, @RequestBody User updatedUser) {
+        User user = userService.updateUserEditProfile(user_id, updatedUser);
+        return ResponseEntity.ok(user);
+    }
 }

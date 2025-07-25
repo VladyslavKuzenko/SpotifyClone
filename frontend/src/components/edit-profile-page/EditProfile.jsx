@@ -4,7 +4,7 @@ import stylesProfileSetup from "../profile-page/profileSetup.module.css";
 import LeftSide from "../main-components/LeftSide";
 import { useNavigate } from "react-router-dom";
 import { useAPI } from "../../hooks/useApi";
-import styleSetup from "../profile-page/profileSetup.module.css"
+import styleSetup from "../profile-page/profileSetup.module.css";
 
 export default function EditProfile() {
   const navigate = useNavigate();
@@ -12,10 +12,15 @@ export default function EditProfile() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [isUserArtist, setIsUserArtist] = useState(false);
   const [countries, setCountries] = useState([]);
+  const [userFullInfo, setUserFullInfo] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [username, setUsername] = useState("");
+  const [selectedCountry, setSelectedCountry] = useState("");
   const [showCountries, setShowCountries] = useState(false);
   const [filter, setFilter] = useState("");
   const profileOptions = ["Artist", "Listener"];
-  const { apiFetchWithoutAutorization } = useAPI();
+  const { apiFetchWithoutAutorization, user, apiFetch } = useAPI();
   const statusRef = useRef(null);
   const dropdownRef = useRef(null);
   const menuRef = useRef(null);
@@ -35,20 +40,64 @@ export default function EditProfile() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
   useEffect(() => {
-  function handleClickOutside(event) {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-      setDropdownOpen(false);
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
     }
-   
-  }
 
-  document.addEventListener("click", handleClickOutside);
-  fetchCountries();
+    document.addEventListener("click", handleClickOutside);
+    fetchCountries();
 
-  return () => {
-    document.removeEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (
+        locationWrapperRef.current &&
+        !locationWrapperRef.current.contains(event.target)
+      ) {
+        setShowCountries(false);
+      }
+    }
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+  useEffect(() => {
+    if (!user) return;
+    fetchUserFullInfo();
+  }, [user]);
+
+  const fetchUserFullInfo = async () => {
+    const respose = await apiFetch(`/users/${user.sub}`);
+    const data = await respose.json();
+    console.log("USER!!!!: ", data);
+    setUserFullInfo(data);
+    setFirstName(data.firstName);
+    setLastName(data.lastName);
+    setUsername(data.username);
   };
-}, []);
+
+  const submitProfileSetup = async () => {
+    userFullInfo.firstName = firstName;
+    userFullInfo.lastName = lastName;
+    userFullInfo.username = username;
+    userFullInfo.isArtist = isUserArtist;
+    userFullInfo.country = isUserArtist;
+
+    const responseUpdate = await apiFetch(`/users/${user.sub}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userFullInfo),
+    });
+  };
 
   const fetchCountries = async () => {
     const response = await apiFetchWithoutAutorization("/countries");
@@ -60,22 +109,7 @@ export default function EditProfile() {
     setDropdownOpen(false);
     setIsUserArtist(option === profileOptions[0] ? true : false);
   }
-const locationWrapperRef = useRef(null);
-
-useEffect(() => {
-  function handleClickOutside(event) {
-    if (
-      locationWrapperRef.current &&
-      !locationWrapperRef.current.contains(event.target)
-    ) {
-      setShowCountries(false);
-    }
-  }
-  document.addEventListener("click", handleClickOutside);
-  return () => {
-    document.removeEventListener("click", handleClickOutside);
-  };
-}, []);
+  const locationWrapperRef = useRef(null);
 
   return (
     <div className={styles.container}>
@@ -216,7 +250,10 @@ useEffect(() => {
                   <option key={country.id} value={country.name} />
                 ))}
               </datalist> */}
-              <div className={styleSetup.customSelectWrapper} ref={locationWrapperRef}>
+              <div
+                className={styleSetup.customSelectWrapper}
+                ref={locationWrapperRef}
+              >
                 <div className={styles.text11}>Location</div>
 
                 <input
@@ -291,9 +328,16 @@ useEffect(() => {
             </div> */}
 
             <div className={styles["save-btn-plat"]}>
-              <button className={styles["logout-btn"]}>Logout</button>
+              {/* <button className={styles["logout-btn"]}>Logout</button> */}
 
-              <button className={styles["save-btn"]}>Continue</button>
+              <button
+                className={styles["save-btn"]}
+                onClick={() => {
+                  submitProfileSetup();
+                }}
+              >
+                Continue
+              </button>
             </div>
           </div>
         </div>
