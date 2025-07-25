@@ -538,7 +538,7 @@ const MyProfile = ({ profileInfo }) => {
               />
             </div>
           </div>
-          <div className={styles["groups-place"]}>
+          {/* <div className={styles["groups-place"]}>
             <div className={styles["groups-text"]}>Groups</div>
             <div className={styles["groups-container"]}>
               {[...Array(12)].map((_, i) => (
@@ -553,7 +553,7 @@ const MyProfile = ({ profileInfo }) => {
                 </div>
               ))}
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
       {menuOpen && (
