@@ -100,12 +100,12 @@ useEffect(() => {
               onClick={() => setMenuVisible((prev) => !prev)}
             ></div>
 
-            {menuVisible && (
+            {/* {menuVisible && (
               <div className={styles["status-menu"]} ref={menuRef}>
                 <div className={styles["menu-item1"]}>Change avatar</div>
-                {/* <div className={styles["menu-item"]}>Change banner</div> */}
+                <div className={styles["menu-item"]}>Change banner</div>
               </div>
-            )}
+            )} */}
           </div>
 
           <div className={styles["you-name"]}>You</div>
