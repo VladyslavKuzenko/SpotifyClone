@@ -7,6 +7,7 @@ import { useAPI } from "../../hooks/useApi";
 const ChatList = ({ onChatSelected, onCreateGroup }) => {
   const { apiFetch, user } = useAPI();
   const [chats, setChats] = useState([]);
+  const [search, setSearch] = useState('');
   const firstLoad = useRef(true);
 
   const fetchChats = async () => {
@@ -22,7 +23,10 @@ const ChatList = ({ onChatSelected, onCreateGroup }) => {
         const messageText = await messageResponse.text();
         const messageData = messageText.trim() ? JSON.parse(messageText) : "";
 
-        return { ...chat, title: titleData.title, lastMessage: messageData };
+        const pictureResponse = await apiFetch(`/chats/${chat.id}/picture`);
+        const pictureData = await pictureResponse.json();
+
+        return { ...chat, picture: pictureData.picture, title: titleData.title, lastMessage: messageData };
       }
       return chat;
     }));
@@ -56,6 +60,16 @@ const ChatList = ({ onChatSelected, onCreateGroup }) => {
     return () => clearInterval(interval);
   }, []);
 
+  const handleSearchChange = (e) => setSearch(e.target.value.toLowerCase());
+
+  const privateChats = chats
+    .filter(chat => chat.isPrivate)
+    .filter(chat => chat.title?.toLowerCase().includes(search));
+
+  const groupChats = chats
+    .filter(chat => !chat.isPrivate)
+    .filter(chat => chat.name?.toLowerCase().includes(search));
+
   return (
     <div className={styles["chat-platform"]}>
       <div className={styles["search-block"]}>
@@ -63,33 +77,40 @@ const ChatList = ({ onChatSelected, onCreateGroup }) => {
           type="search"
           className={styles["chat-search"]}
           placeholder="Search"
+          value={search}
+          onChange={handleSearchChange}
         />
-
         <button
           className={styles["create-group"]}
           onClick={onCreateGroup}
-        >
-        </button>
-
+        />
       </div>
 
-      <div className={styles["groups-block"]}>
-        <div className={styles.text1}>Groups:</div>
-        <div className={styles.groups}>
-          {chats.map((chat) =>
-            !chat.isPrivate ? <GroupChatItem key={chat.id} onChatSelected={onChatSelected} {...chat} /> : null
-          )}
+      {groupChats.length > 0 && (
+        <div className={styles["groups-block"]}>
+          <div className={styles.text1}>Groups:</div>
+          <div className={styles.groups}>
+            {groupChats.map(chat => (
+              <GroupChatItem key={chat.id} onChatSelected={onChatSelected} {...chat} />
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
-      <div className={styles["chats-block"]}>
-        <div className={styles.text2}>Chats:</div>
-        <div className={styles["chats-array"]}>
-          {chats.map((chat) =>
-            chat.isPrivate ? <PrivateChatItem key={chat.id} onChatSelected={onChatSelected} {...chat} /> : null
-          )}
+      {privateChats.length > 0 && (
+        <div className={styles["chats-block"]}>
+          <div className={styles.text2}>Chats:</div>
+          <div className={styles["chats-array"]}>
+            {privateChats.map(chat => (
+              <PrivateChatItem key={chat.id} onChatSelected={onChatSelected} picture={chat.picture} {...chat} />
+            ))}
+          </div>
         </div>
-      </div>
+      )}
+
+      {groupChats.length === 0 && privateChats.length === 0 && (
+        <div className={styles["no-chats"]}>There's no chats yet</div>
+      )}
     </div>
   );
 };

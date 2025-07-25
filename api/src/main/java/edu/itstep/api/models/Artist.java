@@ -6,7 +6,6 @@ import jakarta.persistence.*;
 @Table(name = "artists")
 public class Artist {
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
     @OneToOne
     @JoinColumn(name="user_id", nullable=false)

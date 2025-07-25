@@ -2,6 +2,7 @@ package edu.itstep.api.controlers;
 
 import edu.itstep.api.models.*;
 import edu.itstep.api.models.dto.UserCreationDTO;
+import edu.itstep.api.models.dto.UserDTO;
 import edu.itstep.api.repositories.GenreRepository;
 import edu.itstep.api.repositories.UserRepository;
 import edu.itstep.api.services.PostService;
@@ -50,6 +51,13 @@ public class UserController {
     @GetMapping("/{id}")
     public User getUser(@PathVariable String id) {
         return userRepository.findById(id).orElseThrow(RuntimeException::new);
+    }
+
+    @GetMapping("/all")
+    public List<UserDTO> getAllUsers() {
+        return userRepository.findAll().stream()
+                .map(user -> new UserDTO(user.getId(), user.getUsername(), user.getFirstName(), user.getLastName()))
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/userFollowing/{id}")

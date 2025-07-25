@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import styles from "./user-profile.module.css";
 import LeftSide from "../main-components/LeftSide";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useAPI } from "../../hooks/useApi";
 import FollowingButton from "../sharedComponents/FollowingButton";
 import UserLikedMediaLibrary from "../my-profile-page/UserLikedMediaLibrary";
@@ -11,7 +11,7 @@ const UserProfile = () => {
   const { userId } = useParams();
   const [menuOpen, setMenuOpen] = useState(false);
   const [userFullInfo, setUserFullInfo] = useState("");
-  const { apiFetch } = useAPI();
+  const { apiFetch, user } = useAPI();
   const menuRef = useRef(null);
   const toggleMenu = () => {
     setMenuOpen((prev) => !prev);
@@ -40,12 +40,30 @@ const UserProfile = () => {
     };
   }, [menuOpen]);
 
+  const navigate = useNavigate();
+
   const fetchUserFullInfo = async () => {
     const respose = await apiFetch(`/users/${userId}`);
     const data = await respose.json();
     setUserFullInfo(data);
   };
   // const isArtist = true; //перевіка
+
+  const handleMessageClick = async () => {
+    const response = await apiFetch("/chats/private", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        user1Id: user.sub,
+        user2Id: userId
+      })
+    });
+
+    const chat = await response.json();
+    console.log(chat);
+    
+    navigate("/chat", { state: { openChatId: chat.id } });
+  };
 
   return (
     <div className={styles.container}>
@@ -90,7 +108,9 @@ const UserProfile = () => {
               userToFollow={userFullInfo}
               styles={styles["follow-btn"]}
             />
-            <button className={styles["message-btn"]}>Message</button>
+            <button className={styles["message-btn"]} onClick={handleMessageClick}>
+              Message
+            </button>
           </div>
         </div>
         

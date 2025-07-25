@@ -68,13 +68,18 @@ export default function ProfileSetup() {
     };
   }, []);
 
-  const navigate = useNavigate();
-
   if (isLoading) {
     return <div>Loading...</div>;
   }
+
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
+  }
+
+  if (isConfirmed) {
+    console.log("navigating in progresssss");
+    
+    return <Navigate to="/main" replace />;
   }
 
   function selectProfileOption(option) {
@@ -156,8 +161,22 @@ export default function ProfileSetup() {
       },
       body: JSON.stringify(resultPlaylist),
     });
-    console.log("Ready");
-    navigate("/main", { replace: true });
+
+    if (isUserArtist) {
+      const resultArtist = {
+        id: user.sub,
+      };
+
+      await apiFetch("/artists", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(resultArtist),
+      });
+    }
+
+    setIsConfirmed(true);
   }
 
   return (
