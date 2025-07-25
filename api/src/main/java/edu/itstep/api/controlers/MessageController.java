@@ -17,6 +17,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
@@ -75,7 +76,7 @@ public class MessageController {
         createdMessage.setContentJson(message.getContentJson());
         createdMessage.setChat(selectedChat);
         createdMessage.setUser(sender);
-        createdMessage.setSentDateTime(LocalDateTime.from(Instant.now()));
+        createdMessage.setSentDateTime(LocalDateTime.ofInstant(Instant.now(), ZoneId.systemDefault()));
 
         Message savedMessage = messageRepository.save(createdMessage);
         return ResponseEntity.created(new URI("/messages/" + savedMessage.getId()))

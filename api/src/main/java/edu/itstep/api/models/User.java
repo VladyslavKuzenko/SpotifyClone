@@ -52,13 +52,14 @@ public class User {
     @ManyToMany(mappedBy = "followings")
     @JsonIgnore
     private Set<User> followers;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_chats",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "chat_id"))
     @JsonIgnore
     private Set<Chat> chats;
+
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     private Set<TracksListenings> tracksListenings;

@@ -7,6 +7,7 @@ import { useAPI } from "../../hooks/useApi";
 const ChatList = ({ onChatSelected, onCreateGroup }) => {
   const { apiFetch, user } = useAPI();
   const [chats, setChats] = useState([]);
+  const [search, setSearch] = useState('');
   const firstLoad = useRef(true);
 
   const fetchChats = async () => {
@@ -22,7 +23,10 @@ const ChatList = ({ onChatSelected, onCreateGroup }) => {
         const messageText = await messageResponse.text();
         const messageData = messageText.trim() ? JSON.parse(messageText) : "";
 
-        return { ...chat, title: titleData.title, lastMessage: messageData };
+        const pictureResponse = await apiFetch(`/chats/${chat.id}/picture`);
+        const pictureData = await pictureResponse.json();
+
+        return { ...chat, picture: pictureData.picture, title: titleData.title, lastMessage: messageData };
       }
       return chat;
     }));
@@ -56,8 +60,15 @@ const ChatList = ({ onChatSelected, onCreateGroup }) => {
     return () => clearInterval(interval);
   }, []);
 
-  const privateChats = chats.filter(chat => chat.isPrivate);
-  const groupChats = chats.filter(chat => !chat.isPrivate);
+  const handleSearchChange = (e) => setSearch(e.target.value.toLowerCase());
+
+  const privateChats = chats
+    .filter(chat => chat.isPrivate)
+    .filter(chat => chat.title?.toLowerCase().includes(search));
+
+  const groupChats = chats
+    .filter(chat => !chat.isPrivate)
+    .filter(chat => chat.name?.toLowerCase().includes(search));
 
   return (
     <div className={styles["chat-platform"]}>
@@ -66,6 +77,8 @@ const ChatList = ({ onChatSelected, onCreateGroup }) => {
           type="search"
           className={styles["chat-search"]}
           placeholder="Search"
+          value={search}
+          onChange={handleSearchChange}
         />
         <button
           className={styles["create-group"]}
@@ -89,7 +102,7 @@ const ChatList = ({ onChatSelected, onCreateGroup }) => {
           <div className={styles.text2}>Chats:</div>
           <div className={styles["chats-array"]}>
             {privateChats.map(chat => (
-              <PrivateChatItem key={chat.id} onChatSelected={onChatSelected} {...chat} />
+              <PrivateChatItem key={chat.id} onChatSelected={onChatSelected} picture={chat.picture} {...chat} />
             ))}
           </div>
         </div>

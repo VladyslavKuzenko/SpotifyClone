@@ -60,6 +60,8 @@ const UserProfile = () => {
     });
 
     const chat = await response.json();
+    console.log(chat);
+    
     navigate("/chat", { state: { openChatId: chat.id } });
   };
 

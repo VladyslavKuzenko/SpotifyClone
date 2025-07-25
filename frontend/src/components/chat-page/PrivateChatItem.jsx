@@ -1,6 +1,6 @@
 import styles from "./ChatPage.module.css";
 
-const PrivateChatItem = ({ title, id, onChatSelected, lastMessage }) => {
+const PrivateChatItem = ({ title, id, picture, onChatSelected, lastMessage }) => {
   const selectChat = () => {
     onChatSelected(id);
   };
@@ -24,12 +24,34 @@ const PrivateChatItem = ({ title, id, onChatSelected, lastMessage }) => {
     previewText = "";
   }
 
+  const formatTime = (dateTimeStr) => {
+    const date = new Date(dateTimeStr);
+    const now = new Date();
+
+    const isToday = date.toDateString() === now.toDateString();
+
+    const hours = date.getHours().toString().padStart(2, "0");
+    const minutes = date.getMinutes().toString().padStart(2, "0");
+
+    if (isToday) {
+      return `${hours}:${minutes}`;
+    } else {
+      const day = date.getDate().toString().padStart(2, "0");
+      const month = date.toLocaleString("en-US", { month: "short" });
+      return `${day} ${month}, ${hours}:${minutes}`;
+    }
+  };
+
+  previewTime = formatTime(lastMessage?.sentDateTime);
+
   return (
     <div className={styles["chat-item"]} onClick={selectChat}>
       <div className={styles["ava-circle-place"]}>
-        <div className={styles["ava-circle"]}>
-          <div className={styles.status}></div>
-        </div>
+        <img
+          className={styles["ava-circle"]}
+          src={picture}
+          alt=""
+        />
       </div>
       <div className={styles["name-message"]}>
         <div className={styles["chat-name"]}>{title}</div>

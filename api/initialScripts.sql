@@ -29,6 +29,10 @@ delete from messages where user_id = "auth0|687d672250e5ce653980abaf";
 delete from artists where id = "auth0|687d672250e5ce653980abaf";
 delete from users where id = "auth0|687d672250e5ce653980abaf";
 
+delete from messages where chat_id = :chatId;
+delete from users_chats where chat_id = :chatId;
+delete from chats where id = :chatId;
+
 select *
 from users;
 select *
@@ -36,7 +40,9 @@ from artists;
 select *
 from users_chats;
 select *
-from messages;
+from chats;
+
+
 
 
 INSERT INTO countries (name)
