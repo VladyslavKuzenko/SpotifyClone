@@ -135,7 +135,6 @@ const ChatPage = () => {
                         )}
                     </div>
                     <MessageInputField chatId={currentChat?.id} onSend={() => fetchMessages(chatId)} />
-
                 </div>
             </div>
             {isCreateModalOpen && (

@@ -12,8 +12,7 @@ import {
 
 export default function ProfileSetup() {
   const { isAuthenticated, isLoading, getAccessTokenWithPopup } = useAuth0();
-  const { apiAxiosPost, apiFetch, apiFetchWithoutAutorization, user } =
-    useAPI();
+  const { apiAxiosPost, apiFetch, apiFetchWithoutAutorization, user } = useAPI();
   const [selectedGenres, setSelectedGenres] = useState([]);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [isUserArtist, setIsUserArtist] = useState(false);
@@ -27,6 +26,7 @@ export default function ProfileSetup() {
   const profilePictureInputRef = useRef(null);
   const [showCountries, setShowCountries] = useState(false);
   const [filter, setFilter] = useState("");
+  const [isConfirmed, setIsConfirmed] = useState(false);
   const fetchCountries = async () => {
     const response = await apiFetchWithoutAutorization("/countries");
     const data = await response.json();
@@ -61,7 +61,7 @@ export default function ProfileSetup() {
     document.addEventListener("click", handleClickOutside);
 
     fetchCountries();
-    fetchGenres(); // <- Ось сюди додаємо виклик
+    fetchGenres();
 
     return () => {
       document.removeEventListener("click", handleClickOutside);
@@ -78,7 +78,7 @@ export default function ProfileSetup() {
 
   if (isConfirmed) {
     console.log("navigating in progresssss");
-    
+
     return <Navigate to="/main" replace />;
   }
 
