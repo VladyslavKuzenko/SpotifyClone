@@ -99,12 +99,12 @@ const Main = () => {
             >
               + New post
             </button>
-            <button
+            {/* <button
               className={styles.notification}
               onClick={() => setIsNotificationOpen(!isNotificationOpen)}
             >
               Notification
-            </button>
+            </button> */}
 
             <SearchModal
               isSearchModalOpen={isSearchModalOpen}

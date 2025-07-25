@@ -31,10 +31,8 @@ const WhoToFollow = () => {
       <div className={styles["who-to-follow-accounts"]}>
         {users.map((i) => (
           <>
-            {i.id !== user.sub ? (
+            {i.id !== user.sub && (
               <FollowAccountCard userToFollow={i} key={i.id} />
-            ) : (
-              <></>
             )}
           </>
         ))}
