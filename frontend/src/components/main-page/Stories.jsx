@@ -867,7 +867,7 @@ const Stories = () => {
             <div
               className={styles["storiesbtn-plus"]}
               onClick={(e) => {
-                e.stopPropagation(); // зупиняє клік, щоб не пішов до батьків
+                e.stopPropagation(); 
                 setIsPostModalOpen(true);
               }}
             ></div>
@@ -913,11 +913,15 @@ const Stories = () => {
           onClick={handleOverlayClick}
         >
           <div className={styles["sts-modal-window"]}>
+
             <div className={styles["storie-upper"]}>
+              
               {renderStoryIndicators(
                 currentStoryGroup.length,
                 currentStoryIndex
               )}
+              <button className={styles["close-sts"]} onClick={closeModal}></button>
+
             </div>
 
             {!(currentUserIndex === -1 && currentStoryIndex === 0) && (
@@ -944,7 +948,6 @@ const Stories = () => {
 
             <div className={styles["storie-bottom"]}>
               <div className={styles["avatar-author"]}>
-                {/* <div className={styles["storie-avatar"]}></div> */}
 
                 <div
                   onClick={() => {
@@ -1017,10 +1020,6 @@ const Stories = () => {
                     ></button>
                   )}
                 </div>
-
-                {/* <div className={styles["storie-like"]} onClick={()=>submiteUserLike(currentStoryGroup[currentStoryIndex])}>{currentStoryGroup[currentStoryIndex].isLiked}+{currentStoryGroup[currentStoryIndex].likesCount}</div> */}
-
-                {/* <div>{currentStoryGroup[currentStoryIndex].isLiked}+{currentStoryGroup[currentStoryIndex].likesCount}</div> */}
               </div>
             </div>
           </div>

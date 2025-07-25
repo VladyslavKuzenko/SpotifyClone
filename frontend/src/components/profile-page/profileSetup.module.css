@@ -13,7 +13,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  height: 870px;
+  height: 810px;
   width: 780px;
   background-color: #FFFFFF33;
   border-radius: 10px;
@@ -151,13 +151,14 @@
   grid-template-columns: repeat(4, 1fr);
   gap: 16px;
   width: 100%;
-  font-family: 'Inter', sans-serif;
-  text-align: center;
-  font-weight: 400;
+  font-family: Manrope;
+  font-weight: 300;
+  font-style: Light;
   font-size: 14px;
-  line-height: 1;
+  line-height: 100%;
+  letter-spacing: 0%;
   letter-spacing: 0;
-  color: #9c9c9c;
+  text-align: center;
 }
 
 .bottom {
@@ -194,7 +195,8 @@
 }
 
 .block-selected {
-  background: #ffffff;
+  background: #FF4400;
+  color: white
 }
 
 .cnt-btn {
@@ -212,6 +214,7 @@
   letter-spacing: 0%;
   border-radius: 5px;
   box-shadow: 0 4px 10px #00000040;
+  margin-top: 30px;
 
 
 }
@@ -235,7 +238,7 @@
 .dropdown-toggle {
   width: 270px;
   height: 53px;
-  background-color: #646464;
+  background-color: #1E1E1E;
   color: white;
   display: flex;
   align-items: center;
@@ -246,7 +249,8 @@
   cursor: pointer;
   text-indent: 7px;
   box-sizing: border-box;
-  border-radius: 5px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 
 }
 
@@ -268,7 +272,6 @@
   font-weight: 400;
   font-size: 14px;
   line-height: 100%;
-  color: #9c9c9c;
   box-sizing: border-box;
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
@@ -294,3 +297,181 @@
   justify-content: space-between;
 }
 
+
+.customSelectWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.dropdownList {
+  position: absolute;
+  top: 82%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000;
+  scrollbar-width: thin;
+  font-family: Inter;
+  font-weight: 300;
+  font-style: Light;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: 0%;
+
+}
+
+.dropdownItem {
+  cursor: pointer;
+  width: 100%;
+  height: 40px;
+  text-align: start;
+  text-indent: 20px;
+  align-content: center;
+}
+
+.dropdownItem:hover {
+  background-color: #f0f0f0;
+}
+
+@media (min-width: 320px) and (max-width: 768px) {
+
+  .main-container {
+    width: 90%;
+    height: 90%;
+    background-color: transparent;
+  }
+
+  .bottom-block {
+    width: 100%;
+  }
+
+  .ocnt {
+    width: 100%;
+  }
+
+  .b1 {
+    width: 50%;
+  }
+
+  .location {
+    width: 90%;
+    box-sizing: border-box;
+    height: 38px;
+  }
+
+  .b2 {
+    width: 50%;
+    margin-top: 15px;
+
+  }
+
+  .dropdown {
+    width: 100%;
+
+box-sizing: border-box;
+    background-color: #1E1E1E;
+
+    display: flex;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+
+
+  }
+  .dropdown-toggle {
+        height: 38px;
+
+  }
+
+  .dropdown-options {
+    width: 100%;
+    display: flex;
+
+  }
+
+  .bio {
+    box-sizing: border-box;
+    height: 39px;
+  }
+
+  .cont-block {
+    height: auto;
+    overflow: auto;
+    scrollbar-width: thin;
+  }
+
+  .block {
+    width: 100%;
+    height: 33px;
+  }
+
+  .text1 {
+    font-family: Montserrat;
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 20px;
+    line-height: 100%;
+    letter-spacing: 0%;
+
+  }
+
+  .picture {
+    width: 76px;
+    height: 76px;
+  }
+
+  .change-picture,
+  .delete-picture {
+    width: 99px;
+    height: 37px;
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 12px;
+    line-height: 100%;
+    letter-spacing: 0%;
+
+  }
+
+  .container {
+    width: 213px;
+  }
+
+  .username {
+    font-family: Manrope;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 12px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    margin-right: 20px;
+
+  }
+
+  .user-name {
+    height: 38px;
+    width: 213px;
+    box-sizing: border-box;
+
+  }
+
+  .text11 {
+    font-family: Inter;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 12px;
+    line-height: 100%;
+    letter-spacing: 0%;
+
+  }
+
+  .customSelectWrapper {
+    margin-top: 15px;
+  }
+  .cnt-btn {
+    height: 39px;
+  }
+}

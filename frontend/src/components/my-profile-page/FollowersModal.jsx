@@ -60,7 +60,7 @@ const FollowersModal = ({
           />
           {tab === "followers" ? (
             <>
-              {/* <div>Followers</div> */}
+              
               {followersControl.followers.map((i) => (
                 <FollowAccountCard userToFollow={i} key={i.id} />
               ))}

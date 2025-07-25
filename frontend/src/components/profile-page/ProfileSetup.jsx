@@ -24,7 +24,8 @@ export default function ProfileSetup() {
   const profileOptions = ["Artist", "Listener"];
   const [profilePictureFile, setProfilePictureFile] = useState(null);
   const profilePictureInputRef = useRef(null);
-
+  const [showCountries, setShowCountries] = useState(false);
+  const [filter, setFilter] = useState("");
   const fetchCountries = async () => {
     const response = await apiFetchWithoutAutorization("/countries");
     const data = await response.json();
@@ -48,16 +49,25 @@ export default function ProfileSetup() {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setDropdownOpen(false);
       }
+      if (
+        event.target.tagName.toLowerCase() === "button" ||
+        !event.target.closest(`.${styles.customSelectWrapper}`)
+      ) {
+        setShowCountries(false);
+      }
     }
+
     document.addEventListener("click", handleClickOutside);
 
     fetchCountries();
-    fetchGenres();
+    fetchGenres();  // <- Ось сюди додаємо виклик
 
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
   }, []);
+
+
 
   const navigate = useNavigate();
 
@@ -203,14 +213,17 @@ export default function ProfileSetup() {
           placeholder="@Name"
           className={styles["user-name"]}
           onChange={(e) => {
-            setUsername(e.target.value);
+            const filteredValue = e.target.value.replace(/[^a-zA-Z0-9_.]/g, "");
+            setUsername(filteredValue);
           }}
+          value={username || ""}
         />
 
-        <div className={styles["bottom-block"]}>
+
+
           <div className={styles.ocnt}>
             <div className={styles.b1}>
-              <div className={styles.text11}>Location</div>
+              {/* <div className={styles.text11}>Location</div>
               <input
                 type="text"
                 id="location"
@@ -218,11 +231,47 @@ export default function ProfileSetup() {
                 className={styles.location}
                 list="genres"
               />
-              <datalist id="genres">
+              
+              <datalist id="genres" >
                 {countries.map((country) => (
                   <option key={country.id} value={country.name} />
                 ))}
-              </datalist>
+              </datalist> */}
+              <div className={styles.customSelectWrapper}>
+                <div className={styles.text11}>Location</div>
+
+               <input
+  type="text"
+  value={filter}
+  onChange={(e) => {
+    const filteredValue = e.target.value.replace(/[^a-zA-Z0-9_.]/g, "");
+    setFilter(filteredValue);
+    setShowCountries(true);
+  }}
+  onFocus={() => setShowCountries(true)}
+  placeholder="City or Country"
+  className={styles.location}
+/>
+
+                {showCountries && (
+                  <div className={styles.dropdownList} >
+                    {countries
+                      .filter((c) => c.name.toLowerCase().includes(filter.toLowerCase()))
+                      .map((country) => (
+                        <div
+                          key={country.id}
+                          className={styles.dropdownItem}
+                          onClick={() => {
+                            setFilter(country.name);
+                            setShowCountries(false);
+                          }}
+                        >
+                          {country.name}
+                        </div>
+                      ))}
+                  </div>
+                )}
+              </div>
             </div>
 
             <div className={styles.b2}>
@@ -286,7 +335,6 @@ export default function ProfileSetup() {
             </button>
           </div>
         </div>
-      </div>
     </div>
   );
 }
