@@ -18,7 +18,6 @@ const Modal = ({ onClose, song }) => {
         onClick={(e) => e.stopPropagation()}
       >
         <div className={stylesFooter["foot-left"]}>
-          {/* <div className={stylesFooter["foot-photo"]}></div> */}
           <img
             className={stylesFooter["foot-photo"]}
             src={currentSong.imageUrl}

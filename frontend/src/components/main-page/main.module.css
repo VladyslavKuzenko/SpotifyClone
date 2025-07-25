@@ -2495,6 +2495,8 @@ html {
     transition: width 0.3s ease;
     scrollbar-width: none;
     overflow-x: hidden;
+  background-color: #06070A;
+border-top: 2px solid white;;
   }
 
   .left-side:hover {

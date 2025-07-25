@@ -276,7 +276,7 @@ export default function MiddleItem({
                       />
                     ))
                   ) : (
-                    <div>No songs found</div>
+                    <div className={styles["nsf"]}>No songs found</div>
                   )}
                 </div>
               </div>
@@ -329,7 +329,18 @@ export default function MiddleItem({
 
         {activeTab === "recommended" && (
           <div className={styles["recommended-content"]}>
+            
             <div className={styles["recommended-array"]}>
+                        <div className={styles["playlist-platform1"]}>
+                          <button className={styles["playlist-element"]}></button>
+                          <button className={styles["playlist-element"]}></button>
+                          <button className={styles["playlist-element"]}></button>
+                          <button className={styles["playlist-element"]}></button>
+                          <button className={styles["playlist-element"]}></button>
+                          <button className={styles["playlist-element"]}></button>
+                          <button className={styles["playlist-element"]}></button>
+                        </div>
+
               {songs.map((song) => (
                 <SongItem
                   key={song.id}
