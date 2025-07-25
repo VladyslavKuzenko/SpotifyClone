@@ -93,19 +93,21 @@ const Main = () => {
               className={styles.search}
               onFocus={() => setIsSearchModalOpen(true)}
             />
-            <button
-              className={styles["new-post"]}
-              onClick={() => setIsPostModalOpen(true)}
-            >
-              + New post
-            </button>
-            <button
-              className={styles.notification}
-              onClick={() => setIsNotificationOpen(!isNotificationOpen)}
-            >
-              Notification
-            </button>
 
+            <div className={styles.mobileDisplay}>
+              <button
+                className={styles["new-post"]}
+                onClick={() => setIsPostModalOpen(true)}
+              >
+                + New post
+              </button>
+              <button
+                className={styles.notification}
+                onClick={() => setIsNotificationOpen(!isNotificationOpen)}
+              >
+                Notification
+              </button>
+            </div>
             <SearchModal
               isSearchModalOpen={isSearchModalOpen}
               setIsSearchModalOpen={setIsSearchModalOpen}
@@ -120,9 +122,8 @@ const Main = () => {
                   {["all", "likes", "comments", "follows"].map((tab) => (
                     <div
                       key={tab}
-                      className={`${styles.notificationTab} ${
-                        notificationTab === tab ? styles.active : ""
-                      }`}
+                      className={`${styles.notificationTab} ${notificationTab === tab ? styles.active : ""
+                        }`}
                       onClick={() => setNotificationTab(tab)}
                     >
                       {tab.charAt(0).toUpperCase() + tab.slice(1)}
@@ -143,25 +144,22 @@ const Main = () => {
 
           <div className={styles["swipe-box"]}>
             <div
-              className={`${styles["all-div"]} ${
-                selectedTab === "all" ? styles.active : ""
-              }`}
+              className={`${styles["all-div"]} ${selectedTab === "all" ? styles.active : ""
+                }`}
               onClick={() => setSelectedTab("all")}
             >
               All
             </div>
             <div
-              className={`${styles["artists-div"]} ${
-                selectedTab === "artists" ? styles.active : ""
-              }`}
+              className={`${styles["artists-div"]} ${selectedTab === "artists" ? styles.active : ""
+                }`}
               onClick={() => setSelectedTab("artists")}
             >
               Artists
             </div>
             <div
-              className={`${styles["friends-div"]} ${
-                selectedTab === "friends" ? styles.active : ""
-              }`}
+              className={`${styles["friends-div"]} ${selectedTab === "friends" ? styles.active : ""
+                }`}
               onClick={() => setSelectedTab("friends")}
             >
               Friends

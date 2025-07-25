@@ -98,7 +98,7 @@ const UserProfile = () => {
             <div className={styles["profile-name"]}>
               {userFullInfo.username}
             </div>
-            <div className={styles["profile-bio"]}>{userFullInfo.shortBio}</div>
+            {/* <div className={styles["profile-bio"]}>{userFullInfo.shortBio}</div> */}
           </div>
           <div className={styles["followers-count"]}>
             {userFullInfo.followersCount} followers
@@ -113,22 +113,12 @@ const UserProfile = () => {
             </button>
           </div>
         </div>
-        {/* 
-        <div className={styles["functional-container1"]}>
-          <div className={styles["saved-album-container"]}>
-            <div className={styles["saved-album-text"]}>Saved Albums</div>
-            <div className={styles["album-array"]}></div>
-          </div>
-          <div className={styles["saved-songs-container"]}>
-            <div className={styles["saved-songs-text"]}>Saved Songs</div>
-            <div className={styles["song-array"]}></div>
-          </div>
-        </div> */}
+        
         <div className={styles["functional-container1"]}></div>
         {userFullInfo.isArtist ? (
-          <ArtistOwnMediaLibrary user={userFullInfo} />
+          <ArtistOwnMediaLibrary userToShowProfile={userFullInfo} />
         ) : (
-          <UserLikedMediaLibrary user={userFullInfo} />
+          <UserLikedMediaLibrary userToShowProfile={userFullInfo} />
         )}
 
         <div className={styles["bottom-place"]}>

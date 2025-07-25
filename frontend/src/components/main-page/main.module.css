@@ -6,7 +6,7 @@ html {
   background-repeat: repeat;
   background-size: auto;
   opacity: 1;
-  
+
 }
 
 .container {
@@ -186,6 +186,7 @@ html {
   height: 100vh;
   margin-left: 225px;
   margin-right: 30px;
+
 }
 
 .middle {
@@ -245,6 +246,7 @@ html {
   background-image: url(/public/images/Search.png);
   background-repeat: no-repeat;
   background-position-x: 95%;
+  box-sizing: border-box;
   background-position-y: center;
 }
 
@@ -260,9 +262,8 @@ html {
 
 .new-post {
   height: 100%;
-  width: 23%;
+  width: 47%;
   background-color: #FFFFFF;
-  margin-left: 22px;
   text-align: center;
   align-content: center;
   color: white;
@@ -276,11 +277,13 @@ html {
   line-height: 100%;
   letter-spacing: 0%;
   color: black;
+  margin-left: 22px;
 }
 
 .notification {
   height: 100%;
-  width: 23%;
+  width: 48%;
+
   background-color: #FFFFFF;
   margin-left: 22px;
   text-align: center;
@@ -411,23 +414,20 @@ html {
 
 .container-stories {
   display: flex;
-  width: calc(100%);
-  height: 145px;
-  justify-content: flex-start;
-  align-items: center;
-  overflow: auto;
+  width: 100%;
+  overflow-x: auto;
+  gap: 10px;
   scrollbar-width: none;
-  gap: 2%;
 }
 
 .stories-plat {
-  height: 100%;
+  width: 160px;
+  max-width: 160px;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   align-items: center;
-  width: 180px;
-  flex: 0 0 auto;
+  flex-direction: column;
+  box-sizing: border-box;
+  flex-shrink: 0;
 }
 
 .stories {
@@ -435,10 +435,6 @@ html {
   height: 110px;
   border-radius: 50%;
   padding: 3px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
 }
 
 .stories-inner {
@@ -448,27 +444,33 @@ html {
   overflow: hidden;
 }
 
-.stories-inner1 {
+.preview-image {
   width: 100%;
   height: 100%;
-  border-radius: 50%;
+  object-fit: cover;
 }
 
 .nickname {
   font-family: 'Manrope', sans-serif;
   font-weight: 600;
-  font-style: SemiBold;
+  font-style: normal;
   font-size: 16px;
   line-height: 100%;
-  letter-spacing: 0%;
   text-align: center;
   color: white;
-  width: 100%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 160px;
-  height: 20px;
+  max-width: auto;
+  margin-top: 5px;
+  flex-shrink: 0;
+}
+
+
+.stories-inner1 {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
 }
 
 .leftplat {
@@ -516,6 +518,8 @@ html {
 .all-post-content {
   display: flex;
   flex-direction: column-reverse;
+  ;
+  padding-bottom: 100px;
 }
 
 .artists-div {
@@ -957,7 +961,7 @@ html {
   position: fixed;
   top: 0;
   left: 0;
-  height: 100vh;
+  height: 100%;
   background: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
@@ -1226,6 +1230,7 @@ html {
   width: 100%;
   height: 400px;
   display: flex;
+
 }
 
 .choose-file,
@@ -1388,14 +1393,27 @@ html {
 }
 
 .storie-avatar {
-  width: 63px;
   height: 63px;
+  width: 63px;
   background-color: #060708;
   border-radius: 50%;
   margin-left: 45px;
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.15);
   object-fit: cover;
 
+}
+
+.close-sts {
+  width: 25px;
+  height: 25px;
+  background-image: url(/public/images/cross.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 60%;
+  background-color: transparent;
+  border: none;
+  margin-left: 90%;
+  display: none;
 }
 
 .storie-author {
@@ -1499,9 +1517,8 @@ html {
   width: 35%;
   height: 100%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-evenly;
   align-items: end;
-  gap: 50px;
 }
 
 .post-author {
@@ -2026,13 +2043,11 @@ html {
   display: flex;
   align-items: flex-start;
   gap: 12px;
-  padding-top: 20px;
-  padding-bottom: 30px;
-  border-radius: 16px;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-  max-width: 600px;
+  padding: 16px 0;
   border-bottom: 1px solid #D0D0D0;
+  max-width: 600px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .avatar1 {
@@ -2041,6 +2056,15 @@ html {
   border-radius: 50%;
   object-fit: cover;
   flex-shrink: 0;
+}
+
+.msgTime {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  /* важливо: займає весь доступний простір */
+  min-width: 0;
+  /* для переносу слів у flex-контейнері */
 }
 
 .messageContent1 {
@@ -2052,12 +2076,12 @@ html {
 
 .messageLine1 {
   font-size: 15px;
-  line-height: 1.6;
+  line-height: 1.4;
+  /* робимо адекватний line-height */
   color: #333;
   white-space: pre-wrap;
   word-break: break-word;
   hyphens: auto;
-  width: 100%;
 }
 
 .username1 {
@@ -2073,19 +2097,19 @@ html {
 }
 
 .message1 {
-  width: 380px;
+  display: inline-block;
+  font-family: Manrope, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #696969;
+  white-space: normal;
   word-break: break-word;
   overflow-wrap: break-word;
   hyphens: auto;
-  white-space: normal;
-  display: inline-block;
-  font-family: Manrope;
-  font-weight: 400;
-  font-style: Regular;
-  font-size: 14px;
-  line-height: 100%;
-  letter-spacing: 0%;
-  color: #696969;
+  /* ❌ прибираємо фіксовану ширину */
+  width: auto;
+  max-width: 100%;
 }
 
 .storiesbtn-place {
@@ -2281,6 +2305,7 @@ html {
 }
 
 .delete-stories {
+
   border: none;
   cursor: pointer;
   width: 29px;
@@ -2445,4 +2470,499 @@ html {
   cursor: pointer;
   background-image: url(/public/images/left.svg);
   background-repeat: no-repeat;
+}
+
+.mobileDisplay {
+  width: 50%;
+  display: flex;
+  justify-content: space-between;
+  height: 41px;
+
+}
+
+
+
+@media (min-width: 320px) and (max-width: 768px) {
+  .left-side {
+    width: 100%;
+    height: 10vh;
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    z-index: 11000;
+    transition: width 0.3s ease;
+    scrollbar-width: none;
+    overflow-x: hidden;
+  background-color: #06070A;
+border-top: 2px solid white;;
+  }
+
+  .left-side:hover {
+    width: 100%;
+  }
+
+  .pages-btns-div {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: row;
+    gap: 0;
+  }
+
+  .song-place-div,
+  .home-text,
+  .ava-place,
+  .label,
+  .right-side {
+    display: none;
+    margin: 0;
+  }
+
+  .middle {
+    width: 95%;
+    margin: 0 auto;
+  }
+
+
+  .platform1 {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+
+  }
+
+  .empty-div2 {
+    height: 70px;
+  }
+
+  .search {
+    width: 100%;
+    height: 36px;
+    margin-bottom: 10px;
+  }
+
+  .new-post,
+  .notification {
+    width: 48%;
+    margin: 0;
+    height: 100%;
+  }
+
+  .mobileDisplay {
+    width: 100%;
+  }
+
+  .main {
+    width: 100%;
+    background-color: #FFFFFF0F;
+    padding-bottom: 50px;
+    margin-bottom: 50px;
+    border-radius: 10px;
+
+  }
+
+  .post-item {
+    display: flex;
+    justify-content: center;
+  }
+
+  .post-content {
+    width: 90%;
+    height: auto;
+    margin-top: 30px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .upper-content {
+    width: 100%;
+    height: 56px;
+    display: flex;
+    margin-bottom: 20px;
+  }
+
+
+  .middle-content {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .text-content {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 14px;
+    line-height: 1.5;
+    letter-spacing: 0;
+    color: white;
+    padding: 0 0 30px 0;
+    text-align: justify;
+    text-align-last: left;
+    white-space: normal;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+
+
+  .prl-photo-wrapper {
+    max-width: 100%;
+    min-height: 400px;
+
+    max-height: 400px;
+  }
+
+  .prl-preview-image {
+    min-height: 200px;
+    max-height: 400px;
+  }
+
+  .post-modal-window {
+    width: 100%;
+    height: 600px;
+    background: #FFFFFF;
+    position: relative;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.25s ease-in-out;
+    right: 0;
+    border-radius: 15px;
+  }
+
+  .post-modal-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .post-left {
+    width: 100%;
+
+  }
+
+
+  .location-mention {
+    width: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  .at-gallery,
+  .aml-location-menu-wrapper {
+    width: 43%;
+    margin: 0;
+
+  }
+
+  .share-thoughts-plat {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  .share-thoughts {
+    width: 90%;
+    margin: 0;
+
+  }
+
+  .attributes {
+    width: 90%;
+    margin-left: 5%;
+
+  }
+
+  .post-modal {
+    position: absolute;
+    top: 55%;
+    right: 4%;
+  }
+
+  .comments {
+    margin: 0;
+    width: auto;
+    position: absolute;
+    left: 5%;
+  }
+
+  .stories-design {
+    height: 87%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .file-stories {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+  }
+
+  .post-stories {
+    height: 100px;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    position: relative;
+    right: 0;
+
+  }
+
+  .post-stories-btn {
+    margin: 0;
+    width: 330px;
+
+  }
+
+  .add-stories {
+    margin: 0;
+    width: 330px;
+
+  }
+
+  .notificationMenu {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin: 0;
+    padding: 0;
+  }
+
+  .search-dropdown {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    height: 85vh;
+  }
+
+  .back-btn {
+    position: relative;
+    left: 20px;
+  }
+
+  .modal-container {
+    display: flex;
+    justify-content: center;
+
+  }
+
+  .modal-content {
+
+    overflow: hidden;
+    margin: 0;
+    width: 95%;
+
+  }
+
+  .people-slider {
+    margin: 0;
+    width: 100%;
+    overflow: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #333 transparent;
+  }
+
+  .scroll-btn-left,
+  .scroll-btn-right {
+    display: none;
+
+  }
+
+  .sts-modal-window {
+    width: 97%;
+    margin: 0;
+    position: absolute;
+    top: 0;
+
+    height: 88vh;
+
+  }
+
+  .sts-modal-overlay {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+
+  }
+
+  .close-sts {
+    display: block;
+  }
+
+.storie-upper,
+  .storie-bottom,
+  .sts-modal-content {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    border:none;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+
+  .psb-modal-prev-button {
+    background-image: url(/public/images/scroll-left.png);
+    top:85%;
+    left:5%;
+  }
+
+  .psb-modal-next-button {
+    background-image: url(/public/images/scroll-right.png);
+    top:85%;
+    right:5%;
+  }
+
+  .discussion-modal {
+    width: 100%;
+  }
+
+  .discussion-content,
+  .discussion-body {
+    width: 100%;
+    padding-bottom: 50px;
+
+  }
+
+  .chatMessage1 {
+    width: 100%;
+    max-width: 95%;
+  }
+
+  .like-coment-repost {
+    width: 100px;
+    margin: 0;
+    justify-content: space-between;
+  }
+
+  .name-time {
+    margin: 0;
+    flex: 1;
+
+  }
+
+  .prl-slider-btn {
+    background-color: rgb(0, 0, 0, 0.3);
+    background-size: 30%;
+    top:100%;
+  }
+  .prl-left {
+    position: absolute;
+    left: 60px;
+  }
+  .prl-right {
+    position: absolute;
+    right: 60px;
+  }
+
+  .as-listeners-count {
+    display: none;
+  }
+
+
+  .leftplat,
+  .rightplat {
+    display: none;
+  }
+
+  .stories {
+    width: 95px;
+    height: 95px;
+  }
+
+  .stories-btn {
+    width: 100px;
+    height: 100px;
+  }
+
+  .storiesbtn-place {
+    width: 110px;
+  }
+
+  .storiesbtn-plus {
+    position: relative;
+    bottom: 25px;
+    left: 60px;
+  }
+
+  .stories-plat {
+    min-width: 120px;
+    flex-shrink: 1;
+  }
+
+  .storie-avatar {
+    height: 50px;
+    width: 50px;
+    margin-left: 25px;
+
+  }
+
+  .storie-like {
+    width: 23px;
+    height: 23px;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+  }
+
+  .storie-like img {
+    width: 23px;
+    height: 23px;
+    object-fit: contain;
+    display: block;
+    position: absolute;
+    align-self: center;
+    transform: translate(-25%, 0%);
+  }
+
+  .delete-stories {
+
+    border: none;
+    cursor: pointer;
+    width: 29px;
+    height: 29px;
+    background-color: transparent;
+    background-image: url(/public/images/trash.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    margin: 0;
+  }
+
+  .storie-wrap {
+    height: 40px;
+    width: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+  }
+
+  .like-delete {
+    position: absolute;
+    left: 70%;
+    width: 90px;
+
+  }
+
+  .like-count {
+    color: white;
+    font-family: Manrope;
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 13px;
+    line-height: 100%;
+    letter-spacing: 0%;
+    text-align: center;
+    width: 100%;
+  }
+
 }

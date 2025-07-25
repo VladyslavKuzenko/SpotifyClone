@@ -6,6 +6,7 @@ import { CLIENT_ID, DOMAIN } from "./js/properties/properties.js";
 import { APIProvider } from "./providers/APIProvider.jsx";
 import LeftSide from "./components/main-components/LeftSide.jsx";
 import { AudioProvider } from "./providers/AudioProvider.jsx";
+import { UserInfoProvider } from "./providers/UserInfoProvider.jsx";
 
 const root = createRoot(document.getElementById("root"));
 
@@ -14,15 +15,15 @@ root.render(
     domain={DOMAIN}
     clientId={CLIENT_ID}
     authorizationParams={{
-      redirect_uri:  `${window.location.origin}/main`,
-      
+      redirect_uri: `${window.location.origin}/main`,
     }}
-    
   >
     <BrowserRouter>
       <APIProvider>
         <AudioProvider>
-          <App />
+          <UserInfoProvider>
+            <App />
+          </UserInfoProvider>
         </AudioProvider>
       </APIProvider>
     </BrowserRouter>

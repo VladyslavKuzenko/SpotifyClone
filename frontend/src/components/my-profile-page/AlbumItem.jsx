@@ -2,13 +2,13 @@ import React from 'react';
 import styles from './MyProfile.module.css'; // Заміни на актуальний шлях
 import mainPageStyles from "../main-page/main.module.css";
 
-const AlbumItem = ({ album, idx, onClickFunck, variant }) => {
+const AlbumItem = ({ album, idx, onClickFunck, variant,handleSaveAlbum }) => {
   const wrapperClass = variant === "special" ? styles['album-wrapper-special'] : styles['album-wrapper'];
 
   return (
     <div className={wrapperClass} key={idx} onClick={() => onClickFunck?.()}>
       <div className={styles['album-item']}> 
-        <button className={styles['save-to-library']}></button>
+        <button className={styles['save-to-library']} onClick={handleSaveAlbum}></button>
         {album?.imageUrl && (
           <img
             className={mainPageStyles["preview-image-album"]}

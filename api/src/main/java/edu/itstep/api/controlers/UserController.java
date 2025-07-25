@@ -1,5 +1,6 @@
 package edu.itstep.api.controlers;
 
+import edu.itstep.api.models.Album;
 import edu.itstep.api.models.Genre;
 import edu.itstep.api.models.Post;
 import edu.itstep.api.models.User;
@@ -77,9 +78,19 @@ public class UserController {
         return userRepository.findById(id).orElseThrow(RuntimeException::new).getLikedPosts();
     }
 
+    @GetMapping("/userSavedAlbums/{id}")
+    public Set<Album> getUserSavedAlbums(@PathVariable String id) {
+        return userRepository.findById(id).orElseThrow(RuntimeException::new).getSavedAlbums();
+    }
+
     @GetMapping("/isStoryLiked/{user_id}/{story_id}")
     public Boolean getIsStoryLikedByUser(@PathVariable String user_id,@PathVariable Long story_id) {
         return userService.isStoryLiked(story_id, user_id);
+    }
+
+    @GetMapping("/isAlbumSaved/{user_id}/{album_id}")
+    public Boolean getIsAlbumSavedByUser(@PathVariable String user_id,@PathVariable Long album_id) {
+        return userService.isAlbumSaved(album_id, user_id);
     }
 
     @GetMapping("/userByFollowers/{count}")

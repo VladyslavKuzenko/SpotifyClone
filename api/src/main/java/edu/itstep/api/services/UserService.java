@@ -156,6 +156,14 @@ public class UserService {
 
         return user.getLikedStory().contains(story);
     }
+    public Boolean isAlbumSaved(Long album_id, String user_id) {
+        User user = userRepository.findById(user_id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        Album album = albumRepository.findById(album_id)
+                .orElseThrow(() -> new RuntimeException("Album not found"));
+
+        return user.getSavedAlbums().contains(album);
+    }
 
     public User addAlbumSavedBy(Long album_id, String user_id) {
         User user = userRepository.findById(user_id)

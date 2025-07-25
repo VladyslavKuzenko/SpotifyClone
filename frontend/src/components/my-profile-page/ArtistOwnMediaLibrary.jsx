@@ -7,28 +7,42 @@ import { useAPI } from "../../hooks/useApi";
 import { useAudio } from "../../hooks/useAudio";
 import AddAlbumModal from "./AddAlbumModal";
 import AddMusicModal from "./AddMusicModal";
-import WatchAlbum from "./WatchAlbum"; 
+import WatchAlbum from "./WatchAlbum";
+import { handleSaveAlbum, isAlbumSaved } from "../../js/functions/functions";
 
-const ArtistOwnMediaLibrary = ({ user, isAddButtonsAvaliable }) => {
+const ArtistOwnMediaLibrary = ({
+  userToShowProfile,
+  isAddButtonsAvaliable,
+}) => {
   const { setCurrentSong, setCurrentSongList, setIsRandomList } = useAudio();
   const [songs, setSongs] = useState([]);
   const [albums, setAlbums] = useState([]);
   const { isLoading } = useAuth0();
-  const { apiFetch } = useAPI();
+  const { apiFetch, user } = useAPI();
   const [showModal, setShowModal] = useState(false);
   const [showModal1, setShowModal1] = useState(false);
   const [showWatchAlbum, setShowWatchAlbum] = useState(false);
   const [selectedAlbum, setSelectedAlbum] = useState(null);
   const fetchArtistTracks = async () => {
-    const response = await apiFetch(`/tracks/tracks-by-artists/${user.id}`);
+    const response = await apiFetch(
+      `/tracks/tracks-by-artists/${userToShowProfile.id}`
+    );
     const body = await response.json();
     setSongs(body);
   };
 
   const fetchArtistAlbums = async () => {
-    const response = await apiFetch(`/albums/albums-by-artists/${user.id}`);
+    const response = await apiFetch(
+      `/albums/albums-by-artists/${userToShowProfile.id}`
+    );
     const body = await response.json();
-    setAlbums(body);
+    const newData = await Promise.all(
+      body.map(async (item) => {
+        const isSaved = await isAlbumSaved(item, user, apiFetch);
+        return { ...item, isSaved };
+      })
+    );
+    setAlbums(newData);
   };
 
   useEffect(() => {
@@ -96,37 +110,40 @@ const ArtistOwnMediaLibrary = ({ user, isAddButtonsAvaliable }) => {
               <div className={styles["saved-album-text"]}>Artist's Albums</div>
             )}
           </div>
-            <div className={styles["album-array"]}>
-        {albums.length === 0 ? (
-          <div className={styles["empty-message"]}>
-            <h2>There are no albums here yet</h2>
-            <h3>+ Add your first album</h3>
+          <div className={styles["album-array"]}>
+            {albums.length === 0 ? (
+              <div className={styles["empty-message"]}>
+                <h2>There are no albums here yet</h2>
+                <h3>+ Add your first album</h3>
+              </div>
+            ) : (
+              albums.map((item, idx) => (
+                <AlbumItem
+                  album={item}
+                  key={idx}
+                  onClickFunck={() => {
+                    setSelectedAlbum(item);
+                    setShowWatchAlbum(true);
+                  }}
+                  handleSaveAlbum={() => {
+                    handleSaveAlbum(item, user, apiFetch);
+                  }}
+                />
+              ))
+            )}
           </div>
-        ) : (
-          albums.map((item, idx) => (
-            <AlbumItem
-              album={item}
-              key={idx}
-              onClickFunck={() => {
-                setSelectedAlbum(item);
-                setShowWatchAlbum(true);
-              }}
-            />
-          ))
-        )}
-      </div>
         </div>
       </div>
 
       {/* Modals */}
-      
+
       {showModal && <AddMusicModal onClose={() => setShowModal(false)} />}
       {showModal1 && <AddAlbumModal onClose={() => setShowModal1(false)} />}
-        <WatchAlbum
+      <WatchAlbum
         isOpen={showWatchAlbum}
         onClose={() => setShowWatchAlbum(false)}
-      >
-      </WatchAlbum>
+        album={selectedAlbum}
+      ></WatchAlbum>
     </div>
   );
 };
