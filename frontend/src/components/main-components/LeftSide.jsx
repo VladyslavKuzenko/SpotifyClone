@@ -8,7 +8,9 @@ import { useAudio } from "../../hooks/useAudio";
 const LeftSide = () => {
   const navigate = useNavigate();
   const location = useLocation();
+
   const [isHovered, setIsHovered] = useState(false);
+  
   const [userFullInfo, setUserFullInfo] = useState();
   const { user, apiFetch } = useAPI();
   const { currentSong } = useAudio();
