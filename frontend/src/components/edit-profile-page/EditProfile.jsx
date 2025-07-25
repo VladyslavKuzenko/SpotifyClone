@@ -11,6 +11,8 @@ export default function EditProfile() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [isUserArtist, setIsUserArtist] = useState(false);
   const [countries, setCountries] = useState([]);
+  const [showCountries, setShowCountries] = useState(false);
+  const [filter, setFilter] = useState("");
   const profileOptions = ["Artist", "Listener"];
   const { apiFetchWithoutAutorization } = useAPI();
   const statusRef = useRef(null);
@@ -36,11 +38,17 @@ export default function EditProfile() {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setDropdownOpen(false);
       }
+      if (
+        event.target.tagName.toLowerCase() === "button" ||
+        !event.target.closest(`.${styles.customSelectWrapper}`)
+      ) {
+        setShowCountries(false);
+      }
     }
+
     document.addEventListener("click", handleClickOutside);
 
     fetchCountries();
-    // fetchGenres();
 
     return () => {
       document.removeEventListener("click", handleClickOutside);
@@ -181,12 +189,69 @@ export default function EditProfile() {
                 placeholder="Email"
               /> */}
             </div>
-            <div className={styles["your-name-text"]}>Location</div>
+
+            <div className={styles.b1}>
+              {/* <div className={styles.text11}>Location</div>
+              <input
+                type="text"
+                id="location"
+                placeholder="City or Country"
+                className={styles.location}
+                list="genres"
+              />
+              
+              <datalist id="genres" >
+                {countries.map((country) => (
+                  <option key={country.id} value={country.name} />
+                ))}
+              </datalist> */}
+              <div className={styles.customSelectWrapper}>
+                <div className={styles.text11}>Location</div>
+
+                <input
+                  type="text"
+                  value={filter}
+                  onChange={(e) => {
+                    const filteredValue = e.target.value.replace(
+                      /[^a-zA-Z0-9_.]/g,
+                      ""
+                    );
+                    setFilter(filteredValue);
+                    setShowCountries(true);
+                  }}
+                  onFocus={() => setShowCountries(true)}
+                  placeholder="City or Country"
+                  className={styles.location}
+                />
+
+                {showCountries && (
+                  <div className={styles.dropdownList}>
+                    {countries
+                      .filter((c) =>
+                        c.name.toLowerCase().includes(filter.toLowerCase())
+                      )
+                      .map((country) => (
+                        <div
+                          key={country.id}
+                          className={styles.dropdownItem}
+                          onClick={() => {
+                            setFilter(country.name);
+                            setShowCountries(false);
+                          }}
+                        >
+                          {country.name}
+                        </div>
+                      ))}
+                  </div>
+                )}
+              </div>
+            </div>
+            {/* <div className={styles["your-name-text"]}>Location</div>
             <input
               type="text"
               className={styles["edit-location"]}
               placeholder="Location"
-            />
+            /> */}
 
             {/* <div className={styles["your-name-text"]}>Password</div>
             <div className={styles["two-in-one"]}>

@@ -12,7 +12,8 @@ import {
 
 export default function ProfileSetup() {
   const { isAuthenticated, isLoading, getAccessTokenWithPopup } = useAuth0();
-  const { apiAxiosPost, apiFetch, apiFetchWithoutAutorization, user } = useAPI();
+  const { apiAxiosPost, apiFetch, apiFetchWithoutAutorization, user } =
+    useAPI();
   const [selectedGenres, setSelectedGenres] = useState([]);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [isUserArtist, setIsUserArtist] = useState(false);
@@ -60,14 +61,12 @@ export default function ProfileSetup() {
     document.addEventListener("click", handleClickOutside);
 
     fetchCountries();
-    fetchGenres();  // <- Ось сюди додаємо виклик
+    fetchGenres(); // <- Ось сюди додаємо виклик
 
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
   }, []);
-
-
 
   const navigate = useNavigate();
 
@@ -161,7 +160,6 @@ export default function ProfileSetup() {
     navigate("/main", { replace: true });
   }
 
-
   return (
     <div className={styles["background"]}>
       <div className={styles["main-container"]}>
@@ -171,9 +169,14 @@ export default function ProfileSetup() {
             <img
               src={URL.createObjectURL(profilePictureFile)}
               alt="Profile Preview"
-              style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "50%" }}
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                borderRadius: "50%",
+              }}
             />
-          ) : (null)}
+          ) : null}
         </div>
         <div className={styles.container}>
           <input
@@ -219,11 +222,9 @@ export default function ProfileSetup() {
           value={username || ""}
         />
 
-
-
-          <div className={styles.ocnt}>
-            <div className={styles.b1}>
-              {/* <div className={styles.text11}>Location</div>
+        <div className={styles.ocnt}>
+          <div className={styles.b1}>
+            {/* <div className={styles.text11}>Location</div>
               <input
                 type="text"
                 id="location"
@@ -237,104 +238,120 @@ export default function ProfileSetup() {
                   <option key={country.id} value={country.name} />
                 ))}
               </datalist> */}
-              <div className={styles.customSelectWrapper}>
-                <div className={styles.text11}>Location</div>
+            <div className={styles.customSelectWrapper}>
+              <div className={styles.text11}>Location</div>
 
-               <input
-  type="text"
-  value={filter}
-  onChange={(e) => {
-    const filteredValue = e.target.value.replace(/[^a-zA-Z0-9_.]/g, "");
-    setFilter(filteredValue);
-    setShowCountries(true);
-  }}
-  onFocus={() => setShowCountries(true)}
-  placeholder="City or Country"
-  className={styles.location}
-/>
+              <input
+                type="text"
+                value={filter}
+                onChange={(e) => {
+                  const filteredValue = e.target.value.replace(
+                    /[^a-zA-Z0-9_.]/g,
+                    ""
+                  );
+                  setFilter(filteredValue);
+                  setShowCountries(true);
+                }}
+                onFocus={() => setShowCountries(true)}
+                placeholder="City or Country"
+                className={styles.location}
+              />
 
-                {showCountries && (
-                  <div className={styles.dropdownList} >
-                    {countries
-                      .filter((c) => c.name.toLowerCase().includes(filter.toLowerCase()))
-                      .map((country) => (
-                        <div
-                          key={country.id}
-                          className={styles.dropdownItem}
-                          onClick={() => {
-                            setFilter(country.name);
-                            setShowCountries(false);
-                          }}
-                        >
-                          {country.name}
-                        </div>
-                      ))}
-                  </div>
-                )}
-              </div>
-            </div>
-
-            <div className={styles.b2}>
-              <div className={styles.text11}>Profile View</div>
-              <div className={styles.dropdown} ref={dropdownRef}>
-                <div
-                  className={styles["dropdown-toggle"]}
-                  onClick={() => {
-                    setDropdownOpen(!dropdownOpen);
-                  }}
-                >
-                  <span className={styles.label}>{isUserArtist ? "Artist" : "Listener"}</span>
+              {showCountries && (
+                <div className={styles.dropdownList}>
+                  {countries
+                    .filter((c) =>
+                      c.name.toLowerCase().includes(filter.toLowerCase())
+                    )
+                    .map((country) => (
+                      <div
+                        key={country.id}
+                        className={styles.dropdownItem}
+                        onClick={() => {
+                          setFilter(country.name);
+                          setShowCountries(false);
+                        }}
+                      >
+                        {country.name}
+                      </div>
+                    ))}
                 </div>
-                {dropdownOpen && (
-                  <div className={styles["dropdown-options"]}>
-                    {<div onClick={() => selectProfileOption(isUserArtist ? profileOptions[1] : profileOptions[0])}>
+              )}
+            </div>
+          </div>
+
+          <div className={styles.b2}>
+            <div className={styles.text11}>Profile View</div>
+            <div className={styles.dropdown} ref={dropdownRef}>
+              <div
+                className={styles["dropdown-toggle"]}
+                onClick={() => {
+                  setDropdownOpen(!dropdownOpen);
+                }}
+              >
+                <span className={styles.label}>
+                  {isUserArtist ? "Artist" : "Listener"}
+                </span>
+              </div>
+              {dropdownOpen && (
+                <div className={styles["dropdown-options"]}>
+                  {
+                    <div
+                      onClick={() =>
+                        selectProfileOption(
+                          isUserArtist ? profileOptions[1] : profileOptions[0]
+                        )
+                      }
+                    >
                       {isUserArtist ? profileOptions[1] : profileOptions[0]}
-                    </div>}
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-
-          <div className={styles.text11}>Short Bio</div>
-          <input
-            type="text"
-            id="bio"
-            placeholder="Add a few words about your music taste..."
-            className={styles.bio}
-            onChange={(e) => {
-              setShortBio(e.target.value);
-            }}
-          />
-
-          <div className={styles.text11}>Select your favorite genres:</div>
-          <div className={styles["cont-block"]}>
-            <div className={styles.genres}>
-              {genres.map((genre) => (
-                <div
-                  key={genre.id}
-                  className={`${styles.block} ${isGenreSelected(genre) ? styles["block-selected"] : ""
-                    }`}
-                  onClick={() => {
-                    selectGenre(genre);
-                  }}
-                >
-                  {genre.title}
+                    </div>
+                  }
                 </div>
-              ))}
+              )}
             </div>
-          </div>
-          <div className={styles.f}>
-            <button
-              className={styles["cnt-btn"]}
-              onClick={async () => {
-                await submitProfileSetup();
-              }}
-            >
-              Continue
-            </button>
           </div>
         </div>
+
+        <div className={styles.text11}>Short Bio</div>
+        <input
+          type="text"
+          id="bio"
+          placeholder="Add a few words about your music taste..."
+          className={styles.bio}
+          onChange={(e) => {
+            setShortBio(e.target.value);
+          }}
+        />
+
+        <div className={styles.text11}>Select your favorite genres:</div>
+        <div className={styles["cont-block"]}>
+          <div className={styles.genres}>
+            {genres.map((genre) => (
+              <div
+                key={genre.id}
+                className={`${styles.block} ${
+                  isGenreSelected(genre) ? styles["block-selected"] : ""
+                }`}
+                onClick={() => {
+                  selectGenre(genre);
+                }}
+              >
+                {genre.title}
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className={styles.f}>
+          <button
+            className={styles["cnt-btn"]}
+            onClick={async () => {
+              await submitProfileSetup();
+            }}
+          >
+            Continue
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
