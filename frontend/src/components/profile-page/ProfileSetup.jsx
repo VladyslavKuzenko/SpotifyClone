@@ -209,35 +209,26 @@ export default function ProfileSetup() {
             Delete picture
           </button>
         </div>
-        <div className={styles.username}>Username</div>
-        <input
-          type="text"
-          id="user-name"
-          placeholder="@Name"
-          className={styles["user-name"]}
-          onChange={(e) => {
-            const filteredValue = e.target.value.replace(/[^a-zA-Z0-9_.]/g, "");
-            setUsername(filteredValue);
-          }}
-          value={username || ""}
-        />
+
+        <div className={styles.usernamewrap}>
+          <div className={styles.username}>Username</div>
+          <input
+            type="text"
+            id="user-name"
+            placeholder="@Name"
+            className={styles["user-name"]}
+            onChange={(e) => {
+              const filteredValue = e.target.value.replace(/[^a-zA-Z0-9_.]/g, "");
+              setUsername(filteredValue);
+            }}
+            value={username || ""}
+          />
+        </div>
+
 
         <div className={styles.ocnt}>
           <div className={styles.b1}>
-            {/* <div className={styles.text11}>Location</div>
-              <input
-                type="text"
-                id="location"
-                placeholder="City or Country"
-                className={styles.location}
-                list="genres"
-              />
-              
-              <datalist id="genres" >
-                {countries.map((country) => (
-                  <option key={country.id} value={country.name} />
-                ))}
-              </datalist> */}
+
             <div className={styles.customSelectWrapper}>
               <div className={styles.text11}>Location</div>
 
@@ -245,10 +236,8 @@ export default function ProfileSetup() {
                 type="text"
                 value={filter}
                 onChange={(e) => {
-                  const filteredValue = e.target.value.replace(
-                    /[^a-zA-Z0-9_.]/g,
-                    ""
-                  );
+
+                  const filteredValue = e.target.value.replace(/[^a-zA-Z0-9_.]/g, "");
                   setFilter(filteredValue);
                   setShowCountries(true);
                 }}
@@ -258,11 +247,10 @@ export default function ProfileSetup() {
               />
 
               {showCountries && (
-                <div className={styles.dropdownList}>
+
+                <div className={styles.dropdownList} >
                   {countries
-                    .filter((c) =>
-                      c.name.toLowerCase().includes(filter.toLowerCase())
-                    )
+                    .filter((c) => c.name.toLowerCase().includes(filter.toLowerCase()))
                     .map((country) => (
                       <div
                         key={country.id}
@@ -275,10 +263,12 @@ export default function ProfileSetup() {
                         {country.name}
                       </div>
                     ))}
+
                 </div>
               )}
             </div>
           </div>
+
 
           <div className={styles.b2}>
             <div className={styles.text11}>Profile View</div>
@@ -289,30 +279,20 @@ export default function ProfileSetup() {
                   setDropdownOpen(!dropdownOpen);
                 }}
               >
-                <span className={styles.label}>
-                  {isUserArtist ? "Artist" : "Listener"}
-                </span>
+                <span className={styles.label}>{isUserArtist ? "Artist" : "Listener"}</span>
               </div>
               {dropdownOpen && (
                 <div className={styles["dropdown-options"]}>
-                  {
-                    <div
-                      onClick={() =>
-                        selectProfileOption(
-                          isUserArtist ? profileOptions[1] : profileOptions[0]
-                        )
-                      }
-                    >
-                      {isUserArtist ? profileOptions[1] : profileOptions[0]}
-                    </div>
-                  }
+                  {<div onClick={() => selectProfileOption(isUserArtist ? profileOptions[1] : profileOptions[0])}>
+                    {isUserArtist ? profileOptions[1] : profileOptions[0]}
+                  </div>}
                 </div>
               )}
             </div>
           </div>
         </div>
 
-        <div className={styles.text11}>Short Bio</div>
+        <div className={styles.text12}  >Short Bio</div>
         <input
           type="text"
           id="bio"
@@ -323,15 +303,15 @@ export default function ProfileSetup() {
           }}
         />
 
-        <div className={styles.text11}>Select your favorite genres:</div>
+        <div className={styles.text12}>Select your favorite genres:</div>
         <div className={styles["cont-block"]}>
           <div className={styles.genres}>
             {genres.map((genre) => (
               <div
                 key={genre.id}
-                className={`${styles.block} ${
-                  isGenreSelected(genre) ? styles["block-selected"] : ""
-                }`}
+
+                className={`${styles.block} ${isGenreSelected(genre) ? styles["block-selected"] : ""
+                  }`}
                 onClick={() => {
                   selectGenre(genre);
                 }}
