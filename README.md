@@ -1,5 +1,5 @@
 # SpotifyClone
-Exam project in wich we will do web application based on Spotify with your own vision and improvements
+Exam project in wich we will do web application based on Spotify with our own vision and improvements
 
 
 #Presentation: https://www.figma.com/slides/GNIIWypza9bWNLA6eUCeiU/%D0%9F%D1%80%D0%B5%D0%B7%D0%B5%D0%BD%D1%82%D0%B0%D1%86%D1%96%D1%8F?node-id=2001-53&t=1y2CWrHraCOKK5P6-0
