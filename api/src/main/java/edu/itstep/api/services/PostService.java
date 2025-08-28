@@ -51,7 +51,7 @@ public class PostService {
     }
 
     public String postFileToVM(MultipartFile file, String postId) {
-        String remoteHost = "ec2-18-170-58-194.eu-west-2.compute.amazonaws.com";
+        String remoteHost = "18.130.147.151";
         String username = "ubuntu";
         String remoteDir = "";
         String resultRequestUtl = "http://" + remoteHost;
