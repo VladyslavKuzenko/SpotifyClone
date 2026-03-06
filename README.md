@@ -1,2 +1,2 @@
 # SpotifyClone
-Project in wich we will do web application based on Spotify with our own vision and improvements
+Project in wich we made web application based on Spotify with our own vision and improvements
