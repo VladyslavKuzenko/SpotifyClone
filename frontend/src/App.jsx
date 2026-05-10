@@ -16,6 +16,8 @@ import { hiddenLeftSideRoutes } from './constants/hiddenRoutes'
 import Test from "./components/exampleAuth0/Test";
 import LeftSide from "./components/main-components/LeftSide";
 
+import { routes } from './router/routes'
+
 function App() {
   const location = useLocation();
   const shouldHideLeftSide = hiddenLeftSideRoutes.includes(location.pathname);
@@ -23,22 +25,13 @@ function App() {
     <>
       {!shouldHideLeftSide && <LeftSide />}
       <Routes>
-        <Route path="/" element={<Navigate to="/main" replace />} />
-        <Route path="/main" element={<Main />} />
-        <Route path="/player" element={<PlayerPage />} />
-        <Route path="/login" element={<LoginButton />} />
-        <Route path="/logout" element={<LogoutButton />} />
-        <Route path="/chat" element={<ChatPage />} />
-        <Route path="/user-profile/:userId" element={<UserProfile />} />
-        <Route path="/my-profile" element={<MyProfile />} />
-        <Route path="/edit-profile" element={<EditProfile />} />
-
-        <Route path="/rating" element={<Rating />} />
-        <Route path="/likes" element={<Likes />} />
-        <Route path="/profileSetup" element={<ProfileSetup />} />
-        <Route path="/test" element={<Test />} />
-        {/*    <Route path="/profile" element={<Profile />} /> */}
-        {/*    <Route path="/profile" element={<Profile />} /> */}
+        {routes.map((route) => (
+          <Route
+            key={route.path}
+            path={route.path}
+            element={route.element}
+          />
+        ))}
       </Routes>
     </>
   );
