@@ -19,55 +19,54 @@ import LeftSide from "./components/main-components/LeftSide";
 export const routes = [
     {
         path: '/main',
-        element: <Main />
+        element:  <MainLayout><Main /></MainLayout>
     },
     {
         path: '/main',
-        element: <Navigate to="/main" replace />
+        element: <MainLayout><Navigate to="/main" replace /></MainLayout>
     },
     {
         path: '/login',
-        element: <LoginButton />
+        element: <MainLayout><LoginButton /></MainLayout>
     },
     {
         path: "/logout",
-        element: <LogoutButton />
+        element: <MainLayout><LogoutButton /></MainLayout>
     },
     {
         path: "/chat",
-        element: <ChatPage />
+        element: <MainLayout><ChatPage /></MainLayout>
     },
     {
         path: "/my-profile",
-        element: <MyProfile />
-
+        element: <MainLayout><MyProfile /></MainLayout>
     },
     {
         path: "/rating",
-        element: <Rating />
+        element: <MainLayout><Rating /></MainLayout>
     },
     {
         path: "/likes",
-        element: <Likes />
+        element: <MainLayout><Likes /></MainLayout>
     },
     {
         path: "/profileSetup",
-        element: <ProfileSetup />
+        element: <MainLayout><ProfileSetup /></MainLayout>
     },
     {
         path: "/test",
-        element: <Test />
+        element: <MainLayout><Test /></MainLayout>
     },
     {
         path: '/player',
-        element: <PlayerPage />
+        element: <MainLayout><PlayerPage /></MainLayout>
     },
     {
         path: '/user-profile/:userId',
-        element: <UserProfile />
+        element: <MainLayout><UserProfile /></MainLayout>
     },
     {
         path: '/edit-profile',
-        element: <EditProfile />
+        element: <MainLayout><EditProfile /></MainLayout>
     }
 ]
