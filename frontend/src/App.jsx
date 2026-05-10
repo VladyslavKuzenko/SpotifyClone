@@ -11,13 +11,13 @@ import EditProfile from "./components/edit-profile-page/EditProfile";
 import LoginButton from "./components/exampleAuth0/LoginButton";
 import LogoutButton from "./components/exampleAuth0/LogoutButton";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { hiddenLeftSideRoutes } from './constants/hiddenRoutes'
 
 import Test from "./components/exampleAuth0/Test";
 import LeftSide from "./components/main-components/LeftSide";
 
 function App() {
   const location = useLocation();
-  const hiddenLeftSideRoutes = ["/chat", "/profileSetup"];
   const shouldHideLeftSide = hiddenLeftSideRoutes.includes(location.pathname);
   return (
     <>
